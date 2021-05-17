@@ -18,6 +18,11 @@ export default {
             "validation": null
         },
         {
+            "name": "tags",
+            "title": "Tags",
+            "type": "tags",
+        },
+        {
             "type": "date",
             "name": "date",
             "title": "Date",

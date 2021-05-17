@@ -9,7 +9,7 @@ import config from './config.js';
 import header from './header.js';
 import footer from './footer.js';
 import advanced from './advanced.js';
-import blog from './blog.js';
+import articles from './articles.js';
 import page from './page.js';
 import post from './post.js';
 import section_hero from './section_hero.js';
@@ -32,7 +32,7 @@ export default createSchema({
     header,
     footer,
     advanced,
-    blog,
+    articles,
     page,
     post,
     section_hero,

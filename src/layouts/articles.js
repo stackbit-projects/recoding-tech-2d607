@@ -5,7 +5,7 @@ import moment from 'moment-strftime';
 import {Layout} from '../components/index';
 import {getPages, Link, withPrefix} from '../utils';
 
-export default class Blog extends React.Component {
+export default class Articles extends React.Component {
     render() {
         let display_posts = _.orderBy(getPages(this.props.pages, '/posts'), 'date', 'desc');
         return (
