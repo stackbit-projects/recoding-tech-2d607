@@ -28,6 +28,11 @@ export default class SectionPosts extends React.Component {
                       </header>
                       {_.get(post, 'excerpt', null) && (
                       <div className="post-content">
+                        {_.get(post, 'tags', null) && post.tags.map(tag => (
+                          <div className="post-tag">
+                            {tag.label}
+                          </div>
+                        ))}
                         <p>{_.get(post, 'excerpt', null)}</p>
                       </div>
                       )}

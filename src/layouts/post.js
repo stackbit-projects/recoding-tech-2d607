@@ -17,6 +17,11 @@ export default class Post extends React.Component {
                     {htmlToReact(_.get(this.props, 'page.subtitle', null))}
                   </div>
                   )}
+                  {_.get(this.props, 'page.tags', null) && this.props.page.tags.map(tag => (
+                    <div className="post-tag">
+                      {tag.label}
+                    </div>
+                  ))}
                 </header>
                 {_.get(this.props, 'page.content_img_path', null) && (
                 <div className="post-image">

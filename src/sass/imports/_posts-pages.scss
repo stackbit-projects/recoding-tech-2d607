@@ -29,6 +29,17 @@
   line-height: 1.5;
 }
 
+.post-tag {
+  background-color: _palette(accent-yellow);
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 1px #000;
+  color: #000;
+  font-size: 0.8em;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+}
+
 .post-image {
   margin-bottom: 1.66667em;
 
