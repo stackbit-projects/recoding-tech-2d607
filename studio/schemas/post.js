@@ -11,6 +11,12 @@ export default {
             "validation": Rule => Rule.required()
         },
         {
+          "title": 'Author',
+          "name": 'author',
+          "type": 'reference',
+          "to": [{"type": 'person'}]
+        },
+        {
             "type": "string",
             "name": "subtitle",
             "title": "Subtitle",
@@ -18,9 +24,10 @@ export default {
             "validation": null
         },
         {
-            "name": "tags",
-            "title": "Tags",
-            "type": "tags",
+          "title": 'Topics',
+          "name": 'topics',
+          "type": 'reference',
+          "to": [{"type": 'topic'}]
         },
         {
             "type": "date",

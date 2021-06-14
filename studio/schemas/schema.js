@@ -11,11 +11,13 @@ import footer from './footer.js';
 import advanced from './advanced.js';
 import articles from './articles.js';
 import page from './page.js';
+import person from './person.js';
 import post from './post.js';
 import section_hero from './section_hero.js';
 import section_content from './section_content.js';
 import section_posts from './section_posts.js';
 import section_form from './section_form.js';
+import tag from './tag.js';
 import action from './action.js';
 import form_field from './form_field.js';
 import stackbit_page_meta from './stackbit_page_meta.js';
@@ -34,11 +36,13 @@ export default createSchema({
     advanced,
     articles,
     page,
+    person,
     post,
     section_hero,
     section_content,
     section_posts,
     section_form,
+    tag,
     action,
     form_field,
     stackbit_page_meta

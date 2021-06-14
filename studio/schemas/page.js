@@ -11,6 +11,12 @@ export default {
             "validation": Rule => Rule.required()
         },
         {
+          "title": 'Author',
+          "name": 'author',
+          "type": 'reference',
+          "to": [{"type": 'person'}]
+        },
+        {
             "type": "string",
             "name": "subtitle",
             "title": "Subtitle",
