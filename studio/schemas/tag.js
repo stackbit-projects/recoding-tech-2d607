@@ -10,19 +10,6 @@ export default {
         "description": "The name of the topic",
         "validation": Rule => Rule.required()
     },
-    {
-        "type": "string",
-        "name": "description",
-        "title": "Description",
-        "description": "Describe the topic",
-    },
-    {
-        "title": "Types",
-        "name": "type",
-        "type": "array",
-        "of": [{"type": "string"}]
-    }
-
   ],
   "preview": {
       "select": {
