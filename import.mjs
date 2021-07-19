@@ -46,15 +46,31 @@ const flatten = arr => {
   }, []);
 };
 
+let creators = [];
+let tags = [];
+
 const transform = externalCitation => {
-  let tags = [];
-  const date = new Date();
-  const today = date.getDate();
+  externalCitation.data.creators.map((creator, index) => {
+    const date = new Date()
+    const now = date.getMilliseconds().toString();
+    const item = {
+      _type: 'creator',
+      _id: `creator-${now}-${index}`,
+      _key: `creator-${now}-${index}`,
+      firstName: creator.firstName,
+      lastName: creator.lastName,
+      creatorType: creator.creatorType,
+    };
+    creators.push(item);
+  });
 
   externalCitation.data.tags.map((tag, index) => {
+    const date = new Date();
+    const now = date.getMilliseconds().toString();
     const item = {
       _type: 'topic',
-      _id: `tag-${today}-${tag.index}`,
+      _id: `tag-${now}-${index}`,
+      _key: `tag-${now}-${index}`,
       name: tag.tag,
     };
     tags.push(item);
@@ -65,8 +81,17 @@ const transform = externalCitation => {
     shortTitle: externalCitation.data.shortTitle,
     title: externalCitation.data.title,
     date: externalCitation.data.accessDate,
-    creators: externalCitation.data.creators,
-    // tags: {_type: 'reference', _ref: tags},
+    creators: creators,
+    tags: tags,
+    websiteTitle: externalCitation.data.websiteTitle,
+    institution: externalCitation.data.institution,
+    publicationTitle: externalCitation.data.publicationTitle,
+    place: externalCitation.data.place,
+    publisher: externalCitation.data.publisher,
+    blogTitle: externalCitation.data.blogTitle,
+    network: externalCitation.data.network,
 	};
-	return [tags, citation];
+	return [creators, tags, citation];
 };
+
+// chicago full note 17th edition

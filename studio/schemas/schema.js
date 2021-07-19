@@ -9,7 +9,7 @@ import config from './config.js';
 import header from './header.js';
 import footer from './footer.js';
 import advanced from './advanced.js';
-import authors from './authors.js';
+import creators from './creators.js';
 import citations from './citations.js';
 import articles from './articles.js';
 import page from './page.js';
@@ -37,7 +37,7 @@ export default createSchema({
     footer,
     advanced,
     articles,
-    authors,
+    creators,
     citations,
     page,
     person,

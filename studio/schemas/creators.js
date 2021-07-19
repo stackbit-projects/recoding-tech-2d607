@@ -1,7 +1,7 @@
 export default {
   "type": "document",
-  "name": "author",
-  "title": "Author",
+  "name": "creator",
+  "title": "Creator",
   "fields": [
     {
       "type": "string",
@@ -21,7 +21,7 @@ export default {
   ],
   "preview": {
       "select": {
-          "title": "name"
+          "title": "lastName"
       }
   }
 }
