@@ -24,7 +24,7 @@ queries.forEach(query => {
       client
         .delete(document._id)
         .then((res) => {
-          console.log('Document deleted')
+          console.log(`Document ${document._id} deleted`)
         })
         .catch((err) => {
           console.error('Delete failed: ', err.message)
@@ -67,10 +67,10 @@ const flatten = arr => {
   }, []);
 };
 
-let creators = [];
-let tags = [];
-
 const transform = externalCitation => {
+  let creators = [];
+  let tags = [];
+
   externalCitation.data.creators.map((creator, index) => {
     const date = new Date()
     const now = date.getMilliseconds().toString();
@@ -96,14 +96,16 @@ const transform = externalCitation => {
     };
     tags.push(item);
   });
+
+  console.log(externalCitation.meta.parsedDate);
   const citation =  {
 	  _id: externalCitation.key,
 	  _type: 'citation',
     shortTitle: externalCitation.data.shortTitle,
     title: externalCitation.data.title,
-    date: externalCitation.data.accessDate,
+    date: externalCitation.meta.parsedDate,
     creators: creators,
-    tags: tags,
+    topics: tags,
     url: externalCitation.data.url,
     websiteTitle: externalCitation.data.websiteTitle,
     institution: externalCitation.data.institution,

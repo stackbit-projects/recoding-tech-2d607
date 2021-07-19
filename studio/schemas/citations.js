@@ -17,34 +17,46 @@ export default {
       "name": "date",
     },
     {
-      "type": "array",
-      "name": "creators",
-      of: [{
-        type: 'object',
-        fields: [
-          {
-            name: 'creators',
-            title: 'Creators',
-            type: 'reference',
-            to: { type: 'creator' },
-          },
-        ],
-      }],
+      type: 'array',
+      name: 'creators',
+      of: [
+        {
+          title: 'Creator',
+          type: 'creator'
+        },
+        {
+          title: 'Name',
+          type: 'object',
+          fields: [
+            {
+              title: 'Last Name',
+              name: 'lastName',
+              type: 'string'
+            },
+          ]
+        }
+      ]
     },
     {
-      "type": "array",
-      "name": "tags",
-      of: [{
-        type: 'object',
-        fields: [
-          {
-            name: 'tags',
-            title: 'Tags',
-            type: 'reference',
-            to: { type: 'topic' },
-          },
-        ],
-      }],
+      type: 'array',
+      name: 'topics',
+      of: [
+        {
+          title: 'Topic',
+          type: 'topic'
+        },
+        {
+          title: 'Name',
+          type: 'object',
+          fields: [
+            {
+              title: 'Name',
+              name: 'name',
+              type: 'string'
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "string",

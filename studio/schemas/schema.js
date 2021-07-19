@@ -19,7 +19,7 @@ import section_hero from './section_hero.js';
 import section_content from './section_content.js';
 import section_posts from './section_posts.js';
 import section_form from './section_form.js';
-import tag from './tag.js';
+import topic from './topic.js';
 import action from './action.js';
 import form_field from './form_field.js';
 import stackbit_page_meta from './stackbit_page_meta.js';
@@ -46,7 +46,7 @@ export default createSchema({
     section_content,
     section_posts,
     section_form,
-    tag,
+    topic,
     action,
     form_field,
     stackbit_page_meta
