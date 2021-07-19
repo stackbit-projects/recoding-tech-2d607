@@ -48,6 +48,11 @@ export default {
     },
     {
       "type": "string",
+      "name": "url",
+      "title": "Website Link",
+    },
+    {
+      "type": "string",
       "name": "websiteTitle",
       "title": "Website Title",
     },

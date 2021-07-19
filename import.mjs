@@ -12,6 +12,27 @@ const client = sanityClient({
   useCdn: false, // We can't use the CDN for writing
 });
 
+const queries = [
+  '*[_type == "citation"]',
+  '*[_type == "topic"]',
+  '*[_type == "creator"]'
+]
+
+queries.forEach(query => {
+  client.fetch(query).then(documents => {
+    documents.forEach(document => {
+      client
+        .delete(document._id)
+        .then((res) => {
+          console.log('Document deleted')
+        })
+        .catch((err) => {
+          console.error('Delete failed: ', err.message)
+        })
+    })
+  })
+})
+
 const URL = `https://api.zotero.org/groups/${process.env.ZOTERO_GROUP_ID}/items?format=json&include=data&limit=50`;
 
 async function fetchData(url = '') {
@@ -83,6 +104,7 @@ const transform = externalCitation => {
     date: externalCitation.data.accessDate,
     creators: creators,
     tags: tags,
+    url: externalCitation.data.url,
     websiteTitle: externalCitation.data.websiteTitle,
     institution: externalCitation.data.institution,
     publicationTitle: externalCitation.data.publicationTitle,
