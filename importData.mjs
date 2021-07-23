@@ -1,4 +1,5 @@
 import '@babel/polyfill'
+import regeneratorRuntime from 'regenerator-runtime'
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 import sanityClient from '@sanity/client'
