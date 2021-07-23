@@ -93,6 +93,11 @@ export default {
     {
       "type": "string",
       "name": "network",
+    },
+    {
+      "type": "string",
+      "name": "chicagoCitation",
+      "title": "Chicago Citation",
     }
   ]
 }
