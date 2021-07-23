@@ -86,7 +86,7 @@ const importData = function () {
       publisher: externalCitation.data.publisher,
       blogTitle: externalCitation.data.blogTitle,
       network: externalCitation.data.network,
-      chicagoCitation: externalCitation.citation,
+      chicagoCitation: externalCitation.citation
     }
     return [creators, tags, citation]
   }
