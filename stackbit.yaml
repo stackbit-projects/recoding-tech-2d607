@@ -273,7 +273,7 @@ models:
   article:
     type: page
     urlPath: /article
-    label: Artricles
+    label: Articles
     layout: article
     file: article/index.md
     hideContent: true

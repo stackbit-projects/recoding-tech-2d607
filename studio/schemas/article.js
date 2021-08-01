@@ -1,7 +1,7 @@
 export default {
     "type": "document",
-    "name": "articles",
-    "title": "Articles",
+    "name": "article",
+    "title": "Article",
     "fields": [
         {
             "type": "string",
@@ -62,7 +62,6 @@ export default {
             }
         }
     ],
-    "singleInstance": true,
     "preview": {
         "select": {
             "title": "title"
