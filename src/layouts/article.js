@@ -5,9 +5,9 @@ import moment from 'moment-strftime';
 import {Layout} from '../components/index';
 import {getPages, Link, withPrefix} from '../utils';
 
-export default class Articles extends React.Component {
+export default class Article extends React.Component {
     render() {
-        let display_posts = _.orderBy(getPages(this.props.pages, '/posts'), 'date', 'desc');
+        let display_posts = _.orderBy(getPages(this.props.pages, '/articles'), 'date', 'desc');
         return (
             <Layout {...this.props}>
               <header className="screen-reader-text">
