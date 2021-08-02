@@ -20,7 +20,7 @@ const importData = function () {
 
   let start = 0
   let limit = 25
-  const URL = `https://api.zotero.org/groups/${process.env.ZOTERO_GROUP_ID}/items?format=json&include=data,citation&limit=${limit}&start=${start}`
+  const URL = `https://api.zotero.org/groups/${process.env.ZOTERO_GROUP_ID}/items?format=json&include=data,citation&style=chicago-fullnote-bibliography&limit=${limit}&start=${start}`
 
   async function fetchData (url = '') {
     const response = await fetch(url, {
