@@ -10,8 +10,8 @@ import header from './header.js';
 import footer from './footer.js';
 import advanced from './advanced.js';
 import creators from './creators.js';
-import citations from './citations.js';
-import articles from './articles.js';
+import citation from './citation.js';
+import article from './article.js';
 import page from './page.js';
 import person from './person.js';
 import post from './post.js';
@@ -36,9 +36,9 @@ export default createSchema({
     header,
     footer,
     advanced,
-    articles,
+    article,
     creators,
-    citations,
+    citation,
     page,
     person,
     post,
