@@ -107,3 +107,6 @@ lib
 .sourcebit-nextjs-cache.json
 .DS_Store
 .idea
+
+# Sanity.io studio dist directory
+studio/dist
