@@ -5,14 +5,14 @@ import post from './post';
 
 export {
     advanced,
-    articles,
+    article,
     page,
     post
 };
 
 export default {
     advanced,
-    articles,
+    article,
     page,
     post
 };
