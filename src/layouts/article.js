@@ -7,7 +7,7 @@ import {getPages, Link, withPrefix} from '../utils';
 
 export default class Article extends React.Component {
     render() {
-        let display_posts = _.orderBy(getPages(this.props.pages, '/articles'), 'date', 'desc');
+        let display_posts = _.orderBy(getPages(this.props.pages, '/article'), 'date', 'desc');
         return (
             <Layout {...this.props}>
               <header className="screen-reader-text">
