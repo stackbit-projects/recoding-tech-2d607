@@ -10,7 +10,8 @@
     "build": "next build && next export",
     "start": "next start",
     "import": "node importData.mjs",
-    "compile": "babel src -d lib"
+    "compile": "babel importData.mjs -o importData.js",
+    "reset": "babel deleteData.mjs -o deleteData.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",

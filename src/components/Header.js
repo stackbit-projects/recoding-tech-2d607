@@ -48,7 +48,7 @@ export default class Header extends React.Component {
                           })}
                         </ul>
                         )}
-                        {_.get(this.props, 'data.config.header.has_social', null) && (
+                        {_.get(this.props, 'data.config.header.has_social', null) && false && (
                         <div className="social-links">
                           {_.map(_.get(this.props, 'data.config.header.social_links', null), (action, action_idx) => (
                           action && (
