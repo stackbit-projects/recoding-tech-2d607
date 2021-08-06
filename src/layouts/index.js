@@ -1,5 +1,5 @@
 import advanced from './advanced';
-import articles from './articles';
+import article from './article';
 import page from './page';
 import post from './post';
 
