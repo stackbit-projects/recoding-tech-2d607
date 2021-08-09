@@ -358,6 +358,61 @@
     },
     {
       "type": "page",
+      "urlPath": "/syllabus",
+      "label": "Syllabus",
+      "layout": "syllabus",
+      "file": "syllabus/index.md",
+      "hideContent": true,
+      "singleInstance": true,
+      "fields": [
+        {
+          "type": "string",
+          "name": "title",
+          "label": "Title",
+          "description": "The title of the page.",
+          "required": true
+        },
+        {
+          "type": "model",
+          "name": "seo",
+          "models": ["stackbit_page_meta"],
+          "label": "Seo"
+        },
+        {
+          "type": "string",
+          "name": "layout",
+          "label": "Layout",
+          "const": "syllabus",
+          "hidden": true
+        },
+        {
+          "type": "string",
+          "name": "stackbit_url_path",
+          "label": "URL Path",
+          "description": "The URL path of this page relative to site root. For example, the site root page would be \"/\", and post page would be \"posts/new-post/\"",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "stackbit_dir",
+          "label": "Directory",
+          "description": "The directory path where this file is stored",
+          "const": "content/pages",
+          "hidden": true
+        },
+        {
+          "type": "string",
+          "name": "stackbit_model_type",
+          "label": "Stackbit Model Type",
+          "description": "Stackbit model type",
+          "const": "page",
+          "hidden": true
+        }
+      ],
+      "name": "syllabus"
+    },
+    {
+      "type": "page",
       "label": "Page",
       "layout": "page",
       "exclude": "posts/**",

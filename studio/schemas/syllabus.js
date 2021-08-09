@@ -11,6 +11,12 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      type: "string",
+      name: "subtitle",
+      title: "Subtitle",
+      description: "The subtitle of the page",
+    },
+    {
       type: "stackbit_page_meta",
       name: "seo",
       title: "Seo",
