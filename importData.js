@@ -84,7 +84,7 @@ var transform = externalCitation => {
     var now = date.getMilliseconds().toString();
     var item = {
       _type: 'creator',
-      _id: "creator-".concat(now, "-").concat(index),
+      _id: "creator-".concat(creator.lastName.replace(/[^A-Z0-9]/ig, '-'), "-").concat(creator.firstName.replace(/[^A-Z0-9]/ig, '-')),
       _key: "creator-".concat(now, "-").concat(index),
       firstName: creator.firstName,
       lastName: creator.lastName,
@@ -97,7 +97,7 @@ var transform = externalCitation => {
     var now = date.getMilliseconds().toString();
     var item = {
       _type: 'topic',
-      _id: "topic-".concat(now, "-").concat(index),
+      _id: tag.tag.replace(/[^A-Z0-9]/ig, '-'),
       _key: "topic-".concat(now, "-").concat(index),
       name: tag.tag
     };

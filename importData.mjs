@@ -70,7 +70,7 @@ const transform = (externalCitation) => {
     const now = date.getMilliseconds().toString()
     const item = {
       _type: 'creator',
-      _id: `creator-${now}-${index}`,
+      _id: `creator-${creator.lastName.replace(/[^A-Z0-9]/ig, '-')}-${creator.firstName.replace(/[^A-Z0-9]/ig, '-')}`,
       _key: `creator-${now}-${index}`,
       firstName: creator.firstName,
       lastName: creator.lastName,
@@ -84,7 +84,7 @@ const transform = (externalCitation) => {
     const now = date.getMilliseconds().toString()
     const item = {
       _type: 'topic',
-      _id: `topic-${now}-${index}`,
+      _id: tag.tag.replace(/[^A-Z0-9]/ig, '-'),
       _key: `topic-${now}-${index}`,
       name: tag.tag
     }
