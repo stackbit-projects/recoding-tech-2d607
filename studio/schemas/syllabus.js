@@ -1,20 +1,52 @@
+// need to figure out the subheading field type
+
 export default {
   type: "document",
   name: "syllabus",
   title: "Syllabus",
   fields: [
     {
-      type: "string",
+      type: "string", // this is going to have to refer to another doc, i believe the title of the syllabus would be the topic itself?
       name: "title",
       title: "Title",
-      description: "The title of the page.",
+      description: "The title of the syllabus",
       validation: (Rule) => Rule.required(),
     },
     {
       type: "string",
       name: "subtitle",
       title: "Subtitle",
-      description: "The subtitle of the page",
+      description: "The subtitle of the syllabus",
+    },
+    {
+      type: "string", // this will probably a list of creators/admins instead
+      name: "author",
+      title: "Author",
+      description: "The author of this syllabus",
+    },
+    {
+      type: "string",
+      name: "subheadingTitle",
+      title: "Subheading title",
+      description:
+        "Title of the subheading, e.g. Why is disinformation important?",
+    },
+    {
+      type: "text",
+      name: "subheadingDesc",
+      title: "Subheading description",
+      description:
+        "Description of each subheading",
+    },
+    {
+      type: "date",
+      name: "datePublished",
+      title: "Date published",
+      description: "Date this syllabus was published",
+      initialValue: () => new Date().toISOString(),
+      options: {
+        dateFormat: "MMMM DD YYYY",
+      },
     },
     {
       type: "stackbit_page_meta",

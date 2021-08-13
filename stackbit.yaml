@@ -293,9 +293,6 @@ models:
     urlPath: "/syllabus/{slug}"
     label: Syllabus
     layout: syllabus
-    file: syllabus/index.md
-    hideContent: true
-    singleInstance: true
     fields:
       - type: string
         name: title

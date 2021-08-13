@@ -7,6 +7,7 @@ import { getPages, Link, withPrefix } from "../utils";
 
 export default class Syllabus extends React.Component {
   render() {
+    console.log("rendering syllabi component!")
     let display_posts = _.orderBy(
       getPages(this.props.pages, "/syllabus"),
       "date",
