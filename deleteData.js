@@ -24,7 +24,7 @@ var client = (0, _client.default)({
 });
 var queries = ['*[_type == "citation"]', '*[_type == "topic"]', '*[_type == "creator"]'];
 var limiter = new _limiter.RateLimiter({
-  tokensPerInterval: 2,
+  tokensPerInterval: 1,
   interval: 'second'
 });
 
@@ -38,7 +38,6 @@ function _deleteData() {
     // that were set in the constructor
     // remainingRequests tells us how many additional requests could be sent
     // right this moment
-    var remainingRequests = yield limiter.removeTokens(1);
     queries.forEach(function (query) {
       client.fetch(query).then(function (documents) {
         documents.forEach(function (document) {
@@ -54,4 +53,20 @@ function _deleteData() {
   return _deleteData.apply(this, arguments);
 }
 
-deleteData();
+function sendRequest() {
+  return _sendRequest.apply(this, arguments);
+}
+
+function _sendRequest() {
+  _sendRequest = (0, _asyncToGenerator2.default)(function* () {
+    // This call will throw if we request more than the maximum number of requests
+    // that were set in the constructor
+    // remainingRequests tells us how many additional requests could be sent
+    // right this moment
+    var remainingRequests = yield limiter.removeTokens(1);
+    deleteData();
+  });
+  return _sendRequest.apply(this, arguments);
+}
+
+sendRequest();

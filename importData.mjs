@@ -30,6 +30,7 @@ async function fetchData (url = '') {
   const remainingRequests = await limiter.removeTokens(1)
   console.log(`Remaining requests: ${remainingRequests}`)
   console.log(`Limit is: ${limit}`)
+  console.log(`Start is: ${start}`)
   console.log('Fetching citations...')
   const response = await fetch(url, {
     headers: {
@@ -113,28 +114,41 @@ const transform = (externalCitation) => {
 }
 
 (async () => {
-  fetchData(URL)
-    .then(citations => {
-      console.log('Parsing citations...')
-      start = citations.length
-      return citations.map(transform)
-    })
-    .then(docs =>
-      // docs is now an array of [creators, tags, citation], so we need to flatten it
-      flatten(docs)
-    )
-    .then(documents => {
-      // now we have all our documents and are ready to save them to our dataset
-      if (documents) {
-        const transaction = client.transaction()
-        documents.forEach(document => {
-          transaction.createOrReplace(document)
-        })
-        console.log('Committing transaction...')
-        return transaction.commit()
-      }
-    })
-    .catch(error => {
-      console.debug(error)
-    })
+
 })()
+
+const promises = []
+for (let i = 1; i <= limit; i++) {
+  promises.push(fetchData(URL))
+}
+Promise.all(promises)
+  .then(() => {
+    return fetchData(URL)
+      .then(citations => {
+        console.log('Parsing citations...')
+        console.log(`Start is now ${start}`)
+        start = citations.length
+        return citations.map(transform)
+      })
+      .then(docs =>
+        // docs is now an array of [creators, tags, citation], so we need to flatten it
+        flatten(docs)
+      )
+      .then(documents => {
+        // now we have all our documents and are ready to save them to our dataset
+        if (documents) {
+          const transaction = client.transaction()
+          documents.forEach(document => {
+            transaction.createOrReplace(document)
+          })
+          console.log('Committing transaction...')
+          return transaction.commit()
+        }
+      })
+      .catch(error => {
+        console.debug(error)
+      })
+  })
+  .catch(function handleError (error) {
+    console.log(`Error: ${error}`)
+  })

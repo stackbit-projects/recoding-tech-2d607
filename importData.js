@@ -124,9 +124,17 @@ var transform = externalCitation => {
   return [creators, tags, citation];
 };
 
-(0, _asyncToGenerator2.default)(function* () {
-  fetchData(URL).then(citations => {
+(0, _asyncToGenerator2.default)(function* () {})();
+var promises = [];
+
+for (var i = 1; i <= limit; i++) {
+  promises.push(fetchData(URL));
+}
+
+Promise.all(promises).then(() => {
+  return fetchData(URL).then(citations => {
     console.log('Parsing citations...');
+    console.log("Start is now ".concat(start));
     start = citations.length;
     return citations.map(transform);
   }).then(docs => // docs is now an array of [creators, tags, citation], so we need to flatten it
@@ -143,4 +151,6 @@ var transform = externalCitation => {
   }).catch(error => {
     console.debug(error);
   });
-})();
+}).catch(function handleError(error) {
+  console.log('Error' + error);
+});

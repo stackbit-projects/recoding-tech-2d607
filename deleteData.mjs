@@ -15,14 +15,13 @@ const client = sanityClient({
 
 const queries = ['*[_type == "citation"]', '*[_type == "topic"]', '*[_type == "creator"]']
 
-const limiter = new RateLimiter({ tokensPerInterval: 2, interval: 'second' })
+const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 'second' })
 
 async function deleteData () {
   // This call will throw if we request more than the maximum number of requests
   // that were set in the constructor
   // remainingRequests tells us how many additional requests could be sent
   // right this moment
-  const remainingRequests = await limiter.removeTokens(1)
   queries.forEach(function (query) {
     client.fetch(query).then(function (documents) {
       documents.forEach(function (document) {
@@ -36,4 +35,13 @@ async function deleteData () {
   })
 }
 
-deleteData()
+async function sendRequest () {
+  // This call will throw if we request more than the maximum number of requests
+  // that were set in the constructor
+  // remainingRequests tells us how many additional requests could be sent
+  // right this moment
+  const remainingRequests = await limiter.removeTokens(1)
+  deleteData()
+}
+
+sendRequest()
