@@ -1,15 +1,15 @@
-import advanced from "./advanced";
-import article from "./article";
-import syllabus from "./syllabus";
-import page from "./page";
-import post from "./post";
+import advanced from './advanced'
+import articles from './articles'
+import article from './article'
+import syllabus from './syllabus'
+import page from './page'
 
-export { advanced, article, page, post, syllabus };
+export { advanced, articles, article, page, syllabus }
 
 export default {
   advanced,
+  articles,
   article,
   page,
-  post,
-  syllabus,
-};
+  syllabus
+}

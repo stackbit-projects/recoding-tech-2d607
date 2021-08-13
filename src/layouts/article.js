@@ -1,51 +1,55 @@
-import React from 'react';
-import _ from 'lodash';
-import moment from 'moment-strftime';
+import React from 'react'
+import _ from 'lodash'
+import moment from 'moment-strftime'
 
-import {Layout} from '../components/index';
-import {getPages, Link, withPrefix} from '../utils';
+import { Layout } from '../components/index'
+import { htmlToReact, withPrefix, markdownify } from '../utils'
 
-export default class Article extends React.Component {
-    render() {
-        let display_posts = _.orderBy(getPages(this.props.pages, '/article'), 'date', 'desc');
-        return (
-            <Layout {...this.props}>
-              <header className="screen-reader-text">
-                <h1>{_.get(this.props, 'page.title', null)}</h1>
-              </header>
-              <div className="post-feed">
-                <div className="post-feed-inside">
-                  {_.map(display_posts, (post, post_idx) => (
-                  <article key={post_idx} className="post post-card">
-                    <div className="post-inside">
-                      {_.get(post, 'thumb_img_path', null) && (
-                      <Link className="post-thumbnail" href={withPrefix(_.get(post, 'stackbit_url_path', null))}>
-                        <img src={withPrefix(_.get(post, 'thumb_img_path', null))} alt={_.get(post, 'thumb_img_alt', null)} />
-                      </Link>
-                      )}
-                      <header className="post-header">
-                        <h2 className="post-title"><Link href={withPrefix(_.get(post, 'stackbit_url_path', null))} rel="bookmark">{_.get(post, 'title', null)}</Link></h2>
-                      </header>
-                      {_.get(post, 'excerpt', null) && (
-                      <div className="post-content">
-                        {_.get(post, 'tags', null) && post.tags.map(tag => (
-                          <div className="post-tag">
-                            {tag.label}
-                          </div>
-                        ))}
-                        <p>{_.get(post, 'excerpt', null)}</p>
-                      </div>
-                      )}
-                      <footer className="post-meta">
-                        <time className="published"
-                          dateTime={moment(_.get(post, 'date', null)).strftime('%Y-%m-%d %H:%M')}>{moment(_.get(post, 'date', null)).strftime('%B %d, %Y')}</time>
-                      </footer>
-                    </div>
-                  </article>
-                  ))}
-                </div>
+export default class Post extends React.Component {
+  render() {
+    return (
+      <Layout {...this.props}>
+        <article className="post post-full">
+          <header className="post-header inner-sm">
+            <h1 className="post-title underline">
+              {_.get(this.props, 'page.title', null)}
+            </h1>
+            {_.get(this.props, 'page.category', null) && (
+              <div className="post-subtitle">
+                {htmlToReact(_.get(this.props, 'page.category', null))}
               </div>
-            </Layout>
-        );
-    }
+            )}
+            <time
+              className="published"
+              dateTime={moment(_.get(this.props, 'page.date', null)).strftime(
+                '%Y-%m-%d %H:%M'
+              )}
+            >
+              {moment(_.get(this.props, 'page.date', null)).strftime(
+                '%A, %B %e, %Y'
+              )}
+            </time>
+            {_.get(this.props, 'page.topics', null) &&
+              this.props.page.topics.map(tag => (
+                <div className="post-tag">{tag.name}</div>
+              ))}
+          </header>
+          {_.get(this.props, 'page.content_img_path', null) && (
+            <div className="post-image">
+              <img
+                src={withPrefix(
+                  _.get(this.props, 'page.content_img_path', null)
+                )}
+                alt={_.get(this.props, 'page.content_img_alt', null)}
+              />
+            </div>
+          )}
+          <div className="post-content inner-sm">
+            {markdownify(_.get(this.props, 'page.content', null))}
+          </div>
+          <footer className="post-meta inner-sm"></footer>
+        </article>
+      </Layout>
+    )
+  }
 }
