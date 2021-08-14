@@ -14,6 +14,7 @@ import citation from './citation.js';
 import article from './article.js';
 import page from './page.js';
 import person from './person.js';
+import policy from './policy.js';
 import post from './post.js';
 import section_hero from './section_hero.js';
 import section_content from './section_content.js';
@@ -44,6 +45,7 @@ export default createSchema({
     citation,
     page,
     person,
+    policy,
     post,
     section_hero,
     section_content,

@@ -20,7 +20,13 @@ export default {
       name: "citations",
       title: "Citations",
       type: "array",
-      of: [{type: 'citation'}],
+      type: "array",
+      of: [{
+        type: "reference",
+        to: [{
+          type: "citation"
+        }]
+      }],
       description: "Further recommended reading for the subheading question",
     },
   ],

@@ -20,10 +20,10 @@ export default class Syllabus extends React.Component {
                 {htmlToReact(_.get(this.props, "page.subtitle", null))}
               </div>
             )}
-            {_.get(this.props, "page.author", null) && (
+            {_.get(this.props, "page.author.name", null) && (
               <div className="post-content inner-sm">
                 {" "}
-                By {htmlToReact(_.get(this.props, "page.author", null))}
+                By {htmlToReact(_.get(this.props, "page.author.name", null))}
               </div>
             )}
             {_.get(this.props, "page.datePublished", null) && (

@@ -6,23 +6,24 @@ export default {
   title: "Syllabus",
   fields: [
     {
-      type: "string", // this is going to have to refer to another doc, i believe the title of the syllabus would be the topic itself?
       name: "title",
       title: "Title",
+      type: "string",
       description: "The title of the syllabus",
       validation: (Rule) => Rule.required(),
     },
     {
-      type: "string",
       name: "subtitle",
       title: "Subtitle",
+      type: "string",
       description: "The subtitle of the syllabus",
     },
     {
-      type: "reference",
-      to: [{ type: "person" }],
       name: "author",
       title: "Author",
+      type: "reference",
+      to: [{ type: "person" }],
+
       description: "The author of this syllabus",
     },
     {
@@ -34,9 +35,9 @@ export default {
         "A subheading for the syllabus, usually in the form of a question, e.g. 'Why is disinformation important?'",
     },
     {
-      type: "date",
       name: "datePublished",
       title: "Date published",
+      type: "date",
       description: "Date this syllabus was published",
       initialValue: () => new Date().toISOString(),
       options: {
