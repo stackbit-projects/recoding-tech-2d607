@@ -19,7 +19,9 @@ import section_hero from './section_hero.js';
 import section_content from './section_content.js';
 import section_posts from './section_posts.js';
 import section_form from './section_form.js';
+import section_syllabi from './section_syllabi.js';
 import syllabus from './syllabus.js';
+import syllabusQuestion from './syllabus_question';
 import topic from './topic.js';
 import action from './action.js';
 import form_field from './form_field.js';
@@ -47,7 +49,9 @@ export default createSchema({
     section_content,
     section_posts,
     section_form,
+    section_syllabi,
     syllabus,
+    syllabusQuestion, 
     topic,
     action,
     form_field,

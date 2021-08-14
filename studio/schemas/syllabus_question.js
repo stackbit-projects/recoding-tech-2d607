@@ -1,6 +1,6 @@
 export default {
   type: "document",
-  name: "syllabusQs",
+  name: "syllabusQuestion",
   title: "Syllabus questions",
   fields: [
     {

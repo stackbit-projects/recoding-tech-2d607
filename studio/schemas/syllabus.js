@@ -19,7 +19,8 @@ export default {
       description: "The subtitle of the syllabus",
     },
     {
-      type: "string", // this will probably a list of creators/admins instead
+      type: "reference",
+      to: [{ type: "person" }],
       name: "author",
       title: "Author",
       description: "The author of this syllabus",
@@ -28,8 +29,9 @@ export default {
       name: "subheadings",
       title: "Subheading questions",
       type: "array",
-      of: [{type: 'syllabusQs'}],
-      description: "A subheading for the syllabus, usually in the form of a question, e.g. 'Why is disinformation important?'",
+      of: [{ type: "syllabusQuestion" }],
+      description:
+        "A subheading for the syllabus, usually in the form of a question, e.g. 'Why is disinformation important?'",
     },
     {
       type: "date",
