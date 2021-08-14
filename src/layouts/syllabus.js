@@ -20,10 +20,24 @@ export default class Syllabus extends React.Component {
                 {htmlToReact(_.get(this.props, "page.subtitle", null))}
               </div>
             )}
-            {_.get(this.props, "page.tags", null) &&
+            {_.get(this.props, "page.author", null) && (
+              <div className="post-content inner-sm">
+                {" "}
+                By {htmlToReact(_.get(this.props, "page.author", null))}
+              </div>
+            )}
+            {_.get(this.props, "page.datePublished", null) && (
+              <div className="post-content inner-sm">
+                {" "}
+                {moment(_.get(this.props, "page.datePublished", null)).strftime(
+                  "%B %e, %Y"
+                )}
+              </div>
+            )}
+            {/* {_.get(this.props, "page.tags", null) &&
               this.props.page.tags.map((tag) => (
                 <div className="post-tag">{tag.label}</div>
-              ))}
+              ))} */}
           </header>
           {_.get(this.props, "page.content_img_path", null) && (
             <div className="post-image">
@@ -35,10 +49,10 @@ export default class Syllabus extends React.Component {
               />
             </div>
           )}
-          <div className="post-content inner-sm">
+          {/* <div className="post-content inner-sm">
             {markdownify(_.get(this.props, "page.content", null))}
-          </div>
-          <footer className="post-meta inner-sm">
+          </div> */}
+          {/* <footer className="post-meta inner-sm">
             <time
               className="published"
               dateTime={moment(_.get(this.props, "page.date", null)).strftime(
@@ -49,7 +63,7 @@ export default class Syllabus extends React.Component {
                 "%A, %B %e, %Y"
               )}
             </time>
-          </footer>
+          </footer> */}
         </article>
       </Layout>
     );

@@ -25,18 +25,11 @@ export default {
       description: "The author of this syllabus",
     },
     {
-      type: "string",
-      name: "subheadingTitle",
-      title: "Subheading title",
-      description:
-        "Title of the subheading, e.g. Why is disinformation important?",
-    },
-    {
-      type: "text",
-      name: "subheadingDesc",
-      title: "Subheading description",
-      description:
-        "Description of each subheading",
+      name: "subheadings",
+      title: "Subheading questions",
+      type: "array",
+      of: [{type: 'syllabusQs'}],
+      description: "A subheading for the syllabus, usually in the form of a question, e.g. 'Why is disinformation important?'",
     },
     {
       type: "date",

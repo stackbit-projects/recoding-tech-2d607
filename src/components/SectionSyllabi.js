@@ -5,10 +5,10 @@ import moment from "moment-strftime";
 import { getPages, Link, withPrefix } from "../utils";
 import CtaButtons from "./CtaButtons";
 
-export default class SectionPosts extends React.Component {
+export default class SectionSyllabi extends React.Component {
   render() {
     let section = _.get(this.props, "section", null);
-    let display_posts = _.orderBy(
+    let display_syllabi = _.orderBy(
       getPages(this.props.pages, "/syllabus"),
       "date",
       "desc"
