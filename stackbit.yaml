@@ -102,7 +102,7 @@ sourceMapping:
       file: config.yml
       fieldPath: 'params.footer.links[0].style'
 logicFields:
-  - section_posts.posts_number
+  - section_articles.articles_number
 models:
   config:
     type: data
@@ -265,7 +265,7 @@ models:
             - section_content
             - section_form
             - section_hero
-            - section_posts
+            - section_articles
       - type: model
         name: seo
         models:
@@ -434,15 +434,15 @@ models:
           type: model
           models:
             - action
-  section_posts:
+  section_articles:
     type: object
-    label: Posts Section
+    label: Articles Section
     extends:
       - section
     fields:
       - type: number
-        name: posts_number
-        label: Number of posts to display
+        name: articles_number
+        label: Number of articles to display
         required: true
       - type: list
         name: actions

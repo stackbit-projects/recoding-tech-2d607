@@ -258,7 +258,7 @@
               "section_content",
               "section_form",
               "section_hero",
-              "section_posts"
+              "section_articles"
             ]
           }
         },
@@ -740,7 +740,7 @@
           "name": "type",
           "label": "Object Type",
           "description": "The type of the object",
-          "const": "section_posts",
+          "const": "section_articles",
           "hidden": true
         },
         {
@@ -752,7 +752,7 @@
           "hidden": true
         }
       ],
-      "name": "section_posts",
+      "name": "section_articles",
       "labelField": "title",
       "hideContent": true
     },
@@ -1442,9 +1442,9 @@
             "stackbit_model_type": "object"
           },
           {
-            "type": "section_posts",
-            "title": "Recent Posts",
-            "section_id": "recent-posts",
+            "type": "section_articles",
+            "title": "Recent Articles",
+            "section_id": "recent-articles",
             "posts_number": 4,
             "actions": [
               {

@@ -17,7 +17,7 @@ import person from './person.js'
 // import post from './post.js';
 import section_hero from './section_hero.js'
 import section_content from './section_content.js'
-import section_posts from './section_posts.js'
+import section_articles from './section_articles.js'
 import section_form from './section_form.js'
 import syllabus from './syllabus.js'
 import topic from './topic.js'
@@ -45,7 +45,7 @@ export default createSchema({
     // post,
     section_hero,
     section_content,
-    section_posts,
+    section_articles,
     section_form,
     syllabus,
     topic,

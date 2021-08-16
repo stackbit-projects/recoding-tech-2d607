@@ -31,7 +31,9 @@ export default class Post extends React.Component {
             </time>
             {_.get(this.props, 'page.topics', null) &&
               this.props.page.topics.map(tag => (
-                <div className="post-tag">{tag.name}</div>
+                <div className="post-tag" key={tag.name}>
+                  {tag.name}
+                </div>
               ))}
           </header>
           {_.get(this.props, 'page.content_img_path', null) && (
