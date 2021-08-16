@@ -42,6 +42,9 @@ export default {
         },
         {
           type: 'section_articles'
+        },
+        {
+          type: 'section_policies'
         }
       ]
     },

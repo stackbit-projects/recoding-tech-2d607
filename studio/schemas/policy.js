@@ -85,6 +85,16 @@ export default {
       title: 'Summary',
       description: 'A summary of the policy.',
       validation: Rule => Rule.required()
+    },
+    {
+      type: 'string',
+      name: 'layout',
+      title: 'Layout',
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ['policy']
+      }
     }
   ]
 }
