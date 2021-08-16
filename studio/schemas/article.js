@@ -18,7 +18,7 @@ export default {
         'The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.',
       validation: Rule => Rule.required(),
       options: {
-        source: 'name',
+        source: 'title',
         maxLength: 200, // will be ignored if slugify is set
         slugify: input =>
           input
