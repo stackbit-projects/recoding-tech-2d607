@@ -2,14 +2,14 @@ import React from 'react'
 import _ from 'lodash'
 import moment from 'moment-strftime'
 
-import { getPages, Link, withPrefix } from '../utils'
+import { getArticles, Link, withPrefix } from '../utils'
 import CtaButtons from './CtaButtons'
 
 export default class SectionArticles extends React.Component {
   render() {
     let section = _.get(this.props, 'section', null)
     let display_articles = _.orderBy(
-      getPages(this.props.pages, '/articles'),
+      getArticles(this.props.pages),
       'date',
       'desc'
     )
@@ -35,9 +35,9 @@ export default class SectionArticles extends React.Component {
                   {_.get(article, 'img_path', null) && (
                     <Link
                       className="post-thumbnail"
-                      href={withPrefix(
-                        _.get(article, 'stackbit_url_path', null)
-                      )}
+                      href={`/articles${withPrefix(
+                        _.get(article, 'slug', null)
+                      )}`}
                     >
                       <img
                         src={withPrefix(_.get(article, 'img_path', null))}
@@ -48,9 +48,9 @@ export default class SectionArticles extends React.Component {
                   <header className="post-header">
                     <h3 className="post-title">
                       <Link
-                        href={withPrefix(
-                          _.get(article, 'stackbit_url_path', null)
-                        )}
+                        href={`/articles${withPrefix(
+                          _.get(article, 'slug', null)
+                        )}`}
                         rel="bookmark"
                       >
                         {_.get(article, 'title', null)}
