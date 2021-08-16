@@ -4,7 +4,7 @@ export default {
   title: 'Policy',
   fields: [
     {
-      name: 'name',
+      name: 'title',
       type: 'string',
       title: 'Policy name',
       description: 'Official name of the policy',
@@ -18,7 +18,7 @@ export default {
         'The slug for the policy. Can be the same as the name, but turned into a URL. For example, name-of-policy.',
       validation: Rule => Rule.required(),
       options: {
-        source: 'name',
+        source: 'title',
         maxLength: 200, // will be ignored if slugify is set
         slugify: input =>
           input
@@ -78,6 +78,13 @@ export default {
           ]
         }
       ]
+    },
+    {
+      type: 'markdown',
+      name: 'summary',
+      title: 'Summary',
+      description: 'A summary of the policy.',
+      validation: Rule => Rule.required()
     }
   ]
 }
