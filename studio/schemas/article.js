@@ -11,6 +11,24 @@ export default {
       validation: Rule => Rule.required()
     },
     {
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
+      description:
+        'The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.',
+      validation: Rule => Rule.required(),
+      options: {
+        source: 'name',
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: input =>
+          input
+            .toLowerCase()
+            .replace(/[^\w\s]/gi, '')
+            .replace(/\s+/g, '-')
+            .slice(0, 200)
+      }
+    },
+    {
       title: 'Author',
       name: 'author',
       type: 'reference',

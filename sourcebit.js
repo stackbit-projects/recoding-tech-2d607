@@ -25,7 +25,7 @@ module.exports = {
             predicate: _.matchesProperty('__metadata.modelName', 'advanced')
           },
           {
-            path: '/{stackbit_url_path}',
+            path: '/articles/{slug}',
             predicate: _.matchesProperty('__metadata.modelName', 'article')
           },
           {

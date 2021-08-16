@@ -14,6 +14,9 @@ export default {
       title: 'Slug',
       name: 'slug',
       type: 'slug',
+      description:
+        'The slug for the policy. Can be the same as the name, but turned into a URL. For example, name-of-policy.',
+      validation: Rule => Rule.required(),
       options: {
         source: 'name',
         maxLength: 200, // will be ignored if slugify is set
