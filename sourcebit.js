@@ -30,10 +30,14 @@ module.exports = {
           },
           {
             path: '/{stackbit_url_path}',
+            predicate: _.matchesProperty('__metadata.modelName', 'citation')
+          },
+          {
+            path: '/{stackbit_url_path}',
             predicate: _.matchesProperty('__metadata.modelName', 'page')
           },
           {
-            path: '/policy/{slug}',
+            path: '/policies/{slug}',
             predicate: _.matchesProperty('__metadata.modelName', 'policy')
           },
           {
@@ -51,6 +55,7 @@ module.exports = {
               [
                 'advanced',
                 'article',
+                'citation',
                 'page',
                 'policy',
                 'post',

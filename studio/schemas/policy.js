@@ -65,8 +65,15 @@ export default {
       }
     },
     {
+      type: 'markdown',
+      name: 'summary',
+      title: 'Summary',
+      description: 'A summary of the policy.',
+      validation: Rule => Rule.required()
+    },
+    {
       name: 'relatedCitations',
-      title: 'Related citations',
+      title: 'Further reading',
       type: 'array',
       of: [
         {
@@ -80,11 +87,21 @@ export default {
       ]
     },
     {
-      type: 'markdown',
-      name: 'summary',
-      title: 'Summary',
-      description: 'A summary of the policy.',
-      validation: Rule => Rule.required()
+      name: 'relatedDocs',
+      title: 'Related Primary Documents',
+      type: 'array',
+      of: [{ type: 'file' }]
+    },
+    {
+      name: 'relatedTopics',
+      title: 'Related Topics',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'topic' }]
+        }
+      ]
     },
     {
       type: 'string',

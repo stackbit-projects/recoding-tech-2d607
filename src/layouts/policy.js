@@ -3,10 +3,16 @@ import _ from 'lodash'
 import moment from 'moment-strftime'
 
 import { Layout } from '../components/index'
-import { htmlToReact, withPrefix, markdownify } from '../utils'
+import { htmlToReact, Link, markdownify } from '../utils'
+
+import Grid from '@material-ui/core/Grid'
 
 export default class Policy extends React.Component {
   render() {
+    let relatedDocs = _.get(this.props.page, 'relatedDocs', null)
+    let relatedTopics = _.get(this.props.page, 'relatedTopics', null)
+    let relatedCitations = _.get(this.props.page, 'relatedCitations', null)
+    console.log(relatedDocs)
     return (
       <Layout {...this.props}>
         <header className="post-header inner-sm">
@@ -55,6 +61,49 @@ export default class Policy extends React.Component {
           <h2>Summary</h2>
           {markdownify(_.get(this.props, 'page.summary', null))}
         </div>
+        <footer className="post-meta inner-sm">
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              Related Primary Documents:
+              {relatedDocs &&
+                relatedDocs.map(doc => (
+                  <div key={doc.assetId}>
+                    <Link className="post-thumbnail" href={doc.url}>
+                      {doc.originalFilename}
+                    </Link>
+                  </div>
+                ))}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              Related Topics:
+              {relatedTopics &&
+                relatedTopics.map(topic => (
+                  <div key={topic.id}>
+                    <Link
+                      className="post-thumbnail"
+                      href={`/topics/${topic.name}`}
+                    >
+                      {topic.name}
+                    </Link>
+                  </div>
+                ))}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              Further reading:
+              {relatedCitations &&
+                relatedCitations.map(citation => (
+                  <div key={citation.id}>
+                    <Link
+                      className="post-thumbnail"
+                      href={`/${citation.stackbit_url_path}`}
+                    >
+                      {citation.title}
+                    </Link>
+                  </div>
+                ))}
+            </Grid>
+          </Grid>
+        </footer>
       </Layout>
     )
   }
