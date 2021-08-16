@@ -93,10 +93,7 @@ export default class Policy extends React.Component {
               {relatedCitations &&
                 relatedCitations.map(citation => (
                   <div key={citation.id}>
-                    <Link
-                      className="post-thumbnail"
-                      href={`/${citation.stackbit_url_path}`}
-                    >
+                    <Link className="post-thumbnail" href={`${citation.url}`}>
                       {citation.title}
                     </Link>
                   </div>
