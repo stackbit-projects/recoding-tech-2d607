@@ -106,3 +106,7 @@ lib
 
 # Sanity.io studio dist directory
 studio/dist
+
+# compiled scripts
+importData.js
+deleteData.js
