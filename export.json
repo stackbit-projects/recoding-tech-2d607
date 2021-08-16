@@ -258,7 +258,7 @@
               "section_content",
               "section_form",
               "section_hero",
-              "section_posts"
+              "section_articles"
             ]
           }
         },
@@ -355,6 +355,61 @@
         }
       ],
       "name": "article"
+    },
+    {
+      "type": "page",
+      "urlPath": "/syllabus",
+      "label": "Syllabus",
+      "layout": "syllabus",
+      "file": "syllabus/index.md",
+      "hideContent": true,
+      "singleInstance": true,
+      "fields": [
+        {
+          "type": "string",
+          "name": "title",
+          "label": "Title",
+          "description": "The title of the page.",
+          "required": true
+        },
+        {
+          "type": "model",
+          "name": "seo",
+          "models": ["stackbit_page_meta"],
+          "label": "Seo"
+        },
+        {
+          "type": "string",
+          "name": "layout",
+          "label": "Layout",
+          "const": "syllabus",
+          "hidden": true
+        },
+        {
+          "type": "string",
+          "name": "stackbit_url_path",
+          "label": "URL Path",
+          "description": "The URL path of this page relative to site root. For example, the site root page would be \"/\", and post page would be \"posts/new-post/\"",
+          "required": true
+        },
+        {
+          "type": "string",
+          "name": "stackbit_dir",
+          "label": "Directory",
+          "description": "The directory path where this file is stored",
+          "const": "content/pages",
+          "hidden": true
+        },
+        {
+          "type": "string",
+          "name": "stackbit_model_type",
+          "label": "Stackbit Model Type",
+          "description": "Stackbit model type",
+          "const": "page",
+          "hidden": true
+        }
+      ],
+      "name": "syllabus"
     },
     {
       "type": "page",
@@ -685,7 +740,7 @@
           "name": "type",
           "label": "Object Type",
           "description": "The type of the object",
-          "const": "section_posts",
+          "const": "section_articles",
           "hidden": true
         },
         {
@@ -697,7 +752,7 @@
           "hidden": true
         }
       ],
-      "name": "section_posts",
+      "name": "section_articles",
       "labelField": "title",
       "hideContent": true
     },
@@ -1387,9 +1442,9 @@
             "stackbit_model_type": "object"
           },
           {
-            "type": "section_posts",
-            "title": "Recent Posts",
-            "section_id": "recent-posts",
+            "type": "section_articles",
+            "title": "Recent Articles",
+            "section_id": "recent-articles",
             "posts_number": 4,
             "actions": [
               {

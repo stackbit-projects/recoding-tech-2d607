@@ -1,18 +1,13 @@
-import advanced from './advanced';
-import article from './article';
-import page from './page';
-import post from './post';
+import advanced from './advanced'
+import article from './article'
+import syllabus from './syllabus'
+import page from './page'
 
-export {
-    advanced,
-    article,
-    page,
-    post
-};
+export { advanced, article, page, syllabus }
 
 export default {
-    advanced,
-    article,
-    page,
-    post
-};
+  advanced,
+  article,
+  page,
+  syllabus
+}
