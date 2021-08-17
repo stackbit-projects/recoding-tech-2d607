@@ -28,7 +28,6 @@ import _ from 'lodash'
 export default function getPolicies(pages) {
   return _.filter(pages, page => {
     const layout = _.get(page, 'layout')
-    console.log(layout)
     return layout == 'policy'
   })
 }

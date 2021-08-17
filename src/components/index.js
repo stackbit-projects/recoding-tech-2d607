@@ -4,6 +4,7 @@ import FormField from './FormField'
 import Header from './Header'
 import Layout from './Layout'
 import Icon from './Icon'
+import SectionCitations from './SectionCitations'
 import SectionContent from './SectionContent'
 import SectionForm from './SectionForm'
 import SectionHero from './SectionHero'
@@ -17,6 +18,7 @@ export {
   Header,
   Layout,
   Icon,
+  SectionCitations,
   SectionContent,
   SectionForm,
   SectionHero,
@@ -31,6 +33,7 @@ export default {
   Header,
   Layout,
   Icon,
+  SectionCitations,
   SectionContent,
   SectionForm,
   SectionHero,
