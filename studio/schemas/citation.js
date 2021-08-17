@@ -1,20 +1,20 @@
 export default {
-  "type": "document",
-  "name": "citation",
-  "title": "Citation",
-  "fields": [
+  type: 'document',
+  name: 'citation',
+  title: 'Citation',
+  fields: [
     {
-      "type": "string",
-      "name": "title"
+      type: 'string',
+      name: 'title'
     },
     {
-      "type": "string",
-      "name": "shortTitle",
-      "title": "Short Title",
+      type: 'string',
+      name: 'shortTitle',
+      title: 'Short Title'
     },
     {
-      "type": "date",
-      "name": "date",
+      type: 'date',
+      name: 'date'
     },
     {
       type: 'array',
@@ -32,7 +32,7 @@ export default {
               title: 'Last Name',
               name: 'lastName',
               type: 'string'
-            },
+            }
           ]
         }
       ]
@@ -59,45 +59,55 @@ export default {
       ]
     },
     {
-      "type": "string",
-      "name": "url",
-      "title": "Website Link",
+      type: 'string',
+      name: 'url',
+      title: 'Website Link'
     },
     {
-      "type": "string",
-      "name": "websiteTitle",
-      "title": "Website Title",
+      type: 'string',
+      name: 'websiteTitle',
+      title: 'Website Title'
     },
     {
-      "type": "string",
-      "name": "institution",
+      type: 'string',
+      name: 'institution'
     },
     {
-      "type": "string",
-      "name": "publicationTitle",
-      "title": "Publication Title",
+      type: 'string',
+      name: 'publicationTitle',
+      title: 'Publication Title'
     },
     {
-      "type": "string",
-      "name": "place",
+      type: 'string',
+      name: 'place'
     },
     {
-      "type": "string",
-      "name": "publisher",
+      type: 'string',
+      name: 'publisher'
     },
     {
-      "type": "string",
-      "name": "blogTitle",
-      "title": "Blog Title",
+      type: 'string',
+      name: 'blogTitle',
+      title: 'Blog Title'
     },
     {
-      "type": "string",
-      "name": "network",
+      type: 'string',
+      name: 'network'
     },
     {
-      "type": "string",
-      "name": "chicagoCitation",
-      "title": "Chicago Citation",
+      type: 'string',
+      name: 'chicagoCitation',
+      title: 'Chicago Citation'
+    },
+    {
+      type: 'string',
+      name: 'layout',
+      title: 'Layout',
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ['citation']
+      }
     }
   ]
 }
