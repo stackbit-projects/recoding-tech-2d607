@@ -98,16 +98,6 @@ export default {
       type: 'string',
       name: 'chicagoCitation',
       title: 'Chicago Citation'
-    },
-    {
-      type: 'string',
-      name: 'layout',
-      title: 'Layout',
-      hidden: false,
-      validation: Rule => Rule.required(),
-      options: {
-        list: ['citation']
-      }
     }
   ]
 }
