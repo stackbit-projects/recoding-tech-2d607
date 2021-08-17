@@ -45,12 +45,6 @@ export default {
       },
     },
     {
-      type: "stackbit_page_meta",
-      name: "seo",
-      title: "Seo",
-      validation: null,
-    },
-    {
       type: "string",
       name: "layout",
       title: "Layout",
