@@ -1,9 +1,12 @@
 const path = require('path')
 const sourcebit = require('sourcebit')
+const dotenv = require('dotenv')
 
 const sourcebitConfig = require('./sourcebit.js')
 
 sourcebit.fetch(sourcebitConfig)
+
+dotenv.config()
 
 module.exports = {
   trailingSlash: true,
