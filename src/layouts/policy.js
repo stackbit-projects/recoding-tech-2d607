@@ -62,7 +62,7 @@ export default class Policy extends React.Component {
           {markdownify(_.get(this.props, 'page.summary', null))}
         </div>
         <footer className="post-meta inner-sm">
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12} sm={6}>
               Related Primary Documents:
               {relatedDocs &&

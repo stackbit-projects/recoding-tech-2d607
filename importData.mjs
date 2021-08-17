@@ -1,4 +1,3 @@
-
 import '@babel/polyfill'
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
@@ -16,24 +15,28 @@ const client = sanityClient({
 
 const flatten = arr => {
   if (arr) {
-    arr = arr.reduce(function (flat, toFlatten) {
-      return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten)
+    arr = arr.reduce(function(flat, toFlatten) {
+      return flat.concat(
+        Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
+      )
     }, [])
-    return arr.filter((item, index, self) =>
-      index === self.findIndex((a) => {
-        if (a.name) {
-          return a.name === item.name
-        } else if (a.lastName) {
-          return a.lastName === item.lastName
-        } else {
-          return a.title === item.title
-        }
-      })
+    return arr.filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex(a => {
+          if (a.name) {
+            return a.name === item.name
+          } else if (a.lastName) {
+            return a.lastName === item.lastName
+          } else {
+            return a.title === item.title
+          }
+        })
     )
   }
 }
 
-const transform = (externalCitation) => {
+const transform = externalCitation => {
   console.log(`Found citation ${externalCitation.key}`)
 
   const creators = []
@@ -44,12 +47,17 @@ const transform = (externalCitation) => {
       const date = new Date()
       const now = date.getMilliseconds().toString()
       if (!creator.firstName || !creator.lastName) {
-        console.warn(`Skipping creator with invalid name: ${creator.firstname} ${creator.lastName}`)
+        console.warn(
+          `Skipping creator with invalid name: ${creator.firstname} ${creator.lastName}`
+        )
         return
       }
       const item = {
         _type: 'creator',
-        _id: `creator-${creator.lastName.replace(/[^A-Z0-9]/ig, '-')}-${creator.firstName.replace(/[^A-Z0-9]/ig, '-')}`,
+        _id: `creator-${creator.lastName.replace(
+          /[^A-Z0-9]/gi,
+          '-'
+        )}-${creator.firstName.replace(/[^A-Z0-9]/gi, '-')}`,
         _key: `creator-${now}-${index}`,
         firstName: creator.firstName,
         lastName: creator.lastName,
@@ -66,7 +74,7 @@ const transform = (externalCitation) => {
         const now = date.getMilliseconds().toString()
         const item = {
           _type: 'topic',
-          _id: tag.tag.replace(/[^A-Z0-9]/ig, '-'),
+          _id: tag.tag.replace(/[^A-Z0-9]/gi, '-'),
           _key: `topic-${now}-${index}`,
           name: tag.tag
         }
@@ -96,7 +104,6 @@ const transform = (externalCitation) => {
   return [creators, tags, citation]
 }
 
-
 async function fetchBackoff(url, options) {
   const response = await fetch(url, options)
   if (response.headers.has('backoff')) {
@@ -110,7 +117,7 @@ async function fetchBackoff(url, options) {
     await new Promise(resolve => setTimeout(resolve, retryAfter))
     return fetchBackoff(url, options)
   }
-  return response;
+  return response
 }
 
 function zoteroUrl(start, limit) {
@@ -124,16 +131,16 @@ async function fetchAllCitations() {
   let limit = 25
 
   console.log('Fetching citations...')
-  while(!finished) {
+  while (!finished) {
     await fetchBackoff(zoteroUrl(start, limit), {
-        headers: {
-          'Zotero-API-Version': process.env.ZOTERO_API_VERSION,
-          'Zotero-API-Key': process.env.ZOTERO_API_KEY
-        }
-      })
+      headers: {
+        'Zotero-API-Version': process.env.ZOTERO_API_VERSION,
+        'Zotero-API-Key': process.env.ZOTERO_API_KEY
+      }
+    })
       .then(response => {
-        if (response.ok) return response.json();
-        throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);
+        if (response.ok) return response.json()
+        throw new Error(`HTTP Error ${response.status}: ${response.statusText}`)
       })
       .then(citations => {
         console.log(`Parsing batch starting at ${start}...`)
@@ -141,9 +148,10 @@ async function fetchAllCitations() {
         if (citations.length < limit) finished = true
         return citations.map(transform)
       })
-      .then(docs =>
-        // docs is now an array of [creators, tags, citation], so we need to flatten it
-        documents = documents.concat(flatten(docs))
+      .then(
+        docs =>
+          // docs is now an array of [creators, tags, citation], so we need to flatten it
+          (documents = documents.concat(flatten(docs)))
       )
       .catch(error => {
         console.error(error)
@@ -158,11 +166,11 @@ async function fetchAllCitations() {
         transaction.createOrReplace(document)
       })
       console.log('Committing transaction...')
-      transaction.commit();
+      transaction.commit()
     }
   } catch (error) {
     console.error(error.name + ': ' + error.message)
   }
 }
 
-fetchAllCitations();
+fetchAllCitations()
