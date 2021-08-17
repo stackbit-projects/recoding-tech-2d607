@@ -25,15 +25,9 @@ import _ from 'lodash'
  * @param {string} urlPath The url path to filter pages by
  * @return {Array}
  */
-export default function getPages(pages, urlPath) {
-  urlPath = _.trim(urlPath, '/')
-  const urlPathParts = _.split(urlPath, '/')
+export default function getArticles(pages) {
   return _.filter(pages, page => {
-    const pageUrlPath = _.trim(_.get(page, 'stackbit_url_path'), '/')
-    const pageUrlParts = _.split(pageUrlPath, '/')
-    return (
-      pageUrlParts.length > urlPathParts.length &&
-      _.isEqual(pageUrlParts.slice(0, urlPathParts.length), urlPathParts)
-    )
+    const layout = _.get(page, 'layout')
+    return layout == 'article'
   })
 }

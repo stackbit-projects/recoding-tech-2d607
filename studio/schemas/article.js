@@ -1,70 +1,155 @@
 export default {
-    "type": "document",
-    "name": "article",
-    "title": "Article",
-    "fields": [
+  type: 'document',
+  name: 'article',
+  title: 'Article',
+  fields: [
+    {
+      type: 'string',
+      name: 'title',
+      title: 'Title',
+      description: 'The title of the post.',
+      validation: Rule => Rule.required()
+    },
+    {
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
+      description:
+        'The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.',
+      validation: Rule => Rule.required(),
+      options: {
+        source: 'title',
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: input =>
+          input
+            .toLowerCase()
+            .replace(/[^\w\s]/gi, '')
+            .replace(/\s+/g, '-')
+            .slice(0, 200)
+      }
+    },
+    {
+      title: 'Author',
+      name: 'author',
+      type: 'reference',
+      to: [{ type: 'person' }]
+    },
+    {
+      type: 'string',
+      name: 'category',
+      title: 'Category',
+      description: 'What type of article is this? (ex: commentary)',
+      validation: null
+    },
+    {
+      type: 'array',
+      name: 'topics',
+      of: [
         {
-            "type": "string",
-            "name": "title",
-            "title": "Title",
-            "description": "The title of the page.",
-            "validation": Rule => Rule.required()
-        },
-        {
-            "type": "stackbit_page_meta",
-            "name": "seo",
-            "title": "Seo",
-            "validation": null
-        },
-        {
-            "type": "string",
-            "name": "layout",
-            "title": "Layout",
-            "hidden": false,
-            "validation": Rule => Rule.required(),
-            "options": {
-                "list": [
-                    "articles"
-                ]
+          title: 'Name',
+          type: 'object',
+          fields: [
+            {
+              title: 'Name',
+              name: 'name',
+              type: 'string'
             }
-        },
-        {
-            "type": "string",
-            "name": "stackbit_url_path",
-            "title": "URL Path",
-            "description": "The URL path of this page relative to site root. For example, the site root page would be \"/\", and post page would be \"posts/new-post/\"",
-            "validation": Rule => Rule.required()
-        },
-        {
-            "type": "string",
-            "name": "stackbit_dir",
-            "title": "Directory",
-            "description": "The directory path where this file is stored",
-            "hidden": false,
-            "validation": Rule => Rule.required(),
-            "options": {
-                "list": [
-                    "content/pages"
-                ]
-            }
-        },
-        {
-            "type": "string",
-            "name": "stackbit_model_type",
-            "title": "Stackbit Model Type",
-            "description": "Stackbit model type",
-            "hidden": false,
-            "validation": Rule => Rule.required(),
-            "options": {
-                "list": [
-                    "page"
-                ]
-            }
+          ]
         }
-    ],
-    "preview": {
-        "select": {
-            "title": "title"
+      ]
+    },
+    {
+      type: 'date',
+      name: 'date',
+      title: 'Date',
+      validation: Rule => Rule.required()
+    },
+    {
+      type: 'image',
+      name: 'img_path',
+      title: 'Image',
+      description: 'A featured image for the article, if any.',
+      validation: null
+    },
+    {
+      type: 'string',
+      name: 'img_alt',
+      title: 'Image alt text',
+      description: 'The alt text of the featured image.',
+      validation: null
+    },
+    {
+      type: 'array',
+      name: 'links',
+      title: 'Related Links',
+      of: [
+        {
+          title: 'Name',
+          type: 'object',
+          fields: [
+            {
+              title: 'Name',
+              name: 'name',
+              type: 'string'
+            },
+            {
+              title: 'URL',
+              name: 'url',
+              type: 'string'
+            }
+          ]
         }
+      ]
+    },
+    {
+      type: 'markdown',
+      name: 'content',
+      title: 'Content',
+      description: 'Page content',
+      validation: null
+    },
+    {
+      type: 'stackbit_page_meta',
+      name: 'seo',
+      title: 'Seo',
+      validation: null
+    },
+    {
+      type: 'string',
+      name: 'layout',
+      title: 'Layout',
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ['article']
+      }
+    },
+    {
+      type: 'string',
+      name: 'stackbit_dir',
+      title: 'Directory',
+      description: 'The directory path where this file is stored',
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ['content/pages']
+      }
+    },
+    {
+      type: 'string',
+      name: 'stackbit_model_type',
+      title: 'Stackbit Model Type',
+      description: 'Stackbit model type',
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ['page']
+      }
     }
+  ],
+  preview: {
+    select: {
+      title: 'title'
+    }
+  }
 }

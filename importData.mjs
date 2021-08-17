@@ -3,7 +3,6 @@ import '@babel/polyfill'
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 import sanityClient from '@sanity/client'
-import { RateLimiter } from 'limiter'
 
 dotenv.config()
 
@@ -14,31 +13,6 @@ const client = sanityClient({
   token: process.env.SANITY_ACCESS_TOKEN,
   useCdn: false // We can't use the CDN for writing
 })
-
-const limiter = new RateLimiter({ tokensPerInterval: 10, interval: 'second' })
-
-let start = 0
-let limit = 25
-
-const URL = `https://api.zotero.org/groups/${process.env.ZOTERO_GROUP_ID}/items?format=json&include=data,citation&style=chicago-fullnote-bibliography&limit=${limit}&start=${start}`
-
-async function fetchData (url = '') {
-  // This call will throw if we request more than the maximum number of requests
-  // that were set in the constructor
-  // remainingRequests tells us how many additional requests could be sent
-  // right this moment
-  const remainingRequests = await limiter.removeTokens(1)
-  console.log(`Remaining requests: ${remainingRequests}`)
-  console.log(`Limit is: ${limit}`)
-  console.log('Fetching citations...')
-  const response = await fetch(url, {
-    headers: {
-      'Zotero-API-Version': process.env.ZOTERO_API_VERSION,
-      'Zotero-API-Key': process.env.ZOTERO_API_KEY
-    }
-  })
-  return response.json() // parses JSON response into native JavaScript objects
-}
 
 const flatten = arr => {
   if (arr) {
@@ -65,31 +39,41 @@ const transform = (externalCitation) => {
   const creators = []
   const tags = []
 
-  externalCitation.data.creators.map((creator, index) => {
-    const date = new Date()
-    const now = date.getMilliseconds().toString()
-    const item = {
-      _type: 'creator',
-      _id: `creator-${now}-${index}`,
-      _key: `creator-${now}-${index}`,
-      firstName: creator.firstName,
-      lastName: creator.lastName,
-      creatorType: creator.creatorType
-    }
-    return creators.push(item)
-  })
+  if (externalCitation.data.creators) {
+    externalCitation.data.creators.map((creator, index) => {
+      const date = new Date()
+      const now = date.getMilliseconds().toString()
+      if (!creator.firstName || !creator.lastName) {
+        console.warn(`Skipping creator with invalid name: ${creator.firstname} ${creator.lastName}`)
+        return
+      }
+      const item = {
+        _type: 'creator',
+        _id: `creator-${creator.lastName.replace(/[^A-Z0-9]/ig, '-')}-${creator.firstName.replace(/[^A-Z0-9]/ig, '-')}`,
+        _key: `creator-${now}-${index}`,
+        firstName: creator.firstName,
+        lastName: creator.lastName,
+        creatorType: creator.creatorType
+      }
+      return creators.push(item)
+    })
+  }
 
-  externalCitation.data.tags.map((tag, index) => {
-    const date = new Date()
-    const now = date.getMilliseconds().toString()
-    const item = {
-      _type: 'topic',
-      _id: `topic-${now}-${index}`,
-      _key: `topic-${now}-${index}`,
-      name: tag.tag
-    }
-    return tags.push(item)
-  })
+  if (externalCitation.data.creators) {
+    externalCitation.data.tags.map((tag, index) => {
+      if (tag.tag) {
+        const date = new Date()
+        const now = date.getMilliseconds().toString()
+        const item = {
+          _type: 'topic',
+          _id: tag.tag.replace(/[^A-Z0-9]/ig, '-'),
+          _key: `topic-${now}-${index}`,
+          name: tag.tag
+        }
+        return tags.push(item)
+      }
+    })
+  }
 
   const citation = {
     _id: externalCitation.key,
@@ -112,29 +96,73 @@ const transform = (externalCitation) => {
   return [creators, tags, citation]
 }
 
-(async () => {
-  fetchData(URL)
-    .then(citations => {
-      console.log('Parsing citations...')
-      start = citations.length
-      return citations.map(transform)
-    })
-    .then(docs =>
-      // docs is now an array of [creators, tags, citation], so we need to flatten it
-      flatten(docs)
-    )
-    .then(documents => {
-      // now we have all our documents and are ready to save them to our dataset
-      if (documents) {
-        const transaction = client.transaction()
-        documents.forEach(document => {
-          transaction.createOrReplace(document)
-        })
-        console.log('Committing transaction...')
-        return transaction.commit()
-      }
-    })
-    .catch(error => {
-      console.debug(error)
-    })
-})()
+
+async function fetchBackoff(url, options) {
+  const response = await fetch(url, options)
+  if (response.headers.has('backoff')) {
+    const backoff = response.headers.get('backoff')
+    console.log(`Rate-limited: pausing for ${backoff} seconds.`)
+    await new Promise(resolve => setTimeout(resolve, backoff))
+    return fetchBackoff(url, options)
+  } else if (response.status === 429 && response.headers.has('retry-after')) {
+    const retryAfter = response.headers.get('retry-after')
+    console.log(`System overloaded: retrying in ${retryAfter} seconds.`)
+    await new Promise(resolve => setTimeout(resolve, retryAfter))
+    return fetchBackoff(url, options)
+  }
+  return response;
+}
+
+function zoteroUrl(start, limit) {
+  return `https://api.zotero.org/groups/${process.env.ZOTERO_GROUP_ID}/items?format=json&include=data,citation&style=chicago-fullnote-bibliography&limit=${limit}&start=${start}`
+}
+
+async function fetchAllCitations() {
+  let finished = false
+  let documents = []
+  let start = 0
+  let limit = 25
+
+  console.log('Fetching citations...')
+  while(!finished) {
+    await fetchBackoff(zoteroUrl(start, limit), {
+        headers: {
+          'Zotero-API-Version': process.env.ZOTERO_API_VERSION,
+          'Zotero-API-Key': process.env.ZOTERO_API_KEY
+        }
+      })
+      .then(response => {
+        if (response.ok) return response.json();
+        throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);
+      })
+      .then(citations => {
+        console.log(`Parsing batch starting at ${start}...`)
+        start += citations.length
+        if (citations.length < limit) finished = true
+        return citations.map(transform)
+      })
+      .then(docs =>
+        // docs is now an array of [creators, tags, citation], so we need to flatten it
+        documents = documents.concat(flatten(docs))
+      )
+      .catch(error => {
+        console.error(error)
+      })
+  }
+  console.log(`Fetched ${documents.length} citations.`)
+
+  try {
+    if (documents.length > 0) {
+      const transaction = client.transaction()
+      documents.forEach(document => {
+        transaction.createOrReplace(document)
+      })
+      console.log('Committing transaction...')
+      transaction.commit();
+    }
+  } catch (error) {
+    console.error(error.name + ': ' + error.message)
+  }
+}
+
+fetchAllCitations();

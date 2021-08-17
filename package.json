@@ -4,14 +4,15 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
+    "eslint": "eslint --init",
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
     "build": "next build && next export",
     "start": "next start",
     "import": "node importData.mjs",
-    "compile": "babel importData.mjs -o importData.js",
-    "reset": "babel deleteData.mjs -o deleteData.js"
+    "compile": "babel importData.mjs -o importData.js; babel deleteData.mjs -o deleteData.js",
+    "reset": "node deleteData.mjs"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
