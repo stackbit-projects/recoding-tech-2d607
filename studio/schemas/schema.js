@@ -16,6 +16,7 @@ import page from './page.js'
 import person from './person.js'
 import policy from './policy.js'
 import section_hero from './section_hero.js'
+import section_citations from './section_citations.js'
 import section_articles from './section_articles.js'
 import section_content from './section_content.js'
 import section_form from './section_form.js'
@@ -46,6 +47,7 @@ export default createSchema({
     policy,
     section_hero,
     section_articles,
+    section_citations,
     section_content,
     section_form,
     section_policies,
