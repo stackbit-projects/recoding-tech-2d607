@@ -32,6 +32,9 @@ export default {
       validation: null,
       of: [
         {
+          type: 'section_citations'
+        },
+        {
           type: 'section_content'
         },
         {
@@ -42,6 +45,9 @@ export default {
         },
         {
           type: 'section_articles'
+        },
+        {
+          type: 'section_policies'
         }
       ]
     },

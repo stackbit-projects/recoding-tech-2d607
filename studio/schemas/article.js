@@ -11,6 +11,24 @@ export default {
       validation: Rule => Rule.required()
     },
     {
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
+      description:
+        'The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.',
+      validation: Rule => Rule.required(),
+      options: {
+        source: 'title',
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: input =>
+          input
+            .toLowerCase()
+            .replace(/[^\w\s]/gi, '')
+            .replace(/\s+/g, '-')
+            .slice(0, 200)
+      }
+    },
+    {
       title: 'Author',
       name: 'author',
       type: 'reference',
@@ -105,14 +123,6 @@ export default {
       options: {
         list: ['article']
       }
-    },
-    {
-      type: 'string',
-      name: 'stackbit_url_path',
-      title: 'URL Path',
-      description:
-        'The URL path of this page relative to site root. For example, the site root page would be "/", and article page would be "articles/new-post/"',
-      validation: Rule => Rule.required()
     },
     {
       type: 'string',

@@ -14,11 +14,13 @@ import citation from './citation.js'
 import article from './article.js'
 import page from './page.js'
 import person from './person.js'
-// import post from './post.js';
+import policy from './policy.js'
 import section_hero from './section_hero.js'
-import section_content from './section_content.js'
+import section_citations from './section_citations.js'
 import section_articles from './section_articles.js'
+import section_content from './section_content.js'
 import section_form from './section_form.js'
+import section_policies from './section_policies.js'
 import syllabus from './syllabus.js'
 import topic from './topic.js'
 import action from './action.js'
@@ -42,11 +44,13 @@ export default createSchema({
     citation,
     page,
     person,
-    // post,
+    policy,
     section_hero,
-    section_content,
     section_articles,
+    section_citations,
+    section_content,
     section_form,
+    section_policies,
     syllabus,
     topic,
     action,

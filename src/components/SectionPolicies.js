@@ -2,20 +2,20 @@ import React from 'react'
 import _ from 'lodash'
 import moment from 'moment-strftime'
 
-import { getArticles, Link, withPrefix } from '../utils'
+import { getPolicies, Link, withPrefix } from '../utils'
 import CtaButtons from './CtaButtons'
 
-export default class SectionArticles extends React.Component {
+export default class SectionPolicies extends React.Component {
   render() {
     let section = _.get(this.props, 'section', null)
-    let display_articles = _.orderBy(
-      getArticles(this.props.pages),
+    let display_policies = _.orderBy(
+      getPolicies(this.props.pages),
       'date',
       'desc'
     )
-    let recent_articles = display_articles.slice(
+    let recent_policies = display_policies.slice(
       0,
-      _.get(section, 'articles_number', null)
+      _.get(section, 'policies_number', null)
     )
     return (
       <section
@@ -29,51 +29,51 @@ export default class SectionArticles extends React.Component {
         )}
         <div className="post-feed">
           <div className="post-feed-inside">
-            {_.map(recent_articles, (article, post_idx) => (
+            {_.map(recent_policies, (policy, post_idx) => (
               <article key={post_idx} className="post post-card">
                 <div className="post-inside">
-                  {_.get(article, 'img_path', null) && (
+                  {_.get(policy, 'img_path', null) && (
                     <Link
                       className="post-thumbnail"
-                      href={`/articles${withPrefix(
-                        _.get(article, 'slug', null)
+                      href={`/policies${withPrefix(
+                        _.get(policy, 'slug', null)
                       )}`}
                     >
                       <img
-                        src={withPrefix(_.get(article, 'img_path', null))}
-                        alt={_.get(article, 'img_alt', null)}
+                        src={withPrefix(_.get(policy, 'img_path', null))}
+                        alt={_.get(policy, 'img_alt', null)}
                       />
                     </Link>
                   )}
                   <header className="post-header">
                     <h3 className="post-title">
                       <Link
-                        href={`/articles${withPrefix(
-                          _.get(article, 'slug', null)
+                        href={`/policies${withPrefix(
+                          _.get(policy, 'slug', null)
                         )}`}
                         rel="bookmark"
                       >
-                        {_.get(article, 'title', null)}
+                        {_.get(policy, 'title', null)}
                       </Link>
                     </h3>
                   </header>
-                  {_.get(article, 'category', null) && (
+                  {_.get(policy, 'category', null) && (
                     <div className="post-content">
-                      {_.get(article, 'topics', null) &&
-                        article.topics.map(tag => (
+                      {_.get(policy, 'topics', null) &&
+                        policy.topics.map(tag => (
                           <div className="post-tag">{tag.name}</div>
                         ))}
-                      <p>{_.get(article, 'category', null)}</p>
+                      <p>{_.get(policy, 'category', null)}</p>
                     </div>
                   )}
                   <footer className="post-meta">
                     <time
                       className="published"
-                      dateTime={moment(_.get(article, 'date', null)).strftime(
-                        '%Y-%m-%d %H:%M'
-                      )}
+                      dateTime={moment(
+                        _.get(policy, 'dateInitiated', null)
+                      ).strftime('%Y-%m-%d %H:%M')}
                     >
-                      {moment(_.get(article, 'date', null)).strftime(
+                      {moment(_.get(policy, 'dateInitiated', null)).strftime(
                         '%B %d, %Y'
                       )}
                     </time>
