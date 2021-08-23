@@ -13,7 +13,7 @@ export default {
     {
       name: "answerBlurb",
       title: "Answer blurb",
-      type: "text",
+      type: "markdown",
       description: "Blurb to answer the above subheading question",
     },
     {
@@ -25,6 +25,8 @@ export default {
         type: "reference",
         to: [{
           type: "citation"
+        }, {
+          type: "article"
         }]
       }],
       description: "Further recommended reading for the subheading question",
