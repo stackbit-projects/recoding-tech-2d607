@@ -15,7 +15,7 @@
     "@sanity/desk-tool",
     "markdown",
     "@sanity/color-input",
-    "autocomplete-tags"
+    "@sanity/vision"
   ],
   "parts": [
     {
