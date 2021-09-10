@@ -34,7 +34,7 @@ module.exports = {
           },
           {
             path: '/policies/{slug}',
-            predicate: _.matchesProperty('__metadata.modelName', 'policy')
+            predicate: _.matchesProperty('__metadata.modelName', 'policyAction')
           },
           {
             path: '/{stackbit_url_path}',
@@ -42,28 +42,28 @@ module.exports = {
           },
           {
             path: '/{stackbit_url_path}',
-            predicate: _.matchesProperty('__metadata.modelName', 'syllabus')
+            predicate: _.matchesProperty('__metadata.modelName', 'quickStartGuide')
           }
         ],
         commonProps: items => {
           return {
-            pages: _.filter(items, item =>
+            pages: _.filter(items, (item) =>
               [
-                'advanced',
-                'article',
-                'page',
-                'policy',
-                'post',
-                'syllabus'
-              ].includes(_.get(item, '__metadata.modelName'))
+                "advanced",
+                "article",
+                "page",
+                "policyAction",
+                "post",
+                "quickStartGuide",
+              ].includes(_.get(item, "__metadata.modelName"))
             ),
             data: {
               config: _.find(
                 items,
-                _.matchesProperty('__metadata.modelName', 'config')
-              )
-            }
-          }
+                _.matchesProperty("__metadata.modelName", "config")
+              ),
+            },
+          };
         }
       }
     }
