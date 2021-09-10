@@ -7,12 +7,11 @@ import { htmlToReact, Link, markdownify } from '../utils'
 
 import Grid from '@material-ui/core/Grid'
 
-export default class Policy extends React.Component {
+export default class PolicyAction extends React.Component {
   render() {
     let relatedDocs = _.get(this.props.page, 'relatedDocs', null)
     let relatedTopics = _.get(this.props.page, 'relatedTopics', null)
     let relatedCitations = _.get(this.props.page, 'relatedCitations', null)
-    console.log(relatedDocs)
     return (
       <Layout {...this.props}>
         <header className="post-header inner-sm">

@@ -1,15 +1,15 @@
 import advanced from './advanced'
 import article from './article'
 import page from './page'
-import policy from './policy'
+import policyAction from './policyAction'
 import syllabus from './syllabus'
 
-export { advanced, article, page, policy, syllabus }
+export { advanced, article, page, policyAction, syllabus };
 
 export default {
   advanced,
   article,
   page,
-  policy,
-  syllabus
-}
+  policyAction,
+  syllabus,
+};
