@@ -2,21 +2,21 @@
 
 export default {
   type: "document",
-  name: "syllabus",
-  title: "Syllabus",
+  name: "quickStartGuide",
+  title: "Quick Start Guide",
   fields: [
     {
       name: "title",
       title: "Title",
       type: "string",
-      description: "The title of the syllabus",
+      description: "The title of the quick start guide",
       validation: (Rule) => Rule.required(),
     },
     {
       name: "subtitle",
       title: "Subtitle",
       type: "string",
-      description: "The subtitle of the syllabus",
+      description: "The subtitle of the quick start guide",
     },
     {
       name: "author",
@@ -24,15 +24,15 @@ export default {
       type: "reference",
       to: [{ type: "person" }],
 
-      description: "The author of this syllabus",
+      description: "The author of this quick start guide",
     },
     {
       name: "subheadings",
       title: "Subheading questions",
       type: "array",
-      of: [{ type: "syllabusQuestion" }],
+      of: [{ type: "subheadingQuestion" }],
       description:
-        "A subheading for the syllabus, usually in the form of a question, e.g. 'Why is disinformation important?'",
+        "A subheading for the quick start guide, usually in the form of a question, e.g. 'Why is disinformation important?'",
     },
     {
       name: "datePublished",

@@ -1,7 +1,7 @@
 export default {
   type: 'object',
-  name: 'section_policies',
-  title: 'Policy Tracker Section',
+  name: 'section_policy_actions',
+  title: 'Policy Actions',
   fields: [
     {
       type: 'string',
@@ -43,7 +43,7 @@ export default {
       hidden: false,
       validation: Rule => Rule.required(),
       options: {
-        list: ['section_policies']
+        list: ['section_policy_actions']
       }
     },
     {

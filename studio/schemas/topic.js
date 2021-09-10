@@ -14,12 +14,13 @@ export default {
       title: "Display title",
       type: "string",
       name: "displayTitle",
-      description: "How you want the name of the topic to appear on the front-end",
+      description:
+        "How you want the name of the topic to appear on the front-end",
     },
     {
       title: "Type of topic",
       type: "string",
-      name: "topicType",
+      name: "type",
       options: {
         list: [
           { title: "Country", value: "country" },
@@ -32,17 +33,51 @@ export default {
       title: "Fast facts",
       type: "markdown",
       name: "fastFacts",
-      description: "Featured stats and facts about the topic."
+      description: "Featured stats and facts about the topic.",
     },
     {
       title: "Topic description",
-      type: "markdown", 
+      type: "markdown",
       name: "topicDescription",
-      description: "Anything you want to say about the topic."
+      description: "Anything you want to say about the topic.",
     },
     {
       title: "Related commentary and analysis",
-    }
+      name: "relatedCommentary",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [
+            {
+              type: "citation",
+            },
+            {
+              type: "article",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Related topics",
+      name: "relatedTopics",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "topic" }],
+        },
+      ],
+    },
+    {
+      title: "Layout",
+      name: "layout",
+      type: "string",
+      options: {
+        list: ["issue", "country", "company"],
+      },
+    },
   ],
   preview: {
     select: {

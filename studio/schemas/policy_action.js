@@ -1,13 +1,13 @@
 export default {
   type: "document",
-  name: "policy",
-  title: "Policy",
+  name: "policyAction",
+  title: "Policy action",
   fields: [
     {
       name: "title",
       type: "string",
-      title: "Policy name",
-      description: "Official name of the policy",
+      title: "Policy action name",
+      description: "Official name of the policy action",
       validation: (Rule) => Rule.required(),
     },
     {
@@ -15,7 +15,7 @@ export default {
       name: "slug",
       type: "slug",
       description:
-        "The slug for the policy. Can be the same as the name, but turned into a URL. For example, name-of-policy.",
+        "The slug for the policy action. Can be the same as the name, but turned into a URL. For example, name-of-policy.",
       validation: (Rule) => Rule.required(),
       options: {
         source: "title",
@@ -31,7 +31,7 @@ export default {
     {
       name: "type",
       type: "string",
-      title: "Policy type",
+      title: "Policy action type",
       description: "E.g. legislation, proposal, etc.",
       validation: (Rule) => Rule.required(),
     },
@@ -39,7 +39,7 @@ export default {
       name: "country",
       type: "string",
       title: "Country",
-      description: "The policy's country of origin",
+      description: "The policy actions's country of origin",
       validation: (Rule) => Rule.required(),
     },
     {
@@ -88,13 +88,13 @@ export default {
     },
     {
       name: "relatedDocs",
-      title: "Related Primary Documents",
+      title: "Related primary documents",
       type: "array",
       of: [{ type: "file" }],
     },
     {
       name: "relatedTopics",
-      title: "Related Topics",
+      title: "Related topics",
       type: "array",
       of: [
         {
@@ -110,7 +110,7 @@ export default {
       hidden: false,
       validation: (Rule) => Rule.required(),
       options: {
-        list: ["policy"],
+        list: ["policy_action"],
       },
     },
   ],

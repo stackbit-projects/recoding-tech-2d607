@@ -14,16 +14,16 @@ import citation from './citation.js'
 import article from './article.js'
 import page from './page.js'
 import person from './person.js'
-import policy from './policy.js'
+import policy_action from './policy_action.js'
 import section_hero from './section_hero.js'
 import section_citations from './section_citations.js'
 import section_articles from './section_articles.js'
 import section_content from './section_content.js'
 import section_form from './section_form.js'
-import section_policies from './section_policies.js'
+import section_policy_actions from './section_policy_actions'
 import section_syllabi from "./section_syllabi.js";
-import syllabusQuestion from "./syllabus_question";
-import syllabus from './syllabus.js'
+import subheading_question from "./subheading_question";
+import quick_start_guide from "./quick_start_guide.js";
 import topic from './topic.js'
 import action from './action.js'
 import form_field from './form_field.js'
@@ -32,7 +32,7 @@ import stackbit_page_meta from './stackbit_page_meta.js'
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
-  name: 'default',
+  name: "default",
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
@@ -46,19 +46,19 @@ export default createSchema({
     citation,
     page,
     person,
-    policy,
+    policy_action,
     section_hero,
     section_articles,
     section_citations,
     section_content,
     section_form,
     section_syllabi,
-    section_policies,
-    syllabus,
-    syllabusQuestion, 
+    section_policy_actions,
+    quick_start_guide,
+    subheading_question, // subheading questions for the Quick Start Guide
     topic,
     action,
     form_field,
-    stackbit_page_meta
-  ])
-})
+    stackbit_page_meta,
+  ]),
+});
