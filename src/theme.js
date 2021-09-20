@@ -28,6 +28,12 @@ const theme = createTheme({
     },
     link: {
       color: "#FF0033"
+    },
+    overline: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "bold",
+      textTransform: "none"
     }
   }
 });

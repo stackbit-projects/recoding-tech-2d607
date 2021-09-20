@@ -11,7 +11,15 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
+  em: {
+    fontStyle: "italic"
+  },
   header: {},
+  mobileNav: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
+  },
   name: {
     fontSize: "2.5em",
     fontWeight: "bold"
@@ -50,6 +58,11 @@ const useStyles = makeStyles(theme => ({
       transform: "translateY(-50%)",
       width: "7px"
     }
+  },
+  nav: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
   }
 }));
 
@@ -59,8 +72,8 @@ function Header(props) {
   return (
     <header className={classes.header}>
       <Box m={4}>
-        <Grid container spacing={1} justifyContent="space-between">
-          <Grid item>
+        <Grid container spacing={3} justifyContent="space-between">
+          <Grid item xs={12} sm={4}>
             <span className={`${classes.name} ${classes.nameRe}`}>Re</span>
             <span className={classes.name}>cod</span>
             <span className={`${classes.name} ${classes.nameCoding}`}>i</span>
@@ -68,8 +81,48 @@ function Header(props) {
             <span className={`${classes.name} ${classes.nameDot}`}>.</span>
             <span className={classes.name}>Tech</span>
           </Grid>
-          <Grid item>
-            <Typography>Navigation baby</Typography>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={8}
+            className={classes.nav}
+            alignItems="center"
+            spacing={4}
+            justify="flex-end"
+          >
+            <Grid item xs={12} sm={3}>
+              <Typography className={classes.em}>Explore by...</Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              sm={9}
+              spacing={2}
+              justify="space-between"
+            >
+              <Grid item>
+                <Typography variant="overline">Issue</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="overline">Policy</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="overline">Country</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="overline">Company</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid container item className={classes.mobileNav}>
+            <Grid item>
+              <Typography>Explore by...</Typography>
+            </Grid>
+            <Grid container item>
+              <Grid item>Mobile nav here</Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
