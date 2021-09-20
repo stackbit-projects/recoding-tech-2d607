@@ -5,11 +5,11 @@ import moment from "moment-strftime";
 import { getPages, Link, withPrefix } from "../utils";
 import CtaButtons from "./CtaButtons";
 
-export default class SectionQuickStartGuides extends React.Component {
+export default class SectionGuides extends React.Component {
   render() {
     let section = _.get(this.props, "section", null);
     let display_syllabi = _.orderBy(
-      getPages(this.props.pages, "/quick_start_guides"),
+      getPages(this.props.pages, "/guides"),
       "date",
       "desc"
     );

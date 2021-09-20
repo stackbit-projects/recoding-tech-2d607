@@ -288,11 +288,11 @@ models:
         name: seo
         models:
           - stackbit_page_meta
-  quick_start_guide:
+  guide:
     type: page
-    urlPath: '/quick_start_guide/{slug}'
-    label: Quick start guide
-    layout: quick_start_guide
+    urlPath: '/guides/{slug}'
+    label: Guide
+    layout: guide
     fields:
       - type: string
         name: title

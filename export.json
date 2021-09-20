@@ -259,7 +259,7 @@
               "section_form",
               "section_hero",
               "section_articles",
-              "section_quick_start_guides"
+              "section_guides"
             ]
           }
         },
@@ -359,10 +359,10 @@
     },
     {
       "type": "page",
-      "urlPath": "/quick_start_guide",
-      "label": "Quick start",
-      "layout": "quick_start_guide",
-      "file": "quick_start_guides/index.md",
+      "urlPath": "/guides",
+      "label": "Quick start guides",
+      "layout": "guide",
+      "file": "guides/index.md",
       "hideContent": true,
       "singleInstance": true,
       "fields": [
@@ -383,7 +383,7 @@
           "type": "string",
           "name": "layout",
           "label": "Layout",
-          "const": "quick_start_guides",
+          "const": "guide",
           "hidden": true
         },
         {

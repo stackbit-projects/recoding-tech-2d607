@@ -1,6 +1,6 @@
 export default {
   type: "object",
-  name: "section_guick_start_guides",
+  name: "section_guides",
   title: "Quick start guides section",
   fields: [
     {

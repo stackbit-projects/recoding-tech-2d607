@@ -5,7 +5,7 @@ import moment from "moment-strftime";
 import { Layout } from "../components/index";
 import { htmlToReact, withPrefix, markdownify } from "../utils";
 
-export default class QuickStartGuide extends React.Component {
+export default class Guide extends React.Component {
   render() {
     console.log("hello it's the quick start guide component", this.props.page)
     return (

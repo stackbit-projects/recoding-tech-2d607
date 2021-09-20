@@ -2,7 +2,7 @@
 
 export default {
   type: "document",
-  name: "quick_start_guide",
+  name: "guide",
   title: "Quick start guide",
   fields: [
     {
@@ -68,7 +68,7 @@ export default {
       hidden: false,
       validation: (Rule) => Rule.required(),
       options: {
-        list: ["quick_start_guide"],
+        list: ["guide"],
       },
     },
     {

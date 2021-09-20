@@ -21,9 +21,9 @@ import section_articles from './section_articles.js'
 import section_content from './section_content.js'
 import section_form from './section_form.js'
 import section_policy_actions from './section_policy_actions'
-import section_quick_start_guides from "./section_quick_start_guides";
+import section_guides from "./section_guides";
 import subheading_question from "./subheading_question";
-import quick_start_guide from "./quick_start_guide.js";
+import guide from "./guide.js";
 import topic from './topic.js'
 import action from './action.js'
 import form_field from './form_field.js'
@@ -52,9 +52,9 @@ export default createSchema({
     section_citations,
     section_content,
     section_form,
-    section_quick_start_guides,
+    section_guides,
     section_policy_actions,
-    quick_start_guide,
+    guide,
     subheading_question, // subheading questions for the Quick Start Guide
     topic,
     action,

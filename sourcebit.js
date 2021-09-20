@@ -44,10 +44,10 @@ module.exports = {
             predicate: _.matchesProperty("__metadata.modelName", "post"),
           },
           {
-            path: "/quick_start_guides/{slug}",
+            path: "/guides/{slug}",
             predicate: _.matchesProperty(
               "__metadata.modelName",
-              "quick_start_guide"
+              "guide"
             ),
           },
         ],
@@ -60,7 +60,7 @@ module.exports = {
                 "page",
                 "policyAction",
                 "post",
-                "quick_start_guide",
+                "guide",
               ].includes(_.get(item, "__metadata.modelName"))
             ),
             data: {
