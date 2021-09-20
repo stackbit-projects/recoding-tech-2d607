@@ -1,5 +1,3 @@
-// need to figure out the subheading field type
-
 export default {
   type: "document",
   name: "guide",
@@ -44,12 +42,20 @@ export default {
       description: "The author of this quick start guide",
     },
     {
-      name: "subheadings",
-      title: "Subheading questions",
+      name: "content",
+      title: "Quick start guide content",
       type: "array",
-      of: [{ type: "subheadingQuestion" }],
-      description:
-        "A subheading for the quick start guide, usually in the form of a question, e.g. 'Why is disinformation important?'",
+      of: [
+        { type: "block" },
+        {
+          type: "reference",
+          to: [
+            {
+              type: "citation",
+            },
+          ],
+        },
+      ],
     },
     {
       name: "datePublished",

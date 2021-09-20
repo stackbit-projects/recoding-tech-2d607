@@ -65,9 +65,10 @@ export default {
       },
     },
     {
-      type: "markdown",
       name: "summary",
       title: "Summary",
+      type: "array",
+      of: [{type: "block"}],
       description: "A summary of the policy.",
       validation: (Rule) => Rule.required(),
     },

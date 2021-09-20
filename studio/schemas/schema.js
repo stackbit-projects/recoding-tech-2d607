@@ -14,6 +14,7 @@ import citation from './citation.js'
 import article from './article.js'
 import page from './page.js'
 import person from './person.js'
+import guide from "./guide.js";
 import policy_action from './policy_action.js'
 import section_hero from './section_hero.js'
 import section_citations from './section_citations.js'
@@ -22,8 +23,6 @@ import section_content from './section_content.js'
 import section_form from './section_form.js'
 import section_policy_actions from './section_policy_actions'
 import section_guides from "./section_guides";
-import subheading_question from "./subheading_question";
-import guide from "./guide.js";
 import topic from './topic.js'
 import action from './action.js'
 import form_field from './form_field.js'
@@ -44,6 +43,7 @@ export default createSchema({
     article,
     creators,
     citation,
+    guide,
     page,
     person,
     policy_action,
@@ -54,8 +54,6 @@ export default createSchema({
     section_form,
     section_guides,
     section_policy_actions,
-    guide,
-    subheading_question, // subheading questions for the Quick Start Guide
     topic,
     action,
     form_field,
