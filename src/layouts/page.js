@@ -14,10 +14,12 @@ export default class Page extends React.Component {
       <Layout {...this.props}>
         <Container>
           <article className="post page post-full">
-            <header className="post-header inner-sm">
-              <Typography variant="h1">
-                {_.get(this.props, "page.title", null)}
-              </Typography>
+            <header>
+              <Container maxWidth="sm">
+                <Typography variant="h1">
+                  {_.get(this.props, "page.title", null)}
+                </Typography>
+              </Container>
               {_.get(this.props, "page.subtitle", null) && (
                 <div className="post-subtitle inner-sm">
                   {htmlToReact(_.get(this.props, "page.subtitle", null))}

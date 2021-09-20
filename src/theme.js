@@ -24,14 +24,17 @@ const theme = createTheme({
   typography: {
     fontFamily: serifFont,
     h1: {
-      fontFamily: sansSerifFont
+      fontFamily: sansSerifFont,
+      fontSize: "2em",
+      fontWeight: "bold",
+      textAlign: "center"
     },
     link: {
       color: "#FF0033"
     },
     overline: {
       fontFamily: sansSerifFont,
-      fontSize: "1em",
+      fontSize: "1.2em",
       fontWeight: "bold",
       textTransform: "none"
     }
