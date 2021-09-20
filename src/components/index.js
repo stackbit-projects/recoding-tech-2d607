@@ -10,7 +10,7 @@ import SectionForm from './SectionForm'
 import SectionHero from './SectionHero'
 import SectionArticles from './SectionArticles'
 import SectionPolicyActions from './SectionPolicyActions'
-import SectionSyllabi from "./SectionSyllabi";
+import SectionQuickStartGuides from "./SectionQuickStartGuides";
 
 export {
   CtaButtons,
@@ -25,7 +25,7 @@ export {
   SectionHero,
   SectionArticles,
   SectionPolicyActions,
-  SectionSyllabi,
+  SectionQuickStartGuides,
 };
 
 export default {
@@ -41,5 +41,5 @@ export default {
   SectionHero,
   SectionArticles,
   SectionPolicyActions,
-  SectionSyllabi,
+  SectionQuickStartGuides,
 };
