@@ -3,7 +3,7 @@
 export default {
   type: "document",
   name: "quickStartGuide",
-  title: "Quick Start Guide",
+  title: "Quick start guide",
   fields: [
     {
       name: "title",
@@ -38,7 +38,7 @@ export default {
       name: "datePublished",
       title: "Date published",
       type: "date",
-      description: "Date this syllabus was published",
+      description: "Date this quick start guide was published",
       initialValue: () => new Date().toISOString(),
       options: {
         dateFormat: "MMMM DD YYYY",
@@ -51,7 +51,7 @@ export default {
       hidden: false,
       validation: (Rule) => Rule.required(),
       options: {
-        list: ["syllabus"],
+        list: ["quick_start_guide"],
       },
     },
     {

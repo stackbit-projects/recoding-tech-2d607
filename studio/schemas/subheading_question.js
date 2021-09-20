@@ -1,5 +1,5 @@
 export default {
-  type: "document",
+  type: "object",
   name: "subheadingQuestion",
   title: "Subheading questions for quick start guides",
   fields: [

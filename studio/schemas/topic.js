@@ -71,6 +71,17 @@ export default {
       ],
     },
     {
+      type: "string",
+      name: "stackbit_model_type",
+      title: "Stackbit Model Type",
+      description: "Stackbit model type",
+      hidden: false,
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: ["page", "data"],
+      },
+    },
+    {
       title: "Layout",
       name: "layout",
       type: "string",

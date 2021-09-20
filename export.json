@@ -358,10 +358,10 @@
     },
     {
       "type": "page",
-      "urlPath": "/syllabus",
-      "label": "Syllabus",
-      "layout": "syllabus",
-      "file": "syllabus/index.md",
+      "urlPath": "/quick_start_guide",
+      "label": "Quick start",
+      "layout": "quick_start_guide",
+      "file": "quick_start_guides/index.md",
       "hideContent": true,
       "singleInstance": true,
       "fields": [
@@ -382,7 +382,7 @@
           "type": "string",
           "name": "layout",
           "label": "Layout",
-          "const": "syllabus",
+          "const": "quick_start_guides",
           "hidden": true
         },
         {
@@ -409,7 +409,7 @@
           "hidden": true
         }
       ],
-      "name": "syllabus"
+      "name": "quick start guide"
     },
     {
       "type": "page",
