@@ -2,7 +2,7 @@
 
 export default {
   type: "document",
-  name: "quickStartGuide",
+  name: "quick_start_guide",
   title: "Quick start guide",
   fields: [
     {
@@ -19,11 +19,28 @@ export default {
       description: "The subtitle of the quick start guide",
     },
     {
+      title: "Slug",
+      name: "slug",
+      type: "slug",
+      description:
+        "The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: "title",
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: (input) =>
+          input
+            .toLowerCase()
+            .replace(/[^\w\s]/gi, "")
+            .replace(/\s+/g, "-")
+            .slice(0, 200),
+      },
+    },
+    {
       name: "author",
       title: "Author",
       type: "reference",
       to: [{ type: "person" }],
-
       description: "The author of this quick start guide",
     },
     {
@@ -53,14 +70,6 @@ export default {
       options: {
         list: ["quick_start_guide"],
       },
-    },
-    {
-      type: "string",
-      name: "stackbit_url_path",
-      title: "URL Path",
-      description:
-        'The URL path of this page relative to site root. For example, the site root page would be "/", and post page would be "posts/new-post/"',
-      validation: (Rule) => Rule.required(),
     },
     {
       type: "string",

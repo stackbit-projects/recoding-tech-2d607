@@ -18,6 +18,24 @@ export default {
         "How you want the name of the topic to appear on the front-end",
     },
     {
+      title: "Slug",
+      name: "slug",
+      type: "slug",
+      description:
+        "The slug for the topic. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: "title",
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: (input) =>
+          input
+            .toLowerCase()
+            .replace(/[^\w\s]/gi, "")
+            .replace(/\s+/g, "-")
+            .slice(0, 200),
+      },
+    },
+    {
       title: "Type of topic",
       type: "string",
       name: "type",

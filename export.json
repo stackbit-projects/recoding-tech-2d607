@@ -258,7 +258,8 @@
               "section_content",
               "section_form",
               "section_hero",
-              "section_articles"
+              "section_articles",
+              "section_quick_start_guides"
             ]
           }
         },

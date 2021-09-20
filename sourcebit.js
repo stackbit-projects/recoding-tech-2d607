@@ -5,47 +5,53 @@ const isDev = process.env.NODE_ENV === 'development'
 module.exports = {
   plugins: [
     {
-      module: require('sourcebit-source-sanity'),
+      module: require("sourcebit-source-sanity"),
       options: {
         accessToken: process.env.SANITY_ACCESS_TOKEN,
-        projectId: process.env.SANITY_PROJECT_ID || '3tzzh18d',
-        dataset: process.env.SANITY_DATASET || 'production',
+        projectId: process.env.SANITY_PROJECT_ID || "3tzzh18d",
+        dataset: process.env.SANITY_DATASET || "production",
         isPreview: isDev,
-        watch: isDev
-      }
+        watch: isDev,
+      },
     },
     {
-      module: require('sourcebit-target-next'),
+      module: require("sourcebit-target-next"),
       options: {
         liveUpdate: isDev,
         flattenAssetUrls: true,
         pages: [
           {
-            path: '/{stackbit_url_path}',
-            predicate: _.matchesProperty('__metadata.modelName', 'advanced')
+            path: "/{stackbit_url_path}",
+            predicate: _.matchesProperty("__metadata.modelName", "advanced"),
           },
           {
-            path: '/articles/{slug}',
-            predicate: _.matchesProperty('__metadata.modelName', 'article')
+            path: "/articles/{slug}",
+            predicate: _.matchesProperty("__metadata.modelName", "article"),
           },
           {
-            path: '/{stackbit_url_path}',
-            predicate: _.matchesProperty('__metadata.modelName', 'page')
+            path: "/{stackbit_url_path}",
+            predicate: _.matchesProperty("__metadata.modelName", "page"),
           },
           {
-            path: '/policies/{slug}',
-            predicate: _.matchesProperty('__metadata.modelName', 'policyAction')
+            path: "/policies/{slug}",
+            predicate: _.matchesProperty(
+              "__metadata.modelName",
+              "policyAction"
+            ),
           },
           {
-            path: '/{stackbit_url_path}',
-            predicate: _.matchesProperty('__metadata.modelName', 'post')
+            path: "/{stackbit_url_path}",
+            predicate: _.matchesProperty("__metadata.modelName", "post"),
           },
           {
-            path: '/{stackbit_url_path}',
-            predicate: _.matchesProperty('__metadata.modelName', 'quickStartGuide')
-          }
+            path: "/quick_start_guides/{slug}",
+            predicate: _.matchesProperty(
+              "__metadata.modelName",
+              "quick_start_guide"
+            ),
+          },
         ],
-        commonProps: items => {
+        commonProps: (items) => {
           return {
             pages: _.filter(items, (item) =>
               [
@@ -54,7 +60,7 @@ module.exports = {
                 "page",
                 "policyAction",
                 "post",
-                "quickStartGuide",
+                "quick_start_guide",
               ].includes(_.get(item, "__metadata.modelName"))
             ),
             data: {
@@ -64,8 +70,8 @@ module.exports = {
               ),
             },
           };
-        }
-      }
-    }
-  ]
-}
+        },
+      },
+    },
+  ],
+};
