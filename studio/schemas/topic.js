@@ -25,7 +25,7 @@ export default {
         "The slug for the topic. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
       validation: (Rule) => Rule.required(),
       options: {
-        source: "title",
+        source: "name",
         maxLength: 200, // will be ignored if slugify is set
         slugify: (input) =>
           input
