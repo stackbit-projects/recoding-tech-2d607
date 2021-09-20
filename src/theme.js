@@ -25,6 +25,9 @@ const theme = createTheme({
     fontFamily: serifFont,
     h1: {
       fontFamily: sansSerifFont
+    },
+    link: {
+      color: "#FF0033"
     }
   }
 });

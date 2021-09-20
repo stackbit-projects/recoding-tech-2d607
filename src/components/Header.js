@@ -11,7 +11,46 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  header: {}
+  header: {},
+  name: {
+    fontSize: "2.5em",
+    fontWeight: "bold"
+  },
+  nameCoding: {
+    position: "relative",
+    "&::after": {
+      backgroundColor: theme.typography.link.color,
+      borderRadius: "50%",
+      content: "''",
+      display: "block",
+      height: "7px",
+      left: "50%",
+      position: "absolute",
+      top: "2px",
+      transform: "translateX(-50%)",
+      width: "7px"
+    }
+  },
+  nameDot: {
+    color: theme.typography.link.color
+  },
+  nameRe: {
+    marginRight: "6px",
+    paddingRight: "3px",
+    position: "relative",
+    "&::after": {
+      backgroundColor: theme.typography.link.color,
+      borderRadius: "50%",
+      content: "''",
+      display: "block",
+      height: "7px",
+      position: "absolute",
+      right: "-5px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: "7px"
+    }
+  }
 }));
 
 function Header(props) {
@@ -22,7 +61,12 @@ function Header(props) {
       <Box m={4}>
         <Grid container spacing={1} justifyContent="space-between">
           <Grid item>
-            <Typography>recoding.tech</Typography>
+            <span className={`${classes.name} ${classes.nameRe}`}>Re</span>
+            <span className={classes.name}>cod</span>
+            <span className={`${classes.name} ${classes.nameCoding}`}>i</span>
+            <span className={classes.name}>ng</span>
+            <span className={`${classes.name} ${classes.nameDot}`}>.</span>
+            <span className={classes.name}>Tech</span>
           </Grid>
           <Grid item>
             <Typography>Navigation baby</Typography>
