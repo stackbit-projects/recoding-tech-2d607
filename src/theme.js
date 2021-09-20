@@ -25,7 +25,7 @@ const theme = createTheme({
     fontFamily: serifFont,
     h1: {
       fontFamily: sansSerifFont,
-      fontSize: "2em",
+      fontSize: "2.1em",
       fontWeight: "bold",
       textAlign: "center"
     },
