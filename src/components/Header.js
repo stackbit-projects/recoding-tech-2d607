@@ -10,17 +10,15 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  header: {
-    background: "#C2CECC",
-  },
+const useStyles = makeStyles(theme => ({
+  header: {}
 }));
 
 function Header(props) {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
-    <header id="masthead" className={classes.header}>
+    <header className={classes.header}>
       <Box m={4}>
         <Grid container spacing={1} justifyContent="space-between">
           <Grid item>
@@ -99,7 +97,7 @@ function Header(props) {
                               className={classNames("menu-item", {
                                 "current-menu-item": pageUrl === actionUrl,
                                 "menu-button":
-                                  _.get(action, "style", null) === "button",
+                                  _.get(action, "style", null) === "button"
                               })}
                             >
                               <Link
@@ -116,12 +114,12 @@ function Header(props) {
                                           : "") +
                                         (_.get(action, "no_follow", null)
                                           ? "nofollow"
-                                          : ""),
+                                          : "")
                                     }
                                   : null)}
                                 className={classNames({
                                   button:
-                                    _.get(action, "style", null) === "button",
+                                    _.get(action, "style", null) === "button"
                                 })}
                               >
                                 {_.get(action, "label", null)}
@@ -136,11 +134,7 @@ function Header(props) {
                     false && (
                       <div className="social-links">
                         {_.map(
-                          _.get(
-                            props,
-                            "data.config.header.social_links",
-                            null
-                          ),
+                          _.get(props, "data.config.header.social_links", null),
                           (action, action_idx) =>
                             action && (
                               <Link
@@ -158,12 +152,12 @@ function Header(props) {
                                           : "") +
                                         (_.get(action, "no_follow", null)
                                           ? "nofollow"
-                                          : ""),
+                                          : "")
                                     }
                                   : null)}
                                 className={classNames({
                                   "button button-icon":
-                                    _.get(action, "style", null) === "icon",
+                                    _.get(action, "style", null) === "icon"
                                 })}
                               >
                                 {_.get(action, "style", null) === "icon" &&
