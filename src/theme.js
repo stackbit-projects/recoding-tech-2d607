@@ -30,7 +30,8 @@ const theme = createTheme({
       textAlign: "center"
     },
     link: {
-      color: "#FF0033"
+      color: "#FF0033",
+      fontFamily: sansSerifFont
     },
     overline: {
       fontFamily: sansSerifFont,

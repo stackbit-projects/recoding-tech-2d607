@@ -83,19 +83,11 @@ export default class Body extends React.Component {
           )}
         </Head>
         <ThemeProvider theme={theme}>
-          <Box>
+          <Box style={{ backgroundColor: "#c2cecc" }}>
             <Container>
               <Header {...this.props} />
-              <Container maxWidth="md">
-                <div id="content" className="site-content">
-                  <div className="inner">
-                    <main id="main" className="site-main">
-                      {this.props.children}
-                    </main>
-                    <Footer {...this.props} />
-                  </div>
-                </div>
-              </Container>
+              <main id="main">{this.props.children}</main>
+              <Footer {...this.props} />
             </Container>
           </Box>
         </ThemeProvider>
