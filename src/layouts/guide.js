@@ -16,7 +16,7 @@ const serializer = {
 export default function Guide(props) {
     return (
       <Layout {...props}>
-        {/* <BlockContent blocks={props.page.content} serializers={serializer}/> */}
+        <BlockContent blocks={props.page.content} serializers={serializer}/>
         <article className="post post-full">
           <header className="post-header inner-sm">
             <h1 className="post-title underline">
