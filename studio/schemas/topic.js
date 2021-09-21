@@ -79,6 +79,12 @@ export default {
       ],
     },
     {
+      title: "Quick start guide",
+      name: "quickStartGuide",
+      type: "reference",
+      to: [{ type: "guide" }],
+    },
+    {
       title: "Related topics",
       name: "relatedTopics",
       type: "array",
