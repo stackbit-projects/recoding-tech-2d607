@@ -2,64 +2,71 @@ import React from "react";
 import _ from "lodash";
 import moment from "moment-strftime";
 
+import BlockContent from '@sanity/block-content-to-react'
+
 import { Layout } from "../components/index";
 import { htmlToReact, withPrefix, markdownify } from "../utils";
 
-export default class Guide extends React.Component {
-  render() {
-    console.log("hello it's the quick start guide component", this.props.page)
+const serializer = {
+  types: {
+    reference: (props) => <h1>hello</h1>,
+  },
+};
+
+export default function Guide(props) {
     return (
-      <Layout {...this.props}>
+      <Layout {...props}>
+        {/* <BlockContent blocks={props.page.content} serializers={serializer}/> */}
         <article className="post post-full">
           <header className="post-header inner-sm">
             <h1 className="post-title underline">
-              {_.get(this.props, "page.title", null)}
+              {_.get(props, "page.title", null)}
             </h1>
-            {_.get(this.props, "page.subtitle", null) && (
+            {_.get(props, "page.subtitle", null) && (
               <div className="post-subtitle">
-                {htmlToReact(_.get(this.props, "page.subtitle", null))}
+                {htmlToReact(_.get(props, "page.content", null))}
               </div>
             )}
-            {_.get(this.props, "page.author.name", null) && (
+            {_.get(props, "page.author.name", null) && (
               <div className="post-content inner-sm">
                 {" "}
-                By {htmlToReact(_.get(this.props, "page.author.name", null))}
+                By {htmlToReact(_.get(props, "page.author.name", null))}
               </div>
             )}
-            {_.get(this.props, "page.datePublished", null) && (
+            {_.get(props, "page.datePublished", null) && (
               <div className="post-content inner-sm">
                 {" "}
-                {moment(_.get(this.props, "page.datePublished", null)).strftime(
+                {moment(_.get(props, "page.datePublished", null)).strftime(
                   "%B %e, %Y"
                 )}
               </div>
             )}
-            {/* {_.get(this.props, "page.tags", null) &&
-              this.props.page.tags.map((tag) => (
+            {/* {_.get(props, "page.tags", null) &&
+              props.page.tags.map((tag) => (
                 <div className="post-tag">{tag.label}</div>
               ))} */}
           </header>
-          {_.get(this.props, "page.content_img_path", null) && (
+          {_.get(props, "page.content_img_path", null) && (
             <div className="post-image">
               <img
                 src={withPrefix(
-                  _.get(this.props, "page.content_img_path", null)
+                  _.get(props, "page.content_img_path", null)
                 )}
-                alt={_.get(this.props, "page.content_img_alt", null)}
+                alt={_.get(props, "page.content_img_alt", null)}
               />
             </div>
           )}
           {/* <div className="post-content inner-sm">
-            {markdownify(_.get(this.props, "page.content", null))}
+            {markdownify(_.get(props, "page.content", null))}
           </div> */}
           {/* <footer className="post-meta inner-sm">
             <time
               className="published"
-              dateTime={moment(_.get(this.props, "page.date", null)).strftime(
+              dateTime={moment(_.get(props, "page.date", null)).strftime(
                 "%Y-%m-%d %H:%M"
               )}
             >
-              {moment(_.get(this.props, "page.date", null)).strftime(
+              {moment(_.get(props, "page.date", null)).strftime(
                 "%A, %B %e, %Y"
               )}
             </time>
@@ -68,4 +75,4 @@ export default class Guide extends React.Component {
       </Layout>
     );
   }
-}
+

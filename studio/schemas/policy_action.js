@@ -68,7 +68,7 @@ export default {
       name: "summary",
       title: "Summary",
       type: "array",
-      of: [{type: "block"}],
+      of: [{ type: "block" }],
       description: "A summary of the policy.",
       validation: (Rule) => Rule.required(),
     },
@@ -91,7 +91,24 @@ export default {
       name: "relatedDocs",
       title: "Related primary documents",
       type: "array",
-      of: [{ type: "file" }],
+      of: [
+        {
+          type: "object",
+          title: "Primary document",
+          fields: [
+            {
+              title: "Document title",
+              type: "string",
+              name: "title",
+            },
+            {
+              title: "Document",
+              type: "file",
+              name: "file",
+            },
+          ],
+        },
+      ],
     },
     {
       name: "relatedTopics",

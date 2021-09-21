@@ -21,7 +21,7 @@ export default {
       name: "slug",
       type: "slug",
       description:
-        "The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
+        "The slug for the quick start guide. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
       validation: (Rule) => Rule.required(),
       options: {
         source: "title",

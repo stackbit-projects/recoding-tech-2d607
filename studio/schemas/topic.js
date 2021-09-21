@@ -44,6 +44,7 @@ export default {
           { title: "Country", value: "country" },
           { title: "Issue", value: "issue" },
           { title: "Company", value: "company" },
+          { title: "Policy", value: "policy" },
         ],
       },
     },
@@ -104,7 +105,11 @@ export default {
       name: "layout",
       type: "string",
       options: {
-        list: ["issue", "country", "company"],
+        list: [
+          { title: "Country", value: "country" },
+          { title: "Issue/Policy", value: "issue" },
+          { title: "Company", value: "company" },
+        ],
       },
     },
   ],
