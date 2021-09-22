@@ -43,6 +43,9 @@ export default {
           type: "section_hero"
         },
         {
+          type: "section_topics"
+        },
+        {
           type: "section_articles"
         },
         {
