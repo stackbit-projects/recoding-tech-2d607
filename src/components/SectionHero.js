@@ -38,8 +38,6 @@ function SectionHero(props) {
   const classes = useStyles();
   let { section } = props;
 
-  console.log(section.actions);
-
   return (
     <section
       id={_.get(section, "section_id", null)}

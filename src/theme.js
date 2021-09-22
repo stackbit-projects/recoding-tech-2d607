@@ -43,6 +43,9 @@ const theme = createTheme({
     },
     company: {
       main: "#CCC"
+    },
+    footer: {
+      main: "#EFE9DA"
     }
   },
   typography: {
