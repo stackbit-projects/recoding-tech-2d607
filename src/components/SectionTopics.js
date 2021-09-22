@@ -33,7 +33,7 @@ function SectionTopics(props) {
     <section>
       <Box my={4}>
         <Container>
-          <Typography component="h2" variant="h2" gutterBottom>
+          <Typography component="h2" variant="h3" gutterBottom>
             Featured Topics
           </Typography>
           <Stack direction="row" spacing={3}>

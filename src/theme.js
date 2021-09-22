@@ -52,14 +52,34 @@ const theme = createTheme({
     fontFamily: serifFont,
     h1: {
       fontFamily: sansSerifFont,
-      fontSize: "2.1em",
+      fontSize: "2.4em",
       fontWeight: "bold",
       textAlign: "center"
     },
     h2: {
       fontFamily: sansSerifFont,
+      fontSize: "1.9em",
+      fontWeight: "bold",
+      marginBottom: 40
+    },
+    h3: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.4em",
+      fontWeight: "bold",
+      marginBottom: 20,
+      textTransform: "uppercase"
+    },
+    h4: {
+      fontFamily: sansSerifFont,
       fontSize: "1.1em",
       fontWeight: "bold",
+      marginBottom: 20,
+      textTransform: "uppercase"
+    },
+    h5: {
+      fontFamily: sansSerifFont,
+      fontSize: "0.8em",
+      marginBottom: 20,
       textTransform: "uppercase"
     },
     link: {

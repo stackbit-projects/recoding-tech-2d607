@@ -24,6 +24,7 @@
     "@sanity/client": "^2.13.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
+    "history": "^5.0.1",
     "limiter": "2.0.1",
     "lodash": "^4.17.21",
     "marked": "^0.8.0",
