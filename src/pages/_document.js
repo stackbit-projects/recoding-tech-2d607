@@ -2,7 +2,7 @@ import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import ScriptTag from "react-script-tag";
 import { withPrefix } from "../utils";
-import { ServerStyleSheets } from "@material-ui/styles";
+import { ServerStyleSheets } from "@mui/styles";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

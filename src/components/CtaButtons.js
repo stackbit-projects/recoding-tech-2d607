@@ -2,8 +2,8 @@ import React from "react";
 import _ from "lodash";
 
 // Material UI imports
-import { makeStyles } from "@material-ui/core/styles";
-import Link from "@material-ui/core/Link";
+import { makeStyles } from "@mui/styles";
+import Link from "@mui/material/Link";
 
 // utils
 import { withPrefix } from "../utils";

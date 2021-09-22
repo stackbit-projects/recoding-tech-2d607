@@ -9,9 +9,8 @@ import Footer from "./Footer";
 import theme from "../theme.js";
 
 // Material UI imports
-import { ThemeProvider } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
+import { ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 
 export default class Body extends React.Component {
   render() {
@@ -83,12 +82,10 @@ export default class Body extends React.Component {
           )}
         </Head>
         <ThemeProvider theme={theme}>
-          <Box style={{ backgroundColor: "#c2cecc" }}>
-            <Container>
-              <Header {...this.props} />
-              <main id="main">{this.props.children}</main>
-              <Footer {...this.props} />
-            </Container>
+          <Box>
+            <Header {...this.props} />
+            <main id="main">{this.props.children}</main>
+            <Footer {...this.props} />
           </Box>
         </ThemeProvider>
       </>

@@ -2,10 +2,13 @@ import React from "react";
 import _ from "lodash";
 
 // material ui imports
-import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@mui/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(theme => ({
   em: {
@@ -67,10 +70,20 @@ const useStyles = makeStyles(theme => ({
 
 function Header(props) {
   const classes = useStyles();
+  const { pages } = props;
+
+  const [issueEl, setIssueEl] = React.useState(null);
+  const openIssue = Boolean(issueEl);
+  const handleClickIssue = event => {
+    setIssueEl(event.currentTarget);
+  };
+  const handleCloseIssue = () => {
+    setIssueEl(null);
+  };
 
   return (
-    <header className={classes.header}>
-      <Box m={4}>
+    <header className={classes.header} style={{ backgroundColor: "#c2cecc" }}>
+      <Box p={4}>
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={12} sm={4}>
             <Typography>
@@ -93,7 +106,9 @@ function Header(props) {
             justifyContent="flex-end"
           >
             <Grid item xs={12} sm={3}>
-              <Typography className={classes.em}>Explore by...</Typography>
+              <Typography id="menu-toggle" className={classes.em}>
+                Explore by...
+              </Typography>
             </Grid>
             <Grid
               container
@@ -104,7 +119,15 @@ function Header(props) {
               justifyContent="space-between"
             >
               <Grid item>
-                <Typography variant="overline">Issue</Typography>
+                <Button
+                  id="basic-button"
+                  aria-controls="basic-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openIssue ? "true" : undefined}
+                  onClick={handleClickIssue}
+                >
+                  Issue
+                </Button>
               </Grid>
               <Grid item>
                 <Typography variant="overline">Policy</Typography>
@@ -127,19 +150,6 @@ function Header(props) {
           </Grid>
         </Grid>
       </Box>
-      <div className="site-header-wrap">
-        <div className="site-header-inside">
-          <div className="site-branding">
-            {(_.get(props, "data.config.header.has_nav", null) ||
-              _.get(props, "data.config.header.has_social", null)) && (
-              <button id="menu-toggle" className="menu-toggle">
-                <span className="screen-reader-text">Menu</span>
-                <span className="icon-menu" aria-hidden="true" />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
     </header>
   );
 }

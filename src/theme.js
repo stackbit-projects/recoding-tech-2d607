@@ -1,9 +1,20 @@
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme } from "@mui/material/styles";
 
 const serifFont = "'Libre Baskerville', serif";
 const sansSerifFont = "'Lexend', sans-serif";
 
 const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: sansSerifFont,
+          fontWeight: "bold",
+          textAlign: "center"
+        }
+      }
+    }
+  },
   palette: {
     primary: {
       main: "#C2CECC"

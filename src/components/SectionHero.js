@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 // Material UI imports
-import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@mui/styles";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 // components imports
 import CtaButtons from "./CtaButtons";
@@ -45,7 +45,7 @@ function SectionHero(props) {
       id={_.get(section, "section_id", null)}
       className="block block-hero"
     >
-      <Box marginY={6} style={{ backgroundColor: "#c2cecc" }}>
+      <Box paddingY={6} style={{ backgroundColor: "#c2cecc" }}>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg

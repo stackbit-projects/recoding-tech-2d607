@@ -1,9 +1,9 @@
-import React from 'react'
-import sanityClient from '@sanity/client'
+import React from "react";
+import sanityClient from "@sanity/client";
 
-import Typography from '@material-ui/core/Typography'
+import Typography from "@mui/material/Typography";
 
-import { htmlToReact, urlify } from '../utils'
+import { htmlToReact, urlify } from "../utils";
 
 /* eslint-disable no-undef */
 const client = sanityClient({
@@ -12,15 +12,15 @@ const client = sanityClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   token: process.env.NEXT_PUBLIC_SANITY_ACCESS_TOKEN,
   useCdn: false // We can't use the CDN for writing
-})
+});
 /* eslint-enable no-undef */
 
 export default class SectionContent extends React.Component {
   constructor() {
-    super()
-    this.state = { citations: [] }
+    super();
+    this.state = { citations: [] };
     this.fetchAllCitations = () => {
-      const query = '*[_type == "citation"] {chicagoCitation}'
+      const query = '*[_type == "citation"] {chicagoCitation}';
 
       client
         .fetch(query)
@@ -28,12 +28,12 @@ export default class SectionContent extends React.Component {
           citations.forEach(citation =>
             this.setState({ citations: [...citations, citation] })
           )
-        )
-    }
+        );
+    };
   }
 
   componentDidMount() {
-    this.fetchAllCitations()
+    this.fetchAllCitations();
   }
 
   render() {
@@ -51,6 +51,6 @@ export default class SectionContent extends React.Component {
           </div>
         </div>
       </section>
-    )
+    );
   }
 }
