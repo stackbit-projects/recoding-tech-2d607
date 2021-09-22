@@ -8,6 +8,19 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          color: "#000",
+          fontFamily: sansSerifFont,
+          fontSize: "1.2em",
+          fontWeight: "bold",
+          textAlign: "center",
+          textTransform: "none"
+        }
+      }
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: "#000",
           fontFamily: sansSerifFont,
           fontWeight: "bold",
           textAlign: "center"

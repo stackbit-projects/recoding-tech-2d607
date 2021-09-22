@@ -1,5 +1,5 @@
+// base imports
 import React from "react";
-import _ from "lodash";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -10,6 +10,13 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 
+// material ui icons
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+// component imports
+import Logo from "./Logo";
+
 const useStyles = makeStyles(theme => ({
   em: {
     fontStyle: "italic"
@@ -18,47 +25,6 @@ const useStyles = makeStyles(theme => ({
   mobileNav: {
     [theme.breakpoints.up("sm")]: {
       display: "none"
-    }
-  },
-  name: {
-    fontSize: "2em",
-    fontWeight: "bold"
-  },
-  nameCoding: {
-    position: "relative",
-    "&::after": {
-      backgroundColor: theme.typography.link.color,
-      borderRadius: "50%",
-      content: "''",
-      display: "block",
-      height: "7px",
-      left: "50%",
-      position: "absolute",
-      top: "3px",
-      transform: "translateX(-50%)",
-      width: "7px"
-    }
-  },
-  nameDot: {
-    color: theme.typography.link.color,
-    fontSize: "2.5em",
-    marginLeft: "3px"
-  },
-  nameRe: {
-    marginRight: "6px",
-    paddingRight: "4px",
-    position: "relative",
-    "&::after": {
-      backgroundColor: theme.typography.link.color,
-      borderRadius: "50%",
-      content: "''",
-      display: "block",
-      height: "7px",
-      position: "absolute",
-      right: "-5px",
-      top: "55%",
-      transform: "translateY(-50%)",
-      width: "7px"
     }
   },
   nav: {
@@ -71,6 +37,10 @@ const useStyles = makeStyles(theme => ({
 function Header(props) {
   const classes = useStyles();
   const { pages } = props;
+  const issues = pages.filter(page => page.layout == "issue");
+  const policies = pages.filter(page => page.layout == "policy");
+  const countries = pages.filter(page => page.layout == "country");
+  const companies = pages.filter(page => page.layout == "company");
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssue = Boolean(issueEl);
@@ -81,19 +51,39 @@ function Header(props) {
     setIssueEl(null);
   };
 
+  const [policyEl, setPolicyEl] = React.useState(null);
+  const openPolicy = Boolean(policyEl);
+  const handleClickPolicy = event => {
+    setPolicyEl(event.currentTarget);
+  };
+  const handleClosePolicy = () => {
+    setPolicyEl(null);
+  };
+
+  const [countryEl, setCountryEl] = React.useState(null);
+  const openCountry = Boolean(countryEl);
+  const handleClickCountry = event => {
+    setCountryEl(event.currentTarget);
+  };
+  const handleCloseCountry = () => {
+    setCountryEl(null);
+  };
+
+  const [companyEl, setCompanyEl] = React.useState(null);
+  const openCompany = Boolean(companyEl);
+  const handleClickCompany = event => {
+    setCompanyEl(event.currentTarget);
+  };
+  const handleCloseCompany = () => {
+    setCompanyEl(null);
+  };
+
   return (
     <header className={classes.header} style={{ backgroundColor: "#c2cecc" }}>
       <Box p={4}>
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={12} sm={4}>
-            <Typography>
-              <span className={`${classes.name} ${classes.nameRe}`}>Re</span>
-              <span className={classes.name}>cod</span>
-              <span className={`${classes.name} ${classes.nameCoding}`}>i</span>
-              <span className={classes.name}>ng</span>
-              <span className={`${classes.name} ${classes.nameDot}`}>.</span>
-              <span className={classes.name}>Tech</span>
-            </Typography>
+            <Logo />
           </Grid>
           <Grid
             container
@@ -120,23 +110,135 @@ function Header(props) {
             >
               <Grid item>
                 <Button
-                  id="basic-button"
-                  aria-controls="basic-menu"
+                  id="policy-button"
+                  aria-controls="policy-menu"
                   aria-haspopup="true"
                   aria-expanded={openIssue ? "true" : undefined}
                   onClick={handleClickIssue}
                 >
                   Issue
+                  {openIssue ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
                 </Button>
+                <Menu
+                  id="policy-menu"
+                  anchorEl={issueEl}
+                  open={openIssue}
+                  onClose={handleCloseIssue}
+                  MenuListProps={{
+                    "aria-labelledby": "policy-button"
+                  }}
+                >
+                  {issues.length
+                    ? issues.map(issue => (
+                        <MenuItem key={issue.id} onClick={handleCloseIssue}>
+                          {issue.title}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
               </Grid>
               <Grid item>
-                <Typography variant="overline">Policy</Typography>
+                <Button
+                  id="issue-button"
+                  aria-controls="issue-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openPolicy ? "true" : undefined}
+                  onClick={handleClickPolicy}
+                >
+                  Policy
+                  {openPolicy ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="issue-menu"
+                  anchorEl={policyEl}
+                  open={openPolicy}
+                  onClose={handleClosePolicy}
+                  MenuListProps={{
+                    "aria-labelledby": "policy-button"
+                  }}
+                >
+                  {policies.length
+                    ? policies.map(policy => (
+                        <MenuItem key={policy.id} onClick={handleClosePolicy}>
+                          {policy.title}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
               </Grid>
               <Grid item>
-                <Typography variant="overline">Country</Typography>
+                <Button
+                  id="country-button"
+                  aria-controls="country-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openCountry ? "true" : undefined}
+                  onClick={handleClickCountry}
+                >
+                  Country
+                  {openCountry ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="country-menu"
+                  anchorEl={countryEl}
+                  open={openCountry}
+                  onClose={handleCloseCountry}
+                  MenuListProps={{
+                    "aria-labelledby": "country-button"
+                  }}
+                >
+                  {countries.length
+                    ? countries.map(country => (
+                        <MenuItem key={country.id} onClick={handleCloseCountry}>
+                          {country.title}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
               </Grid>
               <Grid item>
-                <Typography variant="overline">Company</Typography>
+                <Button
+                  id="company-button"
+                  aria-controls="company-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openCompany ? "true" : undefined}
+                  onClick={handleClickCompany}
+                >
+                  Company
+                  {openCompany ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="company-menu"
+                  anchorEl={companyEl}
+                  open={openCompany}
+                  onClose={handleCloseCompany}
+                  MenuListProps={{
+                    "aria-labelledby": "company-button"
+                  }}
+                >
+                  {companies.length
+                    ? companies.map(company => (
+                        <MenuItem key={company.id} onClick={handleCloseCompany}>
+                          {company.title}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
               </Grid>
             </Grid>
           </Grid>
