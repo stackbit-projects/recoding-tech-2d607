@@ -66,9 +66,14 @@ function SectionArticle(props) {
     }
   }, [article]);
 
+  const articleClick = url => {
+    history.push(url);
+  };
+
   const trackerClick = () => {
     history.push("/tracker");
   };
+
   return (
     <section>
       <Container>
@@ -98,7 +103,7 @@ function SectionArticle(props) {
               variant="outlined"
               className={`${classes.box} ${classes.featured}`}
             >
-              <CardActionArea onClick={trackerClick}>
+              <CardActionArea onClick={() => articleClick(article.slug)}>
                 <CardContent>
                   <Typography component="div" variant="h4">
                     Featured Article
