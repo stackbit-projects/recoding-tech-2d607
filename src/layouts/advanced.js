@@ -5,7 +5,6 @@ import components, { Layout } from "../components/index";
 
 export default class Advanced extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <Layout {...this.props}>
         {!_.get(this.props, "page.hide_title", null) && (

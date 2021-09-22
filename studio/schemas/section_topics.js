@@ -8,6 +8,28 @@ export default {
       title: "Featured Topics",
       type: "array",
       of: [{ type: "reference", to: { type: "topic" } }]
+    },
+    {
+      type: "string",
+      name: "type",
+      title: "Object Type",
+      description: "The type of the object",
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ["section_topics"]
+      }
+    },
+    {
+      type: "string",
+      name: "stackbit_model_type",
+      title: "Stackbit Model Type",
+      description: "Stackbit model type",
+      hidden: false,
+      validation: Rule => Rule.required(),
+      options: {
+        list: ["object"]
+      }
     }
   ]
 };

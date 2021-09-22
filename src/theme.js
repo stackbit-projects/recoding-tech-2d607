@@ -56,6 +56,12 @@ const theme = createTheme({
       fontWeight: "bold",
       textAlign: "center"
     },
+    h2: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.1em",
+      fontWeight: "bold",
+      textTransform: "uppercase"
+    },
     link: {
       color: "#FF0033",
       fontFamily: sansSerifFont
