@@ -1,5 +1,6 @@
 // base imports
 import React from "react";
+import PropTypes from "prop-types";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";

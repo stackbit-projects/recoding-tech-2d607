@@ -1,7 +1,6 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import BlockContent from "@sanity/block-content-to-react";
 import { createBrowserHistory } from "history";
 
 // material ui imports
@@ -12,12 +11,6 @@ import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-
-const serializers = {
-  types: {
-    reference: props => <span>test...</span>
-  }
-};
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -128,11 +121,6 @@ function SectionArticle(props) {
                   >
                     {article.date}
                   </Typography>
-                  <BlockContent
-                    blocks={article.body}
-                    serializers={serializers}
-                  />
-                  ,
                 </CardContent>
               </CardActionArea>
             </Card>

@@ -15,7 +15,6 @@ export default function htmlToReact(html) {
   }
   return ReactHtmlParser(html, {
     transform: (node, index) => {
-      console.log(node.type, "helloo!!!");
       if (node.type === "script") {
         if (!_.isEmpty(node.children)) {
           return (
@@ -37,8 +36,6 @@ export default function htmlToReact(html) {
             </Link>
           );
         }
-      } else if (node.type === "reference") {
-        console.log("reference found....");
       }
     }
   });

@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import moment from "moment-strftime";
+import BlockContent from "@sanity/block-content-to-react";
 
 import { Layout } from "../components/index";
 import { htmlToReact, Link, markdownify } from "../utils";
@@ -12,6 +13,13 @@ export default class PolicyAction extends React.Component {
     let relatedDocs = _.get(this.props.page, "relatedDocs", null);
     let relatedTopics = _.get(this.props.page, "relatedTopics", null);
     let relatedCitations = _.get(this.props.page, "relatedCitations", null);
+
+    const serializers = {
+      types: {
+        reference: props => <div>{props.node.reference.chicagoCitation}</div>
+      }
+    };
+
     return (
       <Layout {...this.props}>
         <header className="post-header inner-sm">
@@ -58,7 +66,10 @@ export default class PolicyAction extends React.Component {
         </header>
         <div className="post-content inner-sm">
           <h2>Summary</h2>
-          {markdownify(_.get(this.props, "page.summary", null))}
+          <BlockContent
+            blocks={this.props.page.content}
+            serializers={serializers}
+          />
         </div>
         <footer className="post-meta inner-sm">
           <Grid container spacing={4}>
