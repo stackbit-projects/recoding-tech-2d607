@@ -288,11 +288,11 @@ models:
         name: seo
         models:
           - stackbit_page_meta
-  syllabus:
+  guide:
     type: page
-    urlPath: '/syllabus/{slug}'
-    label: Syllabus
-    layout: syllabus
+    urlPath: '/guides/{slug}'
+    label: Guide
+    layout: guide
     fields:
       - type: string
         name: title

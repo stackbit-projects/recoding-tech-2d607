@@ -5,7 +5,7 @@ import moment from 'moment-strftime'
 import { getPolicies, Link, withPrefix } from '../utils'
 import CtaButtons from './CtaButtons'
 
-export default class SectionPolicies extends React.Component {
+export default class SectionPolicyActions extends React.Component {
   render() {
     let section = _.get(this.props, 'section', null)
     let display_policies = _.orderBy(

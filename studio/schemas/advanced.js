@@ -49,7 +49,7 @@ export default {
           type: "section_articles"
         },
         {
-          type: "section_policies"
+          type: "section_policy_actions"
         }
       ]
     },

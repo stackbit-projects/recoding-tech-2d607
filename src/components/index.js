@@ -9,8 +9,8 @@ import SectionContent from "./SectionContent";
 import SectionForm from "./SectionForm";
 import SectionHero from "./SectionHero";
 import SectionArticles from "./SectionArticles";
-import SectionPolicies from "./SectionPolicies";
-import SectionSyllabi from "./SectionSyllabi";
+import SectionPolicyActions from "./SectionPolicyActions";
+import SectionGuides from "./SectionGuides";
 import SectionTopics from "./SectionTopics";
 
 export {
@@ -25,8 +25,8 @@ export {
   SectionForm,
   SectionHero,
   SectionArticles,
-  SectionPolicies,
-  SectionSyllabi,
+  SectionPolicyActions,
+  SectionGuides,
   SectionTopics
 };
 
@@ -42,7 +42,7 @@ export default {
   SectionForm,
   SectionHero,
   SectionArticles,
-  SectionPolicies,
-  SectionSyllabi,
+  SectionPolicyActions,
+  SectionGuides,
   SectionTopics
 };

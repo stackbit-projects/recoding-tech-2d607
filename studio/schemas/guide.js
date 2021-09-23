@@ -1,54 +1,71 @@
-// need to figure out the subheading field type
-
 export default {
   type: "document",
-  name: "syllabus",
-  title: "Syllabus",
+  name: "guide",
+  title: "Quick start guide",
   fields: [
     {
       name: "title",
       title: "Title",
       type: "string",
-      description: "The title of the syllabus",
+      description: "The title of the quick start guide",
       validation: (Rule) => Rule.required(),
     },
     {
       name: "subtitle",
       title: "Subtitle",
       type: "string",
-      description: "The subtitle of the syllabus",
+      description: "The subtitle of the quick start guide",
+    },
+    {
+      title: "Slug",
+      name: "slug",
+      type: "slug",
+      description:
+        "The slug for the quick start guide. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: "title",
+        maxLength: 200, // will be ignored if slugify is set
+        slugify: (input) =>
+          input
+            .toLowerCase()
+            .replace(/[^\w\s]/gi, "")
+            .replace(/\s+/g, "-")
+            .slice(0, 200),
+      },
     },
     {
       name: "author",
       title: "Author",
       type: "reference",
       to: [{ type: "person" }],
-
-      description: "The author of this syllabus",
+      description: "The author of this quick start guide",
     },
     {
-      name: "subheadings",
-      title: "Subheading questions",
+      name: "content",
+      title: "Quick start guide content",
       type: "array",
-      of: [{ type: "syllabusQuestion" }],
-      description:
-        "A subheading for the syllabus, usually in the form of a question, e.g. 'Why is disinformation important?'",
+      of: [
+        { type: "block" },
+        {
+          type: "reference",
+          to: [
+            {
+              type: "citation",
+            },
+          ],
+        },
+      ],
     },
     {
       name: "datePublished",
       title: "Date published",
       type: "date",
-      description: "Date this syllabus was published",
+      description: "Date this quick start guide was published",
       initialValue: () => new Date().toISOString(),
       options: {
         dateFormat: "MMMM DD YYYY",
       },
-    },
-    {
-      type: "stackbit_page_meta",
-      name: "seo",
-      title: "Seo",
-      validation: null,
     },
     {
       type: "string",
@@ -57,16 +74,8 @@ export default {
       hidden: false,
       validation: (Rule) => Rule.required(),
       options: {
-        list: ["syllabus"],
+        list: ["guide"],
       },
-    },
-    {
-      type: "string",
-      name: "stackbit_url_path",
-      title: "URL Path",
-      description:
-        'The URL path of this page relative to site root. For example, the site root page would be "/", and post page would be "posts/new-post/"',
-      validation: (Rule) => Rule.required(),
     },
     {
       type: "string",

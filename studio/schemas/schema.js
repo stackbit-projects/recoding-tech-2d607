@@ -14,17 +14,16 @@ import citation from "./citation.js";
 import article from "./article.js";
 import page from "./page.js";
 import person from "./person.js";
-import policy from "./policy.js";
+import guide from "./guide.js";
+import policy_action from "./policy_action.js";
 import section_hero from "./section_hero.js";
-import section_articles from "./section_articles.js";
 import section_citations from "./section_citations.js";
+import section_articles from "./section_articles.js";
 import section_content from "./section_content.js";
 import section_form from "./section_form.js";
-import section_policies from "./section_policies.js";
-import section_syllabi from "./section_syllabi.js";
+import section_policy_actions from "./section_policy_actions";
+import section_guides from "./section_guides";
 import section_topics from "./section_topics.js";
-import syllabusQuestion from "./syllabus_question";
-import syllabus from "./syllabus.js";
 import topic from "./topic.js";
 import action from "./action.js";
 import form_field from "./form_field.js";
@@ -45,19 +44,18 @@ export default createSchema({
     article,
     creators,
     citation,
+    guide,
     page,
     person,
-    policy,
+    policy_action,
     section_hero,
     section_articles,
     section_citations,
     section_content,
     section_form,
-    section_syllabi,
+    section_guides,
     section_topics,
-    section_policies,
-    syllabus,
-    syllabusQuestion,
+    section_policy_actions,
     topic,
     action,
     form_field,
