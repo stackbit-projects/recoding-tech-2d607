@@ -11,18 +11,29 @@ export default {
       validation: Rule => Rule.required()
     },
     {
-      type: "boolean",
-      name: "hide_title",
-      title: "Hide page title",
-      initialValue: true,
-      validation: null
+      type: "string",
+      name: "heroContent",
+      title: "Hero Content",
+      description: "The text in the page hero."
     },
     {
-      name: "featuredTopics",
-      title: "Featured Topics",
-      type: "array",
-      of: [{ type: "reference", to: { type: "topic" } }]
+      type: "string",
+      name: "heroLinkText",
+      title: "Hero Link Text",
+      description: "The text displayed on the hero link."
     },
+    {
+      type: "string",
+      name: "heroLinkUrl",
+      title: "Hero Link URL",
+      description: "The URL for the hero link."
+    },
+    // {
+    //   name: "featuredTopics",
+    //   title: "Featured Topics",
+    //   type: "array",
+    //   of: [{ type: "reference", to: { type: "topic" } }]
+    // },
     {
       type: "array",
       name: "sections",
@@ -38,9 +49,6 @@ export default {
         },
         {
           type: "section_form"
-        },
-        {
-          type: "section_hero"
         },
         {
           type: "section_topics"

@@ -1,19 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-// components imports
-import CtaButtons from "./CtaButtons";
+// utils
+import { withPrefix } from "../utils";
 
 const useStyles = makeStyles(theme => ({
   hero: {
     position: "relative"
+  },
+  link: {
+    color: theme.typography.link.color,
+    fontFamily: theme.typography.link.fontFamily,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    position: "relative",
+    zIndex: 1
   },
   links: {
     marginTop: 80,
@@ -36,13 +44,10 @@ const useStyles = makeStyles(theme => ({
 
 function SectionHero(props) {
   const classes = useStyles();
-  let { section } = props;
+  let { page } = props;
 
   return (
-    <section
-      id={_.get(section, "section_id", null)}
-      className="block block-hero"
-    >
+    <section id={page.__metadata.id} className="block block-hero">
       <Box paddingY={6} style={{ backgroundColor: "#c2cecc" }}>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
@@ -65,17 +70,20 @@ function SectionHero(props) {
               />
             </svg>
           </Box>
-          {_.get(section, "title", null) && (
+          {page.heroContent && (
             <Typography variant="h1" className={classes.title}>
-              {_.get(section, "title", null)}
+              {page.heroContent}
             </Typography>
           )}
-          {_.get(section, "actions", null) && (
+          {page.heroLinkUrl && (
             <div className={classes.links}>
-              <CtaButtons
-                {...props}
-                actions={_.get(section, "actions", null)}
-              />
+              <Link
+                variant="link"
+                href={withPrefix(page.heroLinkUrl)}
+                className={classes.link}
+              >
+                {page.heroLinkText}
+              </Link>
             </div>
           )}
         </Container>
@@ -85,7 +93,7 @@ function SectionHero(props) {
 }
 
 SectionHero.propTypes = {
-  section: PropTypes.object
+  page: PropTypes.object
 };
 
 export default SectionHero;

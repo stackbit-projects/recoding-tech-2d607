@@ -1,56 +1,100 @@
+// base imports
 import React from "react";
-import sanityClient from "@sanity/client";
+import PropTypes from "prop-types";
 
+// Material UI imports
+import { makeStyles } from "@mui/styles";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-import { htmlToReact, urlify } from "../utils";
-
-/* eslint-disable no-undef */
-const client = sanityClient({
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  token: process.env.NEXT_PUBLIC_SANITY_ACCESS_TOKEN,
-  useCdn: false // We can't use the CDN for writing
-});
-/* eslint-enable no-undef */
-
-export default class SectionContent extends React.Component {
-  constructor() {
-    super();
-    this.state = { citations: [] };
-    this.fetchAllCitations = () => {
-      const query = '*[_type == "citation"] {chicagoCitation}';
-
-      client
-        .fetch(query)
-        .then(citations =>
-          citations.forEach(citation =>
-            this.setState({ citations: [...citations, citation] })
-          )
-        );
-    };
+const useStyles = makeStyles(theme => ({
+  citation: {
+    borderBottom: "1px solid #000",
+    marginBottom: 20,
+    paddingBottom: 20
+  },
+  citationTitle: {
+    color: "#000 !important",
+    fontSize: "1.2em",
+    fontWeight: "bold",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline"
+    }
+  },
+  citationPublication: {
+    marginTop: 10
+  },
+  grid: {},
+  gridTitle: {
+    marginRight: 20,
+    marginTop: 32
+  },
+  link: {
+    color: theme.typography.link.color
   }
+}));
 
-  componentDidMount() {
-    this.fetchAllCitations();
-  }
+const SectionCitations = props => {
+  const classes = useStyles();
+  const { citations } = props;
 
-  render() {
-    // console.log(citations)
-    return (
-      <section className="block block-posts">
-        <div className="post-feed">
-          <div className="post-feed-inside">
-            {this.state.citations.length &&
-              this.state.citations.map(citation => (
-                <Typography key={citation._id} variant="body1" gutterBottom>
-                  {htmlToReact(urlify(citation.chicagoCitation))}
+  return (
+    <Grid container className={classes.grid}>
+      <Grid
+        container
+        item
+        spacing={2}
+        justifyContent="space-between"
+        className={classes.gridTitle}
+      >
+        <Grid item xs={8}>
+          <Typography component="h2" variant="h4">
+            Latest Headlines &amp; Highlights
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography component="div" variant="h4">
+            <Link href="/citations" className={classes.link}>
+              View all
+            </Link>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container item>
+        {citations && citations.length
+          ? citations.slice(0, 4).map(citation => (
+              <Grid
+                item
+                key={citation.__metadata.id}
+                className={classes.citation}
+              >
+                <Typography component="div" variant="body1">
+                  <Link className={classes.citationTitle} href={citation.url}>
+                    {citation.title}
+                  </Link>
                 </Typography>
-              ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-}
+                <Typography
+                  component="div"
+                  variant="h5"
+                  className={classes.citationPublication}
+                >
+                  {citation.publicationTitle
+                    ? citation.publicationTitle
+                    : citation.websiteTitle}
+                </Typography>
+                <Typography>{citation.date}</Typography>
+              </Grid>
+            ))
+          : null}
+      </Grid>
+    </Grid>
+  );
+};
+
+SectionCitations.propTypes = {
+  citations: PropTypes.array
+};
+
+export default SectionCitations;

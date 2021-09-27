@@ -98,9 +98,6 @@ function Footer(props) {
                                   : "")
                             }
                           : null)}
-                        className={classNames({
-                          button: _.get(action, "style", null) === "button"
-                        })}
                       >
                         {_.get(action, "label", null)}
                       </Link>

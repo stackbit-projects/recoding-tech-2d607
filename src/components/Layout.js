@@ -10,7 +10,6 @@ import theme from "../theme.js";
 
 // Material UI imports
 import { ThemeProvider } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 
 export default class Body extends React.Component {
   render() {
@@ -82,11 +81,9 @@ export default class Body extends React.Component {
           )}
         </Head>
         <ThemeProvider theme={theme}>
-          <Box>
-            <Header {...this.props} />
-            <main id="main">{this.props.children}</main>
-            <Footer {...this.props} />
-          </Box>
+          <Header {...this.props} />
+          <main id="main">{this.props.children}</main>
+          <Footer {...this.props} />
         </ThemeProvider>
       </>
     );

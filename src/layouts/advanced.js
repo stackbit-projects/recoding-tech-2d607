@@ -1,37 +1,60 @@
+// base imports
 import React from "react";
 import _ from "lodash";
+import PropTypes from "prop-types";
 
+// Material UI imports
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+
+// components
 import components, { Layout } from "../components/index";
+import SectionHero from "../components/SectionHero";
+import SectionCitations from "../components/SectionCitations";
 
-export default class Advanced extends React.Component {
-  render() {
-    return (
-      <Layout {...this.props}>
-        {!_.get(this.props, "page.hide_title", null) && (
-          <header className="post-header inner-sm">
-            <h1 className="post-title underline">
-              {_.get(this.props, "page.title", null)}
-            </h1>
-          </header>
-        )}
-        {_.map(
-          _.get(this.props, "page.sections", null),
-          (section, section_idx) => {
-            let component = _.upperFirst(
-              _.camelCase(_.get(section, "type", null))
-            );
-            let Component = components[component];
-            return (
-              <Component
-                key={section_idx}
-                {...this.props}
-                section={section}
-                site={this.props}
-              />
-            );
-          }
-        )}
-      </Layout>
-    );
-  }
+function Advanced(props) {
+  const { citations } = props.data;
+
+  return (
+    <Layout {...props}>
+      <SectionHero {...props} />
+      <Container>
+        <Grid
+          container
+          spacing={4}
+          alignItems="flex-start"
+          justifyContent="space-between"
+        >
+          <Grid item xs={12} sm={8}>
+            {_.map(
+              _.get(props, "page.sections", null),
+              (section, section_idx) => {
+                let component = _.upperFirst(
+                  _.camelCase(_.get(section, "type", null))
+                );
+                let Component = components[component];
+                return (
+                  <Component
+                    key={section_idx}
+                    {...props}
+                    section={section}
+                    site={props}
+                  />
+                );
+              }
+            )}
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <SectionCitations citations={citations} />
+          </Grid>
+        </Grid>
+      </Container>
+    </Layout>
+  );
 }
+
+Advanced.propTypes = {
+  data: PropTypes.object
+};
+
+export default Advanced;

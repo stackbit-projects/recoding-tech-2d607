@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SectionTopics(props) {
+const SectionTopics = props => {
   const classes = useStyles();
   const { section } = props;
   const [topics, setTopics] = useState(null);
@@ -27,7 +27,9 @@ function SectionTopics(props) {
     if (section.featuredTopics.length) {
       setTopics(section.featuredTopics);
     }
-  }, [topics]);
+  }, []);
+
+  useEffect(() => {}, [topics]);
 
   return (
     <section>
@@ -37,22 +39,8 @@ function SectionTopics(props) {
             Featured Topics
           </Typography>
           <Stack direction="row" spacing={3}>
-            <Chip
-              label="Topic"
-              component="a"
-              href="#basic-chip"
-              className={classes.chip}
-              clickable
-            />
-            <Chip
-              label="FIXME"
-              component="a"
-              href="#basic-chip"
-              className={classes.chip}
-              clickable
-            />
             {topics
-              ? topics.forEach((topic, i) => (
+              ? topics.map((topic, i) => (
                   <Chip
                     key={i}
                     label={topic.name}
@@ -68,7 +56,7 @@ function SectionTopics(props) {
       </Box>
     </section>
   );
-}
+};
 
 SectionTopics.propTypes = {
   section: PropTypes.object
