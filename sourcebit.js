@@ -63,22 +63,9 @@ module.exports = {
                 items,
                 _.matchesProperty("__metadata.modelName", "config")
               ),
-              citations: items
-                .filter(item =>
-                  ["citation"].includes(_.get(item, "__metadata.modelName"))
-                )
-                .sort((a, b) => {
-                  const date1 = Date.parse(a.date);
-                  const date2 = Date.parse(b.date);
-
-                  if (date1 && date2) {
-                    // console.log(date1, date2);
-                    return date1 > date2;
-                  } else {
-                    return false;
-                  }
-                })
-                .slice(0, 10)
+              citations: items.filter(item =>
+                ["citation"].includes(_.get(item, "__metadata.modelName"))
+              )
             }
           };
         }

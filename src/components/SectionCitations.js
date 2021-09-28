@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme => ({
   },
   grid: {},
   gridTitle: {
-    marginRight: 20,
+    borderBottom: "1px solid #000",
+    marginBottom: 32,
     marginTop: 32
   },
   link: {
@@ -39,13 +40,26 @@ const useStyles = makeStyles(theme => ({
 const SectionCitations = props => {
   const classes = useStyles();
   const { citations } = props;
+  const [sortedCitations, setSortedCitations] = useState(null);
+
+  useEffect(() => {
+    const sort = citations.sort((a, b) => {
+      if (a.date && b.date) {
+        return Date.parse(b.date) - Date.parse(a.date);
+      } else {
+        return false;
+      }
+    });
+    setSortedCitations(sort);
+  }, []);
+
+  useEffect(() => {}, [sortedCitations]);
 
   return (
     <Grid container className={classes.grid}>
       <Grid
         container
         item
-        spacing={2}
         justifyContent="space-between"
         className={classes.gridTitle}
       >
@@ -62,9 +76,9 @@ const SectionCitations = props => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item>
-        {citations && citations.length
-          ? citations.slice(0, 4).map(citation => (
+      <Grid container item flexDirection="column">
+        {sortedCitations && sortedCitations.length
+          ? sortedCitations.slice(0, 4).map(citation => (
               <Grid
                 item
                 key={citation.__metadata.id}
