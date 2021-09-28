@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     zIndex: 1
   },
   links: {
-    marginTop: 80,
+    marginTop: 40,
     textAlign: "center"
   },
   svg: {
@@ -48,7 +48,7 @@ function SectionHero(props) {
 
   return (
     <section id={page.__metadata.id} className="block block-hero">
-      <Box paddingY={6} style={{ backgroundColor: "#c2cecc" }}>
+      <Box paddingY={16} style={{ backgroundColor: "#c2cecc" }}>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg
@@ -70,9 +70,9 @@ function SectionHero(props) {
               />
             </svg>
           </Box>
-          {page.heroContent && (
+          {(page.displayTitle || page.heroContent) && (
             <Typography variant="h1" className={classes.title}>
-              {page.heroContent}
+              {page.displayTitle ? page.displayTitle : page.heroContent}
             </Typography>
           )}
           {page.heroLinkUrl && (

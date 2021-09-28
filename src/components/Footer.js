@@ -24,6 +24,10 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "normal",
     textTransform: "uppercase"
   },
+  logoLink: {
+    color: "unset",
+    textDecoration: "none"
+  },
   subscribe: {
     border: "1px solid #000",
     borderRadius: 0,
@@ -49,7 +53,9 @@ function Footer(props) {
         <Container>
           <Grid container alignItems="center" spacing={3}>
             <Grid item>
-              <Logo />
+              <Link href="/" className={classes.logoLink}>
+                <Logo />
+              </Link>
             </Grid>
             <Grid item>
               <Button href="#" variant="outlined" className={classes.subscribe}>

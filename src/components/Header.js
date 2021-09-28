@@ -28,6 +28,10 @@ const useStyles = makeStyles(theme => ({
     color: "#000 !important",
     textDecoration: "none"
   },
+  logoLink: {
+    color: "unset",
+    textDecoration: "none"
+  },
   mobileNav: {
     [theme.breakpoints.up("sm")]: {
       display: "none"
@@ -113,7 +117,9 @@ function Header(props) {
       <Box p={4}>
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={12} sm={4}>
-            <Logo />
+            <Link href="/" className={classes.logoLink}>
+              <Logo />
+            </Link>
           </Grid>
           <Grid
             container

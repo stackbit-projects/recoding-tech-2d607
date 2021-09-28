@@ -6,6 +6,15 @@ import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(theme => ({
+  logo: {
+    transition: "0.6s",
+    transformStyle: "preserve-3d",
+    "&:active, &:focus, &:hover": {
+      transform: "rotate(180deg)",
+      transformOrigin: "40% 50%",
+      transition: "0.6s"
+    }
+  },
   name: {
     fontSize: "2em",
     fontWeight: "bold"
@@ -53,7 +62,7 @@ function Logo() {
   const classes = useStyles();
 
   return (
-    <Typography>
+    <Typography className={classes.logo}>
       <span className={`${classes.name} ${classes.nameRe}`}>Re</span>
       <span className={classes.name}>cod</span>
       <span className={`${classes.name} ${classes.nameCoding}`}>i</span>
