@@ -13,7 +13,7 @@ import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
 function Advanced(props) {
-  const { citations } = props.data;
+  const { citations } = props;
 
   return (
     <Layout {...props}>
@@ -54,7 +54,7 @@ function Advanced(props) {
 }
 
 Advanced.propTypes = {
-  data: PropTypes.object
+  citations: PropTypes.array
 };
 
 export default Advanced;

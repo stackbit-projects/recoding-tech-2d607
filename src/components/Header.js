@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
@@ -37,11 +37,37 @@ const useStyles = makeStyles(theme => ({
 
 function Header(props) {
   const classes = useStyles();
-  const { pages } = props;
-  const issues = pages.filter(page => page.layout == "issue");
-  const policies = pages.filter(page => page.layout == "policy");
-  const countries = pages.filter(page => page.layout == "country");
-  const companies = pages.filter(page => page.layout == "company");
+  const { topics } = props;
+  const [issues, setIssues] = useState(null);
+  const [policies, setPolicies] = useState(null);
+  const [countries, setCountries] = useState(null);
+  const [companies, setCompanies] = useState(null);
+
+  useEffect(() => {
+    const topicIssues = topics.filter(
+      topic => topic.type == "issue" && topic.stackbit_model_type === "page"
+    );
+    setIssues(topicIssues);
+
+    const topicPolicies = topics.filter(
+      topic => topic.type == "policy" && topic.stackbit_model_type === "page"
+    );
+    setPolicies(topicPolicies);
+
+    const topicCountries = topics.filter(
+      topic => topic.type == "country" && topic.stackbit_model_type === "page"
+    );
+    setCountries(topicCountries);
+
+    const topicCompanies = topics.filter(
+      topic => topic.type == "company" && topic.stackbit_model_type === "page"
+    );
+    setCompanies(topicCompanies);
+  }, []);
+
+  useEffect(() => {
+    console.log(countries);
+  }, [issues, policies, countries, companies]);
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssue = Boolean(issueEl);
@@ -133,10 +159,10 @@ function Header(props) {
                     "aria-labelledby": "policy-button"
                   }}
                 >
-                  {issues.length
+                  {issues && issues.length
                     ? issues.map(issue => (
-                        <MenuItem key={issue.id} onClick={handleCloseIssue}>
-                          {issue.title}
+                        <MenuItem key={issue.slug} onClick={handleCloseIssue}>
+                          {issue.displayTitle}
                         </MenuItem>
                       ))
                     : null}
@@ -166,10 +192,10 @@ function Header(props) {
                     "aria-labelledby": "policy-button"
                   }}
                 >
-                  {policies.length
+                  {policies && policies.length
                     ? policies.map(policy => (
-                        <MenuItem key={policy.id} onClick={handleClosePolicy}>
-                          {policy.title}
+                        <MenuItem key={policy.slug} onClick={handleClosePolicy}>
+                          {policy.displayTitle}
                         </MenuItem>
                       ))
                     : null}
@@ -199,10 +225,13 @@ function Header(props) {
                     "aria-labelledby": "country-button"
                   }}
                 >
-                  {countries.length
+                  {countries && countries.length
                     ? countries.map(country => (
-                        <MenuItem key={country.id} onClick={handleCloseCountry}>
-                          {country.title}
+                        <MenuItem
+                          key={country.slug}
+                          onClick={handleCloseCountry}
+                        >
+                          {country.displayTitle}
                         </MenuItem>
                       ))
                     : null}
@@ -232,10 +261,13 @@ function Header(props) {
                     "aria-labelledby": "company-button"
                   }}
                 >
-                  {companies.length
+                  {companies && companies.length
                     ? companies.map(company => (
-                        <MenuItem key={company.id} onClick={handleCloseCompany}>
-                          {company.title}
+                        <MenuItem
+                          key={company.slug}
+                          onClick={handleCloseCompany}
+                        >
+                          {company.displayTitle}
                         </MenuItem>
                       ))
                     : null}
@@ -256,5 +288,9 @@ function Header(props) {
     </header>
   );
 }
+
+Header.propTypes = {
+  topics: PropTypes.array
+};
 
 export default Header;

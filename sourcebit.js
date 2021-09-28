@@ -58,13 +58,16 @@ module.exports = {
                 "guide"
               ].includes(_.get(item, "__metadata.modelName"))
             ),
+            citations: items.filter(item =>
+              ["citation"].includes(_.get(item, "__metadata.modelName"))
+            ),
+            topics: items.filter(item =>
+              ["topic"].includes(_.get(item, "__metadata.modelName"))
+            ),
             data: {
               config: _.find(
                 items,
                 _.matchesProperty("__metadata.modelName", "config")
-              ),
-              citations: items.filter(item =>
-                ["citation"].includes(_.get(item, "__metadata.modelName"))
               )
             }
           };
