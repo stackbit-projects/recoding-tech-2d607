@@ -34,8 +34,12 @@ module.exports = {
             predicate: _.matchesProperty("__metadata.modelName", "page")
           },
           {
-            path: "/policies/{slug}",
+            path: "/tracker/{slug}",
             predicate: _.matchesProperty("__metadata.modelName", "policyAction")
+          },
+          {
+            path: "/{type}/{slug}",
+            predicate: _.matchesProperty("__metadata.modelName", "topic")
           },
           {
             path: "/{stackbit_url_path}",
@@ -47,17 +51,29 @@ module.exports = {
           }
         ],
         commonProps: items => {
+          let pages = [];
+          const basicPages = _.filter(items, item =>
+            [
+              "advanced",
+              "article",
+              "page",
+              "policyAction",
+              "post",
+              "guide"
+            ].includes(_.get(item, "__metadata.modelName"))
+          );
+          const topicsPages = items.filter(
+            item =>
+              item.__metadata.modelName === "topic" &&
+              item.stackbit_model_type === "page"
+          );
+
+          pages = [...pages, basicPages, topicsPages];
+
+          pages = pages.flat();
+
           return {
-            pages: _.filter(items, item =>
-              [
-                "advanced",
-                "article",
-                "page",
-                "policyAction",
-                "post",
-                "guide"
-              ].includes(_.get(item, "__metadata.modelName"))
-            ),
+            pages: pages,
             citations: items.filter(item =>
               ["citation"].includes(_.get(item, "__metadata.modelName"))
             ),

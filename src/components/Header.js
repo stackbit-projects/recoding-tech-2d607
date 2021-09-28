@@ -7,6 +7,7 @@ import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
@@ -23,6 +24,10 @@ const useStyles = makeStyles(theme => ({
     fontStyle: "italic"
   },
   header: {},
+  link: {
+    color: "#000 !important",
+    textDecoration: "none"
+  },
   mobileNav: {
     [theme.breakpoints.up("sm")]: {
       display: "none"
@@ -65,9 +70,7 @@ function Header(props) {
     setCompanies(topicCompanies);
   }, []);
 
-  useEffect(() => {
-    console.log(countries);
-  }, [issues, policies, countries, companies]);
+  useEffect(() => {}, [issues, policies, countries, companies]);
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssue = Boolean(issueEl);
@@ -162,7 +165,12 @@ function Header(props) {
                   {issues && issues.length
                     ? issues.map(issue => (
                         <MenuItem key={issue.slug} onClick={handleCloseIssue}>
-                          {issue.displayTitle}
+                          <Link
+                            href={`/issue/${issue.slug}`}
+                            className={classes.link}
+                          >
+                            {issue.displayTitle}
+                          </Link>
                         </MenuItem>
                       ))
                     : null}
@@ -194,8 +202,13 @@ function Header(props) {
                 >
                   {policies && policies.length
                     ? policies.map(policy => (
-                        <MenuItem key={policy.slug} onClick={handleClosePolicy}>
-                          {policy.displayTitle}
+                        <MenuItem key={policy.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/policy/${policy.slug}`}
+                            className={classes.link}
+                          >
+                            {policy.displayTitle}
+                          </Link>
                         </MenuItem>
                       ))
                     : null}
@@ -227,11 +240,13 @@ function Header(props) {
                 >
                   {countries && countries.length
                     ? countries.map(country => (
-                        <MenuItem
-                          key={country.slug}
-                          onClick={handleCloseCountry}
-                        >
-                          {country.displayTitle}
+                        <MenuItem key={country.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/country/${country.slug}`}
+                            className={classes.link}
+                          >
+                            {country.displayTitle}
+                          </Link>
                         </MenuItem>
                       ))
                     : null}
@@ -263,11 +278,13 @@ function Header(props) {
                 >
                   {companies && companies.length
                     ? companies.map(company => (
-                        <MenuItem
-                          key={company.slug}
-                          onClick={handleCloseCompany}
-                        >
-                          {company.displayTitle}
+                        <MenuItem key={company.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/company/${company.slug}`}
+                            className={classes.link}
+                          >
+                            {company.displayTitle}
+                          </Link>
                         </MenuItem>
                       ))
                     : null}
