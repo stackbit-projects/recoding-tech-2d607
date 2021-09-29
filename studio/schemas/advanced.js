@@ -58,6 +58,9 @@ export default {
         },
         {
           type: "section_policy_actions"
+        },
+        {
+          type: "section_tracker"
         }
       ]
     },

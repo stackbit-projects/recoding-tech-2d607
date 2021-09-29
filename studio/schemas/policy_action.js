@@ -8,7 +8,7 @@ export default {
       type: "string",
       title: "Policy action name",
       description: "Official name of the policy action",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required()
     },
     {
       title: "Slug",
@@ -16,53 +16,58 @@ export default {
       type: "slug",
       description:
         "The slug for the policy action. Can be the same as the name, but turned into a URL. For example, name-of-policy.",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
         source: "title",
         maxLength: 200, // will be ignored if slugify is set
-        slugify: (input) =>
+        slugify: input =>
           input
             .toLowerCase()
             .replace(/[^\w\s]/gi, "")
             .replace(/\s+/g, "-")
-            .slice(0, 200),
-      },
+            .slice(0, 200)
+      }
     },
     {
       name: "type",
       type: "string",
       title: "Policy action type",
       description: "E.g. legislation, proposal, etc.",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required()
     },
     {
       name: "country",
-      type: "string",
+      type: "reference",
       title: "Country",
       description: "The policy actions's country of origin",
-      validation: (Rule) => Rule.required(),
+      to: [{ type: "topic" }],
+      options: {
+        filter: "type == $type",
+        filterParams: { type: "country" }
+      },
+      validation: Rule => Rule.required()
     },
     {
       name: "dateInitiated",
       title: "Date initiated",
       type: "date",
       options: {
-        dateFormat: "MMMM DD YYYY",
-      },
+        dateFormat: "MMMM DD YYYY"
+      }
     },
     {
       name: "status",
       title: "Current status of policy",
       type: "string",
-      description: "E.g. passed by committee, enacted, etc.",
+      description: "E.g. passed by committee, enacted, etc."
     },
     {
       name: "lastUpdate",
       title: "Date of last update",
       type: "date",
       options: {
-        dateFormat: "MMMM DD YYYY",
-      },
+        dateFormat: "MMMM DD YYYY"
+      }
     },
     {
       name: "summary",
@@ -70,7 +75,7 @@ export default {
       type: "array",
       of: [{ type: "block" }],
       description: "A summary of the policy.",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required()
     },
     {
       name: "relatedCitations",
@@ -81,11 +86,11 @@ export default {
           type: "reference",
           to: [
             {
-              type: "citation",
-            },
-          ],
-        },
-      ],
+              type: "citation"
+            }
+          ]
+        }
+      ]
     },
     {
       name: "relatedDocs",
@@ -99,16 +104,16 @@ export default {
             {
               title: "Document title",
               type: "string",
-              name: "title",
+              name: "title"
             },
             {
               title: "Document",
               type: "file",
-              name: "file",
-            },
-          ],
-        },
-      ],
+              name: "file"
+            }
+          ]
+        }
+      ]
     },
     {
       name: "relatedTopics",
@@ -117,19 +122,19 @@ export default {
       of: [
         {
           type: "reference",
-          to: [{ type: "topic" }],
-        },
-      ],
+          to: [{ type: "topic" }]
+        }
+      ]
     },
     {
       type: "string",
       name: "layout",
       title: "Layout",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["policy_action"],
-      },
-    },
-  ],
+        list: ["policy_action"]
+      }
+    }
+  ]
 };
