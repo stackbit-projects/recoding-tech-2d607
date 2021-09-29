@@ -50,10 +50,7 @@ export default {
     {
       name: "dateInitiated",
       title: "Date initiated",
-      type: "date",
-      options: {
-        dateFormat: "MMMM DD YYYY"
-      }
+      type: "date"
     },
     {
       name: "status",
@@ -64,10 +61,7 @@ export default {
     {
       name: "lastUpdate",
       title: "Date of last update",
-      type: "date",
-      options: {
-        dateFormat: "MMMM DD YYYY"
-      }
+      type: "date"
     },
     {
       name: "summary",

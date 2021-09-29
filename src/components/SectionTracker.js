@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => ({
   table: {},
   tableCellTitle: {
     position: "relative",
+    textTransform: "none",
     "&:after": {
       backgroundColor: theme.palette.footer.main,
       content: "''",
@@ -47,7 +48,6 @@ const useStyles = makeStyles(theme => ({
       left: 0,
       minHeight: 40,
       position: "absolute",
-      textTransform: "none",
       top: "50%",
       transform: "translateY(-50%)",
       width: "100%",
@@ -137,6 +137,9 @@ function SectionTracker(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  // date parsing
+  var dateOptions = { month: "long", day: "numeric", year: "numeric" };
 
   return (
     <section>
