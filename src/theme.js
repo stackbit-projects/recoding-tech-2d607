@@ -27,6 +27,27 @@ const theme = createTheme({
           textAlign: "center"
         }
       }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontFamily: sansSerifFont,
+          textTransform: "uppercase"
+        }
+      }
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        displayedRows: {
+          fontFamily: sansSerifFont
+        },
+        select: {
+          fontFamily: sansSerifFont
+        },
+        selectLabel: {
+          fontFamily: sansSerifFont
+        }
+      }
     }
   },
   palette: {

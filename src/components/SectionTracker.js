@@ -11,10 +11,18 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
 // material ui icons
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const useStyles = makeStyles(theme => ({
@@ -23,14 +31,28 @@ const useStyles = makeStyles(theme => ({
     textTransform: "uppercase",
     width: 180
   },
-  policyButton: {
-    backgroundColor: theme.palette.policy.main
+  icon: {
+    position: "absolute",
+    right: 10,
+    top: "50%",
+    transform: "translateY(-50%)"
   },
-  countryButton: {
-    backgroundColor: theme.palette.country.main
-  },
-  companyButton: {
-    backgroundColor: theme.palette.company.main
+  table: {},
+  tableCellTitle: {
+    position: "relative",
+    "&:after": {
+      backgroundColor: theme.palette.footer.main,
+      content: "''",
+      display: "block",
+      left: 0,
+      minHeight: 40,
+      position: "absolute",
+      textTransform: "none",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: "100%",
+      zIndex: "-1"
+    }
   }
 }));
 
@@ -38,6 +60,18 @@ function SectionTracker(props) {
   const classes = useStyles();
   const { actions, section } = props;
 
+  console.log(actions);
+
+  const headers = [
+    { id: "title", label: "Name" },
+    { id: "type", label: "Type" },
+    { id: "country.displayTitle", label: "Country" },
+    { id: "dateInitiated", label: "Date Initiated" },
+    { id: "status", label: "Status" },
+    { id: "lastUpdate", label: "Last Updated" }
+  ];
+
+  // filters
   let issues, policies, companies;
   actions.filter(action => {
     issues = action.relatedTopics
@@ -89,6 +123,19 @@ function SectionTracker(props) {
   };
   const handleCloseCompanies = () => {
     setCompaniesEl(null);
+  };
+
+  // table pagination
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
   };
 
   return (
@@ -280,6 +327,71 @@ function SectionTracker(props) {
             </Grid>
           </Grid>
         </Container>
+      </Box>
+      <Box my={4}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table
+            aria-label="Law and Regulation Tracker Table"
+            className={classes.table}
+          >
+            <TableHead>
+              <TableRow>
+                {headers.map(column => (
+                  <TableCell key={column.id}>{column.label}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {actions
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(row => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.slug}
+                    >
+                      {headers.map(column => {
+                        let value = row[column.id];
+                        if (!value) {
+                          value = row.country.displayTitle; // #FIXME
+                        }
+                        return (
+                          <TableCell
+                            key={column.id}
+                            className={
+                              column.id == "title"
+                                ? classes.tableCellTitle
+                                : null
+                            }
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                            {column.id == "title" ? (
+                              <KeyboardArrowRightIcon
+                                className={classes.icon}
+                              />
+                            ) : null}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={actions.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Box>
     </section>
   );
