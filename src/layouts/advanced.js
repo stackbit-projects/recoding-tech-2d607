@@ -13,48 +13,66 @@ import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
 function Advanced(props) {
-  const { citations } = props;
+  const { citations, path } = props;
 
   return (
     <Layout {...props}>
       <SectionHero {...props} />
       <Container>
-        <Grid
-          container
-          spacing={4}
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          <Grid item xs={12} sm={8}>
-            {_.map(
-              _.get(props, "page.sections", null),
-              (section, section_idx) => {
-                let component = _.upperFirst(
-                  _.camelCase(_.get(section, "type", null))
-                );
-                let Component = components[component];
-                return (
-                  <Component
-                    key={section_idx}
-                    {...props}
-                    section={section}
-                    site={props}
-                  />
-                );
-              }
-            )}
+        {path === "/" ? (
+          <Grid
+            container
+            spacing={4}
+            alignItems="flex-start"
+            justifyContent="space-between"
+          >
+            <Grid item xs={12} sm={8}>
+              {_.map(
+                _.get(props, "page.sections", null),
+                (section, section_idx) => {
+                  let component = _.upperFirst(
+                    _.camelCase(_.get(section, "type", null))
+                  );
+                  let Component = components[component];
+                  return (
+                    <Component
+                      key={section_idx}
+                      {...props}
+                      section={section}
+                      site={props}
+                    />
+                  );
+                }
+              )}
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <SectionCitations citations={citations} />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <SectionCitations citations={citations} />
-          </Grid>
-        </Grid>
+        ) : (
+          _.map(_.get(props, "page.sections", null), (section, section_idx) => {
+            let component = _.upperFirst(
+              _.camelCase(_.get(section, "type", null))
+            );
+            let Component = components[component];
+            return (
+              <Component
+                key={section_idx}
+                {...props}
+                section={section}
+                site={props}
+              />
+            );
+          })
+        )}
       </Container>
     </Layout>
   );
 }
 
 Advanced.propTypes = {
-  citations: PropTypes.array
+  citations: PropTypes.array,
+  path: PropTypes.string
 };
 
 export default Advanced;

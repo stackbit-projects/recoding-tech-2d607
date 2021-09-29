@@ -1,6 +1,6 @@
 export default {
   type: "document",
-  name: "policyAction",
+  name: "policy_action",
   title: "Policy action",
   fields: [
     {

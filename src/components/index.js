@@ -12,6 +12,7 @@ import SectionArticles from "./SectionArticles";
 import SectionPolicyActions from "./SectionPolicyActions";
 import SectionGuides from "./SectionGuides";
 import SectionTopics from "./SectionTopics";
+import SectionTracker from "./SectionTracker";
 
 export {
   CtaButtons,
@@ -27,7 +28,8 @@ export {
   SectionArticles,
   SectionPolicyActions,
   SectionGuides,
-  SectionTopics
+  SectionTopics,
+  SectionTracker
 };
 
 export default {
@@ -44,5 +46,6 @@ export default {
   SectionArticles,
   SectionPolicyActions,
   SectionGuides,
-  SectionTopics
+  SectionTopics,
+  SectionTracker
 };

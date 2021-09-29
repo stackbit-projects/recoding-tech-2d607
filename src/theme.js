@@ -8,6 +8,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          borderRadius: 0,
           color: "#000",
           fontFamily: sansSerifFont,
           fontSize: "1.2em",
@@ -36,19 +37,24 @@ const theme = createTheme({
       main: "#C2CECC"
     },
     issue: {
-      main: "#FAD3CD"
+      main: "#FAD3CD",
+      dark: "#C7A09A"
     },
     policy: {
-      main: "#84A4CC"
+      main: "#84A4CC",
+      dark: "#517199"
     },
     country: {
-      main: "#8AA29D"
+      main: "#8AA29D",
+      dark: "#3E5651"
     },
     company: {
-      main: "#CCC"
+      main: "#CCCCCC",
+      dark: "#666666"
     },
     footer: {
-      main: "#EFE9DA"
+      main: "#EFE9DA",
+      dark: "#BCB6A7"
     }
   },
   typography: {

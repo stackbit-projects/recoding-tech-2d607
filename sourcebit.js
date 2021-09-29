@@ -77,6 +77,9 @@ module.exports = {
             citations: items.filter(item =>
               ["citation"].includes(_.get(item, "__metadata.modelName"))
             ),
+            actions: items.filter(item =>
+              ["policy_action"].includes(_.get(item, "__metadata.modelName"))
+            ),
             topics: items.filter(item =>
               ["topic"].includes(_.get(item, "__metadata.modelName"))
             ),

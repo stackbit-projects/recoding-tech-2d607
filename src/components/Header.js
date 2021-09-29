@@ -146,8 +146,8 @@ function Header(props) {
             >
               <Grid item>
                 <Button
-                  id="policy-button"
-                  aria-controls="policy-menu"
+                  id="issue-button"
+                  aria-controls="issue-menu"
                   aria-haspopup="true"
                   aria-expanded={openIssue ? "true" : undefined}
                   onClick={handleClickIssue}
@@ -160,12 +160,12 @@ function Header(props) {
                   )}
                 </Button>
                 <Menu
-                  id="policy-menu"
+                  id="issue-menu"
                   anchorEl={issueEl}
                   open={openIssue}
                   onClose={handleCloseIssue}
                   MenuListProps={{
-                    "aria-labelledby": "policy-button"
+                    "aria-labelledby": "issue-button"
                   }}
                 >
                   {issues && issues.length
@@ -184,8 +184,8 @@ function Header(props) {
               </Grid>
               <Grid item>
                 <Button
-                  id="issue-button"
-                  aria-controls="issue-menu"
+                  id="policy-button"
+                  aria-controls="policy-menu"
                   aria-haspopup="true"
                   aria-expanded={openPolicy ? "true" : undefined}
                   onClick={handleClickPolicy}
@@ -198,7 +198,7 @@ function Header(props) {
                   )}
                 </Button>
                 <Menu
-                  id="issue-menu"
+                  id="policy-menu"
                   anchorEl={policyEl}
                   open={openPolicy}
                   onClose={handleClosePolicy}
