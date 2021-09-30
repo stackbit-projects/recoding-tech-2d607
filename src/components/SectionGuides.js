@@ -13,7 +13,7 @@ export default class SectionGuides extends React.Component {
       "date",
       "desc"
     );
-    let recent_posts = display_posts.slice(
+    let recent_posts = display_syllabi.slice(
       0,
       _.get(section, "syllabi_number", null)
     );
@@ -58,7 +58,7 @@ export default class SectionGuides extends React.Component {
                   {_.get(post, "excerpt", null) && (
                     <div className="post-content">
                       {_.get(post, "tags", null) &&
-                        post.tags.map((tag) => (
+                        post.tags.map(tag => (
                           <div className="post-tag">{tag.label}</div>
                         ))}
                       <p>{_.get(post, "excerpt", null)}</p>

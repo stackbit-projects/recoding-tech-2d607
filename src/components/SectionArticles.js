@@ -1,7 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { createBrowserHistory } from "history";
+import Router from "next/router";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -52,26 +52,21 @@ const useStyles = makeStyles(theme => ({
 
 function SectionArticle(props) {
   const classes = useStyles();
-  const [history, setHistory] = useState(null);
   const { section } = props;
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
-    if (!history) {
-      setHistory(createBrowserHistory());
-    }
-
     if (!article) {
       setArticle(section.featuredArticle);
     }
   }, [article]);
 
   const articleClick = url => {
-    history.push(url);
+    Router.push({ pathname: url });
   };
 
   const trackerClick = () => {
-    history.push("/tracker");
+    Router.push({ pathname: "/tracker" });
   };
 
   return (

@@ -1,7 +1,6 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { createBrowserHistory } from "history";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
