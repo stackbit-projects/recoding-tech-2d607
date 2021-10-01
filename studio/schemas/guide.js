@@ -44,14 +44,7 @@ export default {
     {
       name: "content",
       title: "Quick start guide content",
-      type: "array",
-      of: [
-        { type: "block" },
-        {
-          type: "reference",
-          to: [{ type: "topic" }]
-        }
-      ]
+      type: "portable_text"
     },
     {
       name: "datePublished",

@@ -66,9 +66,7 @@ export default {
     {
       name: "summary",
       title: "Summary",
-      type: "array",
-      of: [{ type: "block" }],
-      description: "A summary of the policy.",
+      type: "portable_text",
       validation: Rule => Rule.required()
     },
     {

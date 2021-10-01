@@ -35,7 +35,10 @@ module.exports = {
           },
           {
             path: "/tracker/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "policyAction")
+            predicate: _.matchesProperty(
+              "__metadata.modelName",
+              "policy_action"
+            )
           },
           {
             path: "/{type}/{slug}",

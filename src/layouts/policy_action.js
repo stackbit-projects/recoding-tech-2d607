@@ -1,117 +1,56 @@
 import React from "react";
-import _ from "lodash";
-import moment from "moment-strftime";
+import PropTypes from "prop-types";
+
+// utils
 import BlockContent from "@sanity/block-content-to-react";
 
-import { Layout } from "../components/index";
-import { htmlToReact, Link, markdownify } from "../utils";
-
+// material ui imports
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
-export default class PolicyAction extends React.Component {
-  render() {
-    let relatedDocs = _.get(this.props.page, "relatedDocs", null);
-    let relatedTopics = _.get(this.props.page, "relatedTopics", null);
-    let relatedCitations = _.get(this.props.page, "relatedCitations", null);
+// components
+import { Layout } from "../components/index";
+import SectionHero from "../components/SectionHero";
+import TrackerActions from "../components/TrackerActions";
 
-    const serializers = {
-      types: {
-        reference: props => <div>{props.node.reference.chicagoCitation}</div>
-      }
-    };
+const PolicyAction = props => {
+  const { page } = props;
+  console.log(page);
 
-    return (
-      <Layout {...this.props}>
-        <header className="post-header inner-sm">
-          <h1 className="post-title underline">
-            {_.get(this.props, "page.title", null)}
-          </h1>
-          {_.get(this.props, "page.type", null) && (
-            <div className="post-subtitle">
-              Policy type: {htmlToReact(_.get(this.props, "page.type", null))}
-            </div>
-          )}
-          {_.get(this.props, "page.country", null) && (
-            <div className="post-subtitle">
-              Country: {htmlToReact(_.get(this.props, "page.country", null))}
-            </div>
-          )}
-          <time
-            className="published"
-            dateTime={moment(
-              _.get(this.props, "page.dateInitiated", null)
-            ).strftime("%Y-%m-%d %H:%M")}
-          >
-            Date initiated:{" "}
-            {moment(_.get(this.props, "page.dateInitiated", null)).strftime(
-              "%B %e, %Y"
-            )}
-          </time>
-          {_.get(this.props, "page.status", null) && (
-            <div className="post-subtitle">
-              Status: {htmlToReact(_.get(this.props, "page.status", null))}
-            </div>
-          )}
-          <time
-            className="published"
-            dateTime={moment(
-              _.get(this.props, "page.lastUpdate", null)
-            ).strftime("%Y-%m-%d %H:%M")}
-          >
-            Last update:{" "}
-            {moment(_.get(this.props, "page.lastUpdate", null)).strftime(
-              "%B %e, %Y"
-            )}
-          </time>
-        </header>
-        <div className="post-content inner-sm">
-          <h2>Summary</h2>
-          <BlockContent
-            blocks={this.props.page.content}
-            serializers={serializers}
-          />
-        </div>
-        <footer className="post-meta inner-sm">
-          <Grid container spacing={4}>
-            <Grid item xs={12} sm={6}>
-              Related Primary Documents:
-              {relatedDocs &&
-                relatedDocs.map(doc => (
-                  <div key={doc.assetId}>
-                    <Link className="post-thumbnail" href={doc.url}>
-                      {doc.originalFilename}
-                    </Link>
-                  </div>
-                ))}
+  const serializers = {
+    types: {
+      citation: props => <div>{props.node.reference.chicagoCitation}</div>
+    }
+  };
+
+  return (
+    <Layout {...props}>
+      <SectionHero {...props} />
+      <Box my={4}>
+        <Container>
+          <TrackerActions {...props} />
+          <Box my={4}>
+            <Grid container>
+              <Grid item sm={12} md={8}>
+                <BlockContent blocks={page.summary} serializers={serializers} />
+              </Grid>
+              <Grid item sm={12} md={4}>
+                <Typography component="div" variant="h4">
+                  Further reading
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              Related Topics:
-              {relatedTopics &&
-                relatedTopics.map(topic => (
-                  <div key={topic.id}>
-                    <Link
-                      className="post-thumbnail"
-                      href={`/topics/${topic.name}`}
-                    >
-                      {topic.name}
-                    </Link>
-                  </div>
-                ))}
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              Further reading:
-              {relatedCitations &&
-                relatedCitations.map(citation => (
-                  <div key={citation.id}>
-                    <Link className="post-thumbnail" href={`${citation.url}`}>
-                      {citation.title}
-                    </Link>
-                  </div>
-                ))}
-            </Grid>
-          </Grid>
-        </footer>
-      </Layout>
-    );
-  }
-}
+          </Box>
+        </Container>
+      </Box>
+    </Layout>
+  );
+};
+
+PolicyAction.propTypes = {
+  page: PropTypes.object
+};
+
+export default PolicyAction;

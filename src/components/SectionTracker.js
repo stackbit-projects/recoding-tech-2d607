@@ -1,5 +1,5 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Table from "@mui/material/Table";
@@ -32,9 +33,10 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     position: "absolute",
-    right: 10,
+    right: 20,
     top: "50%",
-    transform: "translateY(-50%)"
+    transform: "translateY(-50%)",
+    transition: "right 250ms"
   },
   table: {},
   tableCellTitle: {
@@ -51,15 +53,27 @@ const useStyles = makeStyles(theme => ({
       transform: "translateY(-50%)",
       width: "100%",
       zIndex: "-1"
+    },
+    "&:hover": {
+      "& a": {
+        textDecoration: "underline"
+      },
+      "& svg": {
+        right: 10,
+        transition: "right 250ms"
+      }
     }
+  },
+  tableLink: {
+    color: "#000",
+    position: "relative",
+    textDecoration: "none"
   }
 }));
 
 function SectionTracker(props) {
   const classes = useStyles();
   const { actions, section } = props;
-
-  console.log(actions);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -368,9 +382,18 @@ function SectionTracker(props) {
                                 : null
                             }
                           >
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
+                            {column.format && typeof value === "number" ? (
+                              column.format(value)
+                            ) : column.id == "title" ? (
+                              <Link
+                                className={classes.tableLink}
+                                href={row.slug}
+                              >
+                                {value}
+                              </Link>
+                            ) : (
+                              value
+                            )}
                             {column.id == "title" ? (
                               <KeyboardArrowRightIcon
                                 className={classes.icon}

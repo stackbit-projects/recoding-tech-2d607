@@ -16,6 +16,7 @@ import page from "./page.js";
 import person from "./person.js";
 import guide from "./guide.js";
 import policy_action from "./policy_action.js";
+import portable_text from "./portable_text.js";
 import section_hero from "./section_hero.js";
 import section_citations from "./section_citations.js";
 import section_articles from "./section_articles.js";
@@ -49,6 +50,7 @@ export default createSchema({
     page,
     person,
     policy_action,
+    portable_text,
     section_hero,
     section_articles,
     section_citations,

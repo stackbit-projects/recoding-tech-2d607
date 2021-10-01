@@ -27,11 +27,16 @@ const useStyles = makeStyles(theme => ({
     marginTop: 40,
     textAlign: "center"
   },
+  superTitle: {
+    textAlign: "center",
+    position: "relative",
+    zIndex: 1
+  },
   svg: {
     height: 250,
     left: "50%",
     position: "absolute",
-    top: "30%",
+    top: "40%",
     transform: "translate(-50%, -50%)",
     width: 650,
     zIndex: 0
@@ -45,7 +50,6 @@ const useStyles = makeStyles(theme => ({
 function SectionHero(props) {
   const classes = useStyles();
   let { page } = props;
-
   return (
     <section id={page.__metadata.id} className="block block-hero">
       <Box paddingY={16} style={{ backgroundColor: "#c2cecc" }}>
@@ -70,9 +74,18 @@ function SectionHero(props) {
               />
             </svg>
           </Box>
-          {(page.displayTitle || page.heroContent) && (
+          {page.__metadata.modelName == "policy_action" ? (
+            <Typography variant="h4" className={classes.superTitle}>
+              Tracker Detail
+            </Typography>
+          ) : null}
+          {(page.displayTitle || page.heroContent || page.title) && (
             <Typography variant="h1" className={classes.title}>
-              {page.displayTitle ? page.displayTitle : page.heroContent}
+              {page.displayTitle
+                ? page.displayTitle
+                : page.heroContent
+                ? page.heroContent
+                : page.title}
             </Typography>
           )}
           {page.heroLinkUrl && (
