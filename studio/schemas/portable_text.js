@@ -4,37 +4,15 @@ export default {
   title: "Content",
   of: [
     {
-      type: "block",
-      marks: {
-        annotations: [
-          {
-            name: "link",
-            type: "object",
-            title: "Link",
-            fields: [
-              {
-                name: "href",
-                type: "url",
-                title: "URL"
-              }
-            ]
-          },
-
-          {
-            name: "citation",
-            type: "object",
-            title: "Citation",
-            fields: [
-              {
-                name: "reference",
-                type: "reference",
-                title: "Reference",
-                to: [{ type: "citation" }]
-              }
-            ]
-          }
-        ]
-      }
+      type: "block"
+    },
+    {
+      type: "image"
+    },
+    {
+      name: "reference",
+      type: "reference",
+      to: [{ type: "citation" }]
     }
   ]
 };

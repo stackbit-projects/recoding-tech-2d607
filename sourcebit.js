@@ -12,7 +12,20 @@ module.exports = {
         dataset: process.env.SANITY_DATASET || "production",
         isPreview: isDev,
         watch: isDev,
-        richTextOutputFormat: "none"
+        serializers: {
+          types: {
+            reference: node => {
+              return `<div>${node.node._ref}</div>`;
+            }
+          },
+          marks: {
+            annotations: [
+              {
+                citation: node => `<div>${node.node._ref}</div>`
+              }
+            ]
+          }
+        }
       }
     },
     {

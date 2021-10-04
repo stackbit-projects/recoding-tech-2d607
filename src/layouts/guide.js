@@ -8,12 +8,6 @@ import { Layout } from "../components/index";
 import { htmlToReact, withPrefix, markdownify } from "../utils";
 
 export default function Guide(props) {
-  const serializers = {
-    types: {
-      reference: props => <div>{props.node.reference.chicagoCitation}</div>
-    }
-  };
-
   return (
     <Layout {...props}>
       <article className="post post-full">
@@ -40,7 +34,8 @@ export default function Guide(props) {
               )}
             </div>
           )}
-          <BlockContent blocks={props.page.content} serializers={serializers} />
+          <BlockContent blocks={page.content} serializers={serializers} />
+          {/* htmlToReact(props.page.content) */}
           {/* {_.get(props, "page.tags", null) &&
               props.page.tags.map((tag) => (
                 <div className="post-tag">{tag.label}</div>

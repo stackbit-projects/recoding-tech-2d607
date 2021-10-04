@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // utils
-import BlockContent from "@sanity/block-content-to-react";
+import { htmlToReact, withPrefix, markdownify } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -19,12 +19,6 @@ const PolicyAction = props => {
   const { page } = props;
   console.log(page);
 
-  const serializers = {
-    types: {
-      citation: props => <div>{props.node.reference.chicagoCitation}</div>
-    }
-  };
-
   return (
     <Layout {...props}>
       <SectionHero {...props} />
@@ -34,7 +28,7 @@ const PolicyAction = props => {
           <Box my={4}>
             <Grid container>
               <Grid item sm={12} md={8}>
-                <BlockContent blocks={page.summary} serializers={serializers} />
+                {htmlToReact(page.summary)}
               </Grid>
               <Grid item sm={12} md={4}>
                 <Typography component="div" variant="h4">
