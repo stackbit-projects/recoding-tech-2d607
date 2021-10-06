@@ -1,13 +1,14 @@
 export default {
   type: "object",
-  name: "section_articles",
-  title: "Featured Articles Section",
+  name: "section_tracker",
+  title: "Law and Regulation Tracker",
   fields: [
     {
-      name: "featuredArticle",
-      title: "Featured Article",
-      type: "reference",
-      to: { type: "article" }
+      type: "text",
+      name: "intro",
+      title: "Intro Text",
+      description: "The intro text on the law and regulation tracker.",
+      validation: null
     },
     {
       type: "string",
@@ -17,7 +18,7 @@ export default {
       hidden: false,
       validation: Rule => Rule.required(),
       options: {
-        list: ["section_articles"]
+        list: ["section_tracker"]
       }
     },
     {

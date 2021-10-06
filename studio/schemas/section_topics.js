@@ -1,13 +1,13 @@
 export default {
   type: "object",
-  name: "section_articles",
-  title: "Featured Articles Section",
+  name: "section_topics",
+  title: "Featured Topics Section",
   fields: [
     {
-      name: "featuredArticle",
-      title: "Featured Article",
-      type: "reference",
-      to: { type: "article" }
+      name: "featuredTopics",
+      title: "Featured Topics",
+      type: "array",
+      of: [{ type: "reference", to: { type: "topic" } }]
     },
     {
       type: "string",
@@ -17,7 +17,7 @@ export default {
       hidden: false,
       validation: Rule => Rule.required(),
       options: {
-        list: ["section_articles"]
+        list: ["section_topics"]
       }
     },
     {

@@ -1,79 +1,319 @@
-import React from 'react';
-import _ from 'lodash';
+// base imports
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-import {Link, withPrefix, classNames} from '../utils';
-import Icon from './Icon';
+// material ui imports
+import { makeStyles } from "@mui/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
 
-export default class Header extends React.Component {
-    render() {
-        return (
-            <header id="masthead" className={'site-header ' + _.get(this.props, 'data.config.header.background', null)}>
-              <div className="site-header-wrap">
-                <div className="site-header-inside">
-                  <div className="site-branding">
-                    {_.get(this.props, 'data.config.header.profile_img', null) && (
-                    <p className="profile">
-                      <Link href={withPrefix('/')}><img src={withPrefix(_.get(this.props, 'data.config.header.profile_img', null))}
-                          className="avatar" alt={_.get(this.props, 'data.config.header.profile_img_alt', null)} /></Link>
-                    </p>
-                    )}
-                    <div className="site-identity">
-                      <p className="site-title"><Link href={withPrefix('/')}>{_.get(this.props, 'data.config.header.title', null)}</Link></p>
-                      {_.get(this.props, 'data.config.header.tagline', null) && (
-                      <p className="site-description">{_.get(this.props, 'data.config.header.tagline', null)}</p>
-                      )}
-                    </div>
-                    {(_.get(this.props, 'data.config.header.has_nav', null) || _.get(this.props, 'data.config.header.has_social', null)) && (
-                    <button id="menu-toggle" className="menu-toggle"><span className="screen-reader-text">Menu</span><span className="icon-menu"
-                        aria-hidden="true" /></button>
-                    )}
-                  </div>
-                  {(_.get(this.props, 'data.config.header.has_nav', null) || _.get(this.props, 'data.config.header.has_social', null)) && (
-                  <nav id="main-navigation" className="site-navigation" aria-label="Main Navigation">
-                    <div className="site-nav-wrap">
-                      <div className="site-nav-inside">
-                        {_.get(this.props, 'data.config.header.has_nav', null) && (
-                        <ul className="menu">
-                          {_.map(_.get(this.props, 'data.config.header.nav_links', null), (action, action_idx) => {
-                              let pageUrl = _.trim(_.get(this.props, 'page.stackbit_url_path', null), '/');
-                              let actionUrl = _.trim(_.get(action, 'url', null), '/');
-                              return (
-                                <li key={action_idx} className={classNames('menu-item', {'current-menu-item': pageUrl === actionUrl, 'menu-button': _.get(action, 'style', null) === 'button'})}>
-                                  <Link href={withPrefix(_.get(action, 'url', null))}
-                                    {...(_.get(action, 'new_window', null) ? ({target: '_blank'}) : null)}
-                                    {...((_.get(action, 'new_window', null) || _.get(action, 'no_follow', null)) ? ({rel: (_.get(action, 'new_window', null) ? ('noopener ') : '') + (_.get(action, 'no_follow', null) ? ('nofollow') : '')}) : null)}
-                                    className={classNames({'button': _.get(action, 'style', null) === 'button'})}>{_.get(action, 'label', null)}</Link>
-                                </li>
-                              )
-                          })}
-                        </ul>
-                        )}
-                        {_.get(this.props, 'data.config.header.has_social', null) && false && (
-                        <div className="social-links">
-                          {_.map(_.get(this.props, 'data.config.header.social_links', null), (action, action_idx) => (
-                          action && (
-                          <Link key={action_idx} href={withPrefix(_.get(action, 'url', null))}
-                            {...(_.get(action, 'new_window', null) ? ({target: '_blank'}) : null)}
-                            {...((_.get(action, 'new_window', null) || _.get(action, 'no_follow', null)) ? ({rel: (_.get(action, 'new_window', null) ? ('noopener ') : '') + (_.get(action, 'no_follow', null) ? ('nofollow') : '')}) : null)}
-                            className={classNames({'button button-icon': _.get(action, 'style', null) === 'icon'})}>
-                            {((_.get(action, 'style', null) === 'icon') && _.get(action, 'icon_class', null)) ? (<React.Fragment>
-                              <Icon {...this.props} icon={_.get(action, 'icon_class', null)} />
-                              <span className="screen-reader-text">{_.get(action, 'label', null)}</span>
-                            </React.Fragment>) : 
-                            _.get(action, 'label', null)
-                            }
-                          </Link>
-                          )
-                          ))}
-                        </div>
-                        )}
-                      </div>
-                    </div>
-                  </nav>
-                  )}
-                </div>
-              </div>
-            </header>
-        );
+// material ui icons
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+// component imports
+import Logo from "./Logo";
+
+const useStyles = makeStyles(theme => ({
+  em: {
+    fontStyle: "italic"
+  },
+  header: {},
+  link: {
+    color: "#000 !important",
+    textDecoration: "none"
+  },
+  logoLink: {
+    color: "unset",
+    textDecoration: "none"
+  },
+  mobileNav: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
     }
+  },
+  nav: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  }
+}));
+
+function Header(props) {
+  const classes = useStyles();
+  const { topics } = props;
+  const [issues, setIssues] = useState(null);
+  const [policies, setPolicies] = useState(null);
+  const [countries, setCountries] = useState(null);
+  const [companies, setCompanies] = useState(null);
+
+  useEffect(() => {
+    const topicIssues = topics.filter(
+      topic => topic.type == "issue" && topic.stackbit_model_type === "page"
+    );
+    setIssues(topicIssues);
+
+    const topicPolicies = topics.filter(
+      topic => topic.type == "policy" && topic.stackbit_model_type === "page"
+    );
+    setPolicies(topicPolicies);
+
+    const topicCountries = topics.filter(
+      topic => topic.type == "country" && topic.stackbit_model_type === "page"
+    );
+    setCountries(topicCountries);
+
+    const topicCompanies = topics.filter(
+      topic => topic.type == "company" && topic.stackbit_model_type === "page"
+    );
+    setCompanies(topicCompanies);
+  }, []);
+
+  useEffect(() => {}, [issues, policies, countries, companies]);
+
+  const [issueEl, setIssueEl] = React.useState(null);
+  const openIssue = Boolean(issueEl);
+  const handleClickIssue = event => {
+    setIssueEl(event.currentTarget);
+  };
+  const handleCloseIssue = () => {
+    setIssueEl(null);
+  };
+
+  const [policyEl, setPolicyEl] = React.useState(null);
+  const openPolicy = Boolean(policyEl);
+  const handleClickPolicy = event => {
+    setPolicyEl(event.currentTarget);
+  };
+  const handleClosePolicy = () => {
+    setPolicyEl(null);
+  };
+
+  const [countryEl, setCountryEl] = React.useState(null);
+  const openCountry = Boolean(countryEl);
+  const handleClickCountry = event => {
+    setCountryEl(event.currentTarget);
+  };
+  const handleCloseCountry = () => {
+    setCountryEl(null);
+  };
+
+  const [companyEl, setCompanyEl] = React.useState(null);
+  const openCompany = Boolean(companyEl);
+  const handleClickCompany = event => {
+    setCompanyEl(event.currentTarget);
+  };
+  const handleCloseCompany = () => {
+    setCompanyEl(null);
+  };
+
+  return (
+    <header className={classes.header} style={{ backgroundColor: "#c2cecc" }}>
+      <Box p={4}>
+        <Grid container spacing={3} justifyContent="space-between">
+          <Grid item xs={12} sm={4}>
+            <Link href="/" className={classes.logoLink}>
+              <Logo />
+            </Link>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={8}
+            className={classes.nav}
+            alignItems="center"
+            spacing={4}
+            justifyContent="flex-end"
+          >
+            <Grid item xs={12} sm={3}>
+              <Typography id="menu-toggle" className={classes.em}>
+                Explore by...
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              sm={9}
+              spacing={2}
+              justifyContent="space-between"
+            >
+              <Grid item>
+                <Button
+                  id="issue-button"
+                  aria-controls="issue-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openIssue ? "true" : undefined}
+                  onClick={handleClickIssue}
+                >
+                  Issue
+                  {openIssue ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="issue-menu"
+                  anchorEl={issueEl}
+                  open={openIssue}
+                  onClose={handleCloseIssue}
+                  MenuListProps={{
+                    "aria-labelledby": "issue-button"
+                  }}
+                >
+                  {issues && issues.length
+                    ? issues.map(issue => (
+                        <MenuItem key={issue.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/issue/${issue.slug}`}
+                            className={classes.link}
+                          >
+                            {issue.displayTitle}
+                          </Link>
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Grid>
+              <Grid item>
+                <Button
+                  id="policy-button"
+                  aria-controls="policy-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openPolicy ? "true" : undefined}
+                  onClick={handleClickPolicy}
+                >
+                  Policy
+                  {openPolicy ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="policy-menu"
+                  anchorEl={policyEl}
+                  open={openPolicy}
+                  onClose={handleClosePolicy}
+                  MenuListProps={{
+                    "aria-labelledby": "policy-button"
+                  }}
+                >
+                  {policies && policies.length
+                    ? policies.map(policy => (
+                        <MenuItem key={policy.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/policy/${policy.slug}`}
+                            className={classes.link}
+                          >
+                            {policy.displayTitle}
+                          </Link>
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Grid>
+              <Grid item>
+                <Button
+                  id="country-button"
+                  aria-controls="country-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openCountry ? "true" : undefined}
+                  onClick={handleClickCountry}
+                >
+                  Country
+                  {openCountry ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="country-menu"
+                  anchorEl={countryEl}
+                  open={openCountry}
+                  onClose={handleCloseCountry}
+                  MenuListProps={{
+                    "aria-labelledby": "country-button"
+                  }}
+                >
+                  {countries && countries.length
+                    ? countries.map(country => (
+                        <MenuItem key={country.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/country/${country.slug}`}
+                            className={classes.link}
+                          >
+                            {country.displayTitle}
+                          </Link>
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Grid>
+              <Grid item>
+                <Button
+                  id="company-button"
+                  aria-controls="company-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openCompany ? "true" : undefined}
+                  onClick={handleClickCompany}
+                >
+                  Company
+                  {openCompany ? (
+                    <KeyboardArrowUpIcon />
+                  ) : (
+                    <KeyboardArrowDownIcon />
+                  )}
+                </Button>
+                <Menu
+                  id="company-menu"
+                  anchorEl={companyEl}
+                  open={openCompany}
+                  onClose={handleCloseCompany}
+                  MenuListProps={{
+                    "aria-labelledby": "company-button"
+                  }}
+                >
+                  {companies && companies.length
+                    ? companies.map(company => (
+                        <MenuItem key={company.slug} onClick={handleCloseIssue}>
+                          <Link
+                            href={`/company/${company.slug}`}
+                            className={classes.link}
+                          >
+                            {company.displayTitle}
+                          </Link>
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid container item className={classes.mobileNav}>
+            <Grid item>
+              <Typography>Explore by...</Typography>
+            </Grid>
+            <Grid container item>
+              <Grid item>Mobile nav here</Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+    </header>
+  );
 }
+
+Header.propTypes = {
+  topics: PropTypes.array
+};
+
+export default Header;

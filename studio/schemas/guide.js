@@ -8,13 +8,13 @@ export default {
       title: "Title",
       type: "string",
       description: "The title of the quick start guide",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required()
     },
     {
       name: "subtitle",
       title: "Subtitle",
       type: "string",
-      description: "The subtitle of the quick start guide",
+      description: "The subtitle of the quick start guide"
     },
     {
       title: "Slug",
@@ -22,40 +22,29 @@ export default {
       type: "slug",
       description:
         "The slug for the quick start guide. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
         source: "title",
         maxLength: 200, // will be ignored if slugify is set
-        slugify: (input) =>
+        slugify: input =>
           input
             .toLowerCase()
             .replace(/[^\w\s]/gi, "")
             .replace(/\s+/g, "-")
-            .slice(0, 200),
-      },
+            .slice(0, 200)
+      }
     },
     {
       name: "author",
       title: "Author",
       type: "reference",
       to: [{ type: "person" }],
-      description: "The author of this quick start guide",
+      description: "The author of this quick start guide"
     },
     {
       name: "content",
       title: "Quick start guide content",
-      type: "array",
-      of: [
-        { type: "block" },
-        {
-          type: "reference",
-          to: [
-            {
-              type: "citation",
-            },
-          ],
-        },
-      ],
+      type: "portable_text"
     },
     {
       name: "datePublished",
@@ -64,18 +53,18 @@ export default {
       description: "Date this quick start guide was published",
       initialValue: () => new Date().toISOString(),
       options: {
-        dateFormat: "MMMM DD YYYY",
-      },
+        dateFormat: "MMMM DD YYYY"
+      }
     },
     {
       type: "string",
       name: "layout",
       title: "Layout",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["guide"],
-      },
+        list: ["guide"]
+      }
     },
     {
       type: "string",
@@ -83,10 +72,10 @@ export default {
       title: "Directory",
       description: "The directory path where this file is stored",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["content/pages"],
-      },
+        list: ["content/pages"]
+      }
     },
     {
       type: "string",
@@ -94,15 +83,15 @@ export default {
       title: "Stackbit Model Type",
       description: "Stackbit model type",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["page"],
-      },
-    },
+        list: ["page"]
+      }
+    }
   ],
   preview: {
     select: {
-      title: "title",
-    },
-  },
+      title: "title"
+    }
+  }
 };

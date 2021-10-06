@@ -1,16 +1,19 @@
-import CtaButtons from './CtaButtons'
-import Footer from './Footer'
-import FormField from './FormField'
-import Header from './Header'
-import Layout from './Layout'
-import Icon from './Icon'
-import SectionCitations from './SectionCitations'
-import SectionContent from './SectionContent'
-import SectionForm from './SectionForm'
-import SectionHero from './SectionHero'
-import SectionArticles from './SectionArticles'
-import SectionPolicyActions from './SectionPolicyActions'
+import CtaButtons from "./CtaButtons";
+import Footer from "./Footer";
+import FormField from "./FormField";
+import Header from "./Header";
+import Layout from "./Layout";
+import Icon from "./Icon";
+import SectionCitations from "./SectionCitations";
+import SectionContent from "./SectionContent";
+import SectionForm from "./SectionForm";
+import SectionHero from "./SectionHero";
+import SectionArticles from "./SectionArticles";
+import SectionPolicyActions from "./SectionPolicyActions";
 import SectionGuides from "./SectionGuides";
+import SectionTopics from "./SectionTopics";
+import SectionTracker from "./SectionTracker";
+import TrackerActions from "./TrackerActions";
 
 export {
   CtaButtons,
@@ -26,6 +29,9 @@ export {
   SectionArticles,
   SectionPolicyActions,
   SectionGuides,
+  SectionTopics,
+  SectionTracker,
+  TrackerActions
 };
 
 export default {
@@ -42,4 +48,7 @@ export default {
   SectionArticles,
   SectionPolicyActions,
   SectionGuides,
+  SectionTopics,
+  SectionTracker,
+  TrackerActions
 };

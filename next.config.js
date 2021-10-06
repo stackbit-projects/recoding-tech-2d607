@@ -1,12 +1,12 @@
-const path = require('path')
-const sourcebit = require('sourcebit')
-const dotenv = require('dotenv')
+const path = require("path");
+const sourcebit = require("sourcebit");
+const dotenv = require("dotenv");
 
-const sourcebitConfig = require('./sourcebit.js')
+const sourcebitConfig = require("./sourcebit.js");
 
-sourcebit.fetch(sourcebitConfig)
+sourcebit.fetch(sourcebitConfig);
 
-dotenv.config()
+dotenv.config();
 
 module.exports = {
   trailingSlash: true,
@@ -20,9 +20,9 @@ module.exports = {
     // @import "../../public/assets/css/example.css";
     importer: (url, prev, done) => {
       if (/\.css$/i.test(url)) {
-        return { file: path.join('../../public/css', url) }
+        return { file: path.join("../../public/css", url) };
       }
-      return null
+      return null;
     }
   },
   webpack: (config, { webpack }) => {
@@ -31,7 +31,7 @@ module.exports = {
     // Instead, the src/pages/[...slug].js uses the "withRemoteDataUpdates"
     // function to update the content on the page without refreshing the
     // whole page
-    config.plugins.push(new webpack.WatchIgnorePlugin([/\/content\//]))
-    return config
+    config.plugins.push(new webpack.WatchIgnorePlugin([/\/content\//]));
+    return config;
   }
-}
+};
