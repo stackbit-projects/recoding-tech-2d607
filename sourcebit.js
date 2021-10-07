@@ -2,6 +2,19 @@ const _ = require("lodash");
 
 const isDev = process.env.NODE_ENV === "development";
 
+const query = `*[_type == "guide"]{
+  ...,
+  content[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "reference" => {
+        "chicagoCitation": @.reference->chicagoCitation
+      }
+    }
+  }
+}`;
+
 module.exports = {
   plugins: [
     {
