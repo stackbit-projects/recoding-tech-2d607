@@ -10,7 +10,7 @@
     "fetch": "sourcebit fetch",
     "build": "next build && next export",
     "start": "next start",
-    "import": "node importData.mjs",
+    "import:citations": "node importData.mjs",
     "compile": "babel importData.mjs -o importData.js; babel deleteData.mjs -o deleteData.js",
     "reset": "node deleteData.mjs"
   },
