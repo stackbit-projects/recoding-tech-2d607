@@ -43,4 +43,6 @@ jobs:
           SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
           SANITY_API_VERSION: ${{secrets.SANITY_API_VERSION}}
           ZOTERO_GROUP_ID: ${{secrets.ZOTERO_GROUP_ID}}
+          ZOTERO_API_KEY: ${{secrets.ZOTERO_API_KEY}}
+          ZOTERO_API_VERSION: ${{secrets.ZOTERO_API_VERSION}}
         run: npm run import:citations
