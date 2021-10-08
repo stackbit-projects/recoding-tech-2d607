@@ -34,12 +34,13 @@ export default function Guide(props) {
               )}
             </div>
           )}
-          <BlockContent blocks={page.content} serializers={serializers} />
-          {/* htmlToReact(props.page.content) */}
-          {/* {_.get(props, "page.tags", null) &&
-              props.page.tags.map((tag) => (
-                <div className="post-tag">{tag.label}</div>
-              ))} */}
+          {htmlToReact(props.page.content)}
+          {_.get(props, "page.tags", null) &&
+            props.page.tags.map(tag => (
+              <div className="post-tag" key={tag.label}>
+                {tag.label}
+              </div>
+            ))}
         </header>
         {_.get(props, "page.content_img_path", null) && (
           <div className="post-image">
