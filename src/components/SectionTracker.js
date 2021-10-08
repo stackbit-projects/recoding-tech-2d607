@@ -199,7 +199,7 @@ function SectionTracker(props) {
                 open={openIssues}
                 onClose={handleCloseIssues}
               >
-                {issues.length
+                {issues && issues.length
                   ? issues.map(issue => (
                       <MenuItem
                         key={issue.replace(" ", "-")}
@@ -242,7 +242,7 @@ function SectionTracker(props) {
                 open={openPolicies}
                 onClose={handleClosePolicies}
               >
-                {policies.length
+                {policies && policies.length
                   ? policies.map(policy => (
                       <MenuItem
                         key={policy.replace(" ", "-")}
@@ -285,7 +285,7 @@ function SectionTracker(props) {
                 open={openCountries}
                 onClose={handleCloseCountries}
               >
-                {countries.length
+                {countries && countries.length
                   ? countries.map(country => (
                       <MenuItem
                         key={country.slug}
@@ -328,7 +328,7 @@ function SectionTracker(props) {
                 open={openCompanies}
                 onClose={handleCloseCompanies}
               >
-                {companies.length
+                {companies && companies.length
                   ? companies.map(company => (
                       <MenuItem
                         key={companies.replace(" ", "-")}
