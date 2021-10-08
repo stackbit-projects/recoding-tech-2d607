@@ -1,6 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -117,7 +118,9 @@ const TrackerActions = props => {
               </TableCell>
               <TableCell key={page.slug}>{page.type}</TableCell>
               <TableCell key={page.slug}>{page.country.displayTitle}</TableCell>
-              <TableCell key={page.slug}>{page.dateInitiated}</TableCell>
+              <TableCell key={page.slug}>
+                {moment(page.dateInitiated).strftime("%B %e, %Y")}
+              </TableCell>
               <TableCell key={page.slug}>{page.status}</TableCell>
               <TableCell key={page.slug}>{page.lastUpdate}</TableCell>
             </TableRow>

@@ -1,6 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -98,7 +99,9 @@ const SectionCitations = props => {
                     ? citation.publicationTitle
                     : citation.websiteTitle}
                 </Typography>
-                <Typography>{citation.date}</Typography>
+                <Typography>
+                  {moment(citation.date).strftime("%B %e, %Y")}
+                </Typography>
               </Grid>
             ))
           : null}

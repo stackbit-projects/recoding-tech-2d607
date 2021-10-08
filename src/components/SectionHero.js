@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -12,6 +13,13 @@ import Typography from "@mui/material/Typography";
 import { withPrefix } from "../utils";
 
 const useStyles = makeStyles(theme => ({
+  author: {
+    fontStyle: "italic",
+    marginTop: 50,
+    position: "relative",
+    textAlign: "center",
+    zIndex: 1
+  },
   hero: {
     position: "relative"
   },
@@ -78,6 +86,10 @@ function SectionHero(props) {
             <Typography variant="h4" className={classes.superTitle}>
               Tracker Detail
             </Typography>
+          ) : page.__metadata.modelName == "guide" ? (
+            <Typography variant="h4" className={classes.superTitle}>
+              Quick-start Guide
+            </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
             <Typography variant="h1" className={classes.title}>
@@ -98,6 +110,16 @@ function SectionHero(props) {
                 {page.heroLinkText}
               </Link>
             </div>
+          )}
+          {page.__metadata.modelName == "guide" && (
+            <Typography
+              component="div"
+              variant="body1"
+              className={classes.author}
+            >
+              {page.author.name} – Last updated{" "}
+              {moment(page.datePublished).strftime("%B %e, %Y")}
+            </Typography>
           )}
         </Container>
       </Box>
