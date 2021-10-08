@@ -28,7 +28,9 @@ const PolicyAction = props => {
           <Box my={4}>
             <Grid container>
               <Grid item sm={12} md={8}>
-                {htmlToReact(page.summary)}
+                <Typography component="div" variant="body1">
+                  {htmlToReact(page.summary)}
+                </Typography>
               </Grid>
               <Grid item sm={12} md={4}>
                 <Typography component="div" variant="h4">
