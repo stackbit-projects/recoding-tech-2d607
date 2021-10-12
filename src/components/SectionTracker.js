@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
@@ -85,22 +85,40 @@ function SectionTracker(props) {
   ];
 
   // filters
-  let issues, policies, companies;
-  actions.filter(action => {
-    issues = action.relatedTopics
-      .filter(topic => topic.type == "issue")
-      .map(topic => topic.displayTitle);
+  const [issues, setIssues] = useState(null);
+  const [policies, setPolicies] = useState(null);
+  const [companies, setCompanies] = useState(null);
+  const [countries, setCountries] = useState(null);
 
-    policies = action.relatedTopics
-      .filter(topic => topic.type == "policy")
-      .map(topic => topic.displayTitle);
+  useEffect(() => {
+    if (actions) {
+      actions.filter(action => {
+        if (action.relatedTopics) {
+          const newIssues = action.relatedTopics
+            .filter(topic => topic.type == "issue")
+            .map(topic => topic.displayTitle);
 
-    companies = action.relatedTopics
-      .filter(topic => topic.type == "company")
-      .map(topic => topic.displayTitle);
-  });
+          setIssues(newIssues);
 
-  const countries = actions.map(action => action.country);
+          const newPolicies = action.relatedTopics
+            .filter(topic => topic.type == "policy")
+            .map(topic => topic.displayTitle);
+
+          setPolicies(newPolicies);
+
+          const newCompanies = action.relatedTopics
+            .filter(topic => topic.type == "company")
+            .map(topic => topic.displayTitle);
+
+          setCompanies(newCompanies);
+
+          const newCountries = actions.map(action => action.country);
+
+          setCountries(newCountries);
+        }
+      });
+    }
+  }, [actions]);
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssues = Boolean(issueEl);
@@ -286,15 +304,19 @@ function SectionTracker(props) {
                 onClose={handleCloseCountries}
               >
                 {countries && countries.length
-                  ? countries.map(country => (
-                      <MenuItem
-                        key={country.slug}
-                        onClick={handleCloseCountries}
-                        disableRipple
-                      >
-                        {country.displayTitle}
-                      </MenuItem>
-                    ))
+                  ? countries.map(country => {
+                      if (country) {
+                        return (
+                          <MenuItem
+                            key={country.slug}
+                            onClick={handleCloseCountries}
+                            disableRipple
+                          >
+                            {country.displayTitle}
+                          </MenuItem>
+                        );
+                      }
+                    })
                   : null}
               </Menu>
             </Grid>
@@ -371,7 +393,11 @@ function SectionTracker(props) {
                       {headers.map(column => {
                         let value = row[column.id];
                         if (!value) {
-                          value = row.country.displayTitle; // #FIXME
+                          if (row.country) {
+                            value = row.country.displayTitle; // #FIXME
+                          } else {
+                            value = "FIXME";
+                          }
                         }
                         return (
                           <TableCell
