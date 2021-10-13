@@ -54,7 +54,7 @@ const theme = createTheme({
     primary: {
       main: "#FF0033"
     },
-    seconary: {
+    secondary: {
       main: "#C2CECC"
     },
     issue: {
