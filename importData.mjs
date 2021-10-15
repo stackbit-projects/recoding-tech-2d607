@@ -148,7 +148,11 @@ async function fetchAllCitations() {
         console.log(`Parsing batch starting at ${start}...`);
         start += citations.length;
         if (citations.length < limit) finished = true;
-        return citations.map(transform);
+        const allRecords = citations.map(transform);
+        const records = allRecords.filter(citation =>
+          citation.data ? citation.data.itemType != "attachment" : false
+        );
+        return records;
       })
       .then(
         docs =>
@@ -159,7 +163,7 @@ async function fetchAllCitations() {
         console.error(error);
       });
   }
-  console.log(`Fetched ${documents.length} citations.`);
+  console.log(`Fetched ${documents.length} records.`);
 
   try {
     if (documents.length > 0) {
