@@ -6,7 +6,7 @@ name: zotero-citations-pull
 # Triggers the workflow on regular cron intervals. Schedule is approximate.
 on:
   schedule:
-  - cron:  '0 0 * * *'
+  - cron:  '00 13,21 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
