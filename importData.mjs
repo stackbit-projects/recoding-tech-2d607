@@ -24,12 +24,14 @@ const flatten = arr => {
       (item, index, self) =>
         index ===
         self.findIndex(a => {
-          if (a.name) {
-            return a.name === item.name;
-          } else if (a.lastName) {
-            return a.lastName === item.lastName;
-          } else {
-            return a.title === item.title;
+          if (item !== undefined && a !== undefined) {
+            if (a.name) {
+              return a.name === item.name;
+            } else if (a.lastName) {
+              return a.lastName === item.lastName;
+            } else {
+              return a.title === item.title;
+            }
           }
         })
     );
@@ -39,69 +41,71 @@ const flatten = arr => {
 const transform = externalCitation => {
   console.log(`Found citation ${externalCitation.key}`);
 
-  const creators = [];
-  const tags = [];
+  if (externalCitation.data.itemType != "attachment") {
+    const creators = [];
+    const tags = [];
 
-  if (externalCitation.data.creators) {
-    externalCitation.data.creators.map((creator, index) => {
-      const date = new Date();
-      const now = date.getMilliseconds().toString();
-      if (!creator.firstName || !creator.lastName) {
-        console.warn(
-          `Skipping creator with invalid name: ${creator.firstname} ${creator.lastName}`
-        );
-        return;
-      }
-      const item = {
-        _type: "creator",
-        _id: `creator-${creator.lastName.replace(
-          /[^A-Z0-9]/gi,
-          "-"
-        )}-${creator.firstName.replace(/[^A-Z0-9]/gi, "-")}`,
-        _key: `creator-${now}-${index}`,
-        firstName: creator.firstName,
-        lastName: creator.lastName,
-        creatorType: creator.creatorType
-      };
-      return creators.push(item);
-    });
-  }
-
-  if (externalCitation.data.creators) {
-    externalCitation.data.tags.map((tag, index) => {
-      if (tag.tag) {
+    if (externalCitation.data.creators) {
+      externalCitation.data.creators.map((creator, index) => {
         const date = new Date();
         const now = date.getMilliseconds().toString();
+        if (!creator.firstName || !creator.lastName) {
+          console.warn(
+            `Skipping creator with invalid name: ${creator.firstname} ${creator.lastName}`
+          );
+          return;
+        }
         const item = {
-          _type: "topic",
-          _id: tag.tag.replace(/[^A-Z0-9]/gi, "-"),
-          _key: `topic-${now}-${index}`,
-          name: tag.tag
+          _type: "creator",
+          _id: `creator-${creator.lastName.replace(
+            /[^A-Z0-9]/gi,
+            "-"
+          )}-${creator.firstName.replace(/[^A-Z0-9]/gi, "-")}`,
+          _key: `creator-${now}-${index}`,
+          firstName: creator.firstName,
+          lastName: creator.lastName,
+          creatorType: creator.creatorType
         };
-        return tags.push(item);
-      }
-    });
-  }
+        return creators.push(item);
+      });
+    }
 
-  const citation = {
-    _id: externalCitation.key,
-    _type: "citation",
-    shortTitle: externalCitation.data.shortTitle,
-    title: externalCitation.data.title,
-    date: externalCitation.meta.parsedDate,
-    creators: creators,
-    topics: tags,
-    url: externalCitation.data.url,
-    websiteTitle: externalCitation.data.websiteTitle,
-    institution: externalCitation.data.institution,
-    publicationTitle: externalCitation.data.publicationTitle,
-    place: externalCitation.data.place,
-    publisher: externalCitation.data.publisher,
-    blogTitle: externalCitation.data.blogTitle,
-    network: externalCitation.data.network,
-    chicagoCitation: externalCitation.citation
-  };
-  return [creators, tags, citation];
+    if (externalCitation.data.creators) {
+      externalCitation.data.tags.map((tag, index) => {
+        if (tag.tag) {
+          const date = new Date();
+          const now = date.getMilliseconds().toString();
+          const item = {
+            _type: "topic",
+            _id: tag.tag.replace(/[^A-Z0-9]/gi, "-"),
+            _key: `topic-${now}-${index}`,
+            name: tag.tag
+          };
+          return tags.push(item);
+        }
+      });
+    }
+
+    const citation = {
+      _id: externalCitation.key,
+      _type: "citation",
+      shortTitle: externalCitation.data.shortTitle,
+      title: externalCitation.data.title,
+      date: externalCitation.meta.parsedDate,
+      creators: creators,
+      topics: tags,
+      url: externalCitation.data.url,
+      websiteTitle: externalCitation.data.websiteTitle,
+      institution: externalCitation.data.institution,
+      publicationTitle: externalCitation.data.publicationTitle,
+      place: externalCitation.data.place,
+      publisher: externalCitation.data.publisher,
+      blogTitle: externalCitation.data.blogTitle,
+      network: externalCitation.data.network,
+      chicagoCitation: externalCitation.citation
+    };
+    return [creators, tags, citation];
+  }
 };
 
 async function fetchBackoff(url, options) {
@@ -148,11 +152,7 @@ async function fetchAllCitations() {
         console.log(`Parsing batch starting at ${start}...`);
         start += citations.length;
         if (citations.length < limit) finished = true;
-        const allRecords = citations.map(transform);
-        const records = allRecords.filter(citation =>
-          citation.data ? citation.data.itemType != "attachment" : false
-        );
-        return records;
+        return citations.map(transform);
       })
       .then(
         docs =>
