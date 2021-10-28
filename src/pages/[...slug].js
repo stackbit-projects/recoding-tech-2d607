@@ -5,20 +5,18 @@ import { withRemoteDataUpdates } from "sourcebit-target-next/with-remote-data-up
 
 import pageLayouts from "../layouts";
 
-class Page extends React.Component {
-  render() {
-    // every page can have different layout, pick the layout based
-    // on the model of the page (_type in Sanity CMS)
-    let componentName;
+const Page = props => {
+  // every page can have different layout, pick the layout based
+  // on the model of the page (_type in Sanity CMS)
+  let componentName;
 
-    if (_.get(this.props, "page.__metadata.modelName") === "topic") {
-      componentName = _.get(this.props, "page.type");
-    } else {
-      componentName = _.get(this.props, "page.__metadata.modelName");
-    }
-    const PageLayout = pageLayouts[componentName];
-    return <PageLayout {...this.props} />;
+  if (_.get(props, "page.__metadata.modelName") === "topic") {
+    componentName = _.get(props, "page.type");
+  } else {
+    componentName = _.get(props, "page.__metadata.modelName");
   }
+  const PageLayout = pageLayouts[componentName];
+  return <PageLayout {...props} />;
 }
 
 export async function getStaticPaths() {

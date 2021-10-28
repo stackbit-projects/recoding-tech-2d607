@@ -57,7 +57,7 @@ const SectionGuides = props => {
   }, []);
 
   const guideClick = url => {
-    Router.push({ pathname: url });
+    Router.push({ pathname: '/guide/' + url });
   };
 
   return (

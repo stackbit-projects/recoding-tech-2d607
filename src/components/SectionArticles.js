@@ -62,7 +62,7 @@ function SectionArticle(props) {
   }, [article]);
 
   const articleClick = url => {
-    Router.push({ pathname: url });
+    Router.push({ pathname: '/article/' + url });
   };
 
   const trackerClick = () => {

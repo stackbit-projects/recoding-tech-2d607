@@ -3,10 +3,7 @@ import article from "./article";
 import page from "./page";
 import policy_action from "./policy_action";
 import guide from "./guide";
-import issue from "./issue";
-import policy from "./policy";
-import country from "./country";
-import company from "./company";
+import topic from "./topic";
 
 export { advanced, article, page, policy_action, guide };
 
@@ -16,8 +13,8 @@ export default {
   page,
   policy_action,
   guide,
-  issue,
-  policy,
-  country,
-  company
+  issue: topic,
+  policy: topic,
+  country: topic,
+  company: topic
 };

@@ -42,19 +42,31 @@ export default {
       validation: null
     },
     {
+      title: "Further Reading",
+      name: "relatedCommentary",
       type: "array",
-      name: "topics",
       of: [
         {
-          title: "Name",
-          type: "object",
-          fields: [
+          type: "reference",
+          to: [
             {
-              title: "Name",
-              name: "name",
-              type: "string"
+              type: "citation"
+            },
+            {
+              type: "article"
             }
           ]
+        }
+      ]
+    },
+    {
+      title: "Related topics",
+      name: "relatedTopics",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "topic" }]
         }
       ]
     },

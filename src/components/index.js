@@ -1,9 +1,12 @@
 import CtaButtons from "./CtaButtons";
+import FancyCard from "./FancyCard";
 import Footer from "./Footer";
 import FormField from "./FormField";
 import Header from "./Header";
 import Layout from "./Layout";
 import Icon from "./Icon";
+import RelatedReadings from "./RelatedReadings";
+import RelatedTopics from "./RelatedTopics";
 import SectionCitations from "./SectionCitations";
 import SectionContent from "./SectionContent";
 import SectionForm from "./SectionForm";
@@ -17,11 +20,14 @@ import TrackerActions from "./TrackerActions";
 
 export {
   CtaButtons,
+  FancyCard,
   Footer,
   FormField,
   Header,
   Layout,
   Icon,
+  RelatedReadings,
+  RelatedTopics,
   SectionCitations,
   SectionContent,
   SectionForm,
@@ -36,11 +42,14 @@ export {
 
 export default {
   CtaButtons,
+  FancyCard,
   Footer,
   FormField,
   Header,
   Layout,
   Icon,
+  RelatedReadings,
+  RelatedTopics,
   SectionCitations,
   SectionContent,
   SectionForm,

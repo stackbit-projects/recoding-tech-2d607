@@ -1,13 +1,13 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import _ from 'lodash';
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(theme => ({
@@ -18,29 +18,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SectionTopics = props => {
+const Topics = props => {
+  const { topics } = props;
+  if (!Array.isArray(topics) || !topics.length) return null;
   const classes = useStyles();
-  const { section } = props;
-  const [topics, setTopics] = useState(null);
 
-  useEffect(() => {
-    if (Array.isArray(section.featuredTopics) && section.featuredTopics.length ) {
-      setTopics(section.featuredTopics.filter(topic => topic.type));
-    }
-  }, []);
-
-  useEffect(() => {}, [topics]);
+  const title = _.get(props, 'title', 'Related Topics');
 
   return (
     <section>
       <Box my={4}>
         <Container>
           <Typography component="h2" variant="h3" gutterBottom>
-            Featured Topics
+            {title}
           </Typography>
-          <Stack direction="row" spacing={3}>
-            {topics
-              ? topics.map((topic, i) => (
+          <Container spacing={3}>
+            {topics.map((topic, i) => (
                   <Chip
                     key={i}
                     label={topic.name}
@@ -49,17 +42,16 @@ const SectionTopics = props => {
                     className={classes.chip}
                     clickable
                   />
-                ))
-              : null}
-          </Stack>
+                ))}
+          </Container>
         </Container>
       </Box>
     </section>
   );
 };
 
-SectionTopics.propTypes = {
+Topics.propTypes = {
   section: PropTypes.object
 };
 
-export default SectionTopics;
+export default Topics;

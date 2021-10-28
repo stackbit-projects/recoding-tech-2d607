@@ -52,7 +52,7 @@ module.exports = {
             predicate: _.matchesProperty("__metadata.modelName", "advanced")
           },
           {
-            path: "/articles/{slug}",
+            path: "/article/{slug}",
             predicate: _.matchesProperty("__metadata.modelName", "article")
           },
           {
@@ -75,7 +75,7 @@ module.exports = {
             predicate: _.matchesProperty("__metadata.modelName", "post")
           },
           {
-            path: "/guides/{slug}",
+            path: "/guide/{slug}",
             predicate: _.matchesProperty("__metadata.modelName", "guide")
           }
         ],
