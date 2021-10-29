@@ -91,9 +91,9 @@ const Topic = props => {
       <Box my={4}>
         <Container>
           <Box my={4}>
+            <RelatedActions {...props} />
             <Grid container>
               <Grid item sm={12} md={8}>
-                <RelatedActions {...props} />
                 {page.fast_facts && (
                   <Card
                     variant="outlined"

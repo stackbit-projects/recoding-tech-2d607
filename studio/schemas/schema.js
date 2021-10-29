@@ -24,6 +24,7 @@ import section_content from "./section_content.js";
 import section_form from "./section_form.js";
 import section_policy_actions from "./section_policy_actions";
 import section_guides from "./section_guides";
+import section_search from "./section_search.js";
 import section_topics from "./section_topics.js";
 import section_tracker from "./section_tracker.js";
 import topic from "./topic.js";
@@ -57,6 +58,7 @@ export default createSchema({
     section_content,
     section_form,
     section_guides,
+    section_search,
     section_topics,
     section_tracker,
     section_policy_actions,

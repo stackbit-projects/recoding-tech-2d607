@@ -70,7 +70,7 @@ const RelatedDocuments = props => {
               variant="body1"
               className={classes.em}
             >
-              Overview of {page.displayTitle ? page.displayTitle.toLowerCase() : page.name } and recommended reading
+              Overview of {page.displayTitle ? page.displayTitle : page.name } and recommended reading
             </Typography>
           </Grid>
           <Box my={4} pt={8} sx={{ borderTop: "1px solid #000" }}>

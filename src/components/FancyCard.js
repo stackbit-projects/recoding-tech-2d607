@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FancyCard = ({ title, content, onClick = (() => {}) }) => {
+const FancyCard = ({ category, title, content, author, publication, date, onClick = (() => {}) }) => {
   const classes = useStyles();
   const theme = useTheme();
   console.log('style:', theme);
@@ -57,9 +57,29 @@ const FancyCard = ({ title, content, onClick = (() => {}) }) => {
     >
       <CardActionArea onClick={onClick}>
         <CardContent>
+          {category && (
+            <Typography component="div" variant="h4">
+            {category}
+            </Typography>
+          )}
           {title && (
             <Typography component="div" variant="h2">
             {title}
+            </Typography>
+          )}
+          {author && (
+            <Typography component="div" variant="h3">
+            {author}
+            </Typography>
+          )}
+          {publication && (
+            <Typography component="div" variant="h4">
+            {publication}
+            </Typography>
+          )}
+          {date && (
+            <Typography component="div" variant="body1" className={classes.em}>
+            {date}
             </Typography>
           )}
           <Typography

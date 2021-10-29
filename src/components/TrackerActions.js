@@ -93,7 +93,7 @@ const TrackerActions = props => {
       <Typography gutterBottom>
         <Link href="/tracker" className={classes.trackerLink}>
           <KeyboardArrowLeftIcon className={classes.trackerIcon} />
-          Return to law &amp; regulation tracker
+          Return to law & regulation tracker
         </Link>
       </Typography>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -117,7 +117,7 @@ const TrackerActions = props => {
                 <KeyboardArrowRightIcon className={classes.icon} />
               </TableCell>
               <TableCell key={page.slug}>{page.type}</TableCell>
-              <TableCell key={page.slug}>{page.country.displayTitle}</TableCell>
+              <TableCell key={page.slug}>{page.country ? page.country.displayTitle : ""}</TableCell>
               <TableCell key={page.slug}>
                 {moment(page.dateInitiated).strftime("%B %e, %Y")}
               </TableCell>

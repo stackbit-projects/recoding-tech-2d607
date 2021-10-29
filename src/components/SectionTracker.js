@@ -1,6 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useRouter } from 'next/router';
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -73,7 +74,9 @@ const useStyles = makeStyles(theme => ({
 
 function SectionTracker(props) {
   const classes = useStyles();
-  const { actions, section } = props;
+  const { query } = useRouter();
+  const { section } = props;
+  const [actions, setActions] = useState(props.actions);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -91,34 +94,48 @@ function SectionTracker(props) {
   const [countries, setCountries] = useState(null);
 
   useEffect(() => {
-    if (actions) {
-      actions.filter(action => {
-        if (action.relatedTopics) {
-          const newIssues = action.relatedTopics
-            .filter(topic => topic.type == "issue")
-            .map(topic => topic.displayTitle);
+    if (props.actions) {
+      const newIssues = new Set();
+      const newPolicies = new Set();
+      const newCompanies = new Set();
+      const newCountries = new Set();
+      setActions(actions.filter(action => {
+        let selectedIssues = !query.issues;
+        let selectedPolicies = !query.policies;
+        let selectedCompanies = !query.companies;
+        let selectedCountries = !query.countries;
+        if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
+          action.relatedTopics.map(topic => {
+            switch (topic.type) {
+              case 'issue':
+                if (query.issues === topic.slug) selectedIssues = true;
+                newIssues.add(topic);
+                break;
+              case 'policy':
+                if (query.policies === topic.slug) selectedPolicies = true;
+                newPolicies.add(topic);
+                break;
+              case 'company':
+                if (query.companies === topic.slug) selectedCompanies = true;
+                newCompanies.add(topic);
+                break;
+              case 'country':
+                if (query.countries === topic.slug) selectedCountries = true;
+                newCountries.add(topic);
+                break;
+            }
 
-          setIssues(newIssues);
-
-          const newPolicies = action.relatedTopics
-            .filter(topic => topic.type == "policy")
-            .map(topic => topic.displayTitle);
-
-          setPolicies(newPolicies);
-
-          const newCompanies = action.relatedTopics
-            .filter(topic => topic.type == "company")
-            .map(topic => topic.displayTitle);
-
-          setCompanies(newCompanies);
-
-          const newCountries = actions.map(action => action.country);
-
-          setCountries(newCountries);
+            return [newIssues, newPolicies, newCompanies, newCountries];
+          });
         }
-      });
+        return selectedIssues && selectedPolicies && selectedCompanies && selectedCountries;
+      }));
+      setIssues([...newIssues]);
+      setPolicies([...newPolicies]);
+      setCompanies([...newCompanies]);
+      setCountries([...newCountries]);
     }
-  }, [actions]);
+  }, []);
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssues = Boolean(issueEl);
@@ -220,11 +237,11 @@ function SectionTracker(props) {
                 {issues && issues.length
                   ? issues.map(issue => (
                       <MenuItem
-                        key={issue.replace(" ", "-")}
+                        key={issue.slug}
                         onClick={handleCloseIssues}
                         disableRipple
                       >
-                        {issue}
+                        {issue.displayTitle || issue.name}
                       </MenuItem>
                     ))
                   : null}
@@ -263,11 +280,11 @@ function SectionTracker(props) {
                 {policies && policies.length
                   ? policies.map(policy => (
                       <MenuItem
-                        key={policy.replace(" ", "-")}
+                        key={policy.slug}
                         onClick={handleClosePolicies}
                         disableRipple
                       >
-                        {policy}
+                        {policy.displayTitle || policy.name}
                       </MenuItem>
                     ))
                   : null}
@@ -312,7 +329,7 @@ function SectionTracker(props) {
                             onClick={handleCloseCountries}
                             disableRipple
                           >
-                            {country.displayTitle}
+                            {country.displayTitle || country.name}
                           </MenuItem>
                         );
                       }
@@ -353,11 +370,11 @@ function SectionTracker(props) {
                 {companies && companies.length
                   ? companies.map(company => (
                       <MenuItem
-                        key={companies.replace(" ", "-")}
+                        key={companies.slug}
                         onClick={handleCloseCompanies}
                         disableRipple
                       >
-                        {company}
+                        {company.displayTitle || company.name}
                       </MenuItem>
                     ))
                   : null}
@@ -396,7 +413,7 @@ function SectionTracker(props) {
                           if (row.country) {
                             value = row.country.displayTitle; // #FIXME
                           } else {
-                            value = "FIXME";
+                            value = "";
                           }
                         }
                         return (

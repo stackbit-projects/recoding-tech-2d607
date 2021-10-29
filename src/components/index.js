@@ -14,6 +14,7 @@ import SectionHero from "./SectionHero";
 import SectionArticles from "./SectionArticles";
 import SectionPolicyActions from "./SectionPolicyActions";
 import SectionGuides from "./SectionGuides";
+import SectionSearch from "./SectionSearch";
 import SectionTopics from "./SectionTopics";
 import SectionTracker from "./SectionTracker";
 import TrackerActions from "./TrackerActions";
@@ -35,6 +36,7 @@ export {
   SectionArticles,
   SectionPolicyActions,
   SectionGuides,
+  SectionSearch,
   SectionTopics,
   SectionTracker,
   TrackerActions
@@ -57,6 +59,7 @@ export default {
   SectionArticles,
   SectionPolicyActions,
   SectionGuides,
+  SectionSearch,
   SectionTopics,
   SectionTracker,
   TrackerActions

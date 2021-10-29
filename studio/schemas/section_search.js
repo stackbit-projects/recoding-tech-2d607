@@ -1,7 +1,7 @@
 export default {
   type: 'object',
-  name: 'section_citations',
-  title: 'Citations Page',
+  name: 'section_search',
+  title: 'Search Page',
   fields: [
     {
       type: 'string',
@@ -11,7 +11,7 @@ export default {
       hidden: false,
       validation: Rule => Rule.required(),
       options: {
-        list: ['section_citations']
+        list: ['section_search']
       }
     },
     {

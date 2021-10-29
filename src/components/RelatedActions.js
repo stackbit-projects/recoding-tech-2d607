@@ -6,6 +6,7 @@ import moment from "moment-strftime";
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -54,6 +55,10 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
+  em: {
+    fontStyle: "italic",
+    textAlign: "center"
+  },
   tableLink: {
     color: "#000",
     position: "relative",
@@ -79,9 +84,8 @@ const useStyles = makeStyles(theme => ({
 
 const RelatedActions = props => {
   const classes = useStyles();
-  const { page, citations } = props;
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [actions, setActions] = React.useState(null);
+  const { page, actions } = props;
+  const [related, setRelated] = React.useState(null);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -93,18 +97,59 @@ const RelatedActions = props => {
   ];
 
   useEffect(() => {
-    setActions(citations.filter(citation => {
-      console.log('citation:', citation);
-      if (Array.isArray(citation.topics) && citation.topics.length) {
-        return citation.topics.findIndex(topic => topic.name === page.name) >= 0
+    const relatedActions = actions.filter(action => {
+      if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
+        return action.relatedTopics.findIndex(topic => topic.name === page.name) >= 0
       } else return false;
-    }));
+    });
+    console.log('actions:', relatedActions);
+    setRelated(relatedActions);
   }, []);
 
+  // table pagination
+  const [current, setCurrent] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  return Array.isArray(actions) && actions.length ? (
+  const handleChangePage = (event, newPage) => {
+    setCurrent(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(+event.target.value);
+    setCurrent(0);
+  };
+
+  return Array.isArray(related) && related.length ? (
     <section>
-      <Box my={4}>
+      <Grid
+        container
+        item
+        justifyContent="space-between"
+        className={classes.gridTitle}
+      >
+        <Grid item xs>
+          <Typography component="h2" variant="h4" className={classes.title} >
+            Law & Regulation Tracker |
+          </Typography>
+        </Grid>
+        <Grid item xs>
+          <Typography
+            component="div"
+            variant="body1"
+            className={classes.em}
+          >
+            The latest cases, laws, and regulations related to {page.displayTitle ? page.displayTitle : page.name}
+          </Typography>
+        </Grid>
+        <Grid item xs>
+          <Typography component="div" variant="h4">
+            <Link href="/tracker" className={classes.link}>
+              View all
+            </Link>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Box my={4} sx={{ borderTop: "1px solid #000" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table
             aria-label="Law and Regulation Tracker Table"
@@ -118,7 +163,8 @@ const RelatedActions = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {actions
+              {related
+                .slice(current * rowsPerPage, current * rowsPerPage + rowsPerPage)
                 .map(row => {
                   return (
                     <TableRow
@@ -150,7 +196,7 @@ const RelatedActions = props => {
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}
-                                href={row.slug}
+                                href={`/tracker/${row.slug}`}
                               >
                                 {value}
                               </Link>
@@ -171,6 +217,15 @@ const RelatedActions = props => {
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={actions.length}
+          rowsPerPage={rowsPerPage}
+          page={current}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Box>
     </section>
     ) : null;
