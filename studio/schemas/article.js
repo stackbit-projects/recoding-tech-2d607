@@ -107,6 +107,13 @@ export default {
     },
     {
       type: "markdown",
+      name: "key_takeaways",
+      title: "Key takeaways",
+      description: "Key points from the article",
+      validation: null
+    },
+    {
+      type: "markdown",
       name: "content",
       title: "Content",
       description: "Page content",

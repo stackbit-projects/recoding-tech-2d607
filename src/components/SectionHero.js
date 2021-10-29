@@ -90,6 +90,10 @@ function SectionHero(props) {
             <Typography variant="h4" className={classes.superTitle}>
               Quick-start Guide
             </Typography>
+          ) : page.__metadata.modelName == "topic" ? (
+            <Typography variant="h4" className={classes.superTitle}>
+            {page.type}
+            </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
             <Typography variant="h1" className={classes.title}>

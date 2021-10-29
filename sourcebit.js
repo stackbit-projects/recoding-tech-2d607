@@ -15,6 +15,15 @@ const query = `*[_type == "guide"]{
   }
 }`;
 
+const topicQuery = `*[_type == "topic"]{
+  ...,
+  "relatedActions": *[_type == "policy_action" && references(^._id)]{
+    title,
+    slug,
+    country
+  }
+}`;
+
 module.exports = {
   plugins: [
     {

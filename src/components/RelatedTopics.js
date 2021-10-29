@@ -8,6 +8,7 @@ import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(theme => ({
@@ -27,25 +28,34 @@ const Topics = props => {
 
   return (
     <section>
-      <Box my={4}>
-        <Container>
-          <Typography component="h2" variant="h3" gutterBottom>
-            {title}
-          </Typography>
-          <Container spacing={3}>
-            {topics.map((topic, i) => (
-                  <Chip
-                    key={i}
-                    label={topic.name}
-                    component="a"
-                    href={`/${topic.type}/${topic.name}`}
-                    className={classes.chip}
-                    clickable
-                  />
-                ))}
-          </Container>
-        </Container>
-      </Box>
+      <Grid container className={classes.grid}>
+        <Grid
+          container
+          item
+          justifyContent="space-between"
+          className={classes.gridTitle}
+        >
+          <Grid item xs={8}>
+            <Typography component="h2" variant="h4">
+              {title}
+            </Typography>
+          </Grid>
+          <Box my={4} pt={8} sx={{ borderTop: "1px solid #000" }}>
+            <Container spacing={3}>
+              {topics.map((topic, i) => (
+                    <Chip
+                      key={i}
+                      label={topic.name}
+                      component="a"
+                      href={`/${topic.type}/${topic.slug}`}
+                      className={classes.chip}
+                      clickable
+                    />
+                  ))}
+            </Container>
+          </Box>
+        </Grid>
+      </Grid>
     </section>
   );
 };

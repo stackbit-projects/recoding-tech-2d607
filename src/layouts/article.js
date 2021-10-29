@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import { Layout } from "../components/index";
 import FancyCard from "../components/FancyCard";
 import SectionHero from "../components/SectionHero";
-import RelatedReadings from "../components/RelatedReadings";
+import RelatedCommentary from "../components/RelatedCommentary";
 import RelatedTopics from "../components/RelatedTopics";
 
 const Article = props => {
@@ -38,13 +38,13 @@ const Article = props => {
           <Box my={4}>
             <Grid container>
               <Grid item sm={12} md={8}>
-                <FancyCard title="Key Takeaways" content={page.key_takeaways} />
+                <FancyCard title="Key Takeaways" content={markdownify(_.get(props, 'page.key_takeaways', null))} />
                 <Typography component="div" variant="body1">
                   {markdownify(_.get(props, 'page.content', null))}
                 </Typography>
               </Grid>
               <Grid item sm={12} md={4}>
-                <RelatedReadings title="Further Readings" {...props} />
+                <RelatedCommentary title="Further Readings" commentary={page.relatedCommentary} />
                 <RelatedTopics topics={topics} />
               </Grid>
             </Grid>

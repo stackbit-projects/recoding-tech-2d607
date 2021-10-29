@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import _ from 'lodash';
 
 // material ui imports
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
@@ -40,18 +40,22 @@ const useStyles = makeStyles(theme => ({
     fontSize: "0.8em",
     fontStyle: "italic"
   },
+  featured: {
+    backgroundColor: theme.palette.footer.main
+  },
 }));
 
-const FancyCard = ({ title, content }) => {
-  if (!content) return null;
+const FancyCard = ({ title, content, onClick = (() => {}) }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  console.log('style:', theme);
 
   return (
     <Card
       variant="outlined"
       className={`${classes.box} ${classes.featured}`}
     >
-      <CardActionArea onClick={() => {}}>
+      <CardActionArea onClick={onClick}>
         <CardContent>
           {title && (
             <Typography component="div" variant="h2">

@@ -5,7 +5,7 @@ import FormField from "./FormField";
 import Header from "./Header";
 import Layout from "./Layout";
 import Icon from "./Icon";
-import RelatedReadings from "./RelatedReadings";
+import RelatedCommentary from "./RelatedCommentary";
 import RelatedTopics from "./RelatedTopics";
 import SectionCitations from "./SectionCitations";
 import SectionContent from "./SectionContent";
@@ -26,7 +26,7 @@ export {
   Header,
   Layout,
   Icon,
-  RelatedReadings,
+  RelatedCommentary,
   RelatedTopics,
   SectionCitations,
   SectionContent,
@@ -48,7 +48,7 @@ export default {
   Header,
   Layout,
   Icon,
-  RelatedReadings,
+  RelatedCommentary,
   RelatedTopics,
   SectionCitations,
   SectionContent,

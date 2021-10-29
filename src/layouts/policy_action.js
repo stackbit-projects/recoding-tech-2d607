@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { Layout } from "../components/index";
 import SectionHero from "../components/SectionHero";
 import TrackerActions from "../components/TrackerActions";
+import RelatedDocuments from "../components/RelatedDocuments";
 
 const PolicyAction = props => {
   const { page } = props;
@@ -36,6 +37,7 @@ const PolicyAction = props => {
                 <Typography component="div" variant="h4">
                   Further reading
                 </Typography>
+                <RelatedDocuments {...props} />
               </Grid>
             </Grid>
           </Box>

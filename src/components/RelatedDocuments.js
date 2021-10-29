@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
 import { Carousel } from "react-responsive-carousel";
@@ -8,6 +8,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import { CardActionArea } from "@mui/material";
+import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
@@ -42,14 +45,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RelatedReadings = props => {
-  const { readings } = props;
-  if (!Array.isArray(readings) || !readings.length) return null;
+const RelatedDocuments = props => {
   const classes = useStyles();
+  const { page } = props;
 
-  const getHandler = article => {
-    const handler = () => Router.push({ pathname: `/article/${article.slug}` });
+  const docClick = file => {
+    console.log('file:', file);
+    const handler = () => Router.push({ pathname: file.url });
     return handler;
+    //Router.push({ pathname: `${file.url}` });
   };
 
   return (
@@ -57,23 +61,25 @@ const RelatedReadings = props => {
       <Container>
         <Box my={4} pt={8} sx={{ borderTop: "1px solid #000" }}>
           <Typography component="h2" variant="h4" className={classes.title}>
-            Related Reading
+            Related Primary Documents
           </Typography>
-          <Box mt={4}>
-            <Carousel autoPlay={false}>
-              {readings.map((article, index) => (
-                <FancyCard key={index} title={article.title} content={article.author.name} onClick={getHandler(article)} />
-              ))}
-            </Carousel>
-          </Box>
+          {Array.isArray(page.relatedDocs) && page.relatedDocs.length ? (
+            <Box mt={4}>
+              <Carousel autoPlay={false}>
+                {page.relatedDocs.map((doc, index) => (
+                  <FancyCard key={index} title={doc.title} onClick={docClick(doc.file)} />
+                ))}
+              </Carousel>
+            </Box>
+          ) : null}
         </Box>
       </Container>
     </section>
   );
 };
 
-RelatedReadings.propTypes = {
-  readings: PropTypes.array
+RelatedDocuments.propTypes = {
+  page: PropTypes.object
 };
 
-export default RelatedReadings;
+export default RelatedDocuments;
