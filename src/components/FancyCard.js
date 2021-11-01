@@ -79,8 +79,6 @@ const FancyCard = ({
   onClick = () => {}
 }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  console.log("style:", theme);
 
   return (
     <Card

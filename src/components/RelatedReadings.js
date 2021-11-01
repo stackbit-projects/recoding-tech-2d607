@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-import FancyCard from './FancyCard';
+import FancyCard from "./FancyCard";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -31,19 +31,17 @@ const useStyles = makeStyles(theme => ({
     marginTop: 170
   },
   em: {
-    fontStyle: "italic",
-    textAlign: "center"
+    fontStyle: "italic"
   },
   guide: {
     backgroundColor: theme.palette.secondary.main
   },
-  title: {
-    textAlign: "center"
-  }
+  title: {}
 }));
 
 const RelatedReadings = props => {
-  const { readings } = props;
+  const { page, readings } = props;
+
   if (!Array.isArray(readings) || !readings.length) return null;
   const classes = useStyles();
 
@@ -59,10 +57,42 @@ const RelatedReadings = props => {
           <Typography component="h2" variant="h4" className={classes.title}>
             Related Reading
           </Typography>
+          <Typography
+            component="div"
+            variant="body1"
+            sx={{ fontStyle: "italic" }}
+          >
+            The latest thinking about{" "}
+            {page.displayTitle ? page.displayTitle : page.title}
+          </Typography>
           <Box mt={4}>
-            <Carousel autoPlay={false}>
+            <Carousel
+              autoPlay={false}
+              showIndicators={false}
+              showStatus={false}
+              showThumbs={false}
+              centerMode={true}
+              centerSlidePercentage={40}
+              dynamicHeight={false}
+            >
               {readings.map((article, index) => (
-                <FancyCard key={index} title={article.title} content={article.author.name} onClick={getHandler(article)} />
+                <Box
+                  key={index}
+                  sx={{
+                    height: "90%",
+                    marginBottom: 2,
+                    marginLeft: 2,
+                    width: "90%"
+                  }}
+                >
+                  <FancyCard
+                    category={article.category}
+                    title={article.title}
+                    author={article.author.name}
+                    date={article.date}
+                    onClick={getHandler(article)}
+                  />
+                </Box>
               ))}
             </Carousel>
           </Box>
@@ -73,6 +103,7 @@ const RelatedReadings = props => {
 };
 
 RelatedReadings.propTypes = {
+  page: PropTypes.object,
   readings: PropTypes.array
 };
 

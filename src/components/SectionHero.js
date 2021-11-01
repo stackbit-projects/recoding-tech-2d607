@@ -60,10 +60,18 @@ function SectionHero(props) {
   const classes = useStyles();
   const theme = useTheme();
   let { page } = props;
-  console.log('page.type:', page.type);
+
   return (
     <section id={page.__metadata.id} className="block block-hero">
-      <Box paddingY={16} style={{ backgroundColor: page.type && theme.palette[page.type] ? theme.palette[page.type].main : theme.palette.secondary.main }}>
+      <Box
+        paddingY={16}
+        style={{
+          backgroundColor:
+            page.type && theme.palette[page.type]
+              ? theme.palette[page.type].main
+              : theme.palette.secondary.main
+        }}
+      >
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg
@@ -95,7 +103,7 @@ function SectionHero(props) {
             </Typography>
           ) : page.__metadata.modelName == "topic" ? (
             <Typography variant="h4" className={classes.superTitle}>
-            {page.type}
+              {page.type}
             </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (

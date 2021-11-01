@@ -8,35 +8,16 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import { CardActionArea } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    border: "1px solid #000",
-    borderRadius: 0,
-    height: 250,
-    position: "relative",
-    width: 240
-  },
-  cardAction: {
-    height: "100%",
-    position: "absolute",
-    width: "100%"
-  },
-  cardTitle: {
-    fontSize: "1.5em",
-    marginTop: 170
-  },
+// components
+import FancyGuide from "./FancyGuide";
+
+const useStyles = makeStyles(() => ({
   em: {
     fontStyle: "italic",
     textAlign: "center"
-  },
-  guide: {
-    backgroundColor: theme.palette.secondary.main
   },
   title: {
     textAlign: "center"
@@ -52,12 +33,11 @@ const SectionGuides = props => {
     if (pages) {
       const allGuides = pages.filter(page => page.layout == "guide");
       setGuides(allGuides);
-      console.log(allGuides);
     }
   }, []);
 
   const guideClick = url => {
-    Router.push({ pathname: '/guide/' + url });
+    Router.push({ pathname: "/guide/" + url });
   };
 
   return (
@@ -78,28 +58,18 @@ const SectionGuides = props => {
           </Typography>
           {guides && guides.length ? (
             <Box mt={4}>
-              <Carousel autoPlay={false}>
+              <Carousel
+                autoPlay={false}
+                showIndicators={false}
+                showStatus={false}
+                showThumbs={false}
+              >
                 {guides.map(guide => (
-                  <Card
+                  <FancyGuide
                     key={guide.__metadata.id}
-                    variant="outlined"
-                    className={`${classes.card} ${classes.guide}`}
-                  >
-                    <CardActionArea
-                      onClick={() => guideClick(guide.slug)}
-                      className={classes.cardAction}
-                    >
-                      <CardContent>
-                        <Typography
-                          component="div"
-                          variant="h2"
-                          className={classes.cardTitle}
-                        >
-                          {guide.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
+                    guide={guide}
+                    onClick={() => guideClick(guide.slug)}
+                  />
                 ))}
               </Carousel>
             </Box>

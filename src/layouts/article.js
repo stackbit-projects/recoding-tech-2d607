@@ -22,7 +22,6 @@ import RelatedTopics from "../components/RelatedTopics";
 const Article = props => {
   const { page } = props;
   const [topics, setTopics] = useState(null);
-  console.log(page);
 
   useEffect(() => {
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {

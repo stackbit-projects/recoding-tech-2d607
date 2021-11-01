@@ -54,7 +54,6 @@ function Header(props) {
   const [companies, setCompanies] = useState(null);
 
   useEffect(() => {
-    console.log('page.type:', page.type);
     const topicIssues = topics.filter(
       topic => topic.type == "issue" && topic.stackbit_model_type === "page"
     );
@@ -115,7 +114,15 @@ function Header(props) {
   };
 
   return (
-    <header className={classes.header} style={{ backgroundColor: page.type && theme.palette[page.type] ? theme.palette[page.type].main : theme.palette.secondary.main }}>
+    <header
+      className={classes.header}
+      style={{
+        backgroundColor:
+          page.type && theme.palette[page.type]
+            ? theme.palette[page.type].main
+            : theme.palette.secondary.main
+      }}
+    >
       <Box p={4}>
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={12} sm={4}>
