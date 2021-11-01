@@ -49,7 +49,8 @@ const Topics = props => {
 };
 
 Topics.propTypes = {
-  section: PropTypes.object
+  section: PropTypes.object,
+  topics: PropTypes.array
 };
 
 export default Topics;

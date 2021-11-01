@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Material-ui imports
 import IconButton from '@mui/material/IconButton';
@@ -29,5 +30,10 @@ const SearchBar = ({ handleSearch }) => {
     </Paper>
   )
 };
+
+SearchBar.propTypes = {
+  handleSearch: PropTypes.func
+};
+
 
 export default SearchBar;

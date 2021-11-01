@@ -12,7 +12,6 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
@@ -178,7 +177,7 @@ const SectionCitations = props => {
         <Box my={4}>
           <Grid container spacing={2} justifyContent="flex-start">
             { filters.length ? filters.map(filter => (
-                <Grid item>
+                <Grid key={filter.__metadata.id} item>
                   <Chip label={filter.displayTitle || filter.name} color={filter.type} onDelete={handleDelete(filter)}/>
                 </Grid>
             )) : null}
@@ -188,6 +187,7 @@ const SectionCitations = props => {
           {citations && citations.length
             ? citations.slice((page - 1) * ROWS_PER_PAGE, (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE).map(citation => (
             <Grid
+              key={citation.__metadata.id}
               container
               item
               justifyContent="space-between"
@@ -343,7 +343,8 @@ const SectionCitations = props => {
 };
 
 SectionCitations.propTypes = {
-  citations: PropTypes.array
+  citations: PropTypes.array,
+  topics: PropTypes.array
 };
 
 export default SectionCitations;

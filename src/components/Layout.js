@@ -1,5 +1,6 @@
 // base imports
 import React from "react";
+import PropTypes from 'prop-types';
 import Head from "next/head";
 import _ from "lodash";
 
@@ -85,5 +86,10 @@ const Body = props => {
     </>
   );
 }
+
+Body.propTypes = {
+  children: PropTypes.array
+};
+
 
 export default Body;

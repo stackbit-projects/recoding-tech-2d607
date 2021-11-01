@@ -1,4 +1,3 @@
-import React from "react";
 import { sourcebitDataClient } from "sourcebit-target-next";
 
 /**

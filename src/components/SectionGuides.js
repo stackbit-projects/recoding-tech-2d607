@@ -111,7 +111,7 @@ const SectionGuides = props => {
 };
 
 SectionGuides.propTypes = {
-  pages: PropTypes.object
+  pages: PropTypes.array
 };
 
 export default SectionGuides;

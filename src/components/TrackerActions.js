@@ -1,5 +1,5 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
 
@@ -16,7 +16,6 @@ import Typography from "@mui/material/Typography";
 
 // Material UI icons
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const useStyles = makeStyles(theme => ({
   icon: {

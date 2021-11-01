@@ -17,7 +17,7 @@ const SectionForm = props => {
           )}
           <form name={_.get(section, 'form_id', null)} id={_.get(section, 'form_id', null)} {...(_.get(section, 'form_action', null) ? ({action: _.get(section, 'form_action', null)}) : null)}method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
             <div className="screen-reader-text">
-              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+              <label>{"Don't fill this out if you're human: "}<input name="bot-field" /></label>
             </div>
             <input type="hidden" name="form-name" value={_.get(section, 'form_id', null)} />
             {_.map(_.get(section, 'form_fields', null), (field, field_idx) => (

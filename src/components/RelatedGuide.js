@@ -1,9 +1,7 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";

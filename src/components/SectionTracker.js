@@ -214,7 +214,7 @@ function SectionTracker(props) {
   };
 
   // date parsing
-  var dateOptions = { month: "long", day: "numeric", year: "numeric" };
+  //var dateOptions = { month: "long", day: "numeric", year: "numeric" };
 
   return (
     <section>
@@ -413,7 +413,7 @@ function SectionTracker(props) {
       <Box my={4}>
         <Grid container spacing={2} justifyContent="flex-start">
           { filters.length ? filters.map(filter => (
-              <Grid item>
+              <Grid key={filter.__metadata.id} item>
                 <Chip label={filter.displayTitle || filter.name} color={filter.type} onDelete={handleDelete(filter)}/>
               </Grid>
           )) : null}
@@ -503,6 +503,7 @@ function SectionTracker(props) {
 
 SectionTracker.propTypes = {
   actions: PropTypes.array,
+  topics: PropTypes.array,
   section: PropTypes.object
 };
 

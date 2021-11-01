@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   citation: {
     borderBottom: "1px solid #000",
     marginBottom: 20,

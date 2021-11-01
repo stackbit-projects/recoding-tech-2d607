@@ -2,7 +2,7 @@
 import React from "react";
 import _ from "lodash";
 
-import { htmlToReact, Link, withPrefix, classNames } from "../utils";
+import { htmlToReact, Link, withPrefix } from "../utils";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";

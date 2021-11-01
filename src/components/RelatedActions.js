@@ -1,7 +1,6 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -18,7 +17,6 @@ import TablePagination from "@mui/material/TablePagination";
 import Typography from "@mui/material/Typography";
 
 // Material UI icons
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const useStyles = makeStyles(theme => ({
@@ -171,7 +169,7 @@ const RelatedActions = props => {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.slug}
+                      key={row.__metadata.id}
                     >
                       {headers.map(column => {
                         let value = row[column.id];
@@ -233,6 +231,7 @@ const RelatedActions = props => {
 
 RelatedActions.propTypes = {
   citations: PropTypes.array,
+  actions: PropTypes.array,
   page: PropTypes.object
 };
 

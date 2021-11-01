@@ -315,7 +315,8 @@ function Header(props) {
 }
 
 Header.propTypes = {
-  topics: PropTypes.array
+  topics: PropTypes.array,
+  page: PropTypes.object
 };
 
 export default Header;

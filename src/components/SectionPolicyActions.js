@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import _ from "lodash";
 import moment from "moment-strftime";
 
@@ -60,7 +61,7 @@ const SectionPolicyActions = props => {
                   <div className="post-content">
                     {_.get(policy, "topics", null) &&
                       policy.topics.map(tag => (
-                        <div className="post-tag">{tag.name}</div>
+                        <div key={tag.slug} className="post-tag">{tag.name}</div>
                       ))}
                     <p>{_.get(policy, "category", null)}</p>
                   </div>
@@ -93,5 +94,9 @@ const SectionPolicyActions = props => {
     </section>
   );
 }
+
+SectionPolicyActions.propTypes = {
+  pages: PropTypes.array
+};
 
 export default SectionPolicyActions;

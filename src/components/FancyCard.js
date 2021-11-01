@@ -1,7 +1,6 @@
 // base imports
 import React from "react";
 import PropTypes from "prop-types";
-import _ from 'lodash';
 
 // material ui imports
 import { makeStyles, useTheme } from "@mui/styles";
@@ -96,8 +95,13 @@ const FancyCard = ({ category, title, content, author, publication, date, onClic
 };
 
 FancyCard.propTypes = {
+  category: PropTypes.string,
   title: PropTypes.string,
-  content: PropTypes.string
+  content: PropTypes.string,
+  author: PropTypes.string,
+  publication: PropTypes.string,
+  date: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default FancyCard;
