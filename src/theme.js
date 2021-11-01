@@ -3,6 +3,7 @@ import { createTheme } from "@mui/material/styles";
 const serifFont = "'Libre Baskerville', serif";
 const sansSerifFont = "'Lexend', sans-serif";
 
+const defaultTheme = createTheme({});
 const theme = createTheme({
   components: {
     MuiButton: {
@@ -15,6 +16,15 @@ const theme = createTheme({
           fontWeight: "bold",
           textAlign: "center",
           textTransform: "none"
+        }
+      }
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          fontFamily: sansSerifFont,
+          fontWeight: "bold",
+          textTransform: "uppercase"
         }
       }
     },
@@ -57,26 +67,41 @@ const theme = createTheme({
     secondary: {
       main: "#C2CECC"
     },
-    issue: {
-      main: "#FAD3CD",
-      dark: "#C7A09A"
-    },
-    policy: {
-      main: "#84A4CC",
-      dark: "#517199"
-    },
-    country: {
-      main: "#8AA29D",
-      dark: "#3E5651"
-    },
-    company: {
-      main: "#CCCCCC",
-      dark: "#666666"
-    },
-    footer: {
-      main: "#EFE9DA",
-      dark: "#BCB6A7"
-    }
+    issue: defaultTheme.palette.augmentColor({
+      name: "issue",
+      color: {
+        main: "#FAD3CD",
+        dark: "#C7A09A"
+      }
+    }),
+    policy: defaultTheme.palette.augmentColor({
+      name: "policy",
+      color: {
+        main: "#84A4CC",
+        dark: "#517199"
+      }
+    }),
+    country: defaultTheme.palette.augmentColor({
+      name: "country",
+      color: {
+        main: "#8AA29D",
+        dark: "#3E5651"
+      }
+    }),
+    company: defaultTheme.palette.augmentColor({
+      name: "company",
+      color: {
+        main: "#CCCCCC",
+        dark: "#666666"
+      }
+    }),
+    footer: defaultTheme.palette.augmentColor({
+      name: "footer",
+      color: {
+        main: "#EFE9DA",
+        dark: "#BCB6A7"
+      }
+    }),
   },
   typography: {
     fontFamily: serifFont,

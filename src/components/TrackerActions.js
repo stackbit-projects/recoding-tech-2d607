@@ -111,10 +111,7 @@ const TrackerActions = props => {
           <TableBody>
             <TableRow hover role="checkbox" tabIndex={-1} key={page.slug}>
               <TableCell key={page.slug} className={classes.tableCellTitle}>
-                <Link className={classes.tableLink} href={page.slug}>
-                  {page.title}
-                </Link>
-                <KeyboardArrowRightIcon className={classes.icon} />
+                {page.title}
               </TableCell>
               <TableCell key={page.slug}>{page.type}</TableCell>
               <TableCell key={page.slug}>{page.country ? page.country.displayTitle : ""}</TableCell>

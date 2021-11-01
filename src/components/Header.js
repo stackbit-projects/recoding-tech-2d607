@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -46,13 +46,15 @@ const useStyles = makeStyles(theme => ({
 
 function Header(props) {
   const classes = useStyles();
-  const { topics } = props;
+  const theme = useTheme();
+  const { page, topics } = props;
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
   const [countries, setCountries] = useState(null);
   const [companies, setCompanies] = useState(null);
 
   useEffect(() => {
+    console.log('page.type:', page.type);
     const topicIssues = topics.filter(
       topic => topic.type == "issue" && topic.stackbit_model_type === "page"
     );
@@ -113,7 +115,7 @@ function Header(props) {
   };
 
   return (
-    <header className={classes.header} style={{ backgroundColor: "#c2cecc" }}>
+    <header className={classes.header} style={{ backgroundColor: page.type && theme.palette[page.type] ? theme.palette[page.type].main : theme.palette.secondary.main }}>
       <Box p={4}>
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={12} sm={4}>

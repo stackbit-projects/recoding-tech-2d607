@@ -23,6 +23,7 @@
     "@mui/styles": "^5.0.1",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^2.21.7",
+    "@snekcode/mui-search-bar": "^1.1.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
     "limiter": "2.0.1",

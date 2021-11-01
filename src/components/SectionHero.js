@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment-strftime";
 
 // Material UI imports
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
@@ -49,6 +49,7 @@ const useStyles = makeStyles(theme => ({
     width: 650,
     zIndex: 0
   },
+
   title: {
     position: "relative",
     zIndex: 1
@@ -57,10 +58,12 @@ const useStyles = makeStyles(theme => ({
 
 function SectionHero(props) {
   const classes = useStyles();
+  const theme = useTheme();
   let { page } = props;
+  console.log('page.type:', page.type);
   return (
     <section id={page.__metadata.id} className="block block-hero">
-      <Box paddingY={16} style={{ backgroundColor: "#c2cecc" }}>
+      <Box paddingY={16} style={{ backgroundColor: page.type && theme.palette[page.type] ? theme.palette[page.type].main : theme.palette.secondary.main }}>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg

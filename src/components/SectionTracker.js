@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -75,8 +76,9 @@ const useStyles = makeStyles(theme => ({
 function SectionTracker(props) {
   const classes = useStyles();
   const { query } = useRouter();
-  const { section } = props;
-  const [actions, setActions] = useState(props.actions);
+  const { section, topics } = props;
+  const [actions, setActions] = useState([]);
+  const [filters, setFilters] = useState([]);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -88,62 +90,84 @@ function SectionTracker(props) {
   ];
 
   // filters
-  const [issues, setIssues] = useState(null);
-  const [policies, setPolicies] = useState(null);
-  const [companies, setCompanies] = useState(null);
-  const [countries, setCountries] = useState(null);
+  const [issues, setIssues] = useState([]);
+  const [policies, setPolicies] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const newTopics = {
+      issue: new Map(),
+      policy: new Map(),
+      company: new Map(),
+      country: new Map(),
+    };
+    if (Array.isArray(topics) && topics.length) {
+      topics.map(topic => {
+        if (topic.type && topic.slug) {
+          newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
+        }
+      });
+    }
+
+    let newFilters = [];
+    ['issue', 'policy', 'company', 'country'].forEach(type => {
+      if (Array.isArray(query[type]) && query[type].length) {
+        query[type].forEach(t => {
+          const exists = newTopics[type].get(t);
+          if (exists) {
+            newFilters.push(exists);
+          }
+        });
+      } else {
+        const exists = newTopics[type].get(query[type]);
+        if (exists) {
+          newFilters.push(exists);
+        }
+      }
+    });
+    setIssues(Array.from(newTopics.issue.values()));
+    setPolicies(Array.from(newTopics.policy.values()));
+    setCompanies(Array.from(newTopics.company.values()));
+    setCountries(Array.from(newTopics.country.values()));
+    newFilters.sort()
+    setFilters(newFilters);
+  }, [query]);
 
   useEffect(() => {
     if (props.actions) {
-      const newIssues = new Set();
-      const newPolicies = new Set();
-      const newCompanies = new Set();
-      const newCountries = new Set();
-      setActions(actions.filter(action => {
-        let selectedIssues = !query.issues;
-        let selectedPolicies = !query.policies;
-        let selectedCompanies = !query.companies;
-        let selectedCountries = !query.countries;
-        if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
-          action.relatedTopics.map(topic => {
-            switch (topic.type) {
-              case 'issue':
-                if (query.issues === topic.slug) selectedIssues = true;
-                newIssues.add(topic);
-                break;
-              case 'policy':
-                if (query.policies === topic.slug) selectedPolicies = true;
-                newPolicies.add(topic);
-                break;
-              case 'company':
-                if (query.companies === topic.slug) selectedCompanies = true;
-                newCompanies.add(topic);
-                break;
-              case 'country':
-                if (query.countries === topic.slug) selectedCountries = true;
-                newCountries.add(topic);
-                break;
-            }
-
-            return [newIssues, newPolicies, newCompanies, newCountries];
-          });
-        }
-        return selectedIssues && selectedPolicies && selectedCompanies && selectedCountries;
-      }));
-      setIssues([...newIssues]);
-      setPolicies([...newPolicies]);
-      setCompanies([...newCompanies]);
-      setCountries([...newCountries]);
+      if (filters) {
+        setActions(props.actions.filter(action => {
+          let matches = 0;
+          if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
+            action.relatedTopics.forEach(topic => {
+              if (filters.findIndex(f => f.slug === topic.slug) >= 0) matches += 1;
+            });
+          }
+          return matches >= filters.length;
+        }));
+      }
     }
-  }, []);
+  }, [filters]);
+
+  const handleClose = topic => {
+    if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
+      setFilters([...filters, topic]);
+    }
+  }
+
+  const handleDelete = topic => () => {
+    topic && setFilters(filters.filter(f => f.slug !== topic.slug));
+  }
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssues = Boolean(issueEl);
   const handleClickIssues = event => {
     setIssueEl(event.currentTarget);
   };
-  const handleCloseIssues = () => {
+  const handleCloseIssues = topic => () => {
     setIssueEl(null);
+    handleClose(topic);
   };
 
   const [policiesEl, setPoliciesEl] = React.useState(null);
@@ -151,8 +175,9 @@ function SectionTracker(props) {
   const handleClickPolicies = event => {
     setPoliciesEl(event.currentTarget);
   };
-  const handleClosePolicies = () => {
+  const handleClosePolicies = topic => () => {
     setPoliciesEl(null);
+    handleClose(topic);
   };
 
   const [countriesEl, setCountriesEl] = React.useState(null);
@@ -160,8 +185,9 @@ function SectionTracker(props) {
   const handleClickCountries = event => {
     setCountriesEl(event.currentTarget);
   };
-  const handleCloseCountries = () => {
+  const handleCloseCountries = topic => () => {
     setCountriesEl(null);
+    handleClose(topic);
   };
 
   const [companiesEl, setCompaniesEl] = React.useState(null);
@@ -169,8 +195,9 @@ function SectionTracker(props) {
   const handleClickCompanies = event => {
     setCompaniesEl(event.currentTarget);
   };
-  const handleCloseCompanies = () => {
+  const handleCloseCompanies = topic => () => {
     setCompaniesEl(null);
+    handleClose(topic);
   };
 
   // table pagination
@@ -232,13 +259,13 @@ function SectionTracker(props) {
                 }}
                 anchorEl={issueEl}
                 open={openIssues}
-                onClose={handleCloseIssues}
+                onClose={handleCloseIssues()}
               >
                 {issues && issues.length
                   ? issues.map(issue => (
                       <MenuItem
                         key={issue.slug}
-                        onClick={handleCloseIssues}
+                        onClick={handleCloseIssues(issue)}
                         disableRipple
                       >
                         {issue.displayTitle || issue.name}
@@ -275,13 +302,13 @@ function SectionTracker(props) {
                 }}
                 anchorEl={policiesEl}
                 open={openPolicies}
-                onClose={handleClosePolicies}
+                onClose={handleClosePolicies()}
               >
                 {policies && policies.length
                   ? policies.map(policy => (
                       <MenuItem
                         key={policy.slug}
-                        onClick={handleClosePolicies}
+                        onClick={handleClosePolicies(policy)}
                         disableRipple
                       >
                         {policy.displayTitle || policy.name}
@@ -318,7 +345,7 @@ function SectionTracker(props) {
                 }}
                 anchorEl={countriesEl}
                 open={openCountries}
-                onClose={handleCloseCountries}
+                onClose={handleCloseCountries()}
               >
                 {countries && countries.length
                   ? countries.map(country => {
@@ -326,7 +353,7 @@ function SectionTracker(props) {
                         return (
                           <MenuItem
                             key={country.slug}
-                            onClick={handleCloseCountries}
+                            onClick={handleCloseCountries(country)}
                             disableRipple
                           >
                             {country.displayTitle || country.name}
@@ -365,13 +392,13 @@ function SectionTracker(props) {
                 }}
                 anchorEl={companiesEl}
                 open={openCompanies}
-                onClose={handleCloseCompanies}
+                onClose={handleCloseCompanies()}
               >
                 {companies && companies.length
                   ? companies.map(company => (
                       <MenuItem
                         key={companies.slug}
-                        onClick={handleCloseCompanies}
+                        onClick={handleCloseCompanies(company)}
                         disableRipple
                       >
                         {company.displayTitle || company.name}
@@ -382,6 +409,15 @@ function SectionTracker(props) {
             </Grid>
           </Grid>
         </Container>
+      </Box>
+      <Box my={4}>
+        <Grid container spacing={2} justifyContent="flex-start">
+          { filters.length ? filters.map(filter => (
+              <Grid item>
+                <Chip label={filter.displayTitle || filter.name} color={filter.type} onDelete={handleDelete(filter)}/>
+              </Grid>
+          )) : null}
+        </Grid>
       </Box>
       <Box my={4}>
         <TableContainer sx={{ maxHeight: 440 }}>
