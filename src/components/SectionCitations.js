@@ -71,7 +71,7 @@ const SectionCitations = props => {
         </Grid>
         <Grid item xs={4}>
           <Typography component="div" variant="h4">
-            <Link href="/citations" className={classes.link}>
+            <Link href="/search" className={classes.link}>
               View all
             </Link>
           </Typography>
