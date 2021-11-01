@@ -9,8 +9,8 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
-import SectionGuides from "../components/SectionGuides";
 import SectionHero from "../components/SectionHero";
+import Sidebar from "../components/Sidebar";
 
 
 const Page = props => {
@@ -32,7 +32,7 @@ const Page = props => {
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <SectionGuides {...props} />
+            <Sidebar />
           </Grid>
         </Grid>
       </Container>
