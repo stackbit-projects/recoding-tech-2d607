@@ -35,6 +35,27 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
+  boxNoHover: {
+    border: "1px solid #000",
+    borderRadius: 0,
+    overflow: "unset",
+    position: "relative",
+    "&::before": {
+      backgroundColor: "#fff",
+      border: "1px solid #000",
+      content: "''",
+      height: "100%",
+      left: "-8px",
+      position: "absolute",
+      top: 5,
+      transition: "left 250ms, top 250ms",
+      width: "100%",
+      zIndex: "-1"
+    }
+  },
+  content: {
+    fontStyle: "italic"
+  },
   em: {
     fontSize: "0.8em",
     fontStyle: "italic"
@@ -42,49 +63,66 @@ const useStyles = makeStyles(theme => ({
   featured: {
     backgroundColor: theme.palette.footer.main
   },
+  noClick: {
+    cursor: "default"
+  }
 }));
 
-const FancyCard = ({ category, title, content, author, publication, date, onClick = (() => {}) }) => {
+const FancyCard = ({
+  author,
+  category,
+  content,
+  date,
+  publication,
+  notClickable,
+  title,
+  onClick = () => {}
+}) => {
   const classes = useStyles();
   const theme = useTheme();
-  console.log('style:', theme);
+  console.log("style:", theme);
 
   return (
     <Card
       variant="outlined"
-      className={`${classes.box} ${classes.featured}`}
+      className={`${classes.featured} ${
+        notClickable ? classes.boxNoHover : classes.box
+      }`}
     >
-      <CardActionArea onClick={onClick}>
+      <CardActionArea
+        onClick={onClick}
+        className={notClickable ? classes.noClick : ""}
+      >
         <CardContent>
           {category && (
             <Typography component="div" variant="h4">
-            {category}
+              {category}
             </Typography>
           )}
           {title && (
             <Typography component="div" variant="h2">
-            {title}
+              {title}
             </Typography>
           )}
           {author && (
             <Typography component="div" variant="h3">
-            {author}
+              {author}
             </Typography>
           )}
           {publication && (
             <Typography component="div" variant="h4">
-            {publication}
+              {publication}
             </Typography>
           )}
           {date && (
             <Typography component="div" variant="body1" className={classes.em}>
-            {date}
+              {date}
             </Typography>
           )}
           <Typography
             component="div"
             variant="body1"
-            className={classes.em}
+            className={classes.content}
           >
             {content}
           </Typography>
@@ -95,13 +133,14 @@ const FancyCard = ({ category, title, content, author, publication, date, onClic
 };
 
 FancyCard.propTypes = {
-  category: PropTypes.string,
-  title: PropTypes.string,
-  content: PropTypes.string,
   author: PropTypes.string,
-  publication: PropTypes.string,
+  category: PropTypes.string,
+  content: PropTypes.string,
   date: PropTypes.string,
-  onClick: PropTypes.func,
+  notClickable: PropTypes.bool,
+  publication: PropTypes.string,
+  title: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default FancyCard;
