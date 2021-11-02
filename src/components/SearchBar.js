@@ -15,18 +15,33 @@ const SearchBar = ({ handleSearch }) => {
   const handleSearchRequest = () => handleSearch(value);
 
   return (
-    <Paper component="form">
+    <Paper
+      component="form"
+      elevation={0}
+      square
+      sx={{ border: "1px solid #000" }}
+    >
       <IconButton
         type="search"
         aria-label="search"
         onClick={handleSearchRequest}
+        sx={{
+          backgroundColor: "footer.main",
+          borderRadius: 0,
+          borderRight: "1px solid #000"
+        }}
       >
         <SearchIcon />
       </IconButton>
       <Input
         value={value}
         onChange={e => setValue(e.target.value)}
-        sx={{ width: "92%" }}
+        sx={{
+          fontFamily: "h1.fontFamily",
+          marginLeft: 1,
+          width: "92%"
+        }}
+        placeholder="SEARCH..."
       />
     </Paper>
   );

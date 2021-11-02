@@ -171,14 +171,127 @@ const SectionCitations = props => {
       className={classes.grid}
       spacing={4}
       alignItems="flex-start"
+      direction="row-reverse"
+      justifyContent="flex-end"
     >
+      <Grid container item xs={12} md={4} direction="column">
+        <Grid item className={classes.gridTitle}>
+          <Typography component="h2" variant="h2" sx={{ marginTop: 4 }}>
+            Filter...
+          </Typography>
+        </Grid>
+        <Grid
+          container
+          item
+          justifyContent="space-between"
+          className={classes.gridTitle}
+        >
+          <Grid item xs={12}>
+            <Typography component="h2" variant="h4">
+              Issues
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
+              {issues.map((topic, i) => (
+                <Chip
+                  key={i}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          justifyContent="space-between"
+          className={classes.gridTitle}
+        >
+          <Grid item xs={8}>
+            <Typography component="h2" variant="h4">
+              Policies
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
+              {policies.map((topic, i) => (
+                <Chip
+                  key={i}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          justifyContent="space-between"
+          className={classes.gridTitle}
+        >
+          <Grid item xs={8}>
+            <Typography component="h2" variant="h4">
+              Companies
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
+              {companies.map((topic, i) => (
+                <Chip
+                  key={i}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          justifyContent="space-between"
+          className={classes.gridTitle}
+        >
+          <Grid item xs={8}>
+            <Typography component="h2" variant="h4">
+              Countries
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
+              {countries.map((topic, i) => (
+                <Chip
+                  key={`chip-${i}`}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
+        </Grid>
+      </Grid>
       <Grid
         container
         item
         justifyContent="space-between"
         className={classes.gridTitle}
         spacing={4}
-        sm={12}
+        xs={12}
         md={8}
       >
         <Grid item xs={12}>
@@ -259,113 +372,6 @@ const SectionCitations = props => {
             </Typography>
           </Grid>
         )}
-      </Grid>
-      <Grid container item xs={2} direction="column">
-        <Grid item className={classes.gridTitle}>
-          <Typography component="h2" variant="h2" sx={{ marginTop: 4 }}>
-            Filters
-          </Typography>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={12}>
-            <Typography component="h2" variant="h4">
-              Issues
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1}>
-              {issues.map((topic, i) => (
-                <Chip
-                  key={i}
-                  label={topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
-            <Typography component="h2" variant="h4">
-              Policies
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1}>
-              {policies.map((topic, i) => (
-                <Chip
-                  key={i}
-                  label={topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
-            <Typography component="h2" variant="h4">
-              Companies
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1}>
-              {companies.map((topic, i) => (
-                <Chip
-                  key={i}
-                  label={topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
-            <Typography component="h2" variant="h4">
-              Countries
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1}>
-              {countries.map((topic, i) => (
-                <Chip
-                  key={i}
-                  label={topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
       </Grid>
     </Grid>
   );
