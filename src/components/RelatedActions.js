@@ -1,5 +1,5 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
@@ -88,8 +88,6 @@ const RelatedActions = props => {
   const classes = useStyles();
   const { page, actions } = props;
 
-  const [setRelated] = useState(null);
-
   const headers = [
     { id: "title", label: "Name" },
     { id: "type", label: "Type" },
@@ -98,23 +96,6 @@ const RelatedActions = props => {
     { id: "status", label: "Status" },
     { id: "lastUpdate", label: "Last Updated" }
   ];
-
-  useEffect(() => {
-    if (Array.isArray(actions) && actions.length) {
-      const relatedActions = actions.filter(action => {
-        if (
-          Array.isArray(action.relatedTopics) &&
-          action.relatedTopics.length
-        ) {
-          return (
-            action.relatedTopics.findIndex(topic => topic.name === page.name) >=
-            0
-          );
-        } else return false;
-      });
-      setRelated(relatedActions);
-    }
-  }, []);
 
   // table pagination
   const [current, setCurrent] = useState(0);

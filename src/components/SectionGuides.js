@@ -36,6 +36,8 @@ const SectionGuides = props => {
     }
   }, []);
 
+  useEffect(() => {}, [guides]);
+
   const guideClick = url => {
     Router.push({ pathname: "/guide/" + url });
   };
@@ -58,12 +60,7 @@ const SectionGuides = props => {
           </Typography>
           {guides && guides.length ? (
             <Box mt={4}>
-              <Carousel
-                autoPlay={false}
-                showIndicators={false}
-                showStatus={false}
-                showThumbs={false}
-              >
+              <Carousel autoPlay={false} showStatus={false}>
                 {guides.map(guide => (
                   <FancyGuide
                     key={guide.__metadata.id}

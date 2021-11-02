@@ -132,7 +132,7 @@ function SectionHero(props) {
               variant="body1"
               className={classes.author}
             >
-              {page.author.name} – Last updated{" "}
+              {page.author ? `${page.author.name} – ` : ""} Last updated{" "}
               {moment(page.datePublished).strftime("%B %e, %Y")}
             </Typography>
           )}
