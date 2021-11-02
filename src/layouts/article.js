@@ -36,15 +36,17 @@ const Article = props => {
         <Container>
           <Grid container spacing={8}>
             <Grid container spacing={12} item xs={12} md={8} direction="column">
-              <Grid item>
-                <FancyCard
-                  notClickable
-                  category="Key Takeaways"
-                  content={markdownify(
-                    _.get(props, "page.key_takeaways", null)
-                  )}
-                />
-              </Grid>
+              {page.key_takeaways ? (
+                <Grid item>
+                  <FancyCard
+                    notClickable
+                    category="Key Takeaways"
+                    content={markdownify(
+                      _.get(props, "page.key_takeaways", null)
+                    )}
+                  />
+                </Grid>
+              ) : null}
               <Grid item>
                 <Typography component="div" variant="body1">
                   {markdownify(_.get(props, "page.content", null))}

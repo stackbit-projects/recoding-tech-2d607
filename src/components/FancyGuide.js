@@ -35,8 +35,6 @@ const useStyles = makeStyles(theme => ({
 const FancyGuide = ({ guide, onClick = () => {} }) => {
   const classes = useStyles();
 
-  console.log(guide);
-
   return (
     <Card
       key={guide.__metadata.id}

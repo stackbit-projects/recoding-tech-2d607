@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -28,6 +29,14 @@ const SectionGuides = props => {
   const classes = useStyles();
   const { pages } = props;
   const [guides, setGuides] = useState(null);
+
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1
+  };
 
   useEffect(() => {
     if (pages) {
@@ -60,7 +69,7 @@ const SectionGuides = props => {
           </Typography>
           {guides && guides.length ? (
             <Box mt={4}>
-              <Carousel autoPlay={false} showStatus={false}>
+              <Slider {...sliderSettings}>
                 {guides.map(guide => (
                   <FancyGuide
                     key={guide.__metadata.id}
@@ -68,7 +77,7 @@ const SectionGuides = props => {
                     onClick={() => guideClick(guide.slug)}
                   />
                 ))}
-              </Carousel>
+              </Slider>
             </Box>
           ) : null}
         </Box>

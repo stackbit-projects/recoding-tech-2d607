@@ -2,8 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -50,6 +51,14 @@ const RelatedReadings = props => {
     return handler;
   };
 
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
   return (
     <section>
       <Container>
@@ -66,15 +75,7 @@ const RelatedReadings = props => {
             {page.displayTitle ? page.displayTitle : page.title}
           </Typography>
           <Box mt={4}>
-            <Carousel
-              autoPlay={false}
-              showIndicators={false}
-              showStatus={false}
-              showThumbs={false}
-              centerMode={true}
-              centerSlidePercentage={40}
-              dynamicHeight={false}
-            >
+            <Slider {...sliderSettings}>
               {readings.map((article, index) => (
                 <Box
                   key={index}
@@ -94,7 +95,7 @@ const RelatedReadings = props => {
                   />
                 </Box>
               ))}
-            </Carousel>
+            </Slider>
           </Box>
         </Box>
       </Container>
