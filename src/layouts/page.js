@@ -2,7 +2,7 @@
 import React from "react";
 import _ from "lodash";
 import { Layout } from "../components/index";
-import { htmlToReact, withPrefix, markdownify } from "../utils";
+import { markdownify } from "../utils";
 
 // Material UI imports
 import Container from "@mui/material/Container";
@@ -14,6 +14,10 @@ import Sidebar from "../components/Sidebar";
 
 
 const Page = props => {
+  const {
+    page: { sidebar_content = {} },
+  } = props;
+  
   return (
     <Layout {...props}>
       <SectionHero {...props} />
@@ -32,7 +36,7 @@ const Page = props => {
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Sidebar />
+            {sidebar_content.length ? <Sidebar content={sidebar_content}/> : null}
           </Grid>
         </Grid>
       </Container>

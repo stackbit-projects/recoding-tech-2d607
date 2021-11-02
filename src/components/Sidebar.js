@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+// import PropTypes from "prop-types";
 import Router from "next/router";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import { CardActionArea } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+
+import FancyCard from "./FancyCard";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -34,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
     textAlign: "center",
   },
-  guide: {
+  sidebar: {
     backgroundColor: theme.palette.secondary.main,
   },
   title: {
@@ -42,33 +38,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = () => {
+const Sidebar = (props) => {
+  const { content } = props;
   const classes = useStyles();
+
+  const cardClick = (path) => {
+    const handler = () => Router.push({ pathname: path });
+    return handler
+  };
 
   return (
     <section>
       <Container>
-        <Box my={4} pt={8} >
-          <Card
-            key={`1`}
-            variant="outlined"
-            className={`${classes.card} ${classes.guide}`}
-          >
-            {/* <CardActionArea
-                      onClick={() => guideClick(guide.slug)}
-                      className={classes.cardAction}
-                    > */}
-            <CardContent>
-              <Typography
-                component="div"
-                variant="h2"
-                className={classes.cardTitle}
-              >
-                Card title
-              </Typography>
-            </CardContent>
-            {/* </CardActionArea> */}
-          </Card>
+        <Box my={4} pt={8}>
+          {content.map((page, index) => (
+            <>
+            <FancyCard
+              key={index}
+              title={page.title}
+              onClick={cardClick(page.stackbit_url_path)}
+              className={`${classes.card} ${classes.sidebar}`}
+            />
+            </>
+          ))}
         </Box>
       </Container>
     </section>
