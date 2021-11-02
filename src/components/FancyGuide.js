@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
