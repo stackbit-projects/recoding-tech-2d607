@@ -74,6 +74,7 @@ function Footer(props) {
           )}
           <Grid container justifyContent="flex-end" spacing={6}>
             <Grid
+              alignItems="flex-end"
               container
               item
               justifyContent="flex-end"
@@ -85,29 +86,28 @@ function Footer(props) {
                 _.get(props, "data.config.footer.links", null),
                 (action, action_idx) => (
                   <Grid item>
-                    <Typography component="div" className={classes.link}>
-                      <Link
-                        key={action_idx}
-                        href={withPrefix(_.get(action, "url", null))}
-                        {...(_.get(action, "new_window", null)
-                          ? { target: "_blank" }
-                          : null)}
-                        {...(_.get(action, "new_window", null) ||
-                        _.get(action, "no_follow", null)
-                          ? {
-                              rel:
-                                (_.get(action, "new_window", null)
-                                  ? "noopener "
-                                  : "") +
-                                (_.get(action, "no_follow", null)
-                                  ? "nofollow"
-                                  : "")
-                            }
-                          : null)}
-                      >
-                        {_.get(action, "label", null)}
-                      </Link>
-                    </Typography>
+                    <Link
+                      className={classes.link}
+                      key={action_idx}
+                      href={withPrefix(_.get(action, "url", null))}
+                      {...(_.get(action, "new_window", null)
+                        ? { target: "_blank" }
+                        : null)}
+                      {...(_.get(action, "new_window", null) ||
+                      _.get(action, "no_follow", null)
+                        ? {
+                            rel:
+                              (_.get(action, "new_window", null)
+                                ? "noopener "
+                                : "") +
+                              (_.get(action, "no_follow", null)
+                                ? "nofollow"
+                                : "")
+                          }
+                        : null)}
+                    >
+                      {_.get(action, "label", null)}
+                    </Link>
                   </Grid>
                 )
               )}
