@@ -88,7 +88,7 @@ const RelatedActions = props => {
   const classes = useStyles();
   const { page, actions } = props;
 
-  const [related, setRelated] = useState(null);
+  const [setRelated] = useState(null);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -102,9 +102,13 @@ const RelatedActions = props => {
   useEffect(() => {
     if (Array.isArray(actions) && actions.length) {
       const relatedActions = actions.filter(action => {
-        if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
+        if (
+          Array.isArray(action.relatedTopics) &&
+          action.relatedTopics.length
+        ) {
           return (
-            action.relatedTopics.findIndex(topic => topic.name === page.name) >= 0
+            action.relatedTopics.findIndex(topic => topic.name === page.name) >=
+            0
           );
         } else return false;
       });
