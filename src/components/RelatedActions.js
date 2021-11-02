@@ -100,14 +100,16 @@ const RelatedActions = props => {
   ];
 
   useEffect(() => {
-    const relatedActions = actions.filter(action => {
-      if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
-        return (
-          action.relatedTopics.findIndex(topic => topic.name === page.name) >= 0
-        );
-      } else return false;
-    });
-    setRelated(relatedActions);
+    if (Array.isArray(actions) && actions.length) {
+      const relatedActions = actions.filter(action => {
+        if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
+          return (
+            action.relatedTopics.findIndex(topic => topic.name === page.name) >= 0
+          );
+        } else return false;
+      });
+      setRelated(relatedActions);
+    }
   }, []);
 
   // table pagination
