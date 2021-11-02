@@ -9,19 +9,21 @@
     "test": "sanity check"
   },
   "dependencies": {
-    "@sanity/base": "^2.13.1",
-    "@sanity/cli": "^2.13.1",
-    "@sanity/color-input": "^2.13.0",
-    "@sanity/components": "^2.13.0",
-    "@sanity/core": "^2.13.1",
-    "@sanity/default-layout": "^2.13.1",
-    "@sanity/default-login": "^2.13.1",
-    "@sanity/desk-tool": "^2.13.1",
+    "@sanity/base": "^2.21.5",
+    "@sanity/cli": "^2.21.5",
+    "@sanity/color-input": "^2.21.5",
+    "@sanity/components": "^2.14.0",
+    "@sanity/core": "^2.21.5",
+    "@sanity/default-layout": "^2.21.5",
+    "@sanity/default-login": "^2.21.4",
+    "@sanity/desk-tool": "^2.21.5",
+    "@sanity/vision": "^2.21.5",
     "prop-types": "^15.6",
     "react": "^16.2",
     "react-dom": "^16.2",
     "sanity-plugin-autocomplete-tags": "^1.0.1",
-    "sanity-plugin-markdown": "^1.0.1"
+    "sanity-plugin-markdown": "^1.0.1",
+    "styled-components": "^5.2.0"
   },
   "devDependencies": {}
 }

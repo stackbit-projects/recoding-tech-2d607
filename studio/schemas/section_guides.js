@@ -1,7 +1,7 @@
 export default {
   type: "object",
-  name: "section_syllabi",
-  title: "Sylabbi Section",
+  name: "section_guides",
+  title: "Quick start guides section",
   fields: [
     {
       type: "string",

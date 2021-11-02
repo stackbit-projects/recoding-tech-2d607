@@ -1,0 +1,48 @@
+# Generate new pull of citations and commit to reposity for publishing once a day.
+
+name: zotero-citations-pull
+
+# Controls when the workflow will run
+# Triggers the workflow on regular cron intervals. Schedule is approximate.
+on:
+  schedule:
+  - cron:  '00 13,21 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup git config and auth
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        run: |
+          # Hard-code user configuration.
+          git config user.email "team@throneless.tech"
+          git config user.name "Throneless Tech"
+      
+      - name: Install dependencies
+        run: |
+          chmod +x deploy/install.sh
+          ./deploy/install.sh
+
+      - name: Generate new content
+        env:
+          SANITY_ACCESS_TOKEN: ${{ secrets.SANITY_ACCESS_TOKEN }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_API_VERSION: ${{secrets.SANITY_API_VERSION}}
+          ZOTERO_GROUP_ID: ${{secrets.ZOTERO_GROUP_ID}}
+          ZOTERO_API_KEY: ${{secrets.ZOTERO_API_KEY}}
+          ZOTERO_API_VERSION: ${{secrets.ZOTERO_API_VERSION}}
+        run: npm run import:citations

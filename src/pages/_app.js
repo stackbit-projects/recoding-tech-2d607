@@ -1,39 +1,41 @@
 // import App from 'next/app'
-import React, { useEffect } from 'react'
-import Router from 'next/router'
-import '../sass/main.scss'
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import Router from "next/router";
+// import '../sass/main.scss'
+import "../app.css";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (window.onNextjsAppDidMount) {
-      window.onNextjsAppDidMount()
+      window.onNextjsAppDidMount();
     }
 
     if (window.onNextjsRouteChangeComplete) {
-      window.onNextjsRouteChangeComplete()
+      window.onNextjsRouteChangeComplete();
     }
 
     const handleRouteChangeStart = () => {
       if (window.onNextjsRouteChangeStart) {
-        window.onNextjsRouteChangeStart()
+        window.onNextjsRouteChangeStart();
       }
-    }
+    };
 
     const handleRouteChangeComplete = () => {
       if (window.onNextjsRouteChangeComplete) {
-        window.onNextjsRouteChangeComplete()
+        window.onNextjsRouteChangeComplete();
       }
-    }
+    };
 
-    Router.events.on('routeChangeStart', handleRouteChangeStart)
-    Router.events.on('routeChangeComplete', handleRouteChangeComplete)
+    Router.events.on("routeChangeStart", handleRouteChangeStart);
+    Router.events.on("routeChangeComplete", handleRouteChangeComplete);
     return () => {
-      Router.events.off('routeChangeStart', handleRouteChangeStart)
-      Router.events.off('routeChangeComplete', handleRouteChangeComplete)
-    }
-  }, [])
+      Router.events.off("routeChangeStart", handleRouteChangeStart);
+      Router.events.off("routeChangeComplete", handleRouteChangeComplete);
+    };
+  }, []);
 
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -48,4 +50,9 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+MyApp.propTypes = {
+  Component: PropTypes.func,
+  pageProps: PropTypes.object
+};
+
+export default MyApp;

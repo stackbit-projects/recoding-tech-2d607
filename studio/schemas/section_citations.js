@@ -1,7 +1,7 @@
 export default {
   type: 'object',
   name: 'section_citations',
-  title: 'Search Page',
+  title: 'Citations Page',
   fields: [
     {
       type: 'string',
