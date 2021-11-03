@@ -111,3 +111,6 @@ studio/dist
 # compiled scripts
 importData.js
 deleteData.js
+
+# Local Netlify folder
+.netlify
