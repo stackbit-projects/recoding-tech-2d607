@@ -9,6 +9,7 @@
     "develop": "next dev",
     "fetch": "sourcebit fetch",
     "build": "next build && next export",
+    "build:netlify": "next build",
     "start": "next start",
     "import:citations": "node importData.mjs",
     "compile": "babel importData.mjs -o importData.js; babel deleteData.mjs -o deleteData.js",
