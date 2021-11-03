@@ -42,6 +42,7 @@ const Sidebar = (props) => {
   const { content } = props;
   const classes = useStyles();
 
+  console.log("content", content[0])
   const cardClick = (path) => {
     const handler = () => Router.push({ pathname: path });
     return handler
@@ -52,14 +53,14 @@ const Sidebar = (props) => {
       <Container>
         <Box my={4} pt={8}>
           {content.map((page, index) => (
-            <>
-            <FancyCard
-              key={index}
-              title={page.title}
-              onClick={cardClick(page.stackbit_url_path)}
-              className={`${classes.card} ${classes.sidebar}`}
-            />
-            </>
+            <Box mt={2}>
+              <FancyCard
+                key={index}
+                title={page.title}
+                onClick={cardClick(page.stackbit_url_path)}
+                lastUpdated={page.__metadata.updatedAt}
+              />
+            </Box>
           ))}
         </Box>
       </Container>

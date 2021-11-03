@@ -1,6 +1,7 @@
 // base imports
 import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment-strftime";
 
 // material ui imports
 import { makeStyles, useTheme } from "@mui/styles";
@@ -44,48 +45,46 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const FancyCard = ({ category, title, content, author, publication, date, onClick = (() => {}) }) => {
+const FancyCard = ({ category, title, content, author, publication, date, lastUpdated, onClick = (() => {}) }) => {
   const classes = useStyles();
   const theme = useTheme();
   console.log('style:', theme);
 
   return (
-    <Card
-      variant="outlined"
-      className={`${classes.box} ${classes.featured}`}
-    >
+    <Card variant="outlined" className={`${classes.box} ${classes.featured}`}>
       <CardActionArea onClick={onClick}>
         <CardContent>
           {category && (
             <Typography component="div" variant="h4">
-            {category}
+              {category}
             </Typography>
           )}
           {title && (
             <Typography component="div" variant="h2">
-            {title}
+              {title}
             </Typography>
           )}
           {author && (
             <Typography component="div" variant="h3">
-            {author}
+              {author}
             </Typography>
           )}
           {publication && (
             <Typography component="div" variant="h4">
-            {publication}
+              {publication}
             </Typography>
           )}
           {date && (
             <Typography component="div" variant="body1" className={classes.em}>
-            {date}
+              {date}
             </Typography>
           )}
-          <Typography
-            component="div"
-            variant="body1"
-            className={classes.em}
-          >
+          {lastUpdated && (
+            <Typography component="div" variant="body1" className={classes.em}>
+              Last updated: {moment(lastUpdated).strftime("%B %e, %Y")}
+            </Typography>
+          )}
+          <Typography component="div" variant="body1" className={classes.em}>
             {content}
           </Typography>
         </CardContent>
@@ -102,6 +101,7 @@ FancyCard.propTypes = {
   publication: PropTypes.string,
   date: PropTypes.string,
   onClick: PropTypes.func,
+  lastUpdated: PropTypes.string,
 };
 
 export default FancyCard;
