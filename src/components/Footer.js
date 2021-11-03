@@ -24,6 +24,13 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "normal",
     textTransform: "uppercase"
   },
+  links: {
+    justifyContent: "flex-end",
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "flex-start",
+      marginTop: 2
+    }
+  },
   logoLink: {
     color: "unset",
     textDecoration: "none"
@@ -34,6 +41,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: "0.8em",
     fontWeight: "normal",
     textTransform: "uppercase",
+    [theme.breakpoints.down("md")]: {
+      marginBottom: 20
+    },
     "&:active, &:focus, &:hover": {
       backgroundColor: "#000",
       border: "1px solid #fff",
@@ -72,12 +82,12 @@ function Footer(props) {
               {htmlToReact(_.get(props, "data.config.footer.content", null))}
             </Typography>
           )}
-          <Grid container justifyContent="flex-end" spacing={6}>
+          <Grid container spacing={6}>
             <Grid
               alignItems="flex-end"
+              className={classes.links}
               container
               item
-              justifyContent="flex-end"
               spacing={6}
               xs={12}
               sm={10}
