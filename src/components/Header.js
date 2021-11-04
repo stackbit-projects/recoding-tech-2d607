@@ -19,7 +19,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 // component imports
 import Logo from "./Logo";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   em: {
     fontStyle: "italic"
   },
@@ -32,16 +32,7 @@ const useStyles = makeStyles(theme => ({
     color: "unset",
     textDecoration: "none"
   },
-  mobileNav: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
-  },
-  nav: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
-  }
+  nav: {}
 }));
 
 function Header(props) {
@@ -305,14 +296,6 @@ function Header(props) {
                     : null}
                 </Menu>
               </Grid>
-            </Grid>
-          </Grid>
-          <Grid container item className={classes.mobileNav}>
-            <Grid item>
-              <Typography>Explore by...</Typography>
-            </Grid>
-            <Grid container item>
-              <Grid item>Mobile nav here</Grid>
             </Grid>
           </Grid>
         </Grid>

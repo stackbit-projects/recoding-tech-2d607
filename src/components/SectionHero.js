@@ -20,6 +20,14 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     zIndex: 1
   },
+  box: {
+    paddingBottom: 30,
+    paddingTop: 30,
+    [theme.breakpoints.up("sm")]: {
+      paddingBottom: 100,
+      paddingTop: 100
+    }
+  },
   hero: {
     position: "relative"
   },
@@ -64,7 +72,7 @@ function SectionHero(props) {
   return (
     <section id={page.__metadata.id} className="block block-hero">
       <Box
-        paddingY={16}
+        className={classes.box}
         style={{
           backgroundColor:
             page.type && theme.palette[page.type]
