@@ -56,6 +56,7 @@ const Sidebar = (props) => {
             <Box mt={2}>
               <FancyCard
                 key={index}
+                isSidebar={true}
                 title={page.title}
                 onClick={cardClick(page.stackbit_url_path)}
                 lastUpdated={page.__metadata.updatedAt}

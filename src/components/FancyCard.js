@@ -10,7 +10,7 @@ import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   box: {
     border: "1px solid #000",
     borderRadius: 0,
@@ -26,15 +26,15 @@ const useStyles = makeStyles(theme => ({
       top: 5,
       transition: "left 250ms, top 250ms",
       width: "100%",
-      zIndex: "-1"
+      zIndex: "-1",
     },
     "&:active, &:focus, &:hover": {
       "&::before": {
         left: "-14px",
         top: 10,
-        transition: "left 250ms, top 250ms"
-      }
-    }
+        transition: "left 250ms, top 250ms",
+      },
+    },
   },
   boxNoHover: {
     border: "1px solid #000",
@@ -51,22 +51,25 @@ const useStyles = makeStyles(theme => ({
       top: 5,
       transition: "left 250ms, top 250ms",
       width: "100%",
-      zIndex: "-1"
-    }
+      zIndex: "-1",
+    },
   },
   content: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   em: {
     fontSize: "0.8em",
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   featured: {
-    backgroundColor: theme.palette.footer.main
+    backgroundColor: theme.palette.footer.main,
+  },
+  sidebar: {
+    backgroundColor: theme.palette.secondary.main,
   },
   noClick: {
-    cursor: "default"
-  }
+    cursor: "default",
+  },
 }));
 
 const FancyCard = ({
@@ -77,6 +80,7 @@ const FancyCard = ({
   publication,
   notClickable,
   lastUpdated,
+  isSidebar,
   title,
   onClick = () => {}
 }) => {
@@ -85,7 +89,7 @@ const FancyCard = ({
   return (
     <Card
       variant="outlined"
-      className={`${classes.featured} ${
+      className={`${isSidebar ? classes.sidebar : classes.featured} ${
         notClickable ? classes.boxNoHover : classes.box
       }`}
     >
@@ -142,6 +146,7 @@ FancyCard.propTypes = {
   category: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.string,
+  isSidebar: PropTypes.bool,
   notClickable: PropTypes.bool,
   publication: PropTypes.string,
   title: PropTypes.string,

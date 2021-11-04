@@ -65,6 +65,9 @@ export default {
           to: { type: "page" },
         },
       ],
+      options: {
+        
+      }
     },
     {
       type: "string",
