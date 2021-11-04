@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import moment from "moment-strftime";
 
 // material ui imports
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
@@ -36,6 +36,27 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
+  boxNoHover: {
+    border: "1px solid #000",
+    borderRadius: 0,
+    overflow: "unset",
+    position: "relative",
+    "&::before": {
+      backgroundColor: "#fff",
+      border: "1px solid #000",
+      content: "''",
+      height: "100%",
+      left: "-8px",
+      position: "absolute",
+      top: 5,
+      transition: "left 250ms, top 250ms",
+      width: "100%",
+      zIndex: "-1"
+    }
+  },
+  content: {
+    fontStyle: "italic"
+  },
   em: {
     fontSize: "0.8em",
     fontStyle: "italic"
@@ -43,16 +64,35 @@ const useStyles = makeStyles(theme => ({
   featured: {
     backgroundColor: theme.palette.footer.main
   },
+  noClick: {
+    cursor: "default"
+  }
 }));
 
-const FancyCard = ({ category, title, content, author, publication, date, lastUpdated, onClick = (() => {}) }) => {
+const FancyCard = ({
+  author,
+  category,
+  content,
+  date,
+  publication,
+  notClickable,
+  lastUpdated,
+  title,
+  onClick = () => {}
+}) => {
   const classes = useStyles();
-  const theme = useTheme();
-  console.log('style:', theme);
 
   return (
-    <Card variant="outlined" className={`${classes.box} ${classes.featured}`}>
-      <CardActionArea onClick={onClick}>
+    <Card
+      variant="outlined"
+      className={`${classes.featured} ${
+        notClickable ? classes.boxNoHover : classes.box
+      }`}
+    >
+      <CardActionArea
+        onClick={onClick}
+        className={notClickable ? classes.noClick : ""}
+      >
         <CardContent>
           {category && (
             <Typography component="div" variant="h4">
@@ -84,7 +124,11 @@ const FancyCard = ({ category, title, content, author, publication, date, lastUp
               Last updated: {moment(lastUpdated).strftime("%B %e, %Y")}
             </Typography>
           )}
-          <Typography component="div" variant="body1" className={classes.em}>
+          <Typography
+            component="div"
+            variant="body1"
+            className={classes.content}
+          >
             {content}
           </Typography>
         </CardContent>
@@ -94,14 +138,15 @@ const FancyCard = ({ category, title, content, author, publication, date, lastUp
 };
 
 FancyCard.propTypes = {
-  category: PropTypes.string,
-  title: PropTypes.string,
-  content: PropTypes.string,
   author: PropTypes.string,
-  publication: PropTypes.string,
+  category: PropTypes.string,
+  content: PropTypes.string,
   date: PropTypes.string,
-  onClick: PropTypes.func,
+  notClickable: PropTypes.bool,
+  publication: PropTypes.string,
+  title: PropTypes.string,
   lastUpdated: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default FancyCard;

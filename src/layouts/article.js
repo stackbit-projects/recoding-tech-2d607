@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import _ from 'lodash'
+import React, { useEffect, useState } from "react";
+import _ from "lodash";
 
 import PropTypes from "prop-types";
 
@@ -22,10 +22,9 @@ import RelatedTopics from "../components/RelatedTopics";
 const Article = props => {
   const { page } = props;
   const [topics, setTopics] = useState(null);
-  console.log(page);
 
   useEffect(() => {
-    if (Array.isArray(page.relatedTopics) && page.relatedTopics.length ) {
+    if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
       setTopics(page.relatedTopics.filter(topic => topic.type));
     }
   }, []);
@@ -33,22 +32,35 @@ const Article = props => {
   return (
     <Layout {...props}>
       <SectionHero {...props} />
-      <Box my={4}>
+      <Box my={6}>
         <Container>
-          <Box my={4}>
-            <Grid container>
-              <Grid item sm={12} md={8}>
-                <FancyCard title="Key Takeaways" content={markdownify(_.get(props, 'page.key_takeaways', null))} />
+          <Grid container spacing={8}>
+            <Grid container spacing={12} item xs={12} md={8} direction="column">
+              {page.key_takeaways ? (
+                <Grid item>
+                  <FancyCard
+                    notClickable
+                    category="Key Takeaways"
+                    content={markdownify(
+                      _.get(props, "page.key_takeaways", null)
+                    )}
+                  />
+                </Grid>
+              ) : null}
+              <Grid item>
                 <Typography component="div" variant="body1">
-                  {markdownify(_.get(props, 'page.content', null))}
+                  {markdownify(_.get(props, "page.content", null))}
                 </Typography>
               </Grid>
-              <Grid item sm={12} md={4}>
-                <RelatedCommentary title="Further Readings" commentary={page.relatedCommentary} />
-                <RelatedTopics topics={topics} />
-              </Grid>
             </Grid>
-          </Box>
+            <Grid item xs={12} md={4}>
+              <RelatedCommentary
+                title="Further Readings"
+                commentary={page.relatedCommentary}
+              />
+              <RelatedTopics topics={topics} />
+            </Grid>
+          </Grid>
         </Container>
       </Box>
     </Layout>

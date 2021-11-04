@@ -19,7 +19,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 // component imports
 import Logo from "./Logo";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   em: {
     fontStyle: "italic"
   },
@@ -32,16 +32,7 @@ const useStyles = makeStyles(theme => ({
     color: "unset",
     textDecoration: "none"
   },
-  mobileNav: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
-  },
-  nav: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
-  }
+  nav: {}
 }));
 
 function Header(props) {
@@ -54,7 +45,6 @@ function Header(props) {
   const [companies, setCompanies] = useState(null);
 
   useEffect(() => {
-    console.log('page.type:', page.type);
     const topicIssues = topics.filter(
       topic => topic.type == "issue" && topic.stackbit_model_type === "page"
     );
@@ -115,7 +105,15 @@ function Header(props) {
   };
 
   return (
-    <header className={classes.header} style={{ backgroundColor: page.type && theme.palette[page.type] ? theme.palette[page.type].main : theme.palette.secondary.main }}>
+    <header
+      className={classes.header}
+      style={{
+        backgroundColor:
+          page.type && theme.palette[page.type]
+            ? theme.palette[page.type].main
+            : theme.palette.secondary.main
+      }}
+    >
       <Box p={4}>
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={12} sm={4}>
@@ -298,14 +296,6 @@ function Header(props) {
                     : null}
                 </Menu>
               </Grid>
-            </Grid>
-          </Grid>
-          <Grid container item className={classes.mobileNav}>
-            <Grid item>
-              <Typography>Explore by...</Typography>
-            </Grid>
-            <Grid container item>
-              <Grid item>Mobile nav here</Grid>
             </Grid>
           </Grid>
         </Grid>

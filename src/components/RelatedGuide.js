@@ -6,11 +6,11 @@ import Router from "next/router";
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import { CardActionArea } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+
+// components
+import FancyGuide from "./FancyGuide";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -30,14 +30,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: 170
   },
   em: {
-    fontStyle: "italic",
-    textAlign: "center"
+    fontStyle: "italic"
   },
   guide: {
     backgroundColor: theme.palette.secondary.main
-  },
-  title: {
-    textAlign: "center"
   }
 }));
 
@@ -53,37 +49,22 @@ const RelatedDocuments = props => {
   return (
     <section>
       <Grid container className={classes.grid}>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
+        <Grid container item justifyContent="space-between">
+          <Grid item xs={12}>
             <Typography component="h2" variant="h4">
               Quick-start Guide
             </Typography>
-            <Typography
-              component="div"
-              variant="body1"
-              className={classes.em}
-            >
-              Overview of {page.displayTitle ? page.displayTitle : page.name } and recommended reading
+            <Typography component="div" variant="body1" className={classes.em}>
+              Overview of {page.displayTitle ? page.displayTitle : page.name}{" "}
+              and recommended reading
             </Typography>
           </Grid>
-          <Box my={4} pt={8} sx={{ borderTop: "1px solid #000" }}>
-            <Card
-              variant="outlined"
-              className={`${classes.box} ${classes.guide}`}
-            >
-              <CardActionArea onClick={onClick}>
-                <CardContent>
-                  <Typography component="div" variant="h2">
-                    {page.quickStartGuide.title}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+          <Box
+            my={2}
+            pt={2}
+            sx={{ borderTop: "1px solid #000", width: "100%" }}
+          >
+            <FancyGuide guide={page.quickStartGuide} onClick={onClick} />
           </Box>
         </Grid>
       </Grid>

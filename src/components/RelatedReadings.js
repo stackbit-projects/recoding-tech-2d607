@@ -2,8 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -11,7 +12,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-import FancyCard from './FancyCard';
+import FancyCard from "./FancyCard";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -31,25 +32,31 @@ const useStyles = makeStyles(theme => ({
     marginTop: 170
   },
   em: {
-    fontStyle: "italic",
-    textAlign: "center"
+    fontStyle: "italic"
   },
   guide: {
     backgroundColor: theme.palette.secondary.main
   },
-  title: {
-    textAlign: "center"
-  }
+  title: {}
 }));
 
 const RelatedReadings = props => {
-  const { readings } = props;
+  const { page, readings } = props;
+
   if (!Array.isArray(readings) || !readings.length) return null;
   const classes = useStyles();
 
   const getHandler = article => {
     const handler = () => Router.push({ pathname: `/article/${article.slug}` });
     return handler;
+  };
+
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
   };
 
   return (
@@ -59,12 +66,36 @@ const RelatedReadings = props => {
           <Typography component="h2" variant="h4" className={classes.title}>
             Related Reading
           </Typography>
+          <Typography
+            component="div"
+            variant="body1"
+            sx={{ fontStyle: "italic" }}
+          >
+            The latest thinking about{" "}
+            {page.displayTitle ? page.displayTitle : page.title}
+          </Typography>
           <Box mt={4}>
-            <Carousel autoPlay={false}>
+            <Slider {...sliderSettings}>
               {readings.map((article, index) => (
-                <FancyCard key={index} title={article.title} content={article.author.name} onClick={getHandler(article)} />
+                <Box
+                  key={index}
+                  sx={{
+                    height: "90%",
+                    marginBottom: 2,
+                    marginLeft: 2,
+                    width: "90%"
+                  }}
+                >
+                  <FancyCard
+                    category={article.category}
+                    title={article.title}
+                    author={article.author.name}
+                    date={article.date}
+                    onClick={getHandler(article)}
+                  />
+                </Box>
               ))}
-            </Carousel>
+            </Slider>
           </Box>
         </Box>
       </Container>
@@ -73,6 +104,7 @@ const RelatedReadings = props => {
 };
 
 RelatedReadings.propTypes = {
+  page: PropTypes.object,
   readings: PropTypes.array
 };
 

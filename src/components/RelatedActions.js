@@ -1,5 +1,5 @@
 // base imports
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
@@ -20,6 +20,10 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const useStyles = makeStyles(theme => ({
+  em: {
+    fontStyle: "italic",
+    textAlign: "center"
+  },
   icon: {
     position: "absolute",
     right: 20,
@@ -53,14 +57,14 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
-  em: {
-    fontStyle: "italic",
-    textAlign: "center"
-  },
   tableLink: {
     color: "#000",
     position: "relative",
     textDecoration: "none"
+  },
+  title: {
+    borderRight: "2px solid #000",
+    paddingRight: 20
   },
   trackerIcon: {
     left: 0,
@@ -83,7 +87,6 @@ const useStyles = makeStyles(theme => ({
 const RelatedActions = props => {
   const classes = useStyles();
   const { page, actions } = props;
-  const [related, setRelated] = React.useState(null);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -94,19 +97,9 @@ const RelatedActions = props => {
     { id: "lastUpdate", label: "Last Updated" }
   ];
 
-  useEffect(() => {
-    const relatedActions = actions.filter(action => {
-      if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
-        return action.relatedTopics.findIndex(topic => topic.name === page.name) >= 0
-      } else return false;
-    });
-    console.log('actions:', relatedActions);
-    setRelated(relatedActions);
-  }, []);
-
   // table pagination
-  const [current, setCurrent] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [current, setCurrent] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setCurrent(newPage);
@@ -117,7 +110,7 @@ const RelatedActions = props => {
     setCurrent(0);
   };
 
-  return Array.isArray(related) && related.length ? (
+  return Array.isArray(actions) && actions.length ? (
     <section>
       <Grid
         container
@@ -125,21 +118,20 @@ const RelatedActions = props => {
         justifyContent="space-between"
         className={classes.gridTitle}
       >
-        <Grid item xs>
-          <Typography component="h2" variant="h4" className={classes.title} >
-            Law & Regulation Tracker |
-          </Typography>
+        <Grid container spacing={2} item xs={12} md={11}>
+          <Grid item>
+            <Typography component="h2" variant="h4" className={classes.title}>
+              Law & Regulation Tracker
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography component="div" variant="body1" className={classes.em}>
+              The latest cases, laws, and regulations related to{" "}
+              {page.displayTitle ? page.displayTitle : page.name}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Typography
-            component="div"
-            variant="body1"
-            className={classes.em}
-          >
-            The latest cases, laws, and regulations related to {page.displayTitle ? page.displayTitle : page.name}
-          </Typography>
-        </Grid>
-        <Grid item xs>
+        <Grid item xs={12} md={1}>
           <Typography component="div" variant="h4">
             <Link href="/tracker" className={classes.link}>
               View all
@@ -161,8 +153,11 @@ const RelatedActions = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {related
-                .slice(current * rowsPerPage, current * rowsPerPage + rowsPerPage)
+              {actions
+                .slice(
+                  current * rowsPerPage,
+                  current * rowsPerPage + rowsPerPage
+                )
                 .map(row => {
                   return (
                     <TableRow
@@ -226,7 +221,7 @@ const RelatedActions = props => {
         />
       </Box>
     </section>
-    ) : null;
+  ) : null;
 };
 
 RelatedActions.propTypes = {

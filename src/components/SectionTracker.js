@@ -1,7 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -68,8 +68,10 @@ const useStyles = makeStyles(theme => ({
   },
   tableLink: {
     color: "#000",
+    display: "block",
     position: "relative",
-    textDecoration: "none"
+    textDecoration: "none",
+    maxWidth: "85%"
   }
 }));
 
@@ -100,7 +102,7 @@ function SectionTracker(props) {
       issue: new Map(),
       policy: new Map(),
       company: new Map(),
-      country: new Map(),
+      country: new Map()
     };
     if (Array.isArray(topics) && topics.length) {
       topics.map(topic => {
@@ -111,7 +113,7 @@ function SectionTracker(props) {
     }
 
     let newFilters = [];
-    ['issue', 'policy', 'company', 'country'].forEach(type => {
+    ["issue", "policy", "company", "country"].forEach(type => {
       if (Array.isArray(query[type]) && query[type].length) {
         query[type].forEach(t => {
           const exists = newTopics[type].get(t);
@@ -130,22 +132,28 @@ function SectionTracker(props) {
     setPolicies(Array.from(newTopics.policy.values()));
     setCompanies(Array.from(newTopics.company.values()));
     setCountries(Array.from(newTopics.country.values()));
-    newFilters.sort()
+    newFilters.sort();
     setFilters(newFilters);
   }, [query]);
 
   useEffect(() => {
     if (props.actions) {
       if (filters) {
-        setActions(props.actions.filter(action => {
-          let matches = 0;
-          if (Array.isArray(action.relatedTopics) && action.relatedTopics.length) {
-            action.relatedTopics.forEach(topic => {
-              if (filters.findIndex(f => f.slug === topic.slug) >= 0) matches += 1;
-            });
-          }
-          return matches >= filters.length;
-        }));
+        setActions(
+          props.actions.filter(action => {
+            let matches = 0;
+            if (
+              Array.isArray(action.relatedTopics) &&
+              action.relatedTopics.length
+            ) {
+              action.relatedTopics.forEach(topic => {
+                if (filters.findIndex(f => f.slug === topic.slug) >= 0)
+                  matches += 1;
+              });
+            }
+            return matches >= filters.length;
+          })
+        );
       }
     }
   }, [filters]);
@@ -154,11 +162,11 @@ function SectionTracker(props) {
     if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
       setFilters([...filters, topic]);
     }
-  }
+  };
 
   const handleDelete = topic => () => {
     topic && setFilters(filters.filter(f => f.slug !== topic.slug));
-  }
+  };
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssues = Boolean(issueEl);
@@ -412,11 +420,17 @@ function SectionTracker(props) {
       </Box>
       <Box my={4}>
         <Grid container spacing={2} justifyContent="flex-start">
-          { filters.length ? filters.map(filter => (
-              <Grid key={filter.__metadata.id} item>
-                <Chip label={filter.displayTitle || filter.name} color={filter.type} onDelete={handleDelete(filter)}/>
-              </Grid>
-          )) : null}
+          {filters.length
+            ? filters.map(filter => (
+                <Grid key={filter.__metadata.id} item>
+                  <Chip
+                    label={filter.displayTitle || filter.name}
+                    color={filter.type}
+                    onDelete={handleDelete(filter)}
+                  />
+                </Grid>
+              ))
+            : null}
         </Grid>
       </Box>
       <Box my={4}>

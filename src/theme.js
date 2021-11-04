@@ -101,7 +101,7 @@ const theme = createTheme({
         main: "#EFE9DA",
         dark: "#BCB6A7"
       }
-    }),
+    })
   },
   typography: {
     fontFamily: serifFont,

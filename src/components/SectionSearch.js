@@ -6,17 +6,16 @@ import Router, { useRouter } from "next/router";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
-import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-import FancyCard from './FancyCard';
-import SearchBar from './SearchBar';
+// components
+import FancyCard from "./FancyCard";
+import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles(theme => ({
   citation: {
@@ -66,7 +65,7 @@ const SectionCitations = props => {
       issue: new Map(),
       policy: new Map(),
       company: new Map(),
-      country: new Map(),
+      country: new Map()
     };
     if (Array.isArray(topics) && topics.length) {
       topics.map(topic => {
@@ -77,7 +76,7 @@ const SectionCitations = props => {
     }
 
     let newFilters = [];
-    ['issue', 'policy', 'company', 'country'].forEach(type => {
+    ["issue", "policy", "company", "country"].forEach(type => {
       if (Array.isArray(query[type]) && query[type].length) {
         query[type].forEach(t => {
           const exists = newTopics[type].get(t);
@@ -96,7 +95,7 @@ const SectionCitations = props => {
     setPolicies(Array.from(newTopics.policy.values()));
     setCompanies(Array.from(newTopics.company.values()));
     setCountries(Array.from(newTopics.country.values()));
-    newFilters.sort()
+    newFilters.sort();
     setFilters(newFilters);
   }, [query]);
 
@@ -106,9 +105,13 @@ const SectionCitations = props => {
       if (filters) {
         newCitations = newCitations.filter(citation => {
           let matches = 0;
-          if (Array.isArray(citation.relatedTopics) && citation.relatedTopics.length) {
+          if (
+            Array.isArray(citation.relatedTopics) &&
+            citation.relatedTopics.length
+          ) {
             citation.relatedTopics.forEach(topic => {
-              if (filters.findIndex(f => f.slug === topic.slug) >= 0) matches += 1;
+              if (filters.findIndex(f => f.slug === topic.slug) >= 0)
+                matches += 1;
             });
           }
           return matches >= filters.length;
@@ -123,9 +126,9 @@ const SectionCitations = props => {
       }
       if (search) {
         newCitations = newCitations.filter(citation => {
-          const regex = new RegExp(`/${search}/`, 'i');
+          const regex = new RegExp(`/${search}/`, "i");
           for (const prop in citation) {
-            if (typeof prop === 'string' || prop instanceof String) {
+            if (typeof prop === "string" || prop instanceof String) {
               if (prop.search(regex) > 0) return true;
             }
           }
@@ -147,94 +150,32 @@ const SectionCitations = props => {
     if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
       setFilters([...filters, topic]);
     }
-  }
+  };
 
   const handleDelete = topic => () => {
     if (topic) {
       setFilters(filters.filter(f => f.slug !== topic.slug));
     }
-  }
+  };
 
   const getHandler = item => {
     const handler = () => Router.push({ pathname: item.url });
     return handler;
   };
 
-
   return (
-    <Grid container className={classes.grid}>
-      <Grid
-        container
-        item
-        justifyContent="space-between"
-        className={classes.gridTitle}
-        sm={12}
-        md={8}
-      >
-        <Grid item>
-          <SearchBar handleSearch={value => setSearch(value)} />
-        </Grid>
-        <Box my={4}>
-          <Grid container spacing={2} justifyContent="flex-start">
-            { filters.length ? filters.map(filter => (
-                <Grid key={filter.__metadata.id} item>
-                  <Chip label={filter.displayTitle || filter.name} color={filter.type} onDelete={handleDelete(filter)}/>
-                </Grid>
-            )) : null}
-          </Grid>
-        </Box>
-        <Grid container flexDirection="column">
-          {citations && citations.length
-            ? citations.slice((page - 1) * ROWS_PER_PAGE, (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE).map(citation => (
-            <Grid
-              key={citation.__metadata.id}
-              container
-              item
-              justifyContent="space-between"
-            >
-              <Grid
-                item
-                key={citation.__metadata.id}
-                className={classes.citation}
-              >
-                <FancyCard
-                  key={citation.__metadata.id}
-                  title={citation.title}
-                  publication={citation.publicationTitle
-                        ? citation.publicationTitle
-                        : citation.websiteTitle}
-                  date={moment(citation.date).strftime("%B %e, %Y")}
-                  onClick={getHandler(citation)}
-                />
-              </Grid>
-              <Grid
-                item
-                key={citation.__metadata.id}
-                className={classes.citation}
-              >
-                <KeyboardArrowRightIcon />
-              </Grid>
-            </Grid>
-            ))
-            : null}
-        </Grid>
-        {citations && citations.length && (
-          <Box my={4}>
-            <Stack spacing={2}>
-              <Pagination count={Math.ceil(citations.length / ROWS_PER_PAGE)} onChange={handleChangePage} />
-            </Stack>
-          </Box>
-        )}
-      </Grid>
-      <Grid container item xs={2} flexDirection="column">
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Typography component="h2" variant="h2">
-            Filters
+    <Grid
+      container
+      className={classes.grid}
+      spacing={4}
+      alignItems="flex-start"
+      direction="row-reverse"
+      justifyContent="flex-end"
+    >
+      <Grid container item xs={12} md={4} direction="column">
+        <Grid item className={classes.gridTitle}>
+          <Typography component="h2" variant="h2" sx={{ marginTop: 4 }}>
+            Filter...
           </Typography>
         </Grid>
         <Grid
@@ -243,24 +184,25 @@ const SectionCitations = props => {
           justifyContent="space-between"
           className={classes.gridTitle}
         >
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <Typography component="h2" variant="h4">
               Issues
             </Typography>
           </Grid>
-          <Box my={4} pt={8}>
-            <Container spacing={3}>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
               {issues.map((topic, i) => (
-                    <Chip
-                      key={i}
-                      label={topic.name}
-                      color={topic.type}
-                      clickable
-                      onClick={handleClick(topic)}
-                    />
-                  ))}
-            </Container>
-          </Box>
+                <Chip
+                  key={i}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
         </Grid>
         <Grid
           container
@@ -273,19 +215,20 @@ const SectionCitations = props => {
               Policies
             </Typography>
           </Grid>
-          <Box my={4} pt={8}>
-            <Container spacing={3}>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
               {policies.map((topic, i) => (
-                    <Chip
-                      key={i}
-                      label={topic.name}
-                      color={topic.type}
-                      clickable
-                      onClick={handleClick(topic)}
-                    />
-                  ))}
-            </Container>
-          </Box>
+                <Chip
+                  key={i}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
         </Grid>
         <Grid
           container
@@ -298,19 +241,20 @@ const SectionCitations = props => {
               Companies
             </Typography>
           </Grid>
-          <Box my={4} pt={8}>
-            <Container spacing={3}>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
               {companies.map((topic, i) => (
-                    <Chip
-                      key={i}
-                      label={topic.name}
-                      color={topic.type}
-                      clickable
-                      onClick={handleClick(topic)}
-                    />
-                  ))}
-            </Container>
-          </Box>
+                <Chip
+                  key={i}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
         </Grid>
         <Grid
           container
@@ -323,20 +267,109 @@ const SectionCitations = props => {
               Countries
             </Typography>
           </Grid>
-          <Box my={4} pt={8}>
-            <Container spacing={3}>
+          <Grid item>
+            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
               {countries.map((topic, i) => (
-                    <Chip
-                      key={i}
-                      label={topic.name}
-                      color={topic.type}
-                      clickable
-                      onClick={handleClick(topic)}
-                    />
-                  ))}
-            </Container>
-          </Box>
+                <Chip
+                  key={`chip-${i}`}
+                  label={topic.name}
+                  color={topic.type}
+                  clickable
+                  onClick={handleClick(topic)}
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
+            </Stack>
+          </Grid>
         </Grid>
+      </Grid>
+      <Grid
+        container
+        item
+        justifyContent="space-between"
+        className={classes.gridTitle}
+        spacing={4}
+        xs={12}
+        md={8}
+      >
+        <Grid item xs={12}>
+          <SearchBar handleSearch={value => setSearch(value)} />
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" spacing={1}>
+            {filters.length
+              ? filters.map(filter => (
+                  <Chip
+                    key={filter.__metadata.id}
+                    item
+                    label={filter.displayTitle || filter.name}
+                    color={filter.type}
+                    onDelete={handleDelete(filter)}
+                  />
+                ))
+              : null}
+          </Stack>
+        </Grid>
+        <Grid container flexDirection="column" item xs={12}>
+          {citations && citations.length
+            ? citations
+                .slice(
+                  (page - 1) * ROWS_PER_PAGE,
+                  (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
+                )
+                .map(citation => (
+                  <Grid
+                    key={citation.__metadata.id}
+                    container
+                    item
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Grid
+                      item
+                      xs={10}
+                      key={citation.__metadata.id}
+                      className={classes.citation}
+                    >
+                      <FancyCard
+                        key={citation.__metadata.id}
+                        title={citation.title}
+                        publication={
+                          citation.publicationTitle
+                            ? citation.publicationTitle
+                            : citation.websiteTitle
+                        }
+                        date={moment(citation.date).strftime("%B %e, %Y")}
+                        onClick={getHandler(citation)}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      key={citation.__metadata.id}
+                      className={classes.citation}
+                      xs={2}
+                    >
+                      <KeyboardArrowRightIcon />
+                    </Grid>
+                  </Grid>
+                ))
+            : null}
+        </Grid>
+        {citations && citations.length ? (
+          <Grid item>
+            <Pagination
+              count={Math.ceil(citations.length / ROWS_PER_PAGE)}
+              onChange={handleChangePage}
+              sx={{ marginLeft: "-16px" }}
+            />
+          </Grid>
+        ) : (
+          <Grid item>
+            <Typography component="div" variant="body1">
+              No citations found.
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );

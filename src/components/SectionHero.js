@@ -20,6 +20,14 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     zIndex: 1
   },
+  box: {
+    paddingBottom: 30,
+    paddingTop: 30,
+    [theme.breakpoints.up("sm")]: {
+      paddingBottom: 100,
+      paddingTop: 100
+    }
+  },
   hero: {
     position: "relative"
   },
@@ -60,10 +68,18 @@ function SectionHero(props) {
   const classes = useStyles();
   const theme = useTheme();
   let { page } = props;
-  console.log('page.type:', page.type);
+
   return (
     <section id={page.__metadata.id} className="block block-hero">
-      <Box paddingY={16} style={{ backgroundColor: page.type && theme.palette[page.type] ? theme.palette[page.type].main : theme.palette.secondary.main }}>
+      <Box
+        className={classes.box}
+        style={{
+          backgroundColor:
+            page.type && theme.palette[page.type]
+              ? theme.palette[page.type].main
+              : theme.palette.secondary.main
+        }}
+      >
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg
@@ -95,7 +111,7 @@ function SectionHero(props) {
             </Typography>
           ) : page.__metadata.modelName == "topic" ? (
             <Typography variant="h4" className={classes.superTitle}>
-            {page.type}
+              {page.type}
             </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
@@ -124,7 +140,7 @@ function SectionHero(props) {
               variant="body1"
               className={classes.author}
             >
-              {page.author.name} – Last updated{" "}
+              {page.author ? `${page.author.name} – ` : ""} Last updated{" "}
               {moment(page.datePublished).strftime("%B %e, %Y")}
             </Typography>
           )}

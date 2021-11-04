@@ -2,8 +2,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -11,7 +12,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-import FancyCard from './FancyCard';
+import FancyCard from "./FancyCard";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -47,10 +48,17 @@ const RelatedDocuments = props => {
   const { page } = props;
 
   const docClick = file => {
-    console.log('file:', file);
+    console.log("file:", file);
     const handler = () => Router.push({ pathname: file.url });
     return handler;
-    //Router.push({ pathname: `${file.url}` });
+  };
+
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
   };
 
   return (
@@ -62,11 +70,15 @@ const RelatedDocuments = props => {
           </Typography>
           {Array.isArray(page.relatedDocs) && page.relatedDocs.length ? (
             <Box mt={4}>
-              <Carousel autoPlay={false}>
+              <Slider {...sliderSettings}>
                 {page.relatedDocs.map((doc, index) => (
-                  <FancyCard key={index} title={doc.title} onClick={docClick(doc.file)} />
+                  <FancyCard
+                    key={index}
+                    title={doc.title}
+                    onClick={docClick(doc.file)}
+                  />
                 ))}
-              </Carousel>
+              </Slider>
             </Box>
           ) : null}
         </Box>

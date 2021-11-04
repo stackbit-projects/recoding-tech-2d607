@@ -63,6 +63,21 @@ export default {
       description: "Anything you want to say about the topic."
     },
     {
+      title: "Related law and government tracker actions",
+      name: "relatedPolicyActions",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [
+            {
+              type: "policy_action"
+            }
+          ]
+        }
+      ]
+    },
+    {
       title: "Related commentary and analysis",
       name: "relatedCommentary",
       type: "array",
@@ -73,6 +88,21 @@ export default {
             {
               type: "citation"
             },
+            {
+              type: "article"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Related reading",
+      name: "relatedReadings",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [
             {
               type: "article"
             }
@@ -107,19 +137,19 @@ export default {
       options: {
         list: ["page", "data"]
       }
-    },
-    {
-      title: "Layout",
-      name: "layout",
-      type: "string",
-      options: {
-        list: [
-          { title: "Country", value: "country" },
-          { title: "Issue/Policy", value: "issue" },
-          { title: "Company", value: "company" }
-        ]
-      }
     }
+    // {
+    //   title: "Layout",
+    //   name: "layout",
+    //   type: "string",
+    //   options: {
+    //     list: [
+    //       { title: "Country", value: "country" },
+    //       { title: "Issue/Policy", value: "issue" },
+    //       { title: "Company", value: "company" }
+    //     ]
+    //   }
+    // }
   ],
   preview: {
     select: {
