@@ -1,8 +1,6 @@
 // base imports
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
-import moment from "moment-strftime";
 
 // Material UI imports
 import Box from "@mui/material/Box";
@@ -14,7 +12,7 @@ import { Layout } from "../components/index";
 import SectionHero from "../components/SectionHero";
 
 //utils
-import { htmlToReact, withPrefix, markdownify } from "../utils";
+import { htmlToReact } from "../utils";
 
 function Guide(props) {
   const { page } = props;

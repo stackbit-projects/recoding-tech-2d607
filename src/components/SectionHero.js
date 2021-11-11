@@ -21,12 +21,12 @@ const useStyles = makeStyles(theme => ({
     zIndex: 1
   },
   box: {
-    paddingBottom: 30,
-    paddingTop: 30,
-    [theme.breakpoints.up("sm")]: {
-      paddingBottom: 100,
-      paddingTop: 100
-    }
+    paddingBottom: 120,
+    paddingTop: 120
+    // [theme.breakpoints.up("sm")]: {
+    //   paddingBottom: 120,
+    //   paddingTop: 120
+    // }
   },
   hero: {
     position: "relative"

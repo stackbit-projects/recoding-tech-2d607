@@ -24,8 +24,11 @@ const SectionTopics = props => {
   const [topics, setTopics] = useState(null);
 
   useEffect(() => {
-    if (Array.isArray(section.featuredTopics) && section.featuredTopics.length ) {
-      setTopics(section.featuredTopics.filter(topic => topic.type));
+    if (
+      Array.isArray(section.featuredTopics) &&
+      section.featuredTopics.length
+    ) {
+      setTopics(section.featuredTopics.filter(topic => topic.name));
     }
   }, []);
 

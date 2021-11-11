@@ -1,5 +1,6 @@
 // base imports
 import React from "react";
+import PropTypes from "prop-types";
 import _ from "lodash";
 import { Layout } from "../components/index";
 import { markdownify } from "../utils";
@@ -12,12 +13,11 @@ import Grid from "@mui/material/Grid";
 import SectionHero from "../components/SectionHero";
 import Sidebar from "../components/Sidebar";
 
-
 const Page = props => {
   const {
-    page: { sidebar_content = {} },
+    page: { sidebar_content = {} }
   } = props;
-  
+
   return (
     <Layout {...props}>
       <SectionHero {...props} />
@@ -36,12 +36,18 @@ const Page = props => {
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
-            {sidebar_content.length ? <Sidebar content={sidebar_content}/> : null}
+            {sidebar_content.length ? (
+              <Sidebar content={sidebar_content} />
+            ) : null}
           </Grid>
         </Grid>
       </Container>
     </Layout>
   );
+};
+
+Page.propTypes = {
+  page: PropTypes.object
 };
 
 export default Page;
