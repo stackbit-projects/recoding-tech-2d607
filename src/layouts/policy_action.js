@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // utils
-import { htmlToReact, withPrefix, markdownify } from "../utils";
+import { htmlToReact } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";

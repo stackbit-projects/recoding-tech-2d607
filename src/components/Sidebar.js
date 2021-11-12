@@ -3,40 +3,10 @@ import PropTypes from "prop-types";
 import Router from "next/router";
 
 // material ui imports
-import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
 import FancyCard from "./FancyCard";
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    border: "1px solid #000",
-    borderRadius: 0,
-    height: 250,
-    position: "relative",
-    width: 240
-  },
-  cardAction: {
-    height: "100%",
-    position: "absolute",
-    width: "100%"
-  },
-  cardTitle: {
-    fontSize: "1.5em",
-    marginTop: 170
-  },
-  em: {
-    fontStyle: "italic",
-    textAlign: "center"
-  },
-  sidebar: {
-    backgroundColor: theme.palette.secondary.main
-  },
-  title: {
-    textAlign: "center"
-  }
-}));
 
 const Sidebar = props => {
   const { content } = props;

@@ -40,7 +40,6 @@ const Topic = props => {
   const classes = useStyles();
   const { page } = props;
 
-  const [topics, setTopics] = useState(null);
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
   const [readings, setReadings] = useState(null);
@@ -62,8 +61,6 @@ const Topic = props => {
         );
         setIssues(i);
         setPolicies(p);
-      } else {
-        setTopics(page.relatedTopics.filter(topic => topic.type));
       }
     }
 
@@ -120,7 +117,10 @@ const Topic = props => {
                 <Typography component="div" variant="body1">
                   {markdownify(_.get(props, "page.topicDescription", null))}
                 </Typography>
-                <RelatedReadings page={page} readings={page.relatedReadings} />
+                <RelatedReadings
+                  page={page}
+                  readings={readings ? readings : page.relatedReadings}
+                />
               </Grid>
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>
