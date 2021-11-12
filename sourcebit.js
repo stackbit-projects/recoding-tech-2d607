@@ -89,29 +89,29 @@ module.exports = {
           }
         ],
         commonProps: items => {
-          let pages = [];
-          const basicPages = _.filter(items, item =>
-            [
-              "advanced",
-              "article",
-              "page",
-              "policyAction",
-              "post",
-              "guide"
-            ].includes(_.get(item, "__metadata.modelName"))
-          );
-          const topicsPages = items.filter(
-            item =>
-              item.__metadata.modelName === "topic" &&
-              item.stackbit_model_type === "page"
-          );
+          // let pages = [];
+          // const basicPages = _.filter(items, item =>
+          //   [
+          //     "advanced",
+          //     "article",
+          //     "page",
+          //     "policyAction",
+          //     "post",
+          //     "guide"
+          //   ].includes(_.get(item, "__metadata.modelName"))
+          // );
+          // const topicsPages = items.filter(
+          //   item =>
+          //     item.__metadata.modelName === "topic" &&
+          //     item.stackbit_model_type === "page"
+          // );
 
-          pages = [...pages, basicPages, topicsPages];
+          // pages = [...pages, basicPages, topicsPages];
 
-          pages = pages.flat();
+          // pages = pages.flat();
 
           return {
-            pages: pages,
+            // pages: pages,
             citations: items.filter(item =>
               ["citation"].includes(_.get(item, "__metadata.modelName"))
             ),
