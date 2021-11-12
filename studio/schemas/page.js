@@ -8,7 +8,7 @@ export default {
       name: "title",
       title: "Title",
       description: "The title of the page",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required()
     },
     // {
     //   "title": 'Author',
@@ -18,24 +18,25 @@ export default {
     // },
     {
       type: "string",
-      name: "subtitle",
-      title: "Subtitle",
-      description: "The text shown just below the page title.",
-      validation: null,
+      name: "supertitle",
+      title: "Supertitle",
+      description:
+        "Text to describe the page, if any. Used in the related pages sidebar.",
+      validation: null
     },
     {
       type: "image",
       name: "img_path",
       title: "Image",
       description: "The image shown below the page title and subtitle.",
-      validation: null,
+      validation: null
     },
     {
       type: "string",
       name: "img_alt",
       title: "Image Alt Text",
       description: "The alt text of the image.",
-      validation: null,
+      validation: null
     },
     // {
     //     "type": "stackbit_page_meta",
@@ -48,10 +49,10 @@ export default {
       name: "layout",
       title: "Layout",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["page"],
-      },
+        list: ["page"]
+      }
     },
     {
       type: "array",
@@ -62,12 +63,9 @@ export default {
         {
           type: "reference",
           weak: true,
-          to: { type: "page" },
-        },
-      ],
-      options: {
-        
-      }
+          to: { type: "page" }
+        }
+      ]
     },
     {
       type: "string",
@@ -75,7 +73,7 @@ export default {
       title: "URL Path",
       description:
         'The URL path of this page relative to site root. For example, the site root page would be "/", and post page would be "posts/new-post/"',
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required()
     },
     {
       type: "string",
@@ -83,17 +81,17 @@ export default {
       title: "Directory",
       description: "The directory path where this file is stored",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["content/pages"],
-      },
+        list: ["content/pages"]
+      }
     },
     {
       type: "markdown",
       name: "content",
       title: "Content",
       description: "Page content",
-      validation: null,
+      validation: null
     },
 
     {
@@ -102,15 +100,15 @@ export default {
       title: "Stackbit Model Type",
       description: "Stackbit model type",
       hidden: false,
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
       options: {
-        list: ["page"],
-      },
-    },
+        list: ["page"]
+      }
+    }
   ],
   preview: {
     select: {
-      title: "title",
-    },
-  },
+      title: "title"
+    }
+  }
 };

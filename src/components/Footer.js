@@ -95,10 +95,9 @@ function Footer(props) {
               {_.map(
                 _.get(props, "data.config.footer.links", null),
                 (action, action_idx) => (
-                  <Grid item>
+                  <Grid item key={action_idx}>
                     <Link
                       className={classes.link}
-                      key={action_idx}
                       href={withPrefix(_.get(action, "url", null))}
                       {...(_.get(action, "new_window", null)
                         ? { target: "_blank" }

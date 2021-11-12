@@ -1,5 +1,5 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import Router from "next/router";
 
 // material ui imports
@@ -9,55 +9,54 @@ import Container from "@mui/material/Container";
 
 import FancyCard from "./FancyCard";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   card: {
     border: "1px solid #000",
     borderRadius: 0,
     height: 250,
     position: "relative",
-    width: 240,
+    width: 240
   },
   cardAction: {
     height: "100%",
     position: "absolute",
-    width: "100%",
+    width: "100%"
   },
   cardTitle: {
     fontSize: "1.5em",
-    marginTop: 170,
+    marginTop: 170
   },
   em: {
     fontStyle: "italic",
-    textAlign: "center",
+    textAlign: "center"
   },
   sidebar: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   title: {
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 }));
 
-const Sidebar = (props) => {
+const Sidebar = props => {
   const { content } = props;
-  const classes = useStyles();
 
-  console.log("content", content[0])
-  const cardClick = (path) => {
+  console.log("content", content[0]);
+  const cardClick = path => {
     const handler = () => Router.push({ pathname: path });
-    return handler
+    return handler;
   };
 
   return (
     <section>
       <Container>
-        <Box my={4} pt={8}>
+        <Box mt={2}>
           {content.map((page, index) => (
-            <Box mt={2}>
+            <Box mb={4} key={index}>
               <FancyCard
-                key={index}
                 isSidebar={true}
                 title={page.title}
+                category={page.supertitle}
                 onClick={cardClick(page.stackbit_url_path)}
                 lastUpdated={page.__metadata.updatedAt}
               />
@@ -67,6 +66,10 @@ const Sidebar = (props) => {
       </Container>
     </section>
   );
+};
+
+Sidebar.propTypes = {
+  content: PropTypes.array
 };
 
 export default Sidebar;
