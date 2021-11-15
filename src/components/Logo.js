@@ -10,9 +10,9 @@ const useStyles = makeStyles(theme => ({
     transition: "0.6s",
     transformStyle: "preserve-3d",
     "&:active, &:focus, &:hover": {
-      // transform: "scaleY(-1)",
-      transform: "rotate(180deg)",
-      transformOrigin: "40% 50%",
+      transform: "scaleY(-1)",
+      // transform: "rotate(180deg)",
+      // transformOrigin: "40% 50%",
       transition: "0.6s"
     }
   },
