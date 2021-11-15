@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const SectionTopics = props => {
   const classes = useStyles();
+  const theme = useTheme();
   const { section } = props;
   const [topics, setTopics] = useState(null);
 
@@ -50,6 +51,11 @@ const SectionTopics = props => {
                     component="a"
                     href={`/${topic.type}/${topic.name}`}
                     className={classes.chip}
+                    color={
+                      topic.type && theme.palette[topic.type]
+                        ? topic.type
+                        : "secondary"
+                    }
                     clickable
                   />
                 ))

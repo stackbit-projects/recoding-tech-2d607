@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
   // filter out the root page as it has its own page file `src/pages/index.js`
   const paths = await sourcebitDataClient.getStaticPaths();
-  return { paths: _.reject(paths, path => path === "/"), fallback: "blocking" };
+  return { paths: _.reject(paths, path => path === "/"), fallback: false };
 }
 
 export async function getStaticProps({ params }) {

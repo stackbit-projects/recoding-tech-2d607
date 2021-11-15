@@ -27,8 +27,7 @@ const useStyles = makeStyles(() => ({
 
 const SectionGuides = props => {
   const classes = useStyles();
-  const { pages } = props;
-  const [guides, setGuides] = useState(null);
+  const { guides } = props;
 
   const sliderSettings = {
     dots: false,
@@ -37,15 +36,6 @@ const SectionGuides = props => {
     slidesToShow: 4,
     slidesToScroll: 1
   };
-
-  useEffect(() => {
-    if (pages) {
-      const allGuides = pages.filter(page => page.layout == "guide");
-      setGuides(allGuides);
-    }
-  }, []);
-
-  useEffect(() => {}, [guides]);
 
   const guideClick = url => {
     Router.push({ pathname: "/guide/" + url });
@@ -87,7 +77,7 @@ const SectionGuides = props => {
 };
 
 SectionGuides.propTypes = {
-  pages: PropTypes.array
+  guides: PropTypes.array
 };
 
 export default SectionGuides;

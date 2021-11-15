@@ -1,28 +1,34 @@
 const _ = require("lodash");
+// const sanityClient = require("@sanity/client");
+const blocksToHtml = require("@sanity/block-content-to-html");
+
+const h = blocksToHtml.h;
 
 const isDev = process.env.NODE_ENV === "development";
 
-const query = `*[_type == "guide"]{
-  ...,
-  content[]{
-    ...,
-    markDefs[]{
-      ...,
-      _type == "reference" => {
-        "chicagoCitation": @.reference->chicagoCitation
-      }
-    }
-  }
-}`;
-
-const topicQuery = `*[_type == "topic"]{
-  ...,
-  "relatedActions": *[_type == "policy_action" && references(^._id)]{
-    title,
-    slug,
-    country
-  }
-}`;
+// const client = sanityClient({
+//   projectId: process.env.SANITY_PROJECT_ID,
+//   dataset: process.env.SANITY_DATASET || "production",
+//   apiVersion: process.env.SANITY_API_VERSION || "2021-03-25", // use current UTC date - see "specifying API version"!
+//   token: process.env.SANITY_ACCESS_TOKEN,
+//   useCdn: false
+// });
+//
+// const query = `*[_type=="person"]{
+//   name,
+//   "relatedMovies": *[_type=='movie' && references(^._id)]{
+//   	title,
+//   	slug,
+//   	releaseDate
+// 	}
+// }`;
+//
+// client.fetch(query).then(bikes => {
+//   console.log("Bikes with more than one seat:");
+//   bikes.forEach(bike => {
+//     console.log(`${bike.name} (${bike.seats} seats)`);
+//   });
+// });
 
 module.exports = {
   plugins: [
@@ -30,20 +36,24 @@ module.exports = {
       module: require("sourcebit-source-sanity"),
       options: {
         accessToken: process.env.SANITY_ACCESS_TOKEN,
-        projectId: process.env.SANITY_PROJECT_ID || "3tzzh18d",
+        projectId: process.env.SANITY_PROJECT_ID,
         dataset: process.env.SANITY_DATASET || "production",
         isPreview: isDev,
         watch: isDev,
         serializers: {
           types: {
-            reference: node => {
-              return `<div>${node.node._ref}</div>`;
+            reference: props => {
+              console.log(props);
+              h("div", props.node.title, {});
             }
           },
           marks: {
             annotations: [
               {
-                citation: node => `<div>${node.node._ref}</div>`
+                citation: props => {
+                  console.log(props);
+                  h("div", props.node.title, {});
+                }
               }
             ]
           }
@@ -110,8 +120,13 @@ module.exports = {
 
           // pages = pages.flat();
 
+          const guides = _.filter(items, item =>
+            ["guide"].includes(_.get(item, "__metadata.modelName"))
+          );
+
           return {
             // pages: pages,
+            guides: guides,
             citations: items.filter(item =>
               ["citation"].includes(_.get(item, "__metadata.modelName"))
             ),
