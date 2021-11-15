@@ -32,7 +32,13 @@ const useStyles = makeStyles(() => ({
     color: "unset",
     textDecoration: "none"
   },
-  nav: {}
+  nav: {},
+  svg: {
+    display: "block",
+    maxHeight: 20,
+    maxWidth: 20,
+    width: "100%"
+  }
 }));
 
 function Header(props) {
@@ -143,6 +149,7 @@ function Header(props) {
               sm={9}
               spacing={2}
               justifyContent="space-between"
+              alignItems="center"
             >
               <Grid item>
                 <Button
@@ -295,6 +302,30 @@ function Header(props) {
                       ))
                     : null}
                 </Menu>
+              </Grid>
+              <Grid item>
+                <Button href="/search">
+                  <svg
+                    className={classes.svg}
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 17 16"
+                  >
+                    <circle
+                      cx="5.65"
+                      cy="5.65"
+                      r="4.65"
+                      stroke="#000"
+                      strokeWidth="2"
+                    />
+                    <path
+                      stroke="#000"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      d="m9.88 9.41 5.18 5.18"
+                    />
+                  </svg>
+                </Button>
               </Grid>
             </Grid>
           </Grid>
