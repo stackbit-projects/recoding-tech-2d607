@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 
 const SectionCitations = () => {
   const classes = useStyles();
-  const [sortedCitations, setSortedCitations] = useState(null);
+  const [sortedCitations, setSortedCitations] = useState([]);
 
   useEffect(() => {
     if (citations.length) {
