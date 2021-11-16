@@ -12,13 +12,13 @@ import Typography from "@mui/material/Typography";
 import client from "../utils/sanityClient";
 
 const query =
-  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle}[0...5]';
+  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle}[0...5] | order(date desc)';
 
-let citations = [];
+let allCitations = [];
 
 client.fetch(query).then(cites => {
   cites.forEach(citation => {
-    citations = [...citations, citation];
+    allCitations = [...allCitations, citation];
   });
 });
 
@@ -53,22 +53,15 @@ const useStyles = makeStyles(theme => ({
 
 const SectionCitations = () => {
   const classes = useStyles();
-  const [sortedCitations, setSortedCitations] = useState([]);
+  const [citations, setCitations] = useState([]);
 
   useEffect(() => {
-    if (citations.length) {
-      const sort = citations.sort((a, b) => {
-        if (a.date && b.date) {
-          return Date.parse(b.date) - Date.parse(a.date);
-        } else {
-          return false;
-        }
-      });
-      setSortedCitations(sort);
+    if (allCitations.length) {
+      setCitations(allCitations);
     }
-  }, [citations]);
+  }, [allCitations]);
 
-  useEffect(() => {}, [sortedCitations]);
+  useEffect(() => {}, [citations]);
 
   return (
     <Grid container className={classes.grid}>
@@ -92,8 +85,8 @@ const SectionCitations = () => {
         </Grid>
       </Grid>
       <Grid container item flexDirection="column">
-        {sortedCitations && sortedCitations.length
-          ? sortedCitations.map(citation => (
+        {citations && citations.length
+          ? citations.map(citation => (
               <Grid item key={citation._id} className={classes.citation}>
                 <Typography component="div" variant="body1">
                   <Link className={classes.citationTitle} href={citation.url}>
