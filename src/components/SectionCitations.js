@@ -1,6 +1,5 @@
 // base imports
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import moment from "moment-strftime";
 
 // Material UI imports
@@ -8,6 +7,20 @@ import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+
+// utils
+import client from "../utils/sanityClient";
+
+const query =
+  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle}[0...5]';
+
+let citations = [];
+
+client.fetch(query).then(cites => {
+  cites.forEach(citation => {
+    citations = [...citations, citation];
+  });
+});
 
 const useStyles = makeStyles(theme => ({
   citation: {
@@ -38,21 +51,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SectionCitations = props => {
+const SectionCitations = () => {
   const classes = useStyles();
-  const { citations } = props;
   const [sortedCitations, setSortedCitations] = useState(null);
 
   useEffect(() => {
-    const sort = citations.sort((a, b) => {
-      if (a.date && b.date) {
-        return Date.parse(b.date) - Date.parse(a.date);
-      } else {
-        return false;
-      }
-    });
-    setSortedCitations(sort);
-  }, []);
+    if (citations.length) {
+      const sort = citations.sort((a, b) => {
+        if (a.date && b.date) {
+          return Date.parse(b.date) - Date.parse(a.date);
+        } else {
+          return false;
+        }
+      });
+      setSortedCitations(sort);
+    }
+  }, [citations]);
 
   useEffect(() => {}, [sortedCitations]);
 
@@ -79,12 +93,8 @@ const SectionCitations = props => {
       </Grid>
       <Grid container item flexDirection="column">
         {sortedCitations && sortedCitations.length
-          ? sortedCitations.slice(0, 4).map(citation => (
-              <Grid
-                item
-                key={citation.__metadata.id}
-                className={classes.citation}
-              >
+          ? sortedCitations.map(citation => (
+              <Grid item key={citation._id} className={classes.citation}>
                 <Typography component="div" variant="body1">
                   <Link className={classes.citationTitle} href={citation.url}>
                     {citation.title}
@@ -108,10 +118,6 @@ const SectionCitations = props => {
       </Grid>
     </Grid>
   );
-};
-
-SectionCitations.propTypes = {
-  citations: PropTypes.array
 };
 
 export default SectionCitations;

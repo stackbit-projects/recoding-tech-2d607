@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+// utils
+import client from "../utils/sanityClient";
+
 // material ui imports
 import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
@@ -18,6 +21,17 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 // component imports
 import Logo from "./Logo";
+
+const query =
+  '*[_type == "topic" && stackbit_model_type == "page"]{displayTitle, link, slug, type}';
+
+let topics = [];
+
+client.fetch(query).then(allTopics => {
+  allTopics.forEach(topic => {
+    topics = [...topics, topic];
+  });
+});
 
 const useStyles = makeStyles(() => ({
   em: {
@@ -44,33 +58,27 @@ const useStyles = makeStyles(() => ({
 function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const { page, topics } = props;
+  const { page } = props;
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
   const [countries, setCountries] = useState(null);
   const [companies, setCompanies] = useState(null);
 
   useEffect(() => {
-    const topicIssues = topics.filter(
-      topic => topic.type == "issue" && topic.stackbit_model_type === "page"
-    );
-    setIssues(topicIssues);
+    if (topics) {
+      const topicIssues = topics.filter(topic => topic.type == "issue");
+      setIssues(topicIssues);
 
-    const topicPolicies = topics.filter(
-      topic => topic.type == "policy" && topic.stackbit_model_type === "page"
-    );
-    setPolicies(topicPolicies);
+      const topicPolicies = topics.filter(topic => topic.type == "policy");
+      setPolicies(topicPolicies);
 
-    const topicCountries = topics.filter(
-      topic => topic.type == "country" && topic.stackbit_model_type === "page"
-    );
-    setCountries(topicCountries);
+      const topicCountries = topics.filter(topic => topic.type == "country");
+      setCountries(topicCountries);
 
-    const topicCompanies = topics.filter(
-      topic => topic.type == "company" && topic.stackbit_model_type === "page"
-    );
-    setCompanies(topicCompanies);
-  }, []);
+      const topicCompanies = topics.filter(topic => topic.type == "company");
+      setCompanies(topicCompanies);
+    }
+  }, [topics]);
 
   useEffect(() => {}, [issues, policies, countries, companies]);
 

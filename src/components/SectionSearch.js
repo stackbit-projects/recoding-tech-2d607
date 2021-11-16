@@ -1,8 +1,10 @@
 // base imports
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import moment from "moment-strftime";
 import Router, { useRouter } from "next/router";
+
+// utils
+import client from "../utils/sanityClient";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -16,6 +18,26 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 // components
 import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
+
+const citationsQuery =
+  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, relatedTopics, title, url, websiteTitle}';
+
+const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
+
+let allCitations = [];
+let allTopics = [];
+
+client.fetch(citationsQuery).then(cites => {
+  cites.forEach(citation => {
+    allCitations = [...allCitations, citation];
+  });
+});
+
+client.fetch(topicsQuery).then(topics => {
+  topics.forEach(topic => {
+    allTopics = [...allTopics, topic];
+  });
+});
 
 const useStyles = makeStyles(theme => ({
   citation: {
@@ -46,11 +68,10 @@ const useStyles = makeStyles(theme => ({
 
 const ROWS_PER_PAGE = 4;
 
-const SectionCitations = props => {
+const SectionCitations = () => {
   const classes = useStyles();
   const { query } = useRouter();
-  const { topics } = props;
-  const [citations, setCitations] = useState(null);
+  const [citations, setCitations] = useState([]);
   const [filters, setFilters] = useState([]);
   const [search, setSearch] = useState(null);
 
@@ -67,8 +88,8 @@ const SectionCitations = props => {
       company: new Map(),
       country: new Map()
     };
-    if (Array.isArray(topics) && topics.length) {
-      topics.map(topic => {
+    if (Array.isArray(allTopics) && allTopics.length) {
+      allTopics.map(topic => {
         if (topic.type && topic.slug) {
           newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
         }
@@ -97,11 +118,11 @@ const SectionCitations = props => {
     setCountries(Array.from(newTopics.country.values()));
     newFilters.sort();
     setFilters(newFilters);
-  }, [query]);
+  }, [allTopics, query]);
 
   useEffect(() => {
-    if (props.citations) {
-      let newCitations = props.citations;
+    if (allCitations.length) {
+      let newCitations = allCitations;
       if (filters) {
         newCitations = newCitations.filter(citation => {
           let matches = 0;
@@ -137,7 +158,9 @@ const SectionCitations = props => {
       }
       setCitations(newCitations);
     }
-  }, [filters, search]);
+  }, [allCitations, filters, search]);
+
+  useEffect(() => {}, [citations]);
 
   // table pagination
   const [page, setPage] = React.useState(1);
@@ -300,7 +323,7 @@ const SectionCitations = props => {
             {filters.length
               ? filters.map(filter => (
                   <Chip
-                    key={filter.__metadata.id}
+                    key={filter._id}
                     item
                     label={filter.displayTitle || filter.name}
                     color={filter.type}
@@ -319,7 +342,7 @@ const SectionCitations = props => {
                 )
                 .map(citation => (
                   <Grid
-                    key={citation.__metadata.id}
+                    key={citation._id}
                     container
                     item
                     justifyContent="space-between"
@@ -328,11 +351,11 @@ const SectionCitations = props => {
                     <Grid
                       item
                       xs={10}
-                      key={citation.__metadata.id}
+                      key={citation._id}
                       className={classes.citation}
                     >
                       <FancyCard
-                        key={citation.__metadata.id}
+                        key={citation._id}
                         title={citation.title}
                         publication={
                           citation.publicationTitle
@@ -345,7 +368,7 @@ const SectionCitations = props => {
                     </Grid>
                     <Grid
                       item
-                      key={citation.__metadata.id}
+                      key={citation._id}
                       className={classes.citation}
                       xs={2}
                     >
@@ -373,11 +396,6 @@ const SectionCitations = props => {
       </Grid>
     </Grid>
   );
-};
-
-SectionCitations.propTypes = {
-  citations: PropTypes.array,
-  topics: PropTypes.array
 };
 
 export default SectionCitations;

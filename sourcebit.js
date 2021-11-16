@@ -6,30 +6,6 @@ const h = blocksToHtml.h;
 
 const isDev = process.env.NODE_ENV === "development";
 
-// const client = sanityClient({
-//   projectId: process.env.SANITY_PROJECT_ID,
-//   dataset: process.env.SANITY_DATASET || "production",
-//   apiVersion: process.env.SANITY_API_VERSION || "2021-03-25", // use current UTC date - see "specifying API version"!
-//   token: process.env.SANITY_ACCESS_TOKEN,
-//   useCdn: false
-// });
-//
-// const query = `*[_type=="person"]{
-//   name,
-//   "relatedMovies": *[_type=='movie' && references(^._id)]{
-//   	title,
-//   	slug,
-//   	releaseDate
-// 	}
-// }`;
-//
-// client.fetch(query).then(bikes => {
-//   console.log("Bikes with more than one seat:");
-//   bikes.forEach(bike => {
-//     console.log(`${bike.name} (${bike.seats} seats)`);
-//   });
-// });
-
 module.exports = {
   plugins: [
     {
@@ -43,7 +19,6 @@ module.exports = {
         serializers: {
           types: {
             reference: props => {
-              console.log(props);
               h("div", props.node.title, {});
             }
           },
@@ -51,7 +26,6 @@ module.exports = {
             annotations: [
               {
                 citation: props => {
-                  console.log(props);
                   h("div", props.node.title, {});
                 }
               }
@@ -120,22 +94,22 @@ module.exports = {
 
           // pages = pages.flat();
 
-          const guides = _.filter(items, item =>
-            ["guide"].includes(_.get(item, "__metadata.modelName"))
-          );
+          // const guides = _.filter(items, item =>
+          //   ["guide"].includes(_.get(item, "__metadata.modelName"))
+          // );
 
           return {
             // pages: pages,
-            guides: guides,
-            citations: items.filter(item =>
-              ["citation"].includes(_.get(item, "__metadata.modelName"))
-            ),
-            actions: items.filter(item =>
-              ["policy_action"].includes(_.get(item, "__metadata.modelName"))
-            ),
-            topics: items.filter(item =>
-              ["topic"].includes(_.get(item, "__metadata.modelName"))
-            ),
+            // guides: guides,
+            // citations: items.filter(item =>
+            //   ["citation"].includes(_.get(item, "__metadata.modelName"))
+            // ),
+            // actions: items.filter(item =>
+            //   ["policy_action"].includes(_.get(item, "__metadata.modelName"))
+            // ),
+            // topics: items.filter(item =>
+            //   ["topic"].includes(_.get(item, "__metadata.modelName"))
+            // ),
             data: {
               config: _.find(
                 items,

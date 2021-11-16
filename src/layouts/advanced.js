@@ -14,7 +14,7 @@ import SectionCitations from "../components/SectionCitations";
 import SectionGuides from "../components/SectionGuides";
 
 function Advanced(props) {
-  const { citations, path } = props;
+  const { path } = props;
 
   return (
     <Layout {...props}>
@@ -47,7 +47,7 @@ function Advanced(props) {
               )}
             </Grid>
             <Grid item xs={12} sm={4}>
-              <SectionCitations citations={citations} />
+              <SectionCitations />
             </Grid>
             <Grid item xs={12}>
               <SectionGuides {...props} />

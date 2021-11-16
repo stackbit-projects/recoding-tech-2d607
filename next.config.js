@@ -9,6 +9,12 @@ sourcebit.fetch(sourcebitConfig);
 dotenv.config();
 
 module.exports = {
+  env: {
+    sanityAccessToken: process.env.SANITY_ACCESS_TOKEN,
+    sanityProjectId: process.env.SANITY_PROJECT_ID,
+    sanityApiVersion: process.env.SANITY_API_VERSION,
+    sanityDataset: process.env.SANITY_DATASET
+  },
   errorOnExist: false,
   trailingSlash: true,
   devIndicators: {

@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 
+// utils
+import client from "../utils/sanityClient";
+
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
@@ -26,6 +29,25 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+const policyActionsQuery = `*[_type == "policy_action"]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, topics, type}`;
+
+const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
+
+let policyActions = [];
+let allTopics = [];
+
+client.fetch(policyActionsQuery).then(allPolicies => {
+  allPolicies.forEach(policy => {
+    policyActions = [...policyActions, policy];
+  });
+});
+
+client.fetch(topicsQuery).then(topics => {
+  topics.forEach(topic => {
+    allTopics = [...allTopics, topic];
+  });
+});
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -78,7 +100,7 @@ const useStyles = makeStyles(theme => ({
 function SectionTracker(props) {
   const classes = useStyles();
   const { query } = useRouter();
-  const { section, topics } = props;
+  const { section } = props;
   const [actions, setActions] = useState([]);
   const [filters, setFilters] = useState([]);
 
@@ -104,8 +126,8 @@ function SectionTracker(props) {
       company: new Map(),
       country: new Map()
     };
-    if (Array.isArray(topics) && topics.length) {
-      topics.map(topic => {
+    if (Array.isArray(allTopics) && allTopics.length) {
+      allTopics.map(topic => {
         if (topic.type && topic.slug) {
           newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
         }
@@ -134,29 +156,29 @@ function SectionTracker(props) {
     setCountries(Array.from(newTopics.country.values()));
     newFilters.sort();
     setFilters(newFilters);
-  }, [query]);
+  }, [allTopics, query]);
 
   useEffect(() => {
-    if (props.actions) {
+    if (policyActions.length) {
       if (filters) {
-        setActions(
-          props.actions.filter(action => {
-            let matches = 0;
-            if (
-              Array.isArray(action.relatedTopics) &&
-              action.relatedTopics.length
-            ) {
-              action.relatedTopics.forEach(topic => {
-                if (filters.findIndex(f => f.slug === topic.slug) >= 0)
-                  matches += 1;
-              });
-            }
-            return matches >= filters.length;
-          })
-        );
+        const allPolicies = policyActions.filter(action => {
+          let matches = 0;
+          if (
+            Array.isArray(action.relatedTopics) &&
+            action.relatedTopics.length
+          ) {
+            action.relatedTopics.forEach(topic => {
+              if (filters.findIndex(f => f.slug === topic.slug) >= 0)
+                matches += 1;
+            });
+          }
+          return matches >= filters.length;
+        });
+
+        setActions(allPolicies);
       }
     }
-  }, [filters]);
+  }, [filters, policyActions]);
 
   const handleClose = topic => {
     if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
@@ -516,8 +538,6 @@ function SectionTracker(props) {
 }
 
 SectionTracker.propTypes = {
-  actions: PropTypes.array,
-  topics: PropTypes.array,
   section: PropTypes.object
 };
 

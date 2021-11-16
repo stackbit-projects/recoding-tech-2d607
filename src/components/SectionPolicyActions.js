@@ -1,22 +1,39 @@
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import _ from "lodash";
 import moment from "moment-strftime";
 
-import { getPolicies, Link, withPrefix } from "../utils";
+import { Link, withPrefix } from "../utils";
 import CtaButtons from "./CtaButtons";
+
+// utils
+import client from "../utils/sanityClient";
+
+const query = `*[_type == "policy_action"]{category, dateInitiated, img_alt, img_path, slug, title, topics}`;
+
+let policies = [];
+
+client.fetch(query).then(allPolicies => {
+  allPolicies.forEach(policy => {
+    policies = [...policies, policy];
+  });
+});
 
 const SectionPolicyActions = props => {
   let section = _.get(props, "section", null);
-  let display_policies = _.orderBy(
-    getPolicies(props.pages),
-    "date",
-    "desc"
-  );
-  let recent_policies = display_policies.slice(
+  let [displayPolicies, setDisplayPolicies] = useState([]);
+  let recent_policies = displayPolicies.slice(
     0,
     _.get(section, "policies_number", null)
   );
+
+  useEffect(() => {
+    if (policies.length) {
+      const sortedPolicies = _.orderBy(policies, "date", "desc");
+      setDisplayPolicies(sortedPolicies);
+    }
+  }, [policies]);
+
   return (
     <section
       id={_.get(section, "section_id", null)}
@@ -35,9 +52,7 @@ const SectionPolicyActions = props => {
                 {_.get(policy, "img_path", null) && (
                   <Link
                     className="post-thumbnail"
-                    href={`/policies${withPrefix(
-                      _.get(policy, "slug", null)
-                    )}`}
+                    href={`/policies${withPrefix(_.get(policy, "slug", null))}`}
                   >
                     <img
                       src={withPrefix(_.get(policy, "img_path", null))}
@@ -61,7 +76,9 @@ const SectionPolicyActions = props => {
                   <div className="post-content">
                     {_.get(policy, "topics", null) &&
                       policy.topics.map(tag => (
-                        <div key={tag.slug} className="post-tag">{tag.name}</div>
+                        <div key={tag.slug} className="post-tag">
+                          {tag.name}
+                        </div>
                       ))}
                     <p>{_.get(policy, "category", null)}</p>
                   </div>
@@ -85,15 +102,12 @@ const SectionPolicyActions = props => {
       </div>
       {_.get(section, "actions", null) && (
         <div className="block-buttons inner-sm">
-          <CtaButtons
-            {...props}
-            actions={_.get(section, "actions", null)}
-          />
+          <CtaButtons {...props} actions={_.get(section, "actions", null)} />
         </div>
       )}
     </section>
   );
-}
+};
 
 SectionPolicyActions.propTypes = {
   pages: PropTypes.array
