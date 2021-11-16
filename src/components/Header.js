@@ -185,9 +185,12 @@ function Header(props) {
                 >
                   {issues && issues.length
                     ? issues.map(issue => (
-                        <MenuItem key={issue.slug} onClick={handleCloseIssue}>
+                        <MenuItem
+                          key={issue.slug.current}
+                          onClick={handleCloseIssue}
+                        >
                           <Link
-                            href={`/issue/${issue.slug}`}
+                            href={`/issue/${issue.slug.current}`}
                             className={classes.link}
                           >
                             {issue.displayTitle}
@@ -223,9 +226,12 @@ function Header(props) {
                 >
                   {policies && policies.length
                     ? policies.map(policy => (
-                        <MenuItem key={policy.slug} onClick={handleCloseIssue}>
+                        <MenuItem
+                          key={policy.slug.current}
+                          onClick={handleCloseIssue}
+                        >
                           <Link
-                            href={`/policy/${policy.slug}`}
+                            href={`/policy/${policy.slug.current}`}
                             className={classes.link}
                           >
                             {policy.displayTitle}
@@ -261,9 +267,12 @@ function Header(props) {
                 >
                   {countries && countries.length
                     ? countries.map(country => (
-                        <MenuItem key={country.slug} onClick={handleCloseIssue}>
+                        <MenuItem
+                          key={country.slug.current}
+                          onClick={handleCloseIssue}
+                        >
                           <Link
-                            href={`/country/${country.slug}`}
+                            href={`/country/${country.slug.current}`}
                             className={classes.link}
                           >
                             {country.displayTitle}
@@ -299,9 +308,12 @@ function Header(props) {
                 >
                   {companies && companies.length
                     ? companies.map(company => (
-                        <MenuItem key={company.slug} onClick={handleCloseIssue}>
+                        <MenuItem
+                          key={company.slug.current}
+                          onClick={handleCloseIssue}
+                        >
                           <Link
-                            href={`/company/${company.slug}`}
+                            href={`/company/${company.slug.current}`}
                             className={classes.link}
                           >
                             {company.displayTitle}
