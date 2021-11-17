@@ -14,14 +14,6 @@ import client from "../utils/sanityClient";
 const query =
   '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle}[0...5] | order(date desc)';
 
-let allCitations = [];
-
-client.fetch(query).then(cites => {
-  cites.forEach(citation => {
-    allCitations = [...allCitations, citation];
-  });
-});
-
 const useStyles = makeStyles(theme => ({
   citation: {
     borderBottom: "1px solid #000",
@@ -56,10 +48,14 @@ const SectionCitations = () => {
   const [citations, setCitations] = useState([]);
 
   useEffect(() => {
-    if (allCitations.length) {
+    client.fetch(query).then(cites => {
+      let allCitations = [];
+      cites.forEach(citation => {
+        allCitations = [...allCitations, citation];
+      });
       setCitations(allCitations);
-    }
-  }, [allCitations]);
+    });
+  }, []);
 
   useEffect(() => {}, [citations]);
 
