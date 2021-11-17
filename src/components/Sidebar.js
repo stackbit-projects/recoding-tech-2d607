@@ -11,7 +11,6 @@ import FancyCard from "./FancyCard";
 const Sidebar = props => {
   const { content } = props;
 
-  console.log("content", content[0]);
   const cardClick = path => {
     const handler = () => Router.push({ pathname: path });
     return handler;
@@ -28,7 +27,7 @@ const Sidebar = props => {
                 title={page.title}
                 category={page.supertitle}
                 onClick={cardClick(page.stackbit_url_path)}
-                lastUpdated={page.__metadata.updatedAt}
+                lastUpdated={page.__metadata ? page.__metadata.updatedAt : null}
               />
             </Box>
           ))}

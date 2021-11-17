@@ -164,7 +164,7 @@ const RelatedActions = props => {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.__metadata.id}
+                      key={row.slug}
                     >
                       {headers.map(column => {
                         let value = row[column.id];
@@ -225,7 +225,6 @@ const RelatedActions = props => {
 };
 
 RelatedActions.propTypes = {
-  citations: PropTypes.array,
   actions: PropTypes.array,
   page: PropTypes.object
 };

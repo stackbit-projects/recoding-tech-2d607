@@ -91,7 +91,9 @@ const Topic = props => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          <RelatedActions page={page} actions={page.relatedPolicyActions} />
+          {page.relatedPolicyActions && (
+            <RelatedActions page={page} actions={page.relatedPolicyActions} />
+          )}
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (
@@ -119,10 +121,13 @@ const Topic = props => {
                 <Typography component="div" variant="body1">
                   {markdownify(_.get(props, "page.topicDescription", null))}
                 </Typography>
-                <RelatedReadings
-                  page={page}
-                  readings={readings ? readings : page.relatedReadings}
-                />
+                {readings ||
+                  (page.relatedReadings && (
+                    <RelatedReadings
+                      page={page}
+                      readings={readings ? readings : page.relatedReadings}
+                    />
+                  ))}
               </Grid>
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>

@@ -19,8 +19,6 @@ const Page = props => {
     page: { sidebar_content = {} }
   } = props;
 
-  console.log("sidebar!!!", props.page);
-
   return (
     <Layout {...props}>
       <SectionHero {...props} />

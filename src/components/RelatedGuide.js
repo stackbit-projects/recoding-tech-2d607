@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RelatedDocuments = props => {
+const RelatedGuide = props => {
   const { page } = props;
   if (!page.quickStartGuide) return null;
   const classes = useStyles();
@@ -72,8 +72,8 @@ const RelatedDocuments = props => {
   );
 };
 
-RelatedDocuments.propTypes = {
+RelatedGuide.propTypes = {
   page: PropTypes.object
 };
 
-export default RelatedDocuments;
+export default RelatedGuide;

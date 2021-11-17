@@ -24,7 +24,7 @@ function Link({ children, href, ...other }) {
 }
 
 Link.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.string
 };
 
