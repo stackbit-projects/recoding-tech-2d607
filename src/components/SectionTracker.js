@@ -34,21 +34,6 @@ const policyActionsQuery = `*[_type == "policy_action"]{category, country, dateI
 
 const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
 
-let policyActions = [];
-let allTopics = [];
-
-client.fetch(policyActionsQuery).then(allPolicies => {
-  allPolicies.forEach(policy => {
-    policyActions = [...policyActions, policy];
-  });
-});
-
-client.fetch(topicsQuery).then(topics => {
-  topics.forEach(topic => {
-    allTopics = [...allTopics, topic];
-  });
-});
-
 const useStyles = makeStyles(theme => ({
   button: {
     fontSize: "0.8em",
@@ -102,6 +87,7 @@ function SectionTracker(props) {
   const { query } = useRouter();
   const { section } = props;
   const [actions, setActions] = useState([]);
+  const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
 
   const headers = [
@@ -120,14 +106,32 @@ function SectionTracker(props) {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
+    client.fetch(policyActionsQuery).then(allPolicies => {
+      let allPolicyActions = [];
+      allPolicies.forEach(policy => {
+        allPolicyActions = [...allPolicyActions, policy];
+      });
+      setActions(allPolicyActions);
+    });
+
+    client.fetch(topicsQuery).then(topics => {
+      let allTopics = [];
+      topics.forEach(topic => {
+        allTopics = [...allTopics, topic];
+      });
+      setTopics(allTopics);
+    });
+  }, []);
+
+  useEffect(() => {
     const newTopics = {
       issue: new Map(),
       policy: new Map(),
       company: new Map(),
       country: new Map()
     };
-    if (Array.isArray(allTopics) && allTopics.length) {
-      allTopics.map(topic => {
+    if (Array.isArray(topics) && topics.length) {
+      topics.map(topic => {
         if (topic.type && topic.slug) {
           newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
         }
@@ -156,12 +160,12 @@ function SectionTracker(props) {
     setCountries(Array.from(newTopics.country.values()));
     newFilters.sort();
     setFilters(newFilters);
-  }, [allTopics, query]);
+  }, [topics, query]);
 
   useEffect(() => {
-    if (policyActions.length) {
+    if (actions.length) {
       if (filters) {
-        const allPolicies = policyActions.filter(action => {
+        const allPolicies = actions.filter(action => {
           let matches = 0;
           if (
             Array.isArray(action.relatedTopics) &&
@@ -178,7 +182,7 @@ function SectionTracker(props) {
         setActions(allPolicies);
       }
     }
-  }, [filters, policyActions]);
+  }, [actions, filters]);
 
   const handleClose = topic => {
     if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {

@@ -24,21 +24,6 @@ const citationsQuery =
 
 const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
 
-let allCitations = [];
-let allTopics = [];
-
-client.fetch(citationsQuery).then(cites => {
-  cites.forEach(citation => {
-    allCitations = [...allCitations, citation];
-  });
-});
-
-client.fetch(topicsQuery).then(topics => {
-  topics.forEach(topic => {
-    allTopics = [...allTopics, topic];
-  });
-});
-
 const useStyles = makeStyles(theme => ({
   citation: {
     marginBottom: 20,
@@ -72,6 +57,7 @@ const SectionCitations = () => {
   const classes = useStyles();
   const { query } = useRouter();
   const [citations, setCitations] = useState([]);
+  const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
   const [search, setSearch] = useState(null);
 
@@ -82,14 +68,33 @@ const SectionCitations = () => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
+    client.fetch(citationsQuery).then(cites => {
+      let allCitations = [];
+      cites.forEach(citation => {
+        allCitations = [...allCitations, citation];
+      });
+      setCitations(allCitations);
+    });
+
+    client.fetch(topicsQuery).then(topics => {
+      let allTopics = [];
+      topics.forEach(topic => {
+        allTopics = [...allTopics, topic];
+      });
+      setTopics(allTopics);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(topics);
     const newTopics = {
       issue: new Map(),
       policy: new Map(),
       company: new Map(),
       country: new Map()
     };
-    if (Array.isArray(allTopics) && allTopics.length) {
-      allTopics.map(topic => {
+    if (Array.isArray(topics) && topics.length) {
+      topics.map(topic => {
         if (topic.type && topic.slug) {
           newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
         }
@@ -118,11 +123,11 @@ const SectionCitations = () => {
     setCountries(Array.from(newTopics.country.values()));
     newFilters.sort();
     setFilters(newFilters);
-  }, [allTopics, query]);
+  }, [query, topics]);
 
   useEffect(() => {
-    if (allCitations.length) {
-      let newCitations = allCitations;
+    if (citations.length) {
+      let newCitations = citations;
       if (filters) {
         newCitations = newCitations.filter(citation => {
           let matches = 0;
@@ -158,9 +163,7 @@ const SectionCitations = () => {
       }
       setCitations(newCitations);
     }
-  }, [allCitations, filters, search]);
-
-  useEffect(() => {}, [citations]);
+  }, [citations, filters, search]);
 
   // table pagination
   const [page, setPage] = React.useState(1);
