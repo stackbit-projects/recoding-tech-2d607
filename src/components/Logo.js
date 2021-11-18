@@ -7,13 +7,12 @@ import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(theme => ({
   logo: {
-    transition: "0.6s",
-    transformStyle: "preserve-3d",
+    borderBottom: "2px solid transparent",
+    display: "inline-block",
+    transition: "border-bottom 500ms",
     "&:active, &:focus, &:hover": {
-      transform: "scaleY(-1)",
-      // transform: "rotate(180deg)",
-      // transformOrigin: "40% 50%",
-      transition: "0.6s"
+      borderBottom: `2px solid #000`,
+      transition: "border-bottom 500ms"
     }
   },
   name: {
