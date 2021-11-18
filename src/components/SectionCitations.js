@@ -99,7 +99,7 @@ const SectionCitations = () => {
                     : citation.websiteTitle}
                 </Typography>
                 <Typography>
-                  {moment(citation.date).strftime("%B %e, %Y")}
+                  <em>{moment(citation.date).strftime("%B %e, %Y")}</em>
                 </Typography>
               </Grid>
             ))
