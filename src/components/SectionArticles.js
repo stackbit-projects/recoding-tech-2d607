@@ -82,7 +82,7 @@ function SectionArticle(props) {
                 <Typography component="div" variant="h4">
                   Keep up with how governments are recoding tech
                 </Typography>
-                <Typography component="div" variant="h2">
+                <Typography gutterBottom component="div" variant="h2">
                   Law &amp; Regulation Tracker
                 </Typography>
                 <Typography component="div" variant="h5">
@@ -103,12 +103,10 @@ function SectionArticle(props) {
                   <Typography component="div" variant="h4">
                     Featured Article
                   </Typography>
-                  <Typography component="div" variant="h2">
+                  <Typography gutterBottom variant="h2">
                     {article.title}
                   </Typography>
-                  <Typography component="div" variant="h5">
-                    {article.author.name}
-                  </Typography>
+                  <Typography variant="h5">{article.author.name}</Typography>
                   <Typography
                     component="div"
                     variant="body1"
