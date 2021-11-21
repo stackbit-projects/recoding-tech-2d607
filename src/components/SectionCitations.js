@@ -14,11 +14,11 @@ import client from "../utils/sanityClient";
 const query =
   '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle}[0...5] | order(date desc)';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   citation: {
     borderBottom: "1px solid #000",
     marginBottom: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   citationTitle: {
     color: "#000 !important",
@@ -26,21 +26,25 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     textDecoration: "none",
     "&:hover": {
-      textDecoration: "underline"
-    }
+      textDecoration: "underline",
+    },
   },
   citationPublication: {
-    marginTop: 10
+    marginTop: 10,
+  },
+  em: {
+    fontSize: "0.8em",
+    fontStyle: "italic",
   },
   grid: {},
   gridTitle: {
     borderBottom: "1px solid #000",
     marginBottom: 32,
-    marginTop: 32
+    marginTop: 32,
   },
   link: {
-    color: theme.typography.link.color
-  }
+    color: theme.typography.link.color,
+  },
 }));
 
 const SectionCitations = () => {
@@ -82,7 +86,7 @@ const SectionCitations = () => {
       </Grid>
       <Grid container item flexDirection="column">
         {citations && citations.length
-          ? citations.map(citation => (
+          ? citations.map((citation) => (
               <Grid item key={citation._id} className={classes.citation}>
                 <Typography component="div" variant="body1">
                   <Link className={classes.citationTitle} href={citation.url}>
@@ -98,8 +102,8 @@ const SectionCitations = () => {
                     ? citation.publicationTitle
                     : citation.websiteTitle}
                 </Typography>
-                <Typography>
-                  <em>{moment(citation.date).strftime("%B %e, %Y")}</em>
+                <Typography className={classes.em}>
+                  {moment(citation.date).strftime("%B %e, %Y")}
                 </Typography>
               </Grid>
             ))
