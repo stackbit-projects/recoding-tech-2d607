@@ -32,6 +32,9 @@ const useStyles = makeStyles(theme => ({
   citationPublication: {
     marginTop: 10
   },
+  em: {
+    fontStyle: "italic"
+  },
   grid: {},
   gridTitle: {
     borderBottom: "1px solid #000",
