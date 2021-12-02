@@ -82,8 +82,9 @@ const RelatedReadings = props => {
                   sx={{
                     height: "90%",
                     marginBottom: 2,
-                    marginLeft: 2,
-                    width: "90%"
+                    marginLeft: 4,
+                    marginRight: 4,
+                    width: "90% !important"
                   }}
                 >
                   <FancyCard

@@ -33,6 +33,9 @@ const useStyles = makeStyles(() => ({
   },
   em: {
     fontStyle: "italic"
+  },
+  maxWidth: {
+    maxWidth: "100% !important"
   }
 }));
 
@@ -117,17 +120,18 @@ const Topic = props => {
                   </Card>
                 </Grid>
               )}
-              <Grid item>
+
+              <Grid item className={classes.maxWidth}>
                 <Typography component="div" variant="body1">
-                  {markdownify(_.get(props, "page.topicDescription", null))}
+                  {markdownify(page.topicDescription)}
                 </Typography>
-                {readings ||
-                  (page.relatedReadings && (
-                    <RelatedReadings
-                      page={page}
-                      readings={readings ? readings : page.relatedReadings}
-                    />
-                  ))}
+                {(readings && readings.length) ||
+                (page.relatedReadings && page.relatedReadings.length) ? (
+                  <RelatedReadings
+                    page={page}
+                    readings={readings ? readings : page.relatedReadings}
+                  />
+                ) : null}
               </Grid>
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>

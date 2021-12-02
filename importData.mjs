@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import fetch from "node-fetch";
 import sanityClient from "@sanity/client";
 
+const BATCH_SIZE = 250;
+
 dotenv.config();
 
 const client = sanityClient({
@@ -10,12 +12,12 @@ const client = sanityClient({
   dataset: process.env.SANITY_DATASET,
   projectId: process.env.SANITY_PROJECT_ID,
   token: process.env.SANITY_ACCESS_TOKEN,
-  useCdn: false // We can't use the CDN for writing
+  useCdn: false, // We can't use the CDN for writing
 });
 
-const flatten = arr => {
+const flatten = (arr) => {
   if (arr) {
-    arr = arr.reduce(function(flat, toFlatten) {
+    arr = arr.reduce(function (flat, toFlatten) {
       return flat.concat(
         Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
       );
@@ -23,7 +25,7 @@ const flatten = arr => {
     return arr.filter(
       (item, index, self) =>
         index ===
-        self.findIndex(a => {
+        self.findIndex((a) => {
           if (item !== undefined && a !== undefined) {
             if (a.name) {
               return a.name === item.name;
@@ -38,7 +40,7 @@ const flatten = arr => {
   }
 };
 
-const transform = externalCitation => {
+const transform = (externalCitation) => {
   console.log(`Found citation ${externalCitation.key}`);
 
   if (externalCitation.data.itemType != "attachment") {
@@ -64,7 +66,7 @@ const transform = externalCitation => {
           _key: `creator-${now}-${index}`,
           firstName: creator.firstName,
           lastName: creator.lastName,
-          creatorType: creator.creatorType
+          creatorType: creator.creatorType,
         };
         return creators.push(item);
       });
@@ -79,7 +81,7 @@ const transform = externalCitation => {
             _type: "topic",
             _id: tag.tag.replace(/[^A-Z0-9]/gi, "-"),
             _key: `topic-${now}-${index}`,
-            name: tag.tag
+            name: tag.tag,
           };
           return tags.push(item);
         }
@@ -102,7 +104,7 @@ const transform = externalCitation => {
       publisher: externalCitation.data.publisher,
       blogTitle: externalCitation.data.blogTitle,
       network: externalCitation.data.network,
-      chicagoCitation: externalCitation.citation
+      chicagoCitation: externalCitation.citation,
     };
     return [creators, tags, citation];
   }
@@ -113,12 +115,12 @@ async function fetchBackoff(url, options) {
   if (response.headers.has("backoff")) {
     const backoff = response.headers.get("backoff");
     console.log(`Rate-limited: pausing for ${backoff} seconds.`);
-    await new Promise(resolve => setTimeout(resolve, backoff));
+    await new Promise((resolve) => setTimeout(resolve, backoff));
     return fetchBackoff(url, options);
   } else if (response.status === 429 && response.headers.has("retry-after")) {
     const retryAfter = response.headers.get("retry-after");
     console.log(`System overloaded: retrying in ${retryAfter} seconds.`);
-    await new Promise(resolve => setTimeout(resolve, retryAfter));
+    await new Promise((resolve) => setTimeout(resolve, retryAfter));
     return fetchBackoff(url, options);
   }
   return response;
@@ -139,27 +141,27 @@ async function fetchAllCitations() {
     await fetchBackoff(zoteroUrl(start, limit), {
       headers: {
         "Zotero-API-Version": process.env.ZOTERO_API_VERSION,
-        "Zotero-API-Key": process.env.ZOTERO_API_KEY
-      }
+        "Zotero-API-Key": process.env.ZOTERO_API_KEY,
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (response.ok) return response.json();
         throw new Error(
           `HTTP Error ${response.status}: ${response.statusText}`
         );
       })
-      .then(citations => {
+      .then((citations) => {
         console.log(`Parsing batch starting at ${start}...`);
         start += citations.length;
         if (citations.length < limit) finished = true;
         return citations.map(transform);
       })
       .then(
-        docs =>
+        (docs) =>
           // docs is now an array of [creators, tags, citation], so we need to flatten it
           (documents = documents.concat(flatten(docs)))
       )
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -167,12 +169,27 @@ async function fetchAllCitations() {
 
   try {
     if (documents.length > 0) {
-      const transaction = client.transaction();
-      documents.forEach(document => {
-        transaction.createIfNotExists(document);
-      });
-      console.log("Committing transaction...");
-      transaction.commit();
+      //const dedup = new Map();
+      //documents.forEach((document) => {
+      //  dedup.set(document._id, document);
+      //});
+      //const deduped = Array.from(dedup.values());
+      const deduped = documents;
+      let processed = 0;
+      do {
+        const batch = deduped.slice(processed, processed + BATCH_SIZE - 1);
+        const transaction = client.transaction();
+        batch.forEach((document) => {
+          transaction.createIfNotExists(document);
+        });
+        console.log(
+          `Committing batch ${processed + 1} through ${
+            processed + batch.length
+          } of ${deduped.length} total...`
+        );
+        transaction.commit();
+        processed += batch.length;
+      } while (processed < deduped.length);
     }
   } catch (error) {
     console.error(error.name + ": " + error.message);
