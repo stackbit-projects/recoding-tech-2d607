@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "eslint": "eslint --init",
+    "eslint": "eslint",
+    "eslint:init": "eslint --init",
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
