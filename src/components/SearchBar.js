@@ -20,6 +20,7 @@ const SearchBar = ({ handleSearch }) => {
       elevation={0}
       square
       sx={{ border: "1px solid #000" }}
+      onSubmit={(e) => e.preventDefault()}
     >
       <IconButton
         type="search"
@@ -28,18 +29,18 @@ const SearchBar = ({ handleSearch }) => {
         sx={{
           backgroundColor: "footer.main",
           borderRadius: 0,
-          borderRight: "1px solid #000"
+          borderRight: "1px solid #000",
         }}
       >
         <SearchIcon />
       </IconButton>
       <Input
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         sx={{
           fontFamily: "h1.fontFamily",
           marginLeft: 1,
-          width: "92%"
+          width: "92%",
         }}
         placeholder="SEARCH..."
       />
@@ -48,7 +49,7 @@ const SearchBar = ({ handleSearch }) => {
 };
 
 SearchBar.propTypes = {
-  handleSearch: PropTypes.func
+  handleSearch: PropTypes.func,
 };
 
 export default SearchBar;
