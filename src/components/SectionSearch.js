@@ -9,6 +9,7 @@ import client from "../utils/sanityClient";
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -20,14 +21,14 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, relatedTopics, title, url, websiteTitle}';
+  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics, title, url, websiteTitle} | order(date desc)';
 
 const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   citation: {
     marginBottom: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   citationTitle: {
     color: "#000 !important",
@@ -35,20 +36,20 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     textDecoration: "none",
     "&:hover": {
-      textDecoration: "underline"
-    }
+      textDecoration: "underline",
+    },
   },
   citationPublication: {
-    marginTop: 10
+    marginTop: 10,
   },
   grid: {},
   gridTitle: {
     marginBottom: 32,
-    marginTop: 32
+    marginTop: 32,
   },
   link: {
-    color: theme.typography.link.color
-  }
+    color: theme.typography.link.color,
+  },
 }));
 
 const ROWS_PER_PAGE = 4;
@@ -57,9 +58,11 @@ const SectionCitations = () => {
   const classes = useStyles();
   const { query } = useRouter();
   const [citations, setCitations] = useState([]);
+  const [allCitations, setAllCitations] = useState([]);
   const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
   const [search, setSearch] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // filters
   const [issues, setIssues] = useState([]);
@@ -68,33 +71,31 @@ const SectionCitations = () => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    client.fetch(citationsQuery).then(cites => {
-      let allCitations = [];
-      cites.forEach(citation => {
-        allCitations = [...allCitations, citation];
-      });
-      setCitations(allCitations);
+    client.fetch(citationsQuery).then((cites) => {
+      if (Array.isArray(cites) && cites.length) {
+        setAllCitations(cites);
+      }
+      setLoading(false);
     });
 
-    client.fetch(topicsQuery).then(topics => {
+    client.fetch(topicsQuery).then((topics) => {
       let allTopics = [];
-      topics.forEach(topic => {
+      topics.forEach((topic) => {
         allTopics = [...allTopics, topic];
       });
-      setTopics(allTopics);
+      setTopics(topics);
     });
   }, []);
 
   useEffect(() => {
-    console.log(topics);
     const newTopics = {
       issue: new Map(),
       policy: new Map(),
       company: new Map(),
-      country: new Map()
+      country: new Map(),
     };
     if (Array.isArray(topics) && topics.length) {
-      topics.map(topic => {
+      topics.map((topic) => {
         if (topic.type && topic.slug) {
           newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
         }
@@ -102,9 +103,9 @@ const SectionCitations = () => {
     }
 
     let newFilters = [];
-    ["issue", "policy", "company", "country"].forEach(type => {
+    ["issue", "policy", "company", "country"].forEach((type) => {
       if (Array.isArray(query[type]) && query[type].length) {
-        query[type].forEach(t => {
+        query[type].forEach((t) => {
           const exists = newTopics[type].get(t);
           if (exists) {
             newFilters.push(exists);
@@ -126,36 +127,27 @@ const SectionCitations = () => {
   }, [query, topics]);
 
   useEffect(() => {
-    if (citations.length) {
-      let newCitations = citations;
-      if (filters) {
-        newCitations = newCitations.filter(citation => {
+    if (allCitations.length) {
+      let newCitations = allCitations;
+      if (filters.length) {
+        newCitations = newCitations.filter((citation) => {
           let matches = 0;
-          if (
-            Array.isArray(citation.relatedTopics) &&
-            citation.relatedTopics.length
-          ) {
-            citation.relatedTopics.forEach(topic => {
-              if (filters.findIndex(f => f.slug === topic.slug) >= 0)
+          if (Array.isArray(citation.topics) && citation.topics.length) {
+            citation.topics.forEach((topic) => {
+              if (filters.findIndex((f) => f.name === topic.name) >= 0)
                 matches += 1;
             });
           }
           return matches >= filters.length;
         });
-        newCitations.sort((a, b) => {
-          if (a.date && b.date) {
-            return Date.parse(b.date) - Date.parse(a.date);
-          } else {
-            return false;
-          }
-        });
       }
       if (search) {
-        newCitations = newCitations.filter(citation => {
-          const regex = new RegExp(`/${search}/`, "i");
+        newCitations = newCitations.filter((citation) => {
+          const regex = new RegExp(`${search}`, "i");
           for (const prop in citation) {
-            if (typeof prop === "string" || prop instanceof String) {
-              if (prop.search(regex) > 0) return true;
+            const value = citation[prop];
+            if (typeof value === "string" || value instanceof String) {
+              if (value.search(regex) >= 0) return true;
             }
           }
           return false;
@@ -163,7 +155,7 @@ const SectionCitations = () => {
       }
       setCitations(newCitations);
     }
-  }, [citations, filters, search]);
+  }, [filters, search, allCitations]);
 
   // table pagination
   const [page, setPage] = React.useState(1);
@@ -172,19 +164,19 @@ const SectionCitations = () => {
     setPage(newPage);
   };
 
-  const handleClick = topic => () => {
-    if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
+  const handleClick = (topic) => () => {
+    if (topic && filters.findIndex((f) => f.slug === topic.slug) < 0) {
       setFilters([...filters, topic]);
     }
   };
 
-  const handleDelete = topic => () => {
+  const handleDelete = (topic) => () => {
     if (topic) {
-      setFilters(filters.filter(f => f.slug !== topic.slug));
+      setFilters(filters.filter((f) => f.slug !== topic.slug));
     }
   };
 
-  const getHandler = item => {
+  const getHandler = (item) => {
     const handler = () => Router.push({ pathname: item.url });
     return handler;
   };
@@ -319,12 +311,12 @@ const SectionCitations = () => {
         md={8}
       >
         <Grid item xs={12}>
-          <SearchBar handleSearch={value => setSearch(value)} />
+          <SearchBar handleSearch={(value) => setSearch(value)} />
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={1}>
             {filters.length
-              ? filters.map(filter => (
+              ? filters.map((filter) => (
                   <Chip
                     key={filter._id}
                     item
@@ -343,7 +335,7 @@ const SectionCitations = () => {
                   (page - 1) * ROWS_PER_PAGE,
                   (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
                 )
-                .map(citation => (
+                .map((citation) => (
                   <Grid
                     key={citation._id}
                     container
@@ -381,7 +373,11 @@ const SectionCitations = () => {
                 ))
             : null}
         </Grid>
-        {citations && citations.length ? (
+        {loading ? (
+          <Grid item>
+            <CircularProgress color="secondary" />
+          </Grid>
+        ) : citations && citations.length ? (
           <Grid item>
             <Pagination
               count={Math.ceil(citations.length / ROWS_PER_PAGE)}
