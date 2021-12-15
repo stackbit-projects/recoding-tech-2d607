@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import client from "../utils/sanityClient";
 
 const query =
-  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle}[0...5] | order(date desc)';
+  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle} | order(date desc)';
 
 const useStyles = makeStyles((theme) => ({
   citation: {
@@ -60,7 +60,7 @@ const SectionCitations = () => {
       cites.forEach(citation => {
         allCitations = [...allCitations, citation];
       });
-      setCitations(allCitations);
+      setCitations(allCitations.slice(0,5));
     });
   }, []);
 
