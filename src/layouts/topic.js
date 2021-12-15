@@ -73,7 +73,6 @@ const Topic = props => {
     ) {
       const [r, h] = page.relatedCommentary.reduce(
         ([r, h], comment) => {
-          console.log("hi it's me comment*********", comment)
           if (comment.__metadata && comment.__metadata.modelName === "citation") {
             h.push(comment);
           } else if (comment.__metadata && comment.__metadata.modelName === "article") {

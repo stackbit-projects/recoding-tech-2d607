@@ -17,10 +17,6 @@ const Topics = props => {
 
   const title = _.get(props, "title", "Related Topics");
 
-    console.log("topic************", topics);
-
-
-
   return (
     <section>
       <Grid container>
