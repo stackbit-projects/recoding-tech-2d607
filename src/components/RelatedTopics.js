@@ -17,6 +17,10 @@ const Topics = props => {
 
   const title = _.get(props, "title", "Related Topics");
 
+    console.log("topic************", topics);
+
+
+
   return (
     <section>
       <Grid container>
@@ -38,7 +42,7 @@ const Topics = props => {
                   label={topic.name}
                   color={topic.type == "issue" ? "issue" : "policy"}
                   component="a"
-                  href={`/${topic.type}/${topic.slug}`}
+                  href={`/${topic.type}/${typeof topic.slug === 'string' ? topic.slug : topic.slug.current}`}
                   clickable
                 />
               ))}
