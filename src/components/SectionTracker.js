@@ -132,8 +132,8 @@ function SectionTracker(props) {
     };
     if (Array.isArray(topics) && topics.length) {
       topics.map(topic => {
-        if (topic.type && topic.slug) {
-          newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
+        if (topic.type && topic.slug && topic.slug.current) {
+          newTopics[topic.type] && newTopics[topic.type].set(topic.slug.current, topic);
         }
       });
     }
@@ -172,6 +172,7 @@ function SectionTracker(props) {
             action.relatedTopics.length
           ) {
             action.relatedTopics.forEach(topic => {
+              console.log("FILTERS", filters)
               if (filters.findIndex(f => f.slug === topic.slug) >= 0)
                 matches += 1;
             });
@@ -182,7 +183,7 @@ function SectionTracker(props) {
         setActions(allPolicies);
       }
     }
-  }, [actions, filters]);
+  }, [filters]);
 
   const handleClose = topic => {
     if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
@@ -429,9 +430,9 @@ function SectionTracker(props) {
                 onClose={handleCloseCompanies()}
               >
                 {companies && companies.length
-                  ? companies.map(company => (
+                  ? companies.map((company, idx) => (
                       <MenuItem
-                        key={companies.slug}
+                        key={companies.slug && companies.slug.current ? companies.slug.current : idx}
                         onClick={handleCloseCompanies(company)}
                         disableRipple
                       >
@@ -448,7 +449,7 @@ function SectionTracker(props) {
         <Grid container spacing={2} justifyContent="flex-start">
           {filters.length
             ? filters.map(filter => (
-                <Grid key={filter.__metadata.id} item>
+                <Grid key={filter.__metadata ? filter.__metadata.id : filter.id} item>
                   <Chip
                     label={filter.displayTitle || filter.name}
                     color={filter.type}
@@ -481,7 +482,7 @@ function SectionTracker(props) {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.slug}
+                      key={typeof row.slug === 'object' ? row.slug.current : row.slug}
                     >
                       {headers.map(column => {
                         let value = row[column.id];
@@ -506,7 +507,7 @@ function SectionTracker(props) {
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}
-                                href={row.slug}
+                                href={typeof row.slug === 'object' ? row.slug.current : row.slug}
                               >
                                 {value}
                               </Link>
