@@ -30,7 +30,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key,     displayTitle, name, slug}, dateInitiated, 
+const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated, 
                             img_alt, img_path, lastUpdate, 
                             slug, status, title, 
                             relatedTopics[]->{_id, _key, name, slug, type}, type}`;
@@ -93,7 +93,6 @@ function SectionTracker(props) {
   const [allActions, setAllActions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const headers = [
     { id: "title", label: "Name" },
@@ -116,7 +115,6 @@ function SectionTracker(props) {
         setActions(allPolicies);
         setAllActions(allPolicies);
       }
-      setLoading(false);
     });
 
     client.fetch(topicsQuery).then((topics) => {
