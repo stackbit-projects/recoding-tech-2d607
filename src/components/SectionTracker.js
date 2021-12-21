@@ -113,6 +113,7 @@ function SectionTracker(props) {
   useEffect(() => {
     client.fetch(policyActionsQuery).then((allPolicies) => {
       if (Array.isArray(allPolicies) && allPolicies.length) {
+        setActions(allPolicies);
         setAllActions(allPolicies);
       }
       setLoading(false);
@@ -168,10 +169,11 @@ function SectionTracker(props) {
   }, [topics, query]);
 
   useEffect(() => {
+    console.log("this is the useEffect watching for Filters");
     if (allActions.length) {
       let newActions = allActions;
       if (filters.length) {
-        newActions = allActions.filter((action) => {
+        newActions = newActions.filter((action) => {
           let matches = 0;
           if (
             Array.isArray(action.relatedTopics) &&
@@ -179,14 +181,13 @@ function SectionTracker(props) {
           ) {
             action.relatedTopics.forEach((topic) => {
               if (filters.findIndex((f) => f._key === topic._key) >= 0)
-              console.log("ITS A MATCH!!!!!!!")
               matches += 1;
             });
           }
           return matches >= filters.length;
         });
-        setActions(newActions);
       }
+      setActions(newActions);
     }
   }, [filters, allActions]);
 
@@ -476,7 +477,7 @@ function SectionTracker(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {allActions
+              {actions
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
@@ -537,7 +538,7 @@ function SectionTracker(props) {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={allActions.length}
+          count={actions.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
