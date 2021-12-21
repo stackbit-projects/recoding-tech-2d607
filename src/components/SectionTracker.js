@@ -30,9 +30,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const policyActionsQuery = `*[_type == "policy_action"]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, topics, type}`;
+const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key,     displayTitle, name, slug}, dateInitiated, 
+                            img_alt, img_path, lastUpdate, 
+                            slug, status, title, 
+                            relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
-const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
+const topicsQuery = '*[_type == "topic"]{_id, _key, name, slug, type}';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -165,20 +168,19 @@ function SectionTracker(props) {
   }, [topics, query]);
 
   useEffect(() => {
-    console.log("FILTERS********", filters)
     if (allActions.length) {
-      console.log("allActions", allActions[0])
-      let newActions = allActions
+      let newActions = allActions;
       if (filters.length) {
-        newActions = newActions.filter((action) => {
+        newActions = allActions.filter((action) => {
           let matches = 0;
           if (
             Array.isArray(action.relatedTopics) &&
             action.relatedTopics.length
           ) {
             action.relatedTopics.forEach((topic) => {
-              if (filters.findIndex((f) => f.slug === topic.slug) >= 0)
-                matches += 1;
+              if (filters.findIndex((f) => f._key === topic._key) >= 0)
+              console.log("ITS A MATCH!!!!!!!")
+              matches += 1;
             });
           }
           return matches >= filters.length;
@@ -189,13 +191,13 @@ function SectionTracker(props) {
   }, [filters, allActions]);
 
   const handleClose = (topic) => {
-    if (topic && filters.findIndex((f) => f.slug === topic.slug) < 0) {
+    if (topic && filters.findIndex((f) => f._key === topic._key) < 0) {
       setFilters([...filters, topic]);
     }
   };
 
   const handleDelete = (topic) => () => {
-    topic && setFilters(filters.filter((f) => f.slug !== topic.slug));
+    topic && setFilters(filters.filter((f) => f._key !== topic._key));
   };
 
   const [issueEl, setIssueEl] = React.useState(null);
@@ -299,7 +301,7 @@ function SectionTracker(props) {
                 {issues && issues.length
                   ? issues.map((issue) => (
                       <MenuItem
-                        key={issue.slug}
+                        key={issue._id}
                         onClick={handleCloseIssues(issue)}
                         disableRipple
                       >
@@ -342,7 +344,7 @@ function SectionTracker(props) {
                 {policies && policies.length
                   ? policies.map((policy) => (
                       <MenuItem
-                        key={policy.slug}
+                        key={policy._id}
                         onClick={handleClosePolicies(policy)}
                         disableRipple
                       >
@@ -387,7 +389,7 @@ function SectionTracker(props) {
                       if (country) {
                         return (
                           <MenuItem
-                            key={country.slug}
+                            key={country._id}
                             onClick={handleCloseCountries(country)}
                             disableRipple
                           >
@@ -430,13 +432,9 @@ function SectionTracker(props) {
                 onClose={handleCloseCompanies()}
               >
                 {companies && companies.length
-                  ? companies.map((company, idx) => (
+                  ? companies.map((company) => (
                       <MenuItem
-                        key={
-                          companies.slug && companies.slug.current
-                            ? companies.slug.current
-                            : idx
-                        }
+                        key={company._key}
                         onClick={handleCloseCompanies(company)}
                         disableRipple
                       >
@@ -453,10 +451,7 @@ function SectionTracker(props) {
         <Grid container spacing={2} justifyContent="flex-start">
           {filters.length
             ? filters.map((filter) => (
-                <Grid
-                  key={filter.__metadata ? filter.__metadata.id : filter.id}
-                  item
-                >
+                <Grid key={filter._key} item>
                   <Chip
                     label={filter.displayTitle || filter.name}
                     color={filter.type}
@@ -489,11 +484,7 @@ function SectionTracker(props) {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={
-                        typeof row.slug === "object"
-                          ? row.slug.current
-                          : row.slug
-                      }
+                      key={row._key}
                     >
                       {headers.map((column) => {
                         let value = row[column.id];
