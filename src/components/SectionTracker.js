@@ -167,7 +167,7 @@ function SectionTracker(props) {
   }, [topics, query]);
 
   useEffect(() => {
-    console.log("this is the useEffect watching for Filters");
+
     if (allActions.length) {
       let newActions = allActions;
       if (filters.length) {
