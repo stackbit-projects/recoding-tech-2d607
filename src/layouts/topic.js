@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 
 // utils
 import { markdownify } from "../utils";
+import client from "../utils/sanityClient";
+
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -43,12 +45,22 @@ const Topic = props => {
   const classes = useStyles();
   const { page } = props;
 
+  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}")]`
+
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
   const [readings, setReadings] = useState(null);
   const [headlines, setHeadlines] = useState(null);
+  const [actions, setActions] = useState([])
 
   useEffect(() => {
+
+    page.slug ? 
+     client.fetch(policyActionsQuery).then((actions) => {
+       setActions(actions)
+      }
+    ) : null
+
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
       if (page.type === "issue" || page.type === "policy") {
         const [i, p] = page.relatedTopics.reduce(
@@ -94,8 +106,8 @@ const Topic = props => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          {page.relatedPolicyActions && (
-            <RelatedActions page={page} actions={page.relatedPolicyActions} />
+          {actions.length && (
+            <RelatedActions page={page} actions={actions} />
           )}
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
