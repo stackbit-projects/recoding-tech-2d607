@@ -15,18 +15,18 @@ const theme = createTheme({
           fontSize: "1.2em",
           fontWeight: "bold",
           textAlign: "center",
-          textTransform: "none"
-        }
-      }
+          textTransform: "none",
+        },
+      },
     },
     MuiChip: {
       styleOverrides: {
         root: {
           fontFamily: sansSerifFont,
           fontWeight: "bold",
-          textTransform: "uppercase"
-        }
-      }
+          textTransform: "uppercase",
+        },
+      },
     },
     MuiMenuItem: {
       styleOverrides: {
@@ -34,74 +34,74 @@ const theme = createTheme({
           color: "#000",
           fontFamily: sansSerifFont,
           fontWeight: "bold",
-          textAlign: "center"
-        }
-      }
+          textAlign: "center",
+        },
+      },
     },
     MuiTableCell: {
       styleOverrides: {
         root: {
           fontFamily: sansSerifFont,
-          textTransform: "uppercase"
-        }
-      }
+          textTransform: "uppercase",
+        },
+      },
     },
     MuiTablePagination: {
       styleOverrides: {
         displayedRows: {
-          fontFamily: sansSerifFont
+          fontFamily: sansSerifFont,
         },
         select: {
-          fontFamily: sansSerifFont
+          fontFamily: sansSerifFont,
         },
         selectLabel: {
-          fontFamily: sansSerifFont
-        }
-      }
-    }
+          fontFamily: sansSerifFont,
+        },
+      },
+    },
   },
   palette: {
     primary: {
-      main: "#FF0033"
+      main: "#FF0033",
     },
     secondary: {
-      main: "#C2CECC"
+      main: "#C2CECC",
     },
     issue: defaultTheme.palette.augmentColor({
       name: "issue",
       color: {
         main: "#FAD3CD",
-        dark: "#C7A09A"
-      }
+        dark: "#C7A09A",
+      },
     }),
     policy: defaultTheme.palette.augmentColor({
       name: "policy",
       color: {
         main: "#84A4CC",
-        dark: "#517199"
-      }
+        dark: "#517199",
+      },
     }),
     country: defaultTheme.palette.augmentColor({
       name: "country",
       color: {
         main: "#8AA29D",
-        dark: "#3E5651"
-      }
+        dark: "#3E5651",
+      },
     }),
     company: defaultTheme.palette.augmentColor({
       name: "company",
       color: {
         main: "#CCCCCC",
-        dark: "#666666"
-      }
+        dark: "#666666",
+      },
     }),
     footer: defaultTheme.palette.augmentColor({
       name: "footer",
       color: {
         main: "#EFE9DA",
-        dark: "#BCB6A7"
-      }
-    })
+        dark: "#BCB6A7",
+      },
+    }),
   },
   typography: {
     fontFamily: serifFont,
@@ -109,45 +109,51 @@ const theme = createTheme({
       fontFamily: sansSerifFont,
       fontSize: "2.4em",
       fontWeight: "bold",
-      textAlign: "center"
+      textAlign: "center",
     },
     h2: {
       fontFamily: sansSerifFont,
       fontSize: "1.9em",
       fontWeight: "bold",
-      marginBottom: 40
+      marginBottom: 40,
     },
     h3: {
       fontFamily: sansSerifFont,
       fontSize: "1.4em",
       fontWeight: "bold",
       marginBottom: 20,
-      textTransform: "uppercase"
+      textTransform: "uppercase",
+    },
+    h3_subheading: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.4em",
+      fontWeight: "bold",
+      marginBottom: 20,
     },
     h4: {
       fontFamily: sansSerifFont,
       fontSize: "1.1em",
       fontWeight: "bold",
       marginBottom: 20,
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     h5: {
       fontFamily: sansSerifFont,
       fontSize: "0.8em",
       marginBottom: 20,
-      textTransform: "uppercase"
+      textTransform: "uppercase",
     },
     link: {
       color: "#FF0033",
-      fontFamily: sansSerifFont
+      fontFamily: sansSerifFont,
     },
     overline: {
       fontFamily: sansSerifFont,
       fontSize: "1.2em",
       fontWeight: "bold",
-      textTransform: "none"
-    }
-  }
+      textTransform: "none",
+    },
+  },
 });
 
 export default theme;
