@@ -15,29 +15,46 @@ import Typography from "@mui/material/Typography";
 // components
 import FancyGuide from "./FancyGuide";
 
+import client from "../utils/sanityClient";
+
+const query =
+  '*[_type == "guide"]{_id, title, slug, subtitle, _created_at, _updatedAt } | order(date desc)';
+
 const useStyles = makeStyles(() => ({
   em: {
     fontStyle: "italic",
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 }));
 
-const SectionGuides = props => {
+const SectionGuides = () => {
   const classes = useStyles();
-  const { guides } = props;
+  const [guides, setGuides] = useState([]);
+
+  useEffect(() => {
+    client.fetch(query).then((gs) => {
+      let allGuides = [];
+      gs.forEach((g) => {
+        allGuides = [...allGuides, g];
+      });
+      setGuides(allGuides);
+    });
+  }, []);
+
+  useEffect(() => {}, [guides]);
 
   const sliderSettings = {
     dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
 
-  const guideClick = url => {
+  const guideClick = (url) => {
     Router.push({ pathname: "/guide/" + url });
   };
 
@@ -60,11 +77,11 @@ const SectionGuides = props => {
           {guides && guides.length ? (
             <Box mt={4}>
               <Slider {...sliderSettings}>
-                {guides.map(guide => (
+                {guides.map((guide) => (
                   <FancyGuide
-                    key={guide.__metadata.id}
+                    key={guide.title}
                     guide={guide}
-                    onClick={() => guideClick(guide.slug)}
+                    onClick={() => guideClick(guide.slug.current)}
                   />
                 ))}
               </Slider>
@@ -77,7 +94,7 @@ const SectionGuides = props => {
 };
 
 SectionGuides.propTypes = {
-  guides: PropTypes.array
+  guides: PropTypes.array,
 };
 
 export default SectionGuides;

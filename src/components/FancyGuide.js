@@ -37,7 +37,7 @@ const FancyGuide = ({ guide, onClick = () => {} }) => {
 
   return (
     <Card
-      key={guide.__metadata.id}
+      key={guide._id}
       variant="outlined"
       className={`${classes.card} ${classes.guide}`}
     >

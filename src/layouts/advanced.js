@@ -50,7 +50,7 @@ function Advanced(props) {
               <SectionCitations />
             </Grid>
             <Grid item xs={12}>
-              <SectionGuides {...props} />
+              <SectionGuides />
             </Grid>
           </Grid>
         ) : (
