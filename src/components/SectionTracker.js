@@ -37,6 +37,8 @@ const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key
 
 const topicsQuery = '*[_type == "topic"]{_id, _key, name, slug, type}';
 
+const isDev = process.env.NODE_ENV === "development";
+
 const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: "0.8em",
@@ -509,9 +511,15 @@ function SectionTracker(props) {
                               <Link
                                 className={classes.tableLink}
                                 href={
-                                  typeof row.slug === "object"
-                                    ? row.slug.current
-                                    : row.slug
+                                  isDev
+                                    ? typeof row.slug === "object"
+                                      ? row.slug.current
+                                      : row.slug
+                                    : `tracker/${
+                                        typeof row.slug === "object"
+                                          ? row.slug.current
+                                          : row.slug
+                                      }`
                                 }
                               >
                                 {value}
