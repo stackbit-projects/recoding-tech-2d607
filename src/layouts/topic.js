@@ -136,7 +136,8 @@ const Topic = props => {
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>
               <Grid item>
-                <RelatedGuide {...props} />
+                Guide goes here
+                {/* <RelatedGuide {...props} /> */}
               </Grid>
               <Grid item>
                 <RelatedCommentary commentary={headlines} />
