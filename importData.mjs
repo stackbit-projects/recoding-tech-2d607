@@ -180,7 +180,10 @@ async function fetchAllCitations() {
         const batch = deduped.slice(processed, processed + BATCH_SIZE - 1);
         const transaction = client.transaction();
         batch.forEach((document) => {
-          transaction.createIfNotExists(document);
+          transaction.createIfNotExists(document).patch(document._id, (p) => {
+            p.set(document);
+            return p;
+          });
         });
         console.log(
           `Committing batch ${processed + 1} through ${

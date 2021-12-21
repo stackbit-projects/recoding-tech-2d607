@@ -73,9 +73,9 @@ const Topic = props => {
     ) {
       const [r, h] = page.relatedCommentary.reduce(
         ([r, h], comment) => {
-          if (comment.__metadata.modelName === "citation") {
+          if (comment.__metadata && comment.__metadata.modelName === "citation") {
             h.push(comment);
-          } else if (comment.__metadata.modelName === "article") {
+          } else if (comment.__metadata && comment.__metadata.modelName === "article") {
             r.push(comment);
           }
           return [r, h];
@@ -136,7 +136,7 @@ const Topic = props => {
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>
               <Grid item>
-                <RelatedGuide {...props} />
+                <RelatedGuide {...props} /> 
               </Grid>
               <Grid item>
                 <RelatedCommentary commentary={headlines} />

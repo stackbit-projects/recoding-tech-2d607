@@ -30,22 +30,27 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const policyActionsQuery = `*[_type == "policy_action"]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, topics, type}`;
+const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated, 
+                            img_alt, img_path, lastUpdate, 
+                            slug, status, title, 
+                            relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
-const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
+const topicsQuery = '*[_type == "topic"]{_id, _key, name, slug, type}';
 
-const useStyles = makeStyles(theme => ({
+const isDev = process.env.NODE_ENV === "development";
+
+const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: "0.8em",
     textTransform: "uppercase",
-    width: 180
+    width: 180,
   },
   icon: {
     position: "absolute",
     right: 20,
     top: "50%",
     transform: "translateY(-50%)",
-    transition: "right 250ms"
+    transition: "right 250ms",
   },
   table: {},
   tableCellTitle: {
@@ -61,25 +66,25 @@ const useStyles = makeStyles(theme => ({
       top: "50%",
       transform: "translateY(-50%)",
       width: "100%",
-      zIndex: "-1"
+      zIndex: "-1",
     },
     "&:hover": {
       "& a": {
-        textDecoration: "underline"
+        textDecoration: "underline",
       },
       "& svg": {
         right: 10,
-        transition: "right 250ms"
-      }
-    }
+        transition: "right 250ms",
+      },
+    },
   },
   tableLink: {
     color: "#000",
     display: "block",
     position: "relative",
     textDecoration: "none",
-    maxWidth: "85%"
-  }
+    maxWidth: "85%",
+  },
 }));
 
 function SectionTracker(props) {
@@ -87,6 +92,7 @@ function SectionTracker(props) {
   const { query } = useRouter();
   const { section } = props;
   const [actions, setActions] = useState([]);
+  const [allActions, setAllActions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
 
@@ -96,7 +102,7 @@ function SectionTracker(props) {
     { id: "country.displayTitle", label: "Country" },
     { id: "dateInitiated", label: "Date Initiated" },
     { id: "status", label: "Status" },
-    { id: "lastUpdate", label: "Last Updated" }
+    { id: "lastUpdate", label: "Last Updated" },
   ];
 
   // filters
@@ -106,17 +112,16 @@ function SectionTracker(props) {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    client.fetch(policyActionsQuery).then(allPolicies => {
-      let allPolicyActions = [];
-      allPolicies.forEach(policy => {
-        allPolicyActions = [...allPolicyActions, policy];
-      });
-      setActions(allPolicyActions);
+    client.fetch(policyActionsQuery).then((allPolicies) => {
+      if (Array.isArray(allPolicies) && allPolicies.length) {
+        setActions(allPolicies);
+        setAllActions(allPolicies);
+      }
     });
 
-    client.fetch(topicsQuery).then(topics => {
+    client.fetch(topicsQuery).then((topics) => {
       let allTopics = [];
-      topics.forEach(topic => {
+      topics.forEach((topic) => {
         allTopics = [...allTopics, topic];
       });
       setTopics(allTopics);
@@ -128,20 +133,21 @@ function SectionTracker(props) {
       issue: new Map(),
       policy: new Map(),
       company: new Map(),
-      country: new Map()
+      country: new Map(),
     };
     if (Array.isArray(topics) && topics.length) {
-      topics.map(topic => {
-        if (topic.type && topic.slug) {
-          newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
+      topics.map((topic) => {
+        if (topic.type && topic.slug && topic.slug.current) {
+          newTopics[topic.type] &&
+            newTopics[topic.type].set(topic.slug.current, topic);
         }
       });
     }
 
     let newFilters = [];
-    ["issue", "policy", "company", "country"].forEach(type => {
+    ["issue", "policy", "company", "country"].forEach((type) => {
       if (Array.isArray(query[type]) && query[type].length) {
-        query[type].forEach(t => {
+        query[type].forEach((t) => {
           const exists = newTopics[type].get(t);
           if (exists) {
             newFilters.push(exists);
@@ -163,73 +169,74 @@ function SectionTracker(props) {
   }, [topics, query]);
 
   useEffect(() => {
-    if (actions.length) {
-      if (filters) {
-        const allPolicies = actions.filter(action => {
+
+    if (allActions.length) {
+      let newActions = allActions;
+      if (filters.length) {
+        newActions = newActions.filter((action) => {
           let matches = 0;
           if (
             Array.isArray(action.relatedTopics) &&
             action.relatedTopics.length
           ) {
-            action.relatedTopics.forEach(topic => {
-              if (filters.findIndex(f => f.slug === topic.slug) >= 0)
-                matches += 1;
+            action.relatedTopics.forEach((topic) => {
+              if (filters.findIndex((f) => f._key === topic._key) >= 0)
+              matches += 1;
             });
           }
           return matches >= filters.length;
         });
-
-        setActions(allPolicies);
       }
+      setActions(newActions);
     }
-  }, [actions, filters]);
+  }, [filters, allActions]);
 
-  const handleClose = topic => {
-    if (topic && filters.findIndex(f => f.slug === topic.slug) < 0) {
+  const handleClose = (topic) => {
+    if (topic && filters.findIndex((f) => f._key === topic._key) < 0) {
       setFilters([...filters, topic]);
     }
   };
 
-  const handleDelete = topic => () => {
-    topic && setFilters(filters.filter(f => f.slug !== topic.slug));
+  const handleDelete = (topic) => () => {
+    topic && setFilters(filters.filter((f) => f._key !== topic._key));
   };
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssues = Boolean(issueEl);
-  const handleClickIssues = event => {
+  const handleClickIssues = (event) => {
     setIssueEl(event.currentTarget);
   };
-  const handleCloseIssues = topic => () => {
+  const handleCloseIssues = (topic) => () => {
     setIssueEl(null);
     handleClose(topic);
   };
 
   const [policiesEl, setPoliciesEl] = React.useState(null);
   const openPolicies = Boolean(policiesEl);
-  const handleClickPolicies = event => {
+  const handleClickPolicies = (event) => {
     setPoliciesEl(event.currentTarget);
   };
-  const handleClosePolicies = topic => () => {
+  const handleClosePolicies = (topic) => () => {
     setPoliciesEl(null);
     handleClose(topic);
   };
 
   const [countriesEl, setCountriesEl] = React.useState(null);
   const openCountries = Boolean(countriesEl);
-  const handleClickCountries = event => {
+  const handleClickCountries = (event) => {
     setCountriesEl(event.currentTarget);
   };
-  const handleCloseCountries = topic => () => {
+  const handleCloseCountries = (topic) => () => {
     setCountriesEl(null);
     handleClose(topic);
   };
 
   const [companiesEl, setCompaniesEl] = React.useState(null);
   const openCompanies = Boolean(companiesEl);
-  const handleClickCompanies = event => {
+  const handleClickCompanies = (event) => {
     setCompaniesEl(event.currentTarget);
   };
-  const handleCloseCompanies = topic => () => {
+  const handleCloseCompanies = (topic) => () => {
     setCompaniesEl(null);
     handleClose(topic);
   };
@@ -242,13 +249,10 @@ function SectionTracker(props) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  // date parsing
-  //var dateOptions = { month: "long", day: "numeric", year: "numeric" };
 
   return (
     <section>
@@ -289,16 +293,16 @@ function SectionTracker(props) {
               <Menu
                 id="issues-menu"
                 MenuListProps={{
-                  "aria-labelledby": "issues-button"
+                  "aria-labelledby": "issues-button",
                 }}
                 anchorEl={issueEl}
                 open={openIssues}
                 onClose={handleCloseIssues()}
               >
                 {issues && issues.length
-                  ? issues.map(issue => (
+                  ? issues.map((issue) => (
                       <MenuItem
-                        key={issue.slug}
+                        key={issue._id}
                         onClick={handleCloseIssues(issue)}
                         disableRipple
                       >
@@ -332,16 +336,16 @@ function SectionTracker(props) {
               <Menu
                 id="policies-menu"
                 MenuListProps={{
-                  "aria-labelledby": "policies-button"
+                  "aria-labelledby": "policies-button",
                 }}
                 anchorEl={policiesEl}
                 open={openPolicies}
                 onClose={handleClosePolicies()}
               >
                 {policies && policies.length
-                  ? policies.map(policy => (
+                  ? policies.map((policy) => (
                       <MenuItem
-                        key={policy.slug}
+                        key={policy._id}
                         onClick={handleClosePolicies(policy)}
                         disableRipple
                       >
@@ -375,18 +379,18 @@ function SectionTracker(props) {
               <Menu
                 id="countries-menu"
                 MenuListProps={{
-                  "aria-labelledby": "countries-button"
+                  "aria-labelledby": "countries-button",
                 }}
                 anchorEl={countriesEl}
                 open={openCountries}
                 onClose={handleCloseCountries()}
               >
                 {countries && countries.length
-                  ? countries.map(country => {
+                  ? countries.map((country) => {
                       if (country) {
                         return (
                           <MenuItem
-                            key={country.slug}
+                            key={country._id}
                             onClick={handleCloseCountries(country)}
                             disableRipple
                           >
@@ -422,16 +426,16 @@ function SectionTracker(props) {
               <Menu
                 id="companies-menu"
                 MenuListProps={{
-                  "aria-labelledby": "companies-button"
+                  "aria-labelledby": "companies-button",
                 }}
                 anchorEl={companiesEl}
                 open={openCompanies}
                 onClose={handleCloseCompanies()}
               >
                 {companies && companies.length
-                  ? companies.map(company => (
+                  ? companies.map((company) => (
                       <MenuItem
-                        key={companies.slug}
+                        key={company._key}
                         onClick={handleCloseCompanies(company)}
                         disableRipple
                       >
@@ -447,8 +451,8 @@ function SectionTracker(props) {
       <Box my={4}>
         <Grid container spacing={2} justifyContent="flex-start">
           {filters.length
-            ? filters.map(filter => (
-                <Grid key={filter.__metadata.id} item>
+            ? filters.map((filter) => (
+                <Grid key={filter._key} item>
                   <Chip
                     label={filter.displayTitle || filter.name}
                     color={filter.type}
@@ -467,7 +471,7 @@ function SectionTracker(props) {
           >
             <TableHead>
               <TableRow>
-                {headers.map(column => (
+                {headers.map((column) => (
                   <TableCell key={column.id}>{column.label}</TableCell>
                 ))}
               </TableRow>
@@ -475,15 +479,15 @@ function SectionTracker(props) {
             <TableBody>
               {actions
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(row => {
+                .map((row) => {
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.slug}
+                      key={row._key}
                     >
-                      {headers.map(column => {
+                      {headers.map((column) => {
                         let value = row[column.id];
                         if (!value) {
                           if (row.country) {
@@ -506,7 +510,17 @@ function SectionTracker(props) {
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}
-                                href={row.slug}
+                                href={
+                                  isDev
+                                    ? typeof row.slug === "object"
+                                      ? row.slug.current
+                                      : row.slug
+                                    : `tracker/${
+                                        typeof row.slug === "object"
+                                          ? row.slug.current
+                                          : row.slug
+                                      }`
+                                }
                               >
                                 {value}
                               </Link>
@@ -542,7 +556,7 @@ function SectionTracker(props) {
 }
 
 SectionTracker.propTypes = {
-  section: PropTypes.object
+  section: PropTypes.object,
 };
 
 export default SectionTracker;
