@@ -164,7 +164,7 @@ const RelatedActions = props => {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.slug}
+                      key={typeof row.slug === 'object' ? row.slug.current : row.slug}
                     >
                       {headers.map(column => {
                         let value = row[column.id];
@@ -189,7 +189,11 @@ const RelatedActions = props => {
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}
-                                href={`/tracker/${row.slug}`}
+                                href={`/tracker/${
+                                  typeof row.slug === "object"
+                                    ? row.slug.current
+                                    : row.slug
+                                }`}
                               >
                                 {value}
                               </Link>

@@ -62,21 +62,21 @@ export default {
       name: "topicDescription",
       description: "Anything you want to say about the topic."
     },
-    {
-      title: "Related law and government tracker actions",
-      name: "relatedPolicyActions",
-      type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [
-            {
-              type: "policy_action"
-            }
-          ]
-        }
-      ]
-    },
+    // {
+    //   title: "Related law and government tracker actions",
+    //   name: "relatedPolicyActions",
+    //   type: "array",
+    //   of: [
+    //     {
+    //       type: "reference",
+    //       to: [
+    //         {
+    //           type: "policy_action"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
     {
       title: "Related commentary and analysis",
       name: "relatedCommentary",
