@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 
 // utils
-import client from "../utils/sanityClient";
+// import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -30,9 +30,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated, 
-                            img_alt, img_path, lastUpdate, 
-                            slug, status, title, 
+const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
+                            img_alt, img_path, lastUpdate,
+                            slug, status, title,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
 const topicsQuery = '*[_type == "topic"]{_id, _key, name, slug, type}';
@@ -111,22 +111,22 @@ function SectionTracker(props) {
   const [companies, setCompanies] = useState([]);
   const [countries, setCountries] = useState([]);
 
-  useEffect(() => {
-    client.fetch(policyActionsQuery).then((allPolicies) => {
-      if (Array.isArray(allPolicies) && allPolicies.length) {
-        setActions(allPolicies);
-        setAllActions(allPolicies);
-      }
-    });
-
-    client.fetch(topicsQuery).then((topics) => {
-      let allTopics = [];
-      topics.forEach((topic) => {
-        allTopics = [...allTopics, topic];
-      });
-      setTopics(allTopics);
-    });
-  }, []);
+  // useEffect(() => {
+  //   client.fetch(policyActionsQuery).then((allPolicies) => {
+  //     if (Array.isArray(allPolicies) && allPolicies.length) {
+  //       setActions(allPolicies);
+  //       setAllActions(allPolicies);
+  //     }
+  //   });
+  //
+  //   client.fetch(topicsQuery).then((topics) => {
+  //     let allTopics = [];
+  //     topics.forEach((topic) => {
+  //       allTopics = [...allTopics, topic];
+  //     });
+  //     setTopics(allTopics);
+  //   });
+  // }, []);
 
   useEffect(() => {
     const newTopics = {
@@ -169,7 +169,6 @@ function SectionTracker(props) {
   }, [topics, query]);
 
   useEffect(() => {
-
     if (allActions.length) {
       let newActions = allActions;
       if (filters.length) {
@@ -181,7 +180,7 @@ function SectionTracker(props) {
           ) {
             action.relatedTopics.forEach((topic) => {
               if (filters.findIndex((f) => f._key === topic._key) >= 0)
-              matches += 1;
+                matches += 1;
             });
           }
           return matches >= filters.length;

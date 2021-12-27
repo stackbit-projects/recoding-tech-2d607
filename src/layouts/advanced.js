@@ -76,7 +76,7 @@ function Advanced(props) {
 
 Advanced.propTypes = {
   citations: PropTypes.array,
-  path: PropTypes.string
+  path: PropTypes.string,
 };
 
 export default Advanced;

@@ -1,11 +1,15 @@
+// base imports
 import React from "react";
+
+// Sanity.io imports
+import groq from "groq";
+import client from "../../client";
+
 import _ from "lodash";
-import { sourcebitDataClient } from "sourcebit-target-next";
-import { withRemoteDataUpdates } from "sourcebit-target-next/with-remote-data-updates";
 
 import pageLayouts from "../layouts";
 
-const Page = props => {
+const Page = (props) => {
   // every page can have different layout, pick the layout based
   // on the model of the page (_type in Sanity CMS)
   let componentName;
@@ -19,18 +23,19 @@ const Page = props => {
   return <PageLayout {...props} />;
 };
 
-export async function getStaticPaths() {
-  console.log("Page [...slug].js getStaticPaths");
-  // filter out the root page as it has its own page file `src/pages/index.js`
-  const paths = await sourcebitDataClient.getStaticPaths();
-  return { paths: _.reject(paths, path => path === "/"), fallback: false };
-}
+const query = groq`*[_type == "advanced" && slug.current == $slug][0]`;
 
-export async function getStaticProps({ params }) {
-  console.log("Page [...slug].js getStaticProps, params: ", params);
-  const pagePath = "/" + params.slug.join("/");
-  const props = await sourcebitDataClient.getStaticPropsForPageAtPath(pagePath);
-  return { props };
-}
+Page.getInitialProps = async function (context) {
+  const { slug = "" } = context.query;
+  return {
+    pageSettings: await client.fetch(query, { slug }),
+    siteSettings: await client.fetch(groq`
+      *[_type == "settings"]{title, footerImage}
+    `),
+    pages: await client.fetch(groq`
+      *[!(_id in path('drafts.**')) && _type == "page"]{title, slug, weight}
+    `),
+  };
+};
 
-export default withRemoteDataUpdates(Page);
+export default Page;

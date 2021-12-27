@@ -16,5 +16,5 @@ export default {
   issue: topic,
   policy: topic,
   country: topic,
-  company: topic
+  company: topic,
 };

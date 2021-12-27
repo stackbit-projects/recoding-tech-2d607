@@ -9,7 +9,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 // utils
-import client from "../utils/sanityClient";
+// import client from "../utils/sanityClient";
 
 const query =
   '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle} | order(date desc)';
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
   },
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   grid: {},
   gridTitle: {
@@ -54,15 +54,15 @@ const SectionCitations = () => {
   const classes = useStyles();
   const [citations, setCitations] = useState([]);
 
-  useEffect(() => {
-    client.fetch(query).then(cites => {
-      let allCitations = [];
-      cites.forEach(citation => {
-        allCitations = [...allCitations, citation];
-      });
-      setCitations(allCitations.slice(0,5));
-    });
-  }, []);
+  // useEffect(() => {
+  //   client.fetch(query).then(cites => {
+  //     let allCitations = [];
+  //     cites.forEach(citation => {
+  //       allCitations = [...allCitations, citation];
+  //     });
+  //     setCitations(allCitations.slice(0,5));
+  //   });
+  // }, []);
 
   useEffect(() => {}, [citations]);
 

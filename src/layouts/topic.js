@@ -5,8 +5,7 @@ import PropTypes from "prop-types";
 
 // utils
 import { markdownify } from "../utils";
-import client from "../utils/sanityClient";
-
+// import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -31,35 +30,30 @@ const useStyles = makeStyles(() => ({
     border: "1px solid #000",
     borderRadius: 0,
     overflow: "unset",
-    position: "relative"
+    position: "relative",
   },
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   maxWidth: {
-    maxWidth: "100% !important"
-  }
+    maxWidth: "100% !important",
+  },
 }));
 
-const Topic = props => {
+const Topic = (props) => {
   const classes = useStyles();
   const { page } = props;
 
-  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}")]`
+  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}")]`;
 
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
   const [readings, setReadings] = useState(null);
   const [headlines, setHeadlines] = useState(null);
-  const [actions, setActions] = useState([])
+  const [actions, setActions] = useState([]);
 
   useEffect(() => {
-
-    page.slug ? 
-     client.fetch(policyActionsQuery).then((actions) => {
-       setActions(actions)
-      }
-    ) : null
+    page.slug ? null : null;
 
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
       if (page.type === "issue" || page.type === "policy") {
@@ -85,9 +79,15 @@ const Topic = props => {
     ) {
       const [r, h] = page.relatedCommentary.reduce(
         ([r, h], comment) => {
-          if (comment.__metadata && comment.__metadata.modelName === "citation") {
+          if (
+            comment.__metadata &&
+            comment.__metadata.modelName === "citation"
+          ) {
             h.push(comment);
-          } else if (comment.__metadata && comment.__metadata.modelName === "article") {
+          } else if (
+            comment.__metadata &&
+            comment.__metadata.modelName === "article"
+          ) {
             r.push(comment);
           }
           return [r, h];
@@ -106,9 +106,7 @@ const Topic = props => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          {actions.length && (
-            <RelatedActions page={page} actions={actions} />
-          )}
+          {actions.length && <RelatedActions page={page} actions={actions} />}
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (
@@ -148,7 +146,7 @@ const Topic = props => {
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>
               <Grid item>
-                <RelatedGuide {...props} /> 
+                <RelatedGuide {...props} />
               </Grid>
               <Grid item>
                 <RelatedCommentary commentary={headlines} />
@@ -166,7 +164,7 @@ const Topic = props => {
 };
 
 Topic.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default Topic;

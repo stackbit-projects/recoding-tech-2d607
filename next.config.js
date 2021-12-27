@@ -1,48 +1,26 @@
-const path = require("path");
-const sourcebit = require("sourcebit");
-const dotenv = require("dotenv");
+const client = require("./client");
+const withFonts = require("next-fonts");
 
-const sourcebitConfig = require("./sourcebit.js");
-
-sourcebit.fetch(sourcebitConfig);
-
-dotenv.config();
-
-module.exports = {
-  env: {
-    sanityAccessToken: process.env.SANITY_ACCESS_TOKEN,
-    sanityProjectId: process.env.SANITY_PROJECT_ID,
-    sanityApiVersion: process.env.SANITY_API_VERSION,
-    sanityDataset: process.env.SANITY_DATASET
+module.exports = withFonts({
+  exportPathMap: async function (defaultPathMap) {
+    const paths = await client
+      .fetch(
+        '*[_type in [ "page", "advanced", "article", "guide", "policy_action", "topic" ] && defined(slug)].slug.current'
+      )
+      .then((data) =>
+        data.reduce(
+          (acc, slug) => ({
+            "/": { page: "/" },
+            ...acc,
+            [`/${slug}`]: {
+              page: "/[slug]",
+              query: { slug },
+            },
+          }),
+          defaultPathMap
+        )
+      )
+      .catch(console.error);
+    return paths;
   },
-  errorOnExist: false,
-  trailingSlash: true,
-  devIndicators: {
-    autoPrerender: false
-  },
-  sassOptions: {
-    // scss files might import plain css files from the "public" folder:
-    // @import "example.css";
-    // the importer function rewrites path to these files relative to the scss file:
-    // @import "../../public/assets/css/example.css";
-    importer: (url, prev, done) => {
-      if (/\.css$/i.test(url)) {
-        return { file: path.join("../../public/css", url) };
-      }
-      return null;
-    }
-  },
-  webpack: (config, { webpack }) => {
-    // Tell webpack to ignore watching content files in the content folder.
-    // Otherwise webpack receompiles the app and refreshes the whole page.
-    // Instead, the src/pages/[...slug].js uses the "withRemoteDataUpdates"
-    // function to update the content on the page without refreshing the
-    // whole page
-    config.plugins.push(
-      new webpack.WatchIgnorePlugin({
-        paths: [/\/content\//]
-      })
-    );
-    return config;
-  }
-};
+});

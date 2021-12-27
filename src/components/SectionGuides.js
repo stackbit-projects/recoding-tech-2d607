@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 // components
 import FancyGuide from "./FancyGuide";
 
-import client from "../utils/sanityClient";
+// import client from "../utils/sanityClient";
 
 const query =
   '*[_type == "guide"]{_id, title, slug, subtitle, _created_at, _updatedAt } | order(date desc)';
@@ -34,15 +34,15 @@ const SectionGuides = () => {
   const classes = useStyles();
   const [guides, setGuides] = useState([]);
 
-  useEffect(() => {
-    client.fetch(query).then((gs) => {
-      let allGuides = [];
-      gs.forEach((g) => {
-        allGuides = [...allGuides, g];
-      });
-      setGuides(allGuides);
-    });
-  }, []);
+  // useEffect(() => {
+  //   client.fetch(query).then((gs) => {
+  //     let allGuides = [];
+  //     gs.forEach((g) => {
+  //       allGuides = [...allGuides, g];
+  //     });
+  //     setGuides(allGuides);
+  //   });
+  // }, []);
 
   useEffect(() => {}, [guides]);
 

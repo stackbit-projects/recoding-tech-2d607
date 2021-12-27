@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // utils
-import client from "../utils/sanityClient";
+// import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles, useTheme } from "@mui/styles";
@@ -27,32 +27,32 @@ const query =
 
 let topics = [];
 
-client.fetch(query).then(allTopics => {
-  allTopics.forEach(topic => {
-    topics = [...topics, topic];
-  });
-});
+// client.fetch(query).then(allTopics => {
+//   allTopics.forEach(topic => {
+//     topics = [...topics, topic];
+//   });
+// });
 
 const useStyles = makeStyles(() => ({
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   header: {},
   link: {
     color: "#000 !important",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   logoLink: {
     color: "unset",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   nav: {},
   svg: {
     display: "block",
     maxHeight: 20,
     maxWidth: 20,
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 function Header(props) {
@@ -66,16 +66,16 @@ function Header(props) {
 
   useEffect(() => {
     if (topics) {
-      const topicIssues = topics.filter(topic => topic.type == "issue");
+      const topicIssues = topics.filter((topic) => topic.type == "issue");
       setIssues(topicIssues);
 
-      const topicPolicies = topics.filter(topic => topic.type == "policy");
+      const topicPolicies = topics.filter((topic) => topic.type == "policy");
       setPolicies(topicPolicies);
 
-      const topicCountries = topics.filter(topic => topic.type == "country");
+      const topicCountries = topics.filter((topic) => topic.type == "country");
       setCountries(topicCountries);
 
-      const topicCompanies = topics.filter(topic => topic.type == "company");
+      const topicCompanies = topics.filter((topic) => topic.type == "company");
       setCompanies(topicCompanies);
     }
   }, [topics]);
@@ -84,7 +84,7 @@ function Header(props) {
 
   const [issueEl, setIssueEl] = React.useState(null);
   const openIssue = Boolean(issueEl);
-  const handleClickIssue = event => {
+  const handleClickIssue = (event) => {
     setIssueEl(event.currentTarget);
   };
   const handleCloseIssue = () => {
@@ -93,7 +93,7 @@ function Header(props) {
 
   const [policyEl, setPolicyEl] = React.useState(null);
   const openPolicy = Boolean(policyEl);
-  const handleClickPolicy = event => {
+  const handleClickPolicy = (event) => {
     setPolicyEl(event.currentTarget);
   };
   const handleClosePolicy = () => {
@@ -102,7 +102,7 @@ function Header(props) {
 
   const [countryEl, setCountryEl] = React.useState(null);
   const openCountry = Boolean(countryEl);
-  const handleClickCountry = event => {
+  const handleClickCountry = (event) => {
     setCountryEl(event.currentTarget);
   };
   const handleCloseCountry = () => {
@@ -111,7 +111,7 @@ function Header(props) {
 
   const [companyEl, setCompanyEl] = React.useState(null);
   const openCompany = Boolean(companyEl);
-  const handleClickCompany = event => {
+  const handleClickCompany = (event) => {
     setCompanyEl(event.currentTarget);
   };
   const handleCloseCompany = () => {
@@ -125,7 +125,7 @@ function Header(props) {
         backgroundColor:
           page.type && theme.palette[page.type]
             ? theme.palette[page.type].main
-            : theme.palette.secondary.main
+            : theme.palette.secondary.main,
       }}
     >
       <Box p={4}>
@@ -180,11 +180,11 @@ function Header(props) {
                   open={openIssue}
                   onClose={handleCloseIssue}
                   MenuListProps={{
-                    "aria-labelledby": "issue-button"
+                    "aria-labelledby": "issue-button",
                   }}
                 >
                   {issues && issues.length
-                    ? issues.map(issue => (
+                    ? issues.map((issue) => (
                         <MenuItem
                           key={issue.slug.current}
                           onClick={handleCloseIssue}
@@ -221,11 +221,11 @@ function Header(props) {
                   open={openPolicy}
                   onClose={handleClosePolicy}
                   MenuListProps={{
-                    "aria-labelledby": "policy-button"
+                    "aria-labelledby": "policy-button",
                   }}
                 >
                   {policies && policies.length
-                    ? policies.map(policy => (
+                    ? policies.map((policy) => (
                         <MenuItem
                           key={policy.slug.current}
                           onClick={handleCloseIssue}
@@ -262,11 +262,11 @@ function Header(props) {
                   open={openCountry}
                   onClose={handleCloseCountry}
                   MenuListProps={{
-                    "aria-labelledby": "country-button"
+                    "aria-labelledby": "country-button",
                   }}
                 >
                   {countries && countries.length
-                    ? countries.map(country => (
+                    ? countries.map((country) => (
                         <MenuItem
                           key={country.slug.current}
                           onClick={handleCloseIssue}
@@ -303,11 +303,11 @@ function Header(props) {
                   open={openCompany}
                   onClose={handleCloseCompany}
                   MenuListProps={{
-                    "aria-labelledby": "company-button"
+                    "aria-labelledby": "company-button",
                   }}
                 >
                   {companies && companies.length
-                    ? companies.map(company => (
+                    ? companies.map((company) => (
                         <MenuItem
                           key={company.slug.current}
                           onClick={handleCloseIssue}
@@ -357,7 +357,7 @@ function Header(props) {
 
 Header.propTypes = {
   topics: PropTypes.array,
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default Header;

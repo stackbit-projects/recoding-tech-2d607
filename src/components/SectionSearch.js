@@ -4,7 +4,7 @@ import moment from "moment-strftime";
 import Router, { useRouter } from "next/router";
 
 // utils
-import client from "../utils/sanityClient";
+// import client from "../utils/sanityClient";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -70,22 +70,22 @@ const SectionCitations = () => {
   const [companies, setCompanies] = useState([]);
   const [countries, setCountries] = useState([]);
 
-  useEffect(() => {
-    client.fetch(citationsQuery).then((cites) => {
-      if (Array.isArray(cites) && cites.length) {
-        setAllCitations(cites);
-      }
-      setLoading(false);
-    });
-
-    client.fetch(topicsQuery).then((topics) => {
-      let allTopics = [];
-      topics.forEach((topic) => {
-        allTopics = [...allTopics, topic];
-      });
-      setTopics(topics);
-    });
-  }, []);
+  // useEffect(() => {
+  //   client.fetch(citationsQuery).then((cites) => {
+  //     if (Array.isArray(cites) && cites.length) {
+  //       setAllCitations(cites);
+  //     }
+  //     setLoading(false);
+  //   });
+  //
+  //   client.fetch(topicsQuery).then((topics) => {
+  //     let allTopics = [];
+  //     topics.forEach((topic) => {
+  //       allTopics = [...allTopics, topic];
+  //     });
+  //     setTopics(topics);
+  //   });
+  // }, []);
 
   useEffect(() => {
     const newTopics = {
