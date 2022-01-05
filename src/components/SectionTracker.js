@@ -510,17 +510,7 @@ function SectionTracker(props) {
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}
-                                href={
-                                  isDev
-                                    ? typeof row.slug === "object"
-                                      ? row.slug.current
-                                      : row.slug
-                                    : `tracker/${
-                                        typeof row.slug === "object"
-                                          ? row.slug.current
-                                          : row.slug
-                                      }`
-                                }
+                                href={`tracker/${row.slug.current}`}
                               >
                                 {value}
                               </Link>
