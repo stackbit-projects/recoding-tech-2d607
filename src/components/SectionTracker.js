@@ -30,9 +30,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated, 
-                            img_alt, img_path, lastUpdate, 
-                            slug, status, title, 
+const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
+                            img_alt, img_path, lastUpdate,
+                            slug, status, title,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
 const topicsQuery = '*[_type == "topic"]{_id, _key, name, slug, type}';
@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
       content: "''",
       display: "block",
       left: 0,
-      minHeight: 40,
+      height: "75%",
+      // minHeight: 40,
       position: "absolute",
       top: "50%",
       transform: "translateY(-50%)",
@@ -169,7 +170,6 @@ function SectionTracker(props) {
   }, [topics, query]);
 
   useEffect(() => {
-
     if (allActions.length) {
       let newActions = allActions;
       if (filters.length) {
@@ -181,7 +181,7 @@ function SectionTracker(props) {
           ) {
             action.relatedTopics.forEach((topic) => {
               if (filters.findIndex((f) => f._key === topic._key) >= 0)
-              matches += 1;
+                matches += 1;
             });
           }
           return matches >= filters.length;
