@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ROWS_PER_PAGE = 4;
 
-const SectionCitations = () => {
+const SectionSearch = () => {
   const classes = useStyles();
   const { query } = useRouter();
   const [citations, setCitations] = useState([]);
@@ -397,4 +397,4 @@ const SectionCitations = () => {
   );
 };
 
-export default SectionCitations;
+export default SectionSearch;

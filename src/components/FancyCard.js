@@ -1,7 +1,11 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Router from "next/router";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
+
+// utils
+import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -75,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 const FancyCard = ({
   author,
   category,
+  citation,
   content,
   date,
   publication,
@@ -82,19 +87,35 @@ const FancyCard = ({
   lastUpdated,
   isSidebar,
   title,
-  onClick = () => {}
+  onClick = () => {},
 }) => {
   const classes = useStyles();
+  const [reading, setReading] = useState(null);
+
+  useEffect(() => {
+    if (citation) {
+      client.fetch(`*[_id == "${citation}"][0]`).then((ref) => {
+        setReading(ref);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(reading);
+  }, [reading]);
 
   return (
     <Card
       variant="outlined"
+      sx={{ marginBottom: reading ? 4 : 0 }}
       className={`${isSidebar ? classes.sidebar : classes.featured} ${
         notClickable ? classes.boxNoHover : classes.box
       }`}
     >
       <CardActionArea
-        onClick={onClick}
+        onClick={
+          reading ? () => Router.push({ pathname: reading.url }) : onClick
+        }
         className={notClickable ? classes.noClick : ""}
       >
         <CardContent>
@@ -103,24 +124,36 @@ const FancyCard = ({
               {category}
             </Typography>
           )}
-          {title && (
+          {(reading || title) && (
             <Typography component="div" variant="h2">
-              {title}
+              {reading ? reading.title : title}
             </Typography>
           )}
-          {author && (
+          {(reading || author) && (
             <Typography component="div" variant="h3">
-              {author}
+              {reading && reading.creators.length
+                ? reading.creators.length > 1
+                  ? `${reading.creators[0].firstName} ${reading.creators[0].lastName} et al`
+                  : `${reading.creators[0].firstName} ${reading.creators[0].lastName}`
+                : author}
             </Typography>
           )}
-          {publication && (
+          {(reading || publication) && (
             <Typography component="div" variant="h4">
-              {publication}
+              {reading
+                ? reading.institution
+                  ? reading.institution
+                  : reading.websiteTitle
+                  ? reading.websiteTitle
+                  : reading.place
+                  ? reading.place
+                  : reading.publisher
+                : publication}
             </Typography>
           )}
-          {date && (
+          {(reading || date) && (
             <Typography component="div" variant="body1" className={classes.em}>
-              {date}
+              {reading ? reading.date : date}
             </Typography>
           )}
           {lastUpdated && (
@@ -144,6 +177,7 @@ const FancyCard = ({
 FancyCard.propTypes = {
   author: PropTypes.string,
   category: PropTypes.string,
+  citation: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.string,
   isSidebar: PropTypes.bool,
@@ -151,7 +185,7 @@ FancyCard.propTypes = {
   publication: PropTypes.string,
   title: PropTypes.string,
   lastUpdated: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default FancyCard;

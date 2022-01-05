@@ -4,10 +4,14 @@ import ScriptTag from "react-script-tag";
 import Link from "./link";
 import _ from "lodash";
 
-import Typography from '@mui/material/Typography'
+import Typography from "@mui/material/Typography";
+
+import client from "./";
+
+import FancyCard from "../components/FancyCard";
 
 const convertChildren = (children, index) =>
-  _.map(children, childNode =>
+  _.map(children, (childNode) =>
     convertNodeToElement(childNode, index, _.noop())
   );
 
@@ -17,8 +21,10 @@ export default function htmlToReact(html) {
   }
   return ReactHtmlParser(html, {
     transform: (node, index) => {
+      if (node.attribs && node.attribs.class == "citation") {
+        return <FancyCard citation={node.children[0].data} />;
+      }
       if (node.data)
-      console.log("node**********", node.data)
         if (node.type === "script") {
           if (!_.isEmpty(node.children)) {
             return (
@@ -40,11 +46,11 @@ export default function htmlToReact(html) {
               </Link>
             );
           }
-        } else if (node.parent && node.parent.type === 'tag') {
+        } else if (node.parent && node.parent.type === "tag") {
           if (node.parent.name === "h3") {
-            return <Typography variant="h3_subheading">{node.data}</Typography>
+            return <Typography variant="h3_subheading">{node.data}</Typography>;
           }
         }
-    }
+    },
   });
 }

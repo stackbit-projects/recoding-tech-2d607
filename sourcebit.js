@@ -1,5 +1,4 @@
 const _ = require("lodash");
-// const sanityClient = require("@sanity/client");
 const blocksToHtml = require("@sanity/block-content-to-html");
 
 const h = blocksToHtml.h;
@@ -18,21 +17,11 @@ module.exports = {
         watch: isDev,
         serializers: {
           types: {
-            reference: props => {
-              h("div", props.node.title, {});
-            }
+            reference: (props) =>
+              h("div", { className: "citation" }, props.node._ref),
           },
-          marks: {
-            annotations: [
-              {
-                citation: props => {
-                  h("div", props.node.title, {});
-                }
-              }
-            ]
-          }
-        }
-      }
+        },
+      },
     },
     {
       module: require("sourcebit-target-next"),
@@ -42,37 +31,37 @@ module.exports = {
         pages: [
           {
             path: "/{stackbit_url_path}",
-            predicate: _.matchesProperty("__metadata.modelName", "advanced")
+            predicate: _.matchesProperty("__metadata.modelName", "advanced"),
           },
           {
             path: "/article/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "article")
+            predicate: _.matchesProperty("__metadata.modelName", "article"),
           },
           {
             path: "/{stackbit_url_path}",
-            predicate: _.matchesProperty("__metadata.modelName", "page")
+            predicate: _.matchesProperty("__metadata.modelName", "page"),
           },
           {
             path: "/tracker/{slug}",
             predicate: _.matchesProperty(
               "__metadata.modelName",
               "policy_action"
-            )
+            ),
           },
           {
             path: "/{type}/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "topic")
+            predicate: _.matchesProperty("__metadata.modelName", "topic"),
           },
           {
             path: "/{stackbit_url_path}",
-            predicate: _.matchesProperty("__metadata.modelName", "post")
+            predicate: _.matchesProperty("__metadata.modelName", "post"),
           },
           {
             path: "/guide/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "guide")
-          }
+            predicate: _.matchesProperty("__metadata.modelName", "guide"),
+          },
         ],
-        commonProps: items => {
+        commonProps: (items) => {
           // let pages = [];
           // const basicPages = _.filter(items, item =>
           //   [
@@ -114,11 +103,11 @@ module.exports = {
               config: _.find(
                 items,
                 _.matchesProperty("__metadata.modelName", "config")
-              )
-            }
+              ),
+            },
           };
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 };

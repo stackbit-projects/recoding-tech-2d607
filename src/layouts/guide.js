@@ -34,7 +34,7 @@ function Guide(props) {
 }
 
 Guide.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default Guide;
