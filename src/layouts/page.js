@@ -32,7 +32,7 @@ const Page = props => {
           >
             <Grid item xs={12} sm={8}>
               <div className="post-content inner-sm">
-                <Typography component="div" variant="body1">
+                <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
                 </Typography>
               </div>

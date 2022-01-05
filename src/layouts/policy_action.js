@@ -18,7 +18,6 @@ import RelatedDocuments from "../components/RelatedDocuments";
 
 const PolicyAction = props => {
   const { page } = props;
-  console.log(page);
 
   return (
     <Layout {...props}>
@@ -29,7 +28,7 @@ const PolicyAction = props => {
           <Box my={4}>
             <Grid container>
               <Grid item sm={12} md={8}>
-                <Typography component="div" variant="body1">
+                <Typography component="div" className="html-to-react">
                   {htmlToReact(page.summary)}
                 </Typography>
               </Grid>

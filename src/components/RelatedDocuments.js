@@ -48,7 +48,6 @@ const RelatedDocuments = props => {
   const { page } = props;
 
   const docClick = file => {
-    console.log("file:", file);
     const handler = () => Router.push({ pathname: file.url });
     return handler;
   };

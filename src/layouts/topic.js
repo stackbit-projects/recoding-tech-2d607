@@ -134,7 +134,7 @@ const Topic = props => {
               )}
 
               <Grid item className={classes.maxWidth}>
-                <Typography component="div" variant="body1">
+                <Typography component="div" variant="body1" className="html-to-react">
                   {markdownify(page.topicDescription)}
                 </Typography>
                 {(readings && readings.length) ||
