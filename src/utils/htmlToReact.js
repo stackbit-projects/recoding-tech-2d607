@@ -4,10 +4,10 @@ import ScriptTag from "react-script-tag";
 import Link from "./link";
 import _ from "lodash";
 
-import Typography from '@mui/material/Typography'
+import Typography from "@mui/material/Typography";
 
 const convertChildren = (children, index) =>
-  _.map(children, childNode =>
+  _.map(children, (childNode) =>
     convertNodeToElement(childNode, index, _.noop())
   );
 
@@ -40,6 +40,6 @@ export default function htmlToReact(html) {
             );
           }
         }
-    }
+    },
   });
 }
