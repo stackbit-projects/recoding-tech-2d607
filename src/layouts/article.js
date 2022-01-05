@@ -48,7 +48,7 @@ const Article = props => {
                 </Grid>
               ) : null}
               <Grid item>
-                <Typography component="div" variant="body1">
+                <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
                 </Typography>
               </Grid>

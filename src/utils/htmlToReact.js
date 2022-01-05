@@ -39,10 +39,6 @@ export default function htmlToReact(html) {
               </Link>
             );
           }
-        } else if (node.parent && node.parent.type === "tag") {
-          if (node.parent.name === "h3") {
-            return <Typography variant="h3_subheading">{node.data}</Typography>;
-          }
         }
     },
   });
