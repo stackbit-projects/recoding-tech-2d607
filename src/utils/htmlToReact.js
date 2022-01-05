@@ -4,10 +4,10 @@ import ScriptTag from "react-script-tag";
 import Link from "./link";
 import _ from "lodash";
 
+// material ui imports
 import Typography from "@mui/material/Typography";
 
-import client from "./";
-
+// components
 import FancyCard from "../components/FancyCard";
 
 const convertChildren = (children, index) =>
@@ -46,11 +46,7 @@ export default function htmlToReact(html) {
               </Link>
             );
           }
-        } else if (node.parent && node.parent.type === "tag") {
-          if (node.parent.name === "h3") {
-            return <Typography variant="h3_subheading">{node.data}</Typography>;
-          }
-        }
+        } 
     },
   });
 }
