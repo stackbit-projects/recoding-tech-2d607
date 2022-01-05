@@ -18,7 +18,6 @@ import RelatedDocuments from "../components/RelatedDocuments";
 
 const PolicyAction = props => {
   const { page } = props;
-  console.log(page);
 
   return (
     <Layout {...props}>
