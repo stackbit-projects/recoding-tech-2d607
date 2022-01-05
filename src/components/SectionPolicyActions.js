@@ -13,13 +13,13 @@ const query = `*[_type == "policy_action"]{category, dateInitiated, img_alt, img
 
 let policies = [];
 
-client.fetch(query).then(allPolicies => {
-  allPolicies.forEach(policy => {
+client.fetch(query).then((allPolicies) => {
+  allPolicies.forEach((policy) => {
     policies = [...policies, policy];
   });
 });
 
-const SectionPolicyActions = props => {
+const SectionPolicyActions = (props) => {
   let section = _.get(props, "section", null);
   let [displayPolicies, setDisplayPolicies] = useState([]);
   let recent_policies = displayPolicies.slice(
@@ -75,7 +75,7 @@ const SectionPolicyActions = props => {
                 {_.get(policy, "category", null) && (
                   <div className="post-content">
                     {_.get(policy, "topics", null) &&
-                      policy.topics.map(tag => (
+                      policy.topics.map((tag) => (
                         <div key={tag.slug} className="post-tag">
                           {tag.name}
                         </div>
@@ -110,7 +110,7 @@ const SectionPolicyActions = props => {
 };
 
 SectionPolicyActions.propTypes = {
-  pages: PropTypes.array
+  pages: PropTypes.array,
 };
 
 export default SectionPolicyActions;

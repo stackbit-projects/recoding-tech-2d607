@@ -17,13 +17,13 @@ import Typography from "@mui/material/Typography";
 // Material UI icons
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
     position: "absolute",
     right: 20,
     top: "50%",
     transform: "translateY(-50%)",
-    transition: "right 250ms"
+    transition: "right 250ms",
   },
   tableCellTitle: {
     minWidth: 150,
@@ -39,28 +39,28 @@ const useStyles = makeStyles(theme => ({
       top: "50%",
       transform: "translateY(-50%)",
       width: "100%",
-      zIndex: "-1"
+      zIndex: "-1",
     },
     "&:hover": {
       "& a": {
-        textDecoration: "underline"
+        textDecoration: "underline",
       },
       "& svg": {
         right: 10,
-        transition: "right 250ms"
-      }
-    }
+        transition: "right 250ms",
+      },
+    },
   },
   tableLink: {
     color: "#000",
     position: "relative",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   trackerIcon: {
     left: 0,
     position: "absolute",
     top: "50%",
-    transform: "translateY(-50%)"
+    transform: "translateY(-50%)",
   },
   trackerLink: {
     color: "#000",
@@ -69,12 +69,12 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     textDecoration: "none",
     "&:hover": {
-      textDecoration: "underline"
-    }
-  }
+      textDecoration: "underline",
+    },
+  },
 }));
 
-const TrackerActions = props => {
+const TrackerActions = (props) => {
   const classes = useStyles();
   const { page } = props;
 
@@ -84,7 +84,7 @@ const TrackerActions = props => {
     { id: "country.displayTitle", label: "Country" },
     { id: "dateInitiated", label: "Date Initiated" },
     { id: "status", label: "Status" },
-    { id: "lastUpdate", label: "Last Updated" }
+    { id: "lastUpdate", label: "Last Updated" },
   ];
 
   return (
@@ -102,23 +102,25 @@ const TrackerActions = props => {
         >
           <TableHead>
             <TableRow>
-              {headers.map(column => (
+              {headers.map((column) => (
                 <TableCell key={column.id}>{column.label}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow hover role="checkbox" tabIndex={-1} key={page.slug}>
-              <TableCell key={page.slug} className={classes.tableCellTitle}>
+            <TableRow hover role="checkbox" tabIndex={-1}>
+              <TableCell className={classes.tableCellTitle}>
                 {page.title}
               </TableCell>
-              <TableCell key={page.slug}>{page.type}</TableCell>
-              <TableCell key={page.slug}>{page.country ? page.country.displayTitle : ""}</TableCell>
-              <TableCell key={page.slug}>
+              <TableCell>{page.type}</TableCell>
+              <TableCell>
+                {page.country ? page.country.displayTitle : ""}
+              </TableCell>
+              <TableCell>
                 {moment(page.dateInitiated).strftime("%B %e, %Y")}
               </TableCell>
-              <TableCell key={page.slug}>{page.status}</TableCell>
-              <TableCell key={page.slug}>{page.lastUpdate}</TableCell>
+              <TableCell>{page.status}</TableCell>
+              <TableCell>{page.lastUpdate}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -128,7 +130,7 @@ const TrackerActions = props => {
 };
 
 TrackerActions.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default TrackerActions;

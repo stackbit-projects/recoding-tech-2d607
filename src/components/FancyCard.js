@@ -100,10 +100,6 @@ const FancyCard = ({
     }
   }, []);
 
-  useEffect(() => {
-    console.log(reading);
-  }, [reading]);
-
   return (
     <Card
       variant="outlined"

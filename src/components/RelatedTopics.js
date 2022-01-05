@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const Topics = props => {
+const Topics = (props) => {
   const { topics } = props;
 
   if (!Array.isArray(topics) || !topics.length) return null;
@@ -38,7 +38,9 @@ const Topics = props => {
                   label={topic.name}
                   color={topic.type == "issue" ? "issue" : "policy"}
                   component="a"
-                  href={`/${topic.type}/${typeof topic.slug === 'string' ? topic.slug : topic.slug.current}`}
+                  href={`/${topic.type}/${
+                    topic.slug ? topic.slug : topic.__metadata.id
+                  }`}
                   clickable
                 />
               ))}
@@ -52,7 +54,7 @@ const Topics = props => {
 
 Topics.propTypes = {
   section: PropTypes.object,
-  topics: PropTypes.array
+  topics: PropTypes.array,
 };
 
 export default Topics;

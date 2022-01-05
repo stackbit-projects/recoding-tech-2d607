@@ -45,7 +45,7 @@ const Topic = props => {
   const classes = useStyles();
   const { page } = props;
 
-  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}")]`
+  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
@@ -54,7 +54,6 @@ const Topic = props => {
   const [actions, setActions] = useState([])
 
   useEffect(() => {
-
     page.slug ? 
      client.fetch(policyActionsQuery).then((actions) => {
        setActions(actions)
@@ -106,9 +105,10 @@ const Topic = props => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          {actions.length && (
-            <RelatedActions page={page} actions={actions} />
-          )}
+          {actions.length ? 
+            <RelatedActions page={page} actions={actions} /> 
+            : null
+          }
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (
@@ -134,7 +134,7 @@ const Topic = props => {
               )}
 
               <Grid item className={classes.maxWidth}>
-                <Typography component="div" variant="body1">
+                <Typography component="div" variant="body1" className="html-to-react">
                   {markdownify(page.topicDescription)}
                 </Typography>
                 {(readings && readings.length) ||
