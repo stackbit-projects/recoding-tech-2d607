@@ -143,6 +143,11 @@ const theme = createTheme({
       marginBottom: 20,
       textTransform: "uppercase",
     },
+    subtitle1: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.0em",
+      textTransform: "uppercase",
+    },
     link: {
       color: "#FF0033",
       fontFamily: sansSerifFont,

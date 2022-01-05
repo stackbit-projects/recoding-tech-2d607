@@ -125,12 +125,12 @@ const FancyCard = ({
             </Typography>
           )}
           {(reading || title) && (
-            <Typography component="div" variant="h2">
+            <Typography component="div" variant="h2" gutterBottom>
               {reading ? reading.title : title}
             </Typography>
           )}
           {(reading || author) && (
-            <Typography component="div" variant="h3">
+            <Typography component="div" variant="subtitle1" gutterBottom>
               {reading && reading.creators.length
                 ? reading.creators.length > 1
                   ? `${reading.creators[0].firstName} ${reading.creators[0].lastName} et al`
@@ -139,7 +139,7 @@ const FancyCard = ({
             </Typography>
           )}
           {(reading || publication) && (
-            <Typography component="div" variant="h4">
+            <Typography component="div" variant="subtitle1" gutterBottom>
               {reading
                 ? reading.institution
                   ? reading.institution
@@ -153,7 +153,11 @@ const FancyCard = ({
           )}
           {(reading || date) && (
             <Typography component="div" variant="body1" className={classes.em}>
-              {reading ? reading.date : date}
+              {reading ? (
+                <>{moment(reading.date).strftime("%B %Y")}</>
+              ) : (
+                moment(date).strftime("%B %Y")
+              )}
             </Typography>
           )}
           {lastUpdated && (
