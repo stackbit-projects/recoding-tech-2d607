@@ -18,7 +18,6 @@ export default function htmlToReact(html) {
   return ReactHtmlParser(html, {
     transform: (node, index) => {
       if (node.data)
-      console.log("node**********", node)
         if (node.type === "script") {
           if (!_.isEmpty(node.children)) {
             return (
@@ -39,13 +38,6 @@ export default function htmlToReact(html) {
                 {convertChildren(node.children, index)}
               </Link>
             );
-          }
-        } else if (node.parent && node.parent.type === 'tag') {
-          if (node.parent.name === "h1" || node.parent.name === "h3") {
-            return <Typography variant="h4">{node.data}</Typography>
-          }
-          if (node.parent.name === 'h2' && node.parent.prev.name === 'p') {
-            return <Typography variant="h5">{node.data}</Typography>
           }
         }
     }

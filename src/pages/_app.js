@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-// import '../sass/main.scss'
+import '../sass/main.scss'
 import "../app.css";
 
 function MyApp({ Component, pageProps }) {

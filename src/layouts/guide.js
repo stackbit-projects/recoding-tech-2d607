@@ -24,7 +24,7 @@ function Guide(props) {
           <Typography component="div" variant="body1" gutterBottom>
             {page.subtitle}
           </Typography>
-          <Typography component="div" variant="body1">
+          <Typography component="div" className="html-to-react">
             {htmlToReact(props.page.content)}
           </Typography>
         </Container>
