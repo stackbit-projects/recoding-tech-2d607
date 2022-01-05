@@ -18,8 +18,7 @@ import RelatedDocuments from "../components/RelatedDocuments";
 import RelatedCommentary from "../components/RelatedCommentary";
 import RelatedTopics from "../components/RelatedTopics";
 
-
-const PolicyAction = props => {
+const PolicyAction = (props) => {
   const { page } = props;
 
   return (
@@ -36,7 +35,15 @@ const PolicyAction = props => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={4} direction="column" item sm={12} md={4}s>
+            <Grid
+              container
+              spacing={4}
+              direction="column"
+              item
+              sm={12}
+              md={4}
+              s
+            >
               <Grid item>
                 <RelatedCommentary
                   title={"Further reading"}
@@ -45,10 +52,10 @@ const PolicyAction = props => {
                 />
               </Grid>
               <Grid item>
-                <RelatedTopics topics={page.relatedTopics}/>
+                <RelatedTopics topics={page.relatedTopics} />
               </Grid>
               <Grid item>
-                <RelatedDocuments {...props} /> 
+                <RelatedDocuments {...props} />
               </Grid>
             </Grid>
           </Grid>
@@ -59,7 +66,7 @@ const PolicyAction = props => {
 };
 
 PolicyAction.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default PolicyAction;
