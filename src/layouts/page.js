@@ -2,7 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import components, { Layout } from "../components/index";
 import { markdownify } from "../utils";
 
 // Material UI imports
@@ -11,13 +10,15 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
+import components, { Layout } from "../components/index";
+
 import SectionHero from "../components/SectionHero";
 import Sidebar from "../components/Sidebar";
 
-const Page = props => {
-  console.log("props in page", props)
+const Page = (props) => {
+  console.log("props in page", props);
   const {
-    page: { sidebar_content = {} }
+    page: { sidebar_content = {} },
   } = props;
 
   return (
@@ -38,29 +39,33 @@ const Page = props => {
                 </Typography>
               </div>
             </Grid>
+            <Grid item xs={12} sm={8}>
+              <div className="post-content inner-sm">
+                {_.map(
+                  _.get(props, "page.sections", null),
+                  (section, section_idx) => {
+                    let component = _.upperFirst(
+                      _.camelCase(_.get(section, "type", null))
+                    );
+                    let Component = components[component];
+                    return (
+                      <Component
+                        key={section_idx}
+                        {...props}
+                        section={section}
+                        site={props}
+                      />
+                    );
+                  }
+                )}
+              </div>
+            </Grid>
             <Grid item xs={12} sm={4}>
               {sidebar_content.length ? (
                 <Sidebar content={sidebar_content} />
               ) : null}
             </Grid>
           </Grid>
-          {_.map(
-            _.get(props, "page.sections", null),
-            (section, section_idx) => {
-              let component = _.upperFirst(
-                _.camelCase(_.get(section, "type", null))
-              );
-              let Component = components[component];
-              return (
-                <Component
-                  key={section_idx}
-                  {...props}
-                  section={section}
-                  site={props}
-                />
-              );
-            }
-          )}
         </Container>
       </Box>
     </Layout>
@@ -68,7 +73,7 @@ const Page = props => {
 };
 
 Page.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default Page;
