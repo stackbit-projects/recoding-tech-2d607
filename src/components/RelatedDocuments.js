@@ -9,7 +9,6 @@ import "slick-carousel/slick/slick-theme.css";
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
@@ -47,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RelatedDocuments = props => {
+const RelatedDocuments = (props) => {
   const classes = useStyles();
   const { page } = props;
 
-  const docClick = file => {
+  const docClick = (file) => {
     const handler = () => Router.push({ pathname: file.url });
     return handler;
   };
@@ -61,7 +60,7 @@ const RelatedDocuments = props => {
     infinite: false,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
 
   return (
@@ -81,7 +80,7 @@ const RelatedDocuments = props => {
         </Grid>
         <Grid container item flexDirection="column">
           {Array.isArray(page.relatedDocs) && page.relatedDocs.length ? (
-            <Slider {...sliderSettings}>
+            <Slider {...sliderSettings} className="slider-mod">
               {page.relatedDocs.map((doc, index) => (
                 <Box
                   key={index}
@@ -109,7 +108,7 @@ const RelatedDocuments = props => {
 };
 
 RelatedDocuments.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default RelatedDocuments;

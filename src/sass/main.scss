@@ -26,7 +26,11 @@
   a {
     color: black;
     &:hover {
-      color: #FF0033;
+      color: #ff0033;
     }
   }
+}
+
+.slider-mod {
+  width: 100%;
 }
