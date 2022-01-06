@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { Layout } from "../components/index";
+import components, { Layout } from "../components/index";
 import { markdownify } from "../utils";
 
 // Material UI imports
@@ -15,6 +15,7 @@ import SectionHero from "../components/SectionHero";
 import Sidebar from "../components/Sidebar";
 
 const Page = props => {
+  console.log("props in page", props)
   const {
     page: { sidebar_content = {} }
   } = props;
@@ -43,6 +44,23 @@ const Page = props => {
               ) : null}
             </Grid>
           </Grid>
+          {_.map(
+            _.get(props, "page.sections", null),
+            (section, section_idx) => {
+              let component = _.upperFirst(
+                _.camelCase(_.get(section, "type", null))
+              );
+              let Component = components[component];
+              return (
+                <Component
+                  key={section_idx}
+                  {...props}
+                  section={section}
+                  site={props}
+                />
+              );
+            }
+          )}
         </Container>
       </Box>
     </Layout>
