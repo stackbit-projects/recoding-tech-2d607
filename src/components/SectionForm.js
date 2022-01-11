@@ -38,6 +38,8 @@ export default function SectionForm(props) {
   };
 
   const onSubmit = (formData, event) => {
+    event.preventDefault();
+
     fetch(`/`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -50,7 +52,6 @@ export default function SectionForm(props) {
       .catch((error) => {
         alert("Failed to submit contact form, please try again.", error);
       });
-    event.preventDefault();
   };
 
   return (
