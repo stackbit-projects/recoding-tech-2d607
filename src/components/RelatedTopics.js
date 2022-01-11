@@ -31,7 +31,7 @@ const Topics = (props) => {
             pt={2}
             sx={{ borderTop: "1px solid #000", width: "100%" }}
           >
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
               {topics.map((topic, i) => (
                 <Chip
                   key={i}
@@ -42,6 +42,7 @@ const Topics = (props) => {
                     topic.slug ? topic.slug : topic.__metadata.id
                   }`}
                   clickable
+                  sx={{ marginBottom: 1 }}
                 />
               ))}
             </Stack>

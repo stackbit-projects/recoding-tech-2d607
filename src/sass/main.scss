@@ -26,7 +26,7 @@
   a {
     color: black;
     &:hover {
-      color: #FF0033;
+      color: #ff0033;
     }
   }
 }
@@ -42,4 +42,8 @@
   position: absolute;
   width: 1px;
   word-wrap: normal !important;
+}
+
+.slider-mod {
+  width: 100%;
 }

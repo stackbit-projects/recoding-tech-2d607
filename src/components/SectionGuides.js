@@ -52,6 +52,16 @@ const SectionGuides = () => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          centerMode: true,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const guideClick = (url) => {
