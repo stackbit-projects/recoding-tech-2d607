@@ -17,7 +17,7 @@ exports.handler = async function (event, context, callback) {
       _type: "contact_submission", // must match the name of the contact document type on the Sanity schema
       name: payload.data.name,
       email: payload.data.email,
-      inquiry: payload.data.message,
+      message: payload.data.message,
     };
 
     const result = await client
