@@ -46,8 +46,8 @@ export default function SectionForm(props) {
       body: encode({ "form-name": "contact-form", ...formData }),
     })
       .then((response) => {
-        reset();
         alert("Your message has been submitted. Thank you!");
+        reset();
       })
       .catch((error) => {
         alert("Failed to submit contact form, please try again.", error);
@@ -95,7 +95,6 @@ export default function SectionForm(props) {
             direction="column"
             justifyContent="space-evenly"
             spacing={2}
-            xs={12}
           >
             <Grid item>
               <Controller
@@ -147,7 +146,7 @@ export default function SectionForm(props) {
             </Grid>
             <Grid item>
               <Controller
-                name="Message"
+                name="message"
                 control={control}
                 defaultValue=""
                 render={({

@@ -16,7 +16,6 @@ import SectionHero from "../components/SectionHero";
 import Sidebar from "../components/Sidebar";
 
 const Page = (props) => {
-  console.log("props in page", props);
   const {
     page: { sidebar_content = {} },
   } = props;
