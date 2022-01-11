@@ -5,18 +5,30 @@ import { useForm, Controller } from "react-hook-form";
 import { markdownify } from "../utils";
 
 // Material UI import
+import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    borderRadius: 12,
+    backgroundColor: "#c2cecc",
+    textTransform: "uppercase",
+  },
+}));
+
 export default function SectionForm(props) {
   let section = _.get(props, "section", null);
 
-  const { handleSubmit, control, reset } = useForm();
+  const classes = useStyles();
 
-  // Transforms the form data from the React Hook Form output to a format Netlify can read
+  const { handleSubmit, register, control, reset } = useForm();
+
+  /** Transforms the form data from the React Hook Form output
+   * to a format Netlify can read  */
   const encode = (data) => {
     return Object.keys(data)
       .map(
@@ -25,26 +37,21 @@ export default function SectionForm(props) {
       .join("&");
   };
 
-  // const onSubmit = (formData, event) => {
-  //   fetch(`/`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     body: encode({ "form-name": "contact-form", ...formData }),
-  //   })
-  //     .then((response) => {
-  //       console.log("response", response);
-  //     })
-  //     .catch((error) => {
-  //       alert("Failed to submit contact form, please try again.", error);
-  //     });
-  //   event.preventDefault();
-  // };
-
   const onSubmit = (formData, event) => {
-    console.log("formData", formData)
-    console.log("event", event)
-    reset();
-  }
+    fetch(`/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact-form", ...formData }),
+    })
+      .then((response) => {
+        reset();
+        alert("Your message has been submitted. Thank you!");
+      })
+      .catch((error) => {
+        alert("Failed to submit contact form, please try again.", error);
+      });
+    event.preventDefault();
+  };
 
   return (
     <section
@@ -78,111 +85,93 @@ export default function SectionForm(props) {
           </div>
           <input
             type="hidden"
-            name="form-name"
+            name="formId"
             value={_.get(section, "form_id", null)}
+            {...register("formId")}
           />
-            <Grid container spacing={8} item xs={12} md={11}>
-              <Grid item>
-                <Controller
-                  name="name"
-                  control={control}
-                  defaultValue=""
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <TextField
-                      label="Name"
-                      value={value}
-                      onChange={onChange}
-                      error={!!error}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item>
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <TextField
-                      label="Email"
-                      value={value}
-                      onChange={onChange}
-                      error={!!error}
-                      helperText={error ? error.message : null}
-                    />
-                  )}
-                  rules={{
-                    required: "Email is required",
-                    pattern:
-                      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-                  }}
-                />
-              </Grid>
+          <Grid
+            container
+            direction="column"
+            justifyContent="space-evenly"
+            spacing={2}
+            xs={12}
+          >
+            <Grid item>
+              <Controller
+                name="name"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    label="Name"
+                    value={value}
+                    onChange={onChange}
+                    variant="filled"
+                    error={!!error}
+                  />
+                )}
+              />
             </Grid>
-            <Grid container spacing={2} xs={12}>
-              <Grid item>
-                <Controller
-                  name="Message"
-                  control={control}
-                  defaultValue=""
-                  render={({
-                    field: { onChange, value },
-                    fieldState: { error },
-                  }) => (
-                    <TextField
-                      label="Message"
-                      fullWidth
-                      multiline
-                      rows={10}
-                      value={value}
-                      onChange={onChange}
-                      error={!!error}
-                      helperText={error ? error.message : null}
-                    />
-                  )}
-                />
-              </Grid>
+            <Grid item>
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    label="Email"
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    variant="filled"
+                    helperText={
+                      error
+                        ? "Properly formatted email address is required"
+                        : null
+                    }
+                  />
+                )}
+                rules={{
+                  required: true,
+                  pattern:
+                    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                }}
+              />
             </Grid>
-          {/* <label htmlFor="email">
-            <Typography component="div" variant="subtitle1">
-              Email:
-            </Typography>
-            {errors.email && (
-              <span>
-                Please ensure your email address is formatted correctly.
-              </span>
-            )}
-            <input
-              type="text"
-              name="email"
-              {...register("email", {
-                required: true,
-                pattern:
-                  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-              })}
-            />
-          </label> */}
-          {/* <label htmlFor="message">
-            <Typography component="div" variant="subtitle1">
-              Message:
-            </Typography>
-            <textarea
-              name="message"
-              rows={10}
-              {...register("inquiry")}
-            ></textarea>
-          </label> */}
-          <div className="form-submit">
-            <Button type="submit" className="button">
-              {_.get(section, "submit_label", null)}
-            </Button>
-          </div>
+            <Grid item>
+              <Controller
+                name="Message"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    label="Message"
+                    fullWidth
+                    multiline
+                    variant="filled"
+                    rows={10}
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid container item justifyContent="flex-end">
+              <Button type="submit" className={classes.button}>
+                {_.get(section, "submit_label", null)}
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Box>
     </section>
