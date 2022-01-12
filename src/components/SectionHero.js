@@ -12,24 +12,24 @@ import Typography from "@mui/material/Typography";
 // utils
 import { withPrefix } from "../utils";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   author: {
     fontStyle: "italic",
     marginTop: 50,
     position: "relative",
     textAlign: "center",
-    zIndex: 1
+    zIndex: 1,
   },
   box: {
     paddingBottom: 120,
-    paddingTop: 120
+    paddingTop: 120,
     // [theme.breakpoints.up("sm")]: {
     //   paddingBottom: 120,
     //   paddingTop: 120
     // }
   },
   hero: {
-    position: "relative"
+    position: "relative",
   },
   link: {
     color: theme.typography.link.color,
@@ -37,16 +37,16 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     textTransform: "uppercase",
     position: "relative",
-    zIndex: 1
+    zIndex: 1,
   },
   links: {
     marginTop: 40,
-    textAlign: "center"
+    textAlign: "center",
   },
   superTitle: {
     textAlign: "center",
     position: "relative",
-    zIndex: 1
+    zIndex: 1,
   },
   svg: {
     height: 250,
@@ -55,13 +55,13 @@ const useStyles = makeStyles(theme => ({
     top: "40%",
     transform: "translate(-50%, -50%)",
     width: 650,
-    zIndex: 0
+    zIndex: 0,
   },
 
   title: {
     position: "relative",
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 }));
 
 function SectionHero(props) {
@@ -77,7 +77,7 @@ function SectionHero(props) {
           backgroundColor:
             page.type && theme.palette[page.type]
               ? theme.palette[page.type].main
-              : theme.palette.secondary.main
+              : theme.palette.secondary.main,
         }}
       >
         <Container maxWidth="sm" className={classes.hero}>
@@ -113,6 +113,10 @@ function SectionHero(props) {
             <Typography variant="h4" className={classes.superTitle}>
               {page.type}
             </Typography>
+          ) : page.__metadata.modelName == "article" ? (
+            <Typography variant="h4" className={classes.superTitle}>
+              Commentary & Analysis
+            </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
             <Typography variant="h1" className={classes.title}>
@@ -134,14 +138,19 @@ function SectionHero(props) {
               </Link>
             </div>
           )}
-          {page.__metadata.modelName == "guide" && (
+          {(page.__metadata.modelName == "guide" ||
+            page.__metadata.modelName == "article") && (
             <Typography
               component="div"
               variant="body1"
               className={classes.author}
             >
-              {page.author ? `${page.author.name} – ` : ""} Last updated{" "}
-              {moment(page.datePublished).strftime("%B %e, %Y")}
+              {page.author ? `${page.author.name} – ` : ""}
+              {page.__metadata.modelName == "guide"
+                ? `Last updated: ${moment(page.__metadata.updatedAt).strftime(
+                    "%B %e, %Y"
+                  )}`
+                : moment(page.date).strftime("%B %e, %Y")}
             </Typography>
           )}
         </Container>
@@ -151,7 +160,7 @@ function SectionHero(props) {
 }
 
 SectionHero.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default SectionHero;
