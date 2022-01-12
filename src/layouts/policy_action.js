@@ -46,9 +46,11 @@ const PolicyAction = (props) => {
               <Grid item sx={{ width: "100%" }}>
                 <RelatedTopics topics={page.relatedTopics} />
               </Grid>
-              <Grid item sx={{ width: "100%" }}>
-                <RelatedDocuments {...props} />
-              </Grid>
+              {page.relatedDocs ? (
+                <Grid item sx={{ width: "100%" }}>
+                  <RelatedDocuments {...props} />
+                </Grid>
+              ) : null}
             </Grid>
           </Grid>
         </Container>
