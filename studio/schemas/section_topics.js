@@ -7,7 +7,16 @@ export default {
       name: "featuredTopics",
       title: "Featured Topics",
       type: "array",
-      of: [{ type: "reference", to: { type: "topic" } }]
+      of: [
+        {
+          type: "reference",
+          to: { type: "topic" },
+          options: {
+            filter: "stackbit_model_type == $stackbit_model_type",
+            filterParams: { stackbit_model_type: "page" },
+          },
+        },
+      ],
     },
     {
       type: "string",
@@ -15,10 +24,10 @@ export default {
       title: "Object Type",
       description: "The type of the object",
       hidden: false,
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
-        list: ["section_topics"]
-      }
+        list: ["section_topics"],
+      },
     },
     {
       type: "string",
@@ -26,10 +35,10 @@ export default {
       title: "Stackbit Model Type",
       description: "Stackbit model type",
       hidden: false,
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
-        list: ["object"]
-      }
-    }
-  ]
+        list: ["object"],
+      },
+    },
+  ],
 };

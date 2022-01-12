@@ -33,7 +33,7 @@ function Topics(props) {
             sx={{ borderTop: "1px solid #000", width: "100%" }}
           >
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-              {topics.map((topic, i) => (
+              {topics.filter(topic => topic.stackbit_model_type == 'page').map((topic, i) => (
                 <Chip
                   key={i}
                   label={topic.name}
@@ -45,7 +45,7 @@ function Topics(props) {
                   }}
                   component="a"
                   href={`/${topic.type}/${
-                    topic.slug ? topic.slug : topic.__metadata.id
+                    typeof topic.slug == 'string' ? topic.slug : topic.slug.current
                   }`}
                   clickable
                   sx={{ marginBottom: 1 }}

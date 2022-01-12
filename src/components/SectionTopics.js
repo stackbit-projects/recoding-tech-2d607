@@ -10,15 +10,15 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   chip: {
     fontFamily: theme.typography.link.fontFamily,
     fontWeight: "bold",
-    textTransform: "uppercase"
-  }
+    textTransform: "uppercase",
+  },
 }));
 
-const SectionTopics = props => {
+const SectionTopics = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { section } = props;
@@ -29,7 +29,7 @@ const SectionTopics = props => {
       Array.isArray(section.featuredTopics) &&
       section.featuredTopics.length
     ) {
-      setTopics(section.featuredTopics.filter(topic => topic.name));
+      setTopics(section.featuredTopics.filter((topic) => topic.name));
     }
   }, []);
 
@@ -49,13 +49,20 @@ const SectionTopics = props => {
                     key={i}
                     label={topic.name}
                     component="a"
-                    href={`/${topic.type}/${topic.name}`}
+                    href={`/${topic.type}/${
+                      typeof topic.slug == "string"
+                        ? topic.slug
+                        : typeof topic.slug == "object" 
+                        ? topic.slug.current
+                        : topic.name
+                    }`}
                     className={classes.chip}
-                    color={
-                      topic.type && theme.palette[topic.type]
-                        ? topic.type
-                        : "secondary"
-                    }
+                    style={{
+                      backgroundColor:
+                        topic.type && theme.palette[topic.type]
+                          ? theme.palette[topic.type].main
+                          : theme.palette.secondary.main,
+                    }}
                     clickable
                   />
                 ))
@@ -68,7 +75,7 @@ const SectionTopics = props => {
 };
 
 SectionTopics.propTypes = {
-  section: PropTypes.object
+  section: PropTypes.object,
 };
 
 export default SectionTopics;
