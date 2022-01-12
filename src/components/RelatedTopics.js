@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 // material ui imports
+import { useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
-const Topics = (props) => {
+function Topics(props) {
+  const theme = useTheme();
   const { topics } = props;
 
   if (!Array.isArray(topics) || !topics.length) return null;
@@ -36,7 +37,12 @@ const Topics = (props) => {
                 <Chip
                   key={i}
                   label={topic.name}
-                  color={topic.type == "issue" ? "issue" : "policy"}
+                  style={{
+                    backgroundColor:
+                      topic.type && theme.palette[topic.type]
+                        ? theme.palette[topic.type].main
+                        : theme.palette.secondary.main,
+                  }}
                   component="a"
                   href={`/${topic.type}/${
                     topic.slug ? topic.slug : topic.__metadata.id
@@ -51,7 +57,7 @@ const Topics = (props) => {
       </Grid>
     </section>
   );
-};
+}
 
 Topics.propTypes = {
   section: PropTypes.object,
