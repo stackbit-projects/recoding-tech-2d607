@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
+import moment from "moment-strftime";
+
 
 // utils
 import client from "../utils/sanityClient";
@@ -505,8 +507,9 @@ function SectionTracker(props) {
                                 : null
                             }
                           >
-                            {column.format && typeof value === "number" ? (
-                              column.format(value)
+                            {column.id == "dateInitiated" ||
+                            column.id == "lastUpdate" ? (
+                              moment(new Date(value)).strftime("%b %d, %Y")
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}

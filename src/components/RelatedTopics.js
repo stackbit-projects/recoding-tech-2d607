@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 function Topics(props) {
   const theme = useTheme();
   const { topics } = props;
-
+  
   if (!Array.isArray(topics) || !topics.length) return null;
 
   const title = _.get(props, "title", "Related Topics");
