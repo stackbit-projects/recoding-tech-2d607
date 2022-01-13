@@ -22,8 +22,10 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 // component imports
 import Logo from "./Logo";
 
+/** query to get topics in the db that have been published as a page 
+ * && is not a draft */ 
 const query =
-  '*[_type == "topic" && stackbit_model_type == "page"]{displayTitle, link, slug, type}';
+  '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{displayTitle, link, slug, type}';
 
 let topics = [];
 

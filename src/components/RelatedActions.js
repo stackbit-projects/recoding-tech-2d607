@@ -1,6 +1,8 @@
 // base imports
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import moment from "moment-strftime";
+
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -19,17 +21,17 @@ import Typography from "@mui/material/Typography";
 // Material UI icons
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   em: {
     fontStyle: "italic",
-    textAlign: "center"
+    textAlign: "center",
   },
   icon: {
     position: "absolute",
     right: 20,
     top: "50%",
     transform: "translateY(-50%)",
-    transition: "right 250ms"
+    transition: "right 250ms",
   },
   tableCellTitle: {
     minWidth: 150,
@@ -45,32 +47,32 @@ const useStyles = makeStyles(theme => ({
       top: "50%",
       transform: "translateY(-50%)",
       width: "100%",
-      zIndex: "-1"
+      zIndex: "-1",
     },
     "&:hover": {
       "& a": {
-        textDecoration: "underline"
+        textDecoration: "underline",
       },
       "& svg": {
         right: 10,
-        transition: "right 250ms"
-      }
-    }
+        transition: "right 250ms",
+      },
+    },
   },
   tableLink: {
     color: "#000",
     position: "relative",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   title: {
     borderRight: "2px solid #000",
-    paddingRight: 20
+    paddingRight: 20,
   },
   trackerIcon: {
     left: 0,
     position: "absolute",
     top: "50%",
-    transform: "translateY(-50%)"
+    transform: "translateY(-50%)",
   },
   trackerLink: {
     color: "#000",
@@ -79,12 +81,12 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     textDecoration: "none",
     "&:hover": {
-      textDecoration: "underline"
-    }
-  }
+      textDecoration: "underline",
+    },
+  },
 }));
 
-const RelatedActions = props => {
+const RelatedActions = (props) => {
   const classes = useStyles();
   const { page, actions } = props;
 
@@ -94,7 +96,7 @@ const RelatedActions = props => {
     { id: "country.displayTitle", label: "Country" },
     { id: "dateInitiated", label: "Date Initiated" },
     { id: "status", label: "Status" },
-    { id: "lastUpdate", label: "Last Updated" }
+    { id: "lastUpdate", label: "Last Updated" },
   ];
 
   // table pagination
@@ -105,7 +107,7 @@ const RelatedActions = props => {
     setCurrent(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setCurrent(0);
   };
@@ -147,7 +149,7 @@ const RelatedActions = props => {
           >
             <TableHead>
               <TableRow>
-                {headers.map(column => (
+                {headers.map((column) => (
                   <TableCell key={column.id}>{column.label}</TableCell>
                 ))}
               </TableRow>
@@ -158,15 +160,19 @@ const RelatedActions = props => {
                   current * rowsPerPage,
                   current * rowsPerPage + rowsPerPage
                 )
-                .map(row => {
+                .map((row) => {
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={typeof row.slug === 'object' ? row.slug.current : row.slug}
+                      key={
+                        typeof row.slug === "object"
+                          ? row.slug.current
+                          : row.slug
+                      }
                     >
-                      {headers.map(column => {
+                      {headers.map((column) => {
                         let value = row[column.id];
                         if (!value) {
                           if (row.country) {
@@ -184,8 +190,9 @@ const RelatedActions = props => {
                                 : null
                             }
                           >
-                            {column.format && typeof value === "number" ? (
-                              column.format(value)
+                            {column.id == "dateInitiated" ||
+                            column.id == "lastUpdate" ? (
+                              moment(new Date(value)).strftime("%b %d, %Y")
                             ) : column.id == "title" ? (
                               <Link
                                 className={classes.tableLink}
@@ -230,7 +237,7 @@ const RelatedActions = props => {
 
 RelatedActions.propTypes = {
   actions: PropTypes.array,
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default RelatedActions;

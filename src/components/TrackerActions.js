@@ -117,10 +117,12 @@ const TrackerActions = (props) => {
                 {page.country ? page.country.displayTitle : ""}
               </TableCell>
               <TableCell>
-                {moment(page.dateInitiated).strftime("%B %e, %Y")}
+                {moment(page.dateInitiated).strftime("%b %e, %Y")}
               </TableCell>
               <TableCell>{page.status}</TableCell>
-              <TableCell>{page.lastUpdate}</TableCell>
+              <TableCell>
+                {moment(page.lastUpdate).strftime("%b %e, %Y")}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

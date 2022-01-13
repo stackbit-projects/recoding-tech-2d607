@@ -37,7 +37,8 @@ const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key
                             slug, status, title,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
-const topicsQuery = '*[_type == "topic"]{_id, _key, name, slug, type}';
+const topicsQuery =
+  '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{_id, _key, name, slug, type}';
 
 const isDev = process.env.NODE_ENV === "development";
 
