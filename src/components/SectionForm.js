@@ -90,13 +90,8 @@ export default function SectionForm(props) {
             value={_.get(section, "form_id", null)}
             {...register("formId")}
           />
-          <Grid
-            container
-            direction="column"
-            justifyContent="space-evenly"
-            spacing={2}
-          >
-            <Grid item>
+          <Grid container justifyContent="space-evenly" spacing={2}>
+            <Grid item xs={12} sm={6}>
               <Controller
                 name="name"
                 control={control}
@@ -111,11 +106,14 @@ export default function SectionForm(props) {
                     onChange={onChange}
                     variant="filled"
                     error={!!error}
+                    sx={{
+                      backgroundColor: "#fff",
+                    }}
                   />
                 )}
               />
             </Grid>
-            <Grid item>
+            <Grid item xs={12} sm={6}>
               <Controller
                 name="email"
                 control={control}
@@ -135,6 +133,9 @@ export default function SectionForm(props) {
                         ? "Properly formatted email address is required"
                         : null
                     }
+                    sx={{
+                      backgroundColor: "#fff",
+                    }}
                   />
                 )}
                 rules={{
@@ -144,7 +145,7 @@ export default function SectionForm(props) {
                 }}
               />
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Controller
                 name="message"
                 control={control}
@@ -162,6 +163,9 @@ export default function SectionForm(props) {
                     value={value}
                     onChange={onChange}
                     error={!!error}
+                    sx={{
+                      backgroundColor: "#fff",
+                    }}
                   />
                 )}
               />
