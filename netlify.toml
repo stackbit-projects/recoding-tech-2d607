@@ -1,6 +1,7 @@
 [build]
 publish = ".next"
 command = "./stackbit-build.sh"
+functions = "functions/"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"

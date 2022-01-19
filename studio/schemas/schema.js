@@ -9,6 +9,7 @@ import config from "./config.js";
 import header from "./header.js";
 import footer from "./footer.js";
 import advanced from "./advanced.js";
+import contact_submission from "./contact_submission.js"
 import creators from "./creators.js";
 import citation from "./citation.js";
 import article from "./article.js";
@@ -41,6 +42,7 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     config,
+    contact_submission,
     header,
     footer,
     advanced,
