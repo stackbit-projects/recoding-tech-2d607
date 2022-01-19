@@ -1,7 +1,7 @@
 export default {
     "type": "object",
     "name": "section_form",
-    "title": "Form Section",
+    "title": "Contact Form",
     "fields": [
         {
             "type": "string",
@@ -10,20 +10,20 @@ export default {
             "description": "The title of the section.",
             "validation": null
         },
-        {
-            "type": "string",
-            "name": "section_id",
-            "title": "Element ID",
-            "description": "A unique identifier that can be used when linking to this section. Must not contain whitespace.",
-            "validation": null
-        },
-        {
-            "type": "markdown",
-            "name": "content",
-            "title": "Content",
-            "description": "The text content of the section.",
-            "validation": null
-        },
+        // {
+        //     "type": "string",
+        //     "name": "section_id",
+        //     "title": "Element ID",
+        //     "description": "A unique identifier that can be used when linking to this section. Must not contain whitespace.",
+        //     "validation": null
+        // },
+        // {
+        //     "type": "markdown",
+        //     "name": "content",
+        //     "title": "Content",
+        //     "description": "The text content of the section.",
+        //     "validation": null
+        // },
         {
             "type": "string",
             "name": "form_id",
@@ -31,24 +31,24 @@ export default {
             "description": "A unique identifier of the form. Must not contain whitespace.",
             "validation": Rule => Rule.required()
         },
-        {
-            "type": "string",
-            "name": "form_action",
-            "title": "Form Action",
-            "description": "The path of your custom \"success\" page, if you want to replace the default success message.",
-            "validation": null
-        },
-        {
-            "type": "array",
-            "name": "form_fields",
-            "title": "Form Fields",
-            "validation": null,
-            "of": [
-                {
-                    "type": "form_field"
-                }
-            ]
-        },
+        // {
+        //     "type": "string",
+        //     "name": "form_action",
+        //     "title": "Form Action",
+        //     "description": "The path of your custom \"success\" page, if you want to replace the default success message.",
+        //     "validation": null
+        // },
+        // {
+        //     "type": "array",
+        //     "name": "form_fields",
+        //     "title": "Form Fields",
+        //     "validation": null,
+        //     "of": [
+        //         {
+        //             "type": "form_field"
+        //         }
+        //     ]
+        // },
         {
             "type": "string",
             "name": "submit_label",
