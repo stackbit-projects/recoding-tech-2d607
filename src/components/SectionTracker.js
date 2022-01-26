@@ -183,7 +183,7 @@ function SectionTracker(props) {
             action.relatedTopics.length
           ) {
             action.relatedTopics.forEach((topic) => {
-              if (filters.findIndex((f) => f._key === topic._key) >= 0)
+              if (filters.findIndex((f) => f._id === topic._id) >= 0)
                 matches += 1;
             });
           }
@@ -195,13 +195,13 @@ function SectionTracker(props) {
   }, [filters, allActions]);
 
   const handleClose = (topic) => {
-    if (topic && filters.findIndex((f) => f._key === topic._key) < 0) {
+    if (topic && filters.findIndex((f) => f._id === topic._id) < 0) {
       setFilters([...filters, topic]);
     }
   };
 
   const handleDelete = (topic) => () => {
-    topic && setFilters(filters.filter((f) => f._key !== topic._key));
+    topic && setFilters(filters.filter((f) => f._id !== topic._id));
   };
 
   const [issueEl, setIssueEl] = React.useState(null);
@@ -454,8 +454,8 @@ function SectionTracker(props) {
       <Box my={4}>
         <Grid container spacing={2} justifyContent="flex-start">
           {filters.length
-            ? filters.map((filter) => (
-                <Grid key={filter._key} item>
+            ? filters.map((filter, idx) => (
+                <Grid key={`${filter._key+idx}`} item>
                   <Chip
                     label={filter.displayTitle || filter.name}
                     color={filter.type}
