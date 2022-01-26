@@ -9,6 +9,7 @@ import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import Paper from '@mui/material/Paper';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -17,6 +18,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // Material UI icons
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -90,6 +92,8 @@ const RelatedActions = (props) => {
   const classes = useStyles();
   const { page, actions } = props;
 
+  const isMobile = useMediaQuery('(max-width:1064px)');
+
   const headers = [
     { id: "title", label: "Name" },
     { id: "type", label: "Type" },
@@ -142,85 +146,139 @@ const RelatedActions = (props) => {
         </Grid>
       </Grid>
       <Box my={4} sx={{ borderTop: "1px solid #000" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table
-            aria-label="Law and Regulation Tracker Table"
-            className={classes.table}
-          >
-            <TableHead>
-              <TableRow>
-                {headers.map((column) => (
-                  <TableCell key={column.id}>{column.label}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {actions
-                .slice(
-                  current * rowsPerPage,
-                  current * rowsPerPage + rowsPerPage
-                )
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={
-                        typeof row.slug === "object"
-                          ? row.slug.current
-                          : row.slug
-                      }
-                    >
-                      {headers.map((column) => {
-                        let value = row[column.id];
-                        if (!value) {
-                          if (row.country) {
-                            value = row.country.displayTitle; // #FIXME
-                          } else {
-                            value = "";
-                          }
+        {isMobile ? actions
+          .slice(
+            current * rowsPerPage,
+            current * rowsPerPage + rowsPerPage
+          )
+          .map((row) => (
+            <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
+              <Grid container>
+                <Grid item xs={12} sx={{ backgroundColor: "#EFE9DA", padding: 2, marginBottom: 2 }}>
+                  <Link
+                    href={`/tracker/${typeof row.slug === "object"
+                      ? row.slug.current
+                      : row.slug
+                      }`}
+                    underline="hover"
+                    variant="h4"
+                    sx={{ color: "#000" }}
+                  >
+                    {row.title}
+                  </Link>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Type</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.type}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Country</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.country.displayTitle}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Date Initiated</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(row.dateInitiated)).strftime("%b %d, %Y")}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Status</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.status}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Last Updated</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}</Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          )) : (
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table
+              aria-label="Law and Regulation Tracker Table"
+              className={classes.table}
+            >
+              <TableHead>
+                <TableRow>
+                  {headers.map((column) => (
+                    <TableCell key={column.id}>{column.label}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {actions
+                  .slice(
+                    current * rowsPerPage,
+                    current * rowsPerPage + rowsPerPage
+                  )
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={
+                          typeof row.slug === "object"
+                            ? row.slug.current
+                            : row.slug
                         }
-                        return (
-                          <TableCell
-                            key={column.id}
-                            className={
-                              column.id == "title"
-                                ? classes.tableCellTitle
-                                : null
+                      >
+                        {headers.map((column) => {
+                          let value = row[column.id];
+                          if (!value) {
+                            if (row.country) {
+                              value = row.country.displayTitle; // #FIXME
+                            } else {
+                              value = "";
                             }
-                          >
-                            {column.id == "dateInitiated" ||
-                            column.id == "lastUpdate" ? (
-                              moment(new Date(value)).strftime("%b %d, %Y")
-                            ) : column.id == "title" ? (
-                              <Link
-                                className={classes.tableLink}
-                                href={`/tracker/${
-                                  typeof row.slug === "object"
+                          }
+                          return (
+                            <TableCell
+                              key={column.id}
+                              className={
+                                column.id == "title"
+                                  ? classes.tableCellTitle
+                                  : null
+                              }
+                            >
+                              {column.id == "dateInitiated" ||
+                                column.id == "lastUpdate" ? (
+                                moment(new Date(value)).strftime("%b %d, %Y")
+                              ) : column.id == "title" ? (
+                                <Link
+                                  className={classes.tableLink}
+                                  href={`/tracker/${typeof row.slug === "object"
                                     ? row.slug.current
                                     : row.slug
-                                }`}
-                              >
-                                {value}
-                              </Link>
-                            ) : (
-                              value
-                            )}
-                            {column.id == "title" ? (
-                              <KeyboardArrowRightIcon
-                                className={classes.icon}
-                              />
-                            ) : null}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                                    }`}
+                                >
+                                  {value}
+                                </Link>
+                              ) : (
+                                value
+                              )}
+                              {column.id == "title" ? (
+                                <KeyboardArrowRightIcon
+                                  className={classes.icon}
+                                />
+                              ) : null}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

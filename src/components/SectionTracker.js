@@ -18,6 +18,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Paper from '@mui/material/Paper';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -26,6 +27,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // material ui icons
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -99,6 +101,8 @@ function SectionTracker(props) {
   const [allActions, setAllActions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
+
+  const isMobile = useMediaQuery('(max-width:1064px)');
 
   const headers = [
     { id: "title", label: "Name" },
@@ -304,14 +308,14 @@ function SectionTracker(props) {
               >
                 {issues && issues.length
                   ? issues.map((issue) => (
-                      <MenuItem
-                        key={issue._id}
-                        onClick={handleCloseIssues(issue)}
-                        disableRipple
-                      >
-                        {issue.displayTitle || issue.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={issue._id}
+                      onClick={handleCloseIssues(issue)}
+                      disableRipple
+                    >
+                      {issue.displayTitle || issue.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -347,14 +351,14 @@ function SectionTracker(props) {
               >
                 {policies && policies.length
                   ? policies.map((policy) => (
-                      <MenuItem
-                        key={policy._id}
-                        onClick={handleClosePolicies(policy)}
-                        disableRipple
-                      >
-                        {policy.displayTitle || policy.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={policy._id}
+                      onClick={handleClosePolicies(policy)}
+                      disableRipple
+                    >
+                      {policy.displayTitle || policy.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -390,18 +394,18 @@ function SectionTracker(props) {
               >
                 {countries && countries.length
                   ? countries.map((country) => {
-                      if (country) {
-                        return (
-                          <MenuItem
-                            key={country._id}
-                            onClick={handleCloseCountries(country)}
-                            disableRipple
-                          >
-                            {country.displayTitle || country.name}
-                          </MenuItem>
-                        );
-                      }
-                    })
+                    if (country) {
+                      return (
+                        <MenuItem
+                          key={country._id}
+                          onClick={handleCloseCountries(country)}
+                          disableRipple
+                        >
+                          {country.displayTitle || country.name}
+                        </MenuItem>
+                      );
+                    }
+                  })
                   : null}
               </Menu>
             </Grid>
@@ -437,14 +441,14 @@ function SectionTracker(props) {
               >
                 {companies && companies.length
                   ? companies.map((company) => (
-                      <MenuItem
-                        key={company._key}
-                        onClick={handleCloseCompanies(company)}
-                        disableRipple
-                      >
-                        {company.displayTitle || company.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={company._key}
+                      onClick={handleCloseCompanies(company)}
+                      disableRipple
+                    >
+                      {company.displayTitle || company.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -467,84 +471,141 @@ function SectionTracker(props) {
         </Grid>
       </Box>
       <Box my={4}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table
-            aria-label="Law and Regulation Tracker Table"
-            className={classes.table}
-          >
-            <TableHead>
-              <TableRow>
-                {headers.map((column) => (
-                  <TableCell key={column.id}>{column.label}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {actions
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row._key}
+        {isMobile ?
+          actions
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row) => (
+              <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
+                <Grid container>
+                  <Grid item xs={12} sx={{ backgroundColor: "#EFE9DA", padding: 2, marginBottom: 2 }}>
+                    <Link href={
+                      isDev
+                        ? typeof row.slug === "object"
+                          ? row.slug.current
+                          : row.slug
+                        : `tracker/${typeof row.slug === "object"
+                          ? row.slug.current
+                          : row.slug
+                        }`
+                    }
+                      underline="hover"
+                      variant="h4"
+                      sx={{ color: "#000" }}
                     >
-                      {headers.map((column) => {
-                        let value = row[column.id];
-                        if (!value) {
-                          if (row.country) {
-                            value = row.country.displayTitle; // #FIXME
-                          } else {
-                            value = "";
-                          }
-                        }
-                        return (
-                          <TableCell
-                            key={column.id}
-                            className={
-                              column.id == "title"
-                                ? classes.tableCellTitle
-                                : null
+                      {row.title}
+                    </Link>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Type</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.type}</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Country</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.country.displayTitle}</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Date Initiated</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(row.dateInitiated)).strftime("%b %d, %Y")}</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Status</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.status}</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Last Updated</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}</Typography>
+                  </Grid>
+                </Grid>
+              </Paper>
+            )) : (
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table
+                aria-label="Law and Regulation Tracker Table"
+                className={classes.table}
+              >
+                <TableHead>
+                  <TableRow>
+                    {headers.map((column) => (
+                      <TableCell key={column.id}>{column.label}</TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {actions
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={row._key}
+                        >
+                          {headers.map((column) => {
+                            let value = row[column.id];
+                            if (!value) {
+                              if (row.country) {
+                                value = row.country.displayTitle; // #FIXME
+                              } else {
+                                value = "";
+                              }
                             }
-                          >
-                            {column.id == "dateInitiated" ||
-                            column.id == "lastUpdate" ? (
-                              moment(new Date(value)).strftime("%b %d, %Y")
-                            ) : column.id == "title" ? (
-                              <Link
-                                className={classes.tableLink}
-                                href={
-                                  isDev
-                                    ? typeof row.slug === "object"
-                                      ? row.slug.current
-                                      : row.slug
-                                    : `tracker/${
-                                        typeof row.slug === "object"
-                                          ? row.slug.current
-                                          : row.slug
-                                      }`
+                            return (
+                              <TableCell
+                                key={column.id}
+                                className={
+                                  column.id == "title"
+                                    ? classes.tableCellTitle
+                                    : null
                                 }
                               >
-                                {value}
-                              </Link>
-                            ) : (
-                              value
-                            )}
-                            {column.id == "title" ? (
-                              <KeyboardArrowRightIcon
-                                className={classes.icon}
-                              />
-                            ) : null}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                                {column.id == "dateInitiated" ||
+                                  column.id == "lastUpdate" ? (
+                                  moment(new Date(value)).strftime("%b %d, %Y")
+                                ) : column.id == "title" ? (
+                                  <Link
+                                    className={classes.tableLink}
+                                    href={
+                                      isDev
+                                        ? typeof row.slug === "object"
+                                          ? row.slug.current
+                                          : row.slug
+                                        : `tracker/${typeof row.slug === "object"
+                                          ? row.slug.current
+                                          : row.slug
+                                        }`
+                                    }
+                                  >
+                                    {value}
+                                  </Link>
+                                ) : (
+                                  value
+                                )}
+                                {column.id == "title" ? (
+                                  <KeyboardArrowRightIcon
+                                    className={classes.icon}
+                                  />
+                                ) : null}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
