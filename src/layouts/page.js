@@ -32,37 +32,33 @@ const Page = (props) => {
             justifyContent="space-between"
           >
             <Grid item xs={12} sm={8}>
-              <div className="post-content inner-sm">
-                <Typography component="div" className="html-to-react">
-                  {markdownify(_.get(props, "page.content", null))}
-                </Typography>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <div className="post-content inner-sm">
-                {_.map(
-                  _.get(props, "page.sections", null),
-                  (section, section_idx) => {
-                    let component = _.upperFirst(
-                      _.camelCase(_.get(section, "type", null))
-                    );
-                    let Component = components[component];
-                    return (
-                      <Component
-                        key={section_idx}
-                        {...props}
-                        section={section}
-                        site={props}
-                      />
-                    );
-                  }
-                )}
-              </div>
+              <Typography component="div" className="html-to-react">
+                {markdownify(_.get(props, "page.content", null))}
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>
               {sidebar_content.length ? (
                 <Sidebar content={sidebar_content} />
               ) : null}
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              {_.map(
+                _.get(props, "page.sections", null),
+                (section, section_idx) => {
+                  let component = _.upperFirst(
+                    _.camelCase(_.get(section, "type", null))
+                  );
+                  let Component = components[component];
+                  return (
+                    <Component
+                      key={section_idx}
+                      {...props}
+                      section={section}
+                      site={props}
+                    />
+                  );
+                }
+              )}
             </Grid>
           </Grid>
         </Container>
