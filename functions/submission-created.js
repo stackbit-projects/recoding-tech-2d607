@@ -1,9 +1,10 @@
 const sanityClient = require("@sanity/client");
 const client = sanityClient({
-  projectId: process.env.SANITY_PROJECT_ID,
-  dataset: process.env.SANITY_DATASET,
-  token: process.env.SANITY_ACCESS_TOKEN,
-  useCDN: false,
+  projectId: process.env.sanityProjectId || process.env.SANITY_PROJECT_ID,
+  dataset: process.env.sanityDataset || "production",
+  apiVersion: process.env.sanityApiVersion || "2021-03-25",
+  token: process.env.sanityAccessToken || process.env.SANITY_ACCESS_TOKEN,
+  useCdn: false,
 });
 
 exports.handler = async function (event, context, callback) {
