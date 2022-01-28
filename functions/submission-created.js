@@ -1,14 +1,16 @@
 const sanityClient = require("@sanity/client");
 const client = sanityClient({
-  projectId: process.env.sanityProjectId || process.env.SANITY_PROJECT_ID,
-  dataset: process.env.sanityDataset || "production",
-  apiVersion: process.env.sanityApiVersion || "2021-03-25",
-  token: process.env.sanityAccessToken || process.env.SANITY_ACCESS_TOKEN,
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET || "production",
+  apiVersion: process.env.SANITY_API_VERSION || "2021-03-25",
+  token: process.env.SANITY_ACCESS_TOKEN,
   useCdn: false,
 });
 
 exports.handler = async function (event, context, callback) {
   const { payload } = JSON.parse(event.body);
+
+  console.log("payload*******", payload)
 
   const isContactForm = payload.data.formId === "contact-form";
 
@@ -24,6 +26,8 @@ exports.handler = async function (event, context, callback) {
     const result = await client
       .create(contact)
       .catch((err) => console.log(err));
+    
+    console.log("result*******", result)
   }
 
   callback(null, {
