@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import client from "../utils/sanityClient";
 
 const query =
-  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle} | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle} | order(date desc)';
 
 const useStyles = makeStyles((theme) => ({
   citation: {
