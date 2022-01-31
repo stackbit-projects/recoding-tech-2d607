@@ -49,8 +49,8 @@ const Topic = props => {
 
   const [issues, setIssues] = useState(null);
   const [policies, setPolicies] = useState(null);
-  const [readings, setReadings] = useState(null);
-  const [headlines, setHeadlines] = useState(null);
+  const [readings, setReadings] = useState([]);
+  const [headlines, setHeadlines] = useState([]);
   const [actions, setActions] = useState([])
 
   useEffect(() => {
@@ -84,9 +84,9 @@ const Topic = props => {
     ) {
       const [r, h] = page.relatedCommentary.reduce(
         ([r, h], comment) => {
-          if (comment.__metadata && comment.__metadata.modelName === "citation") {
+          if (comment._type === "citation") {
             h.push(comment);
-          } else if (comment.__metadata && comment.__metadata.modelName === "article") {
+          } else if (comment._type === "article") {
             r.push(comment);
           }
           return [r, h];
@@ -95,6 +95,9 @@ const Topic = props => {
       );
       setReadings(r);
       setHeadlines(h);
+      console.log(r);
+      console.log(h);
+
     }
   }, []);
 
@@ -151,7 +154,7 @@ const Topic = props => {
                 <RelatedGuide {...props} /> 
               </Grid>
               <Grid item>
-                <RelatedCommentary commentary={headlines} />
+                <RelatedCommentary commentary={[...headlines, ...readings]} />
               </Grid>
               <Grid item>
                 <RelatedTopics title="Related Issues" topics={issues} />
