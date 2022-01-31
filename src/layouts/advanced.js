@@ -49,9 +49,9 @@ function Advanced(props) {
             <Grid item xs={12} sm={4}>
               <SectionCitations />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <SectionGuides />
-            </Grid>
+              </Grid> */}
           </Grid>
         ) : (
           _.map(_.get(props, "page.sections", null), (section, section_idx) => {
