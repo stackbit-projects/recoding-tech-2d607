@@ -21,9 +21,9 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[_type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics, title, url, websiteTitle} | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics, title, url, websiteTitle} | order(date desc)';
 
-const topicsQuery = '*[_type == "topic"]{_id, name, slug, type}';
+const topicsQuery = '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
 
 const useStyles = makeStyles((theme) => ({
   citation: {
@@ -118,6 +118,7 @@ const SectionSearch = () => {
         }
       }
     });
+
     setIssues(Array.from(newTopics.issue.values()));
     setPolicies(Array.from(newTopics.policy.values()));
     setCompanies(Array.from(newTopics.company.values()));
@@ -129,6 +130,7 @@ const SectionSearch = () => {
   useEffect(() => {
     if (allCitations.length) {
       let newCitations = allCitations;
+      console.log(allCitations);
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
