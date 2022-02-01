@@ -2,7 +2,9 @@ import React from "react";
 import _ from "lodash";
 import { useForm, Controller } from "react-hook-form";
 
+// utils
 import { markdownify } from "../utils";
+import client from "../utils/sanityClient";
 
 // Material UI import
 import { makeStyles } from "@mui/styles";
@@ -27,30 +29,20 @@ export default function SectionForm(props) {
 
   const { handleSubmit, register, control, reset } = useForm();
 
-  /** Transforms the form data from the React Hook Form output
-   * to a format Netlify can read  */
-  const encode = (data) => {
-    return Object.keys(data)
-      .map(
-        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
-      )
-      .join("&");
-  };
-
   const onSubmit = (formData, event) => {
     event.preventDefault();
 
-    fetch(`/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact-form", ...formData }),
-    })
-      .then((response) => {
-        alert("Your message has been submitted. Thank you!");
+    const toSubmit = {
+      _type: "contact_submission", // must match the name of the contact document type on the Sanity schema
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    };
+
+    if (!formData.botField) // submit only if botField is empty string
+      client.create(toSubmit).then((res) => {
+        alert("Thank you for submitting your message to Recoding.Tech!");
         reset();
-      })
-      .catch((error) => {
-        alert("Failed to submit contact form, please try again.", error);
       });
   };
 
@@ -81,7 +73,7 @@ export default function SectionForm(props) {
           <div className="screen-reader-text">
             <label>
               {"Don't fill this out if you're human: "}
-              <input name="bot-field" />
+              <input name="bot-field" {...register("botField")} />
             </label>
           </div>
           <input

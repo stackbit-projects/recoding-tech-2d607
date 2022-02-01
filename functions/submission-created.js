@@ -10,8 +10,6 @@ const client = sanityClient({
 exports.handler = async function (event, context, callback) {
   const { payload } = JSON.parse(event.body);
 
-  console.log("payload*******", payload)
-
   const isContactForm = payload.data.formId === "contact-form";
 
   // Build the document JSON and submit it to SANITY
@@ -26,9 +24,7 @@ exports.handler = async function (event, context, callback) {
     const result = await client
       .create(contact)
       .catch((err) => console.log(err));
-    
-    console.log("result*******", result)
-  }
+      }
 
   callback(null, {
     statusCode: 200,
