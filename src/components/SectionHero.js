@@ -89,7 +89,7 @@ function SectionHero(props) {
             >
               <path
                 d="M705 2H445c-78.4 0-78.4 78.6-156.7 78.6H0V277h288.3c78.3 0 78.3-78.6 156.6-78.6H705V2Z"
-                fill="#B3C1C0"
+                fill="#DFE7E6"
                 opacity=".3"
               />
               <path
