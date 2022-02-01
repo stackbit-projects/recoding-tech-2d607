@@ -83,7 +83,7 @@ const RelatedCommentary = props => {
             ? sortedCommentary.slice(0, 4).map(comment => (
                 <Grid
                   item
-                  key={comment.__metadata.id}
+                  key={comment.__metadata ? comment.__metadata.id : comment._id}
                   className={classes.citation}
                 >
                   <Typography component="div" variant="body1">

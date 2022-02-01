@@ -94,7 +94,7 @@ function Header(props) {
 
   useEffect(() => { }, [issues, policies, countries, companies]);
 
-  const [mobileEl, setMobileEl] = React.useState(null);
+  const [mobileEl, setMobileEl] = useState(null);
   const openMobile = Boolean(mobileEl);
   const handleClickMobile = (event) => {
     setMobileEl(event.currentTarget);
@@ -105,7 +105,7 @@ function Header(props) {
 
   const isMobile = useMediaQuery('(max-width:1244px)');
 
-  const [issueEl, setIssueEl] = React.useState(null);
+  const [issueEl, setIssueEl] = useState(null);
   const openIssue = Boolean(issueEl);
   const handleClickIssue = event => {
     setIssueEl(event.currentTarget);
@@ -114,7 +114,7 @@ function Header(props) {
     setIssueEl(null);
   };
 
-  const [policyEl, setPolicyEl] = React.useState(null);
+  const [policyEl, setPolicyEl] = useState(null);
   const openPolicy = Boolean(policyEl);
   const handleClickPolicy = event => {
     setPolicyEl(event.currentTarget);
@@ -123,7 +123,7 @@ function Header(props) {
     setPolicyEl(null);
   };
 
-  const [countryEl, setCountryEl] = React.useState(null);
+  const [countryEl, setCountryEl] = useState(null);
   const openCountry = Boolean(countryEl);
   const handleClickCountry = event => {
     setCountryEl(event.currentTarget);
@@ -132,7 +132,7 @@ function Header(props) {
     setCountryEl(null);
   };
 
-  const [companyEl, setCompanyEl] = React.useState(null);
+  const [companyEl, setCompanyEl] = useState(null);
   const openCompany = Boolean(companyEl);
   const handleClickCompany = event => {
     setCompanyEl(event.currentTarget);
@@ -169,7 +169,7 @@ function Header(props) {
             justifyContent="flex-end"
           >
             {isMobile ? (
-              <Grid item xs={12} sx={{ textAlign: "right" }}>
+              <Grid item xs={12} sx={{ textAlign: "right" }} id="menu-toggle">
                 <Button
                   id="mobile-menu-button"
                   aria-controls="mobile-menu"
@@ -203,7 +203,7 @@ function Header(props) {
                     p: 2,
                     width: "90vw"
                   }}>
-                    <Typography id="menu-toggle" className={classes.em}>
+                    <Typography className={classes.em}>
                       Explore by...
                     </Typography>
                     <Accordion sx={{
