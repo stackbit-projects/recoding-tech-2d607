@@ -60,7 +60,7 @@ const SectionCitations = () => {
       cites.forEach(citation => {
         allCitations = [...allCitations, citation];
       });
-      setCitations(allCitations.slice(0,5));
+      setCitations(allCitations.slice(0,3));
     });
   }, []);
 
