@@ -45,9 +45,10 @@ const Topic = props => {
   const classes = useStyles();
   const { page } = props;
 
-  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}`;
+  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}") && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 
   const [issues, setIssues] = useState(null);
+  const [loading, setLoading] = useState(true)
   const [policies, setPolicies] = useState(null);
   const [readings, setReadings] = useState([]);
   const [headlines, setHeadlines] = useState([]);
@@ -57,6 +58,7 @@ const Topic = props => {
     page.slug ? 
      client.fetch(policyActionsQuery).then((actions) => {
        setActions(actions)
+       setLoading(false)
       }
     ) : null
 
@@ -95,9 +97,6 @@ const Topic = props => {
       );
       setReadings(r);
       setHeadlines(h);
-      console.log(r);
-      console.log(h);
-
     }
   }, []);
 
@@ -108,10 +107,7 @@ const Topic = props => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          {actions.length ? 
-            <RelatedActions page={page} actions={actions} /> 
-            : null
-          }
+          <RelatedActions page={page} actions={actions} loading={loading} /> 
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (

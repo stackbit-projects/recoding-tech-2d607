@@ -34,8 +34,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const policyActionsQuery = `*[_type == "policy_action"]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
-                            img_alt, img_path, lastUpdate,
+const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
+                            lastUpdate, _id,
                             slug, status, title,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}`;
 

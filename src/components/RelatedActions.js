@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
 
-
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,7 +18,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Typography from "@mui/material/Typography";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -90,9 +90,9 @@ const useStyles = makeStyles((theme) => ({
 
 const RelatedActions = (props) => {
   const classes = useStyles();
-  const { page, actions } = props;
+  const { page, actions, loading } = props;
 
-  const isMobile = useMediaQuery('(max-width:1064px)');
+  const isMobile = useMediaQuery("(max-width:1064px)");
 
   const headers = [
     { id: "title", label: "Name" },
@@ -116,7 +116,13 @@ const RelatedActions = (props) => {
     setCurrent(0);
   };
 
-  return Array.isArray(actions) && actions.length ? (
+  return loading ? (
+    <section>
+      <Grid container item justifyContent="center">
+        <CircularProgress />
+      </Grid>
+    </section>
+  ) : Array.isArray(actions) && actions.length ? (
     <section>
       <Grid
         container
@@ -146,60 +152,140 @@ const RelatedActions = (props) => {
         </Grid>
       </Grid>
       <Box my={4} sx={{ borderTop: "1px solid #000" }}>
-        {isMobile ? actions
-          .slice(
-            current * rowsPerPage,
-            current * rowsPerPage + rowsPerPage
-          )
-          .map((row) => (
-            <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
-              <Grid container>
-                <Grid item xs={12} sx={{ backgroundColor: "#EFE9DA", padding: 2, marginBottom: 2 }}>
-                  <Link
-                    href={`/tracker/${typeof row.slug === "object"
-                      ? row.slug.current
-                      : row.slug
-                      }`}
-                    underline="hover"
-                    variant="h4"
-                    sx={{ color: "#000" }}
+        {isMobile ? (
+          actions
+            .slice(current * rowsPerPage, current * rowsPerPage + rowsPerPage)
+            .map((row) => (
+              <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
+                <Grid container>
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      backgroundColor: "#EFE9DA",
+                      padding: 2,
+                      marginBottom: 2,
+                    }}
                   >
-                    {row.title}
-                  </Link>
+                    <Link
+                      href={`/tracker/${
+                        typeof row.slug === "object"
+                          ? row.slug.current
+                          : row.slug
+                      }`}
+                      underline="hover"
+                      variant="h4"
+                      sx={{ color: "#000" }}
+                    >
+                      {row.title}
+                    </Link>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                    >
+                      Type
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        fontWeight: "normal",
+                        paddingBottom: 2,
+                      }}
+                    >
+                      {row.type}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                    >
+                      Country
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        fontWeight: "normal",
+                        paddingBottom: 2,
+                      }}
+                    >
+                      {row.country.displayTitle}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                    >
+                      Date Initiated
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        fontWeight: "normal",
+                        paddingBottom: 2,
+                      }}
+                    >
+                      {moment(new Date(row.dateInitiated)).strftime(
+                        "%b %d, %Y"
+                      )}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                    >
+                      Status
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        fontWeight: "normal",
+                        paddingBottom: 2,
+                      }}
+                    >
+                      {row.status}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                    >
+                      Last Updated
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        fontWeight: "normal",
+                        paddingBottom: 2,
+                      }}
+                    >
+                      {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Type</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.type}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Country</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.country.displayTitle}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Date Initiated</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(row.dateInitiated)).strftime("%b %d, %Y")}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Status</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{row.status}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Last Updated</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}</Typography>
-                </Grid>
-              </Grid>
-            </Paper>
-          )) : (
+              </Paper>
+            ))
+        ) : (
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table
               aria-label="Law and Regulation Tracker Table"
@@ -249,15 +335,16 @@ const RelatedActions = (props) => {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                                column.id == "lastUpdate" ? (
+                              column.id == "lastUpdate" ? (
                                 moment(new Date(value)).strftime("%b %d, %Y")
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={`/tracker/${typeof row.slug === "object"
-                                    ? row.slug.current
-                                    : row.slug
-                                    }`}
+                                  href={`/tracker/${
+                                    typeof row.slug === "object"
+                                      ? row.slug.current
+                                      : row.slug
+                                  }`}
                                 >
                                   {value}
                                 </Link>
@@ -296,6 +383,7 @@ const RelatedActions = (props) => {
 RelatedActions.propTypes = {
   actions: PropTypes.array,
   page: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
 export default RelatedActions;
