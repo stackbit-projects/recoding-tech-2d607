@@ -86,30 +86,27 @@ export default {
           type: "reference",
           to: [
             {
-              type: "citation"
-            },
-            {
               type: "article"
             }
           ]
         }
       ]
     },
-    {
-      title: "Related reading",
-      name: "relatedReadings",
-      type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [
-            {
-              type: "article"
-            }
-          ]
-        }
-      ]
-    },
+    // {
+    //   title: "Related reading",
+    //   name: "relatedReadings",
+    //   type: "array",
+    //   of: [
+    //     {
+    //       type: "reference",
+    //       to: [
+    //         {
+    //           type: "article"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
     {
       title: "Quick start guide",
       name: "quickStartGuide",

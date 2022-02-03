@@ -47,7 +47,9 @@ const RelatedReadings = props => {
   const classes = useStyles();
 
   const getHandler = article => {
-    const handler = () => Router.push({ pathname: `/article/${article.slug}` });
+    let slug;
+    typeof article.slug === "object" ? slug = article.slug.current : slug = article.slug
+    const handler = () => Router.push({ pathname: `/article/${slug}` });
     return handler;
   };
 
