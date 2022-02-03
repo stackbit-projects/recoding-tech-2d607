@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 import { markdownify } from "../utils";
 import client from "../utils/sanityClient";
 
-
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
@@ -31,17 +30,17 @@ const useStyles = makeStyles(() => ({
     border: "1px solid #000",
     borderRadius: 0,
     overflow: "unset",
-    position: "relative"
+    position: "relative",
   },
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   maxWidth: {
-    maxWidth: "100% !important"
-  }
+    maxWidth: "100% !important",
+  },
 }));
 
-const Topic = props => {
+const Topic = (props) => {
   const classes = useStyles();
   const { page } = props;
 
@@ -51,14 +50,14 @@ const Topic = props => {
   const [policies, setPolicies] = useState(null);
   const [readings, setReadings] = useState([]);
   const [headlines, setHeadlines] = useState([]);
-  const [actions, setActions] = useState([])
+  const [actions, setActions] = useState([]);
 
   useEffect(() => {
-    page.slug ? 
-     client.fetch(policyActionsQuery).then((actions) => {
-       setActions(actions)
-      }
-    ) : null
+    page.slug
+      ? client.fetch(policyActionsQuery).then((actions) => {
+          setActions(actions);
+        })
+      : null;
 
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
       if (page.type === "issue" || page.type === "policy") {
@@ -78,27 +77,6 @@ const Topic = props => {
       }
     }
 
-    if (
-      Array.isArray(page.relatedCommentary) &&
-      page.relatedCommentary.length
-    ) {
-      const [r, h] = page.relatedCommentary.reduce(
-        ([r, h], comment) => {
-          if (comment._type === "citation") {
-            h.push(comment);
-          } else if (comment._type === "article") {
-            r.push(comment);
-          }
-          return [r, h];
-        },
-        [[], []]
-      );
-      setReadings(r);
-      setHeadlines(h);
-      console.log(r);
-      console.log(h);
-
-    }
   }, []);
 
   useEffect(() => {}, [issues, headlines, policies, readings]);
@@ -108,10 +86,9 @@ const Topic = props => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          {actions.length ? 
-            <RelatedActions page={page} actions={actions} /> 
-            : null
-          }
+          {actions.length ? (
+            <RelatedActions page={page} actions={actions} />
+          ) : null}
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (
@@ -137,25 +114,28 @@ const Topic = props => {
               )}
 
               <Grid item className={classes.maxWidth}>
-                <Typography component="div" variant="body1" className="html-to-react">
+                <Typography
+                  component="div"
+                  variant="body1"
+                  className="html-to-react"
+                >
                   {markdownify(page.topicDescription)}
                 </Typography>
-                {(readings && readings.length) ||
-                (page.relatedReadings && page.relatedReadings.length) ? (
+                {page.relatedCommentary && page.relatedCommentary.length ? (
                   <RelatedReadings
                     page={page}
-                    readings={readings ? readings : page.relatedReadings}
+                    readings={page.relatedCommentary}
                   />
                 ) : null}
               </Grid>
             </Grid>
             <Grid container spacing={4} direction="column" item sm={12} md={4}>
               <Grid item>
-                <RelatedGuide {...props} /> 
+                <RelatedGuide {...props} />
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <RelatedCommentary commentary={[...headlines, ...readings]} />
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <RelatedTopics title="Related Issues" topics={issues} />
                 <RelatedTopics title="Related Policies" topics={policies} />
@@ -169,7 +149,7 @@ const Topic = props => {
 };
 
 Topic.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default Topic;
