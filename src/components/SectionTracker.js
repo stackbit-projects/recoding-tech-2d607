@@ -542,6 +542,7 @@ function SectionTracker(props) {
                 </TableHead>
                 <TableBody>
                   {actions
+                    .sort((a,b) => a.lastUpdate < b.lastUpdate)
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       return (
