@@ -12,6 +12,8 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (window.onNextjsRouteChangeComplete) {
+      console.log(window.onNextjsRouteChangeComplete());
+    
       window.onNextjsRouteChangeComplete();
     }
 
