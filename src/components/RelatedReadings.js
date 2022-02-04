@@ -73,7 +73,7 @@ const RelatedReadings = props => {
             variant="body1"
             sx={{ fontStyle: "italic" }}
           >
-            The latest thinking about{" "}
+            Our latest thinking about{" "}
             {page.displayTitle ? page.displayTitle : page.title}
           </Typography>
           <Box mt={4}>
