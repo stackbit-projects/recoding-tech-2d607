@@ -151,9 +151,9 @@ const Topic = (props) => {
               <Grid item>
                 <RelatedGuide {...props} />
               </Grid>
-              {/* <Grid item>
+              <Grid item>
                 <RelatedCommentary commentary={[...headlines, ...readings]} />
-              </Grid> */}
+              </Grid>
               <Grid item>
                 <RelatedTopics title="Related Issues" topics={issues} />
                 <RelatedTopics title="Related Policies" topics={policies} />
