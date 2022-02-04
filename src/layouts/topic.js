@@ -79,7 +79,6 @@ const Topic = (props) => {
       }
     }
 
-<<<<<<< HEAD
     if (
       Array.isArray(page.relatedCommentary) &&
       page.relatedCommentary.length
@@ -98,8 +97,6 @@ const Topic = (props) => {
       setReadings(r);
       setHeadlines(h);
     }
-=======
->>>>>>> master
   }, []);
 
   useEffect(() => {}, [issues, headlines, policies, readings]);
@@ -109,13 +106,7 @@ const Topic = (props) => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-<<<<<<< HEAD
           <RelatedActions page={page} actions={actions} loading={loading} /> 
-=======
-          {actions.length ? (
-            <RelatedActions page={page} actions={actions} />
-          ) : null}
->>>>>>> master
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (
