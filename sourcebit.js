@@ -62,47 +62,30 @@ module.exports = {
           },
         ],
         commonProps: (items) => {
-          // let pages = [];
-          // const basicPages = _.filter(items, item =>
-          //   [
-          //     "advanced",
-          //     "article",
-          //     "page",
-          //     "policyAction",
-          //     "post",
-          //     "guide"
-          //   ].includes(_.get(item, "__metadata.modelName"))
-          // );
-          // const topicsPages = items.filter(
-          //   item =>
-          //     item.__metadata.modelName === "topic" &&
-          //     item.stackbit_model_type === "page"
-          // );
-
-          // pages = [...pages, basicPages, topicsPages];
-
-          // pages = pages.flat();
-
-          // const guides = _.filter(items, item =>
-          //   ["guide"].includes(_.get(item, "__metadata.modelName"))
-          // );
-
           return {
-            // pages: pages,
-            // guides: guides,
-            // citations: items.filter(item =>
-            //   ["citation"].includes(_.get(item, "__metadata.modelName"))
-            // ),
-            // actions: items.filter(item =>
-            //   ["policy_action"].includes(_.get(item, "__metadata.modelName"))
-            // ),
-            // topics: items.filter(item =>
-            //   ["topic"].includes(_.get(item, "__metadata.modelName"))
-            // ),
             data: {
               config: _.find(
                 items,
                 _.matchesProperty("__metadata.modelName", "config")
+              ),
+              topics: _.reduce(
+                items,
+                (acc, item) => {
+                  if (
+                    item.__metadata &&
+                    item.__metadata.modelName === "topic" &&
+                    item.stackbit_model_type === "page"
+                  ) {
+                    acc.push({
+                      displayTitle: item.displayTitle,
+                      link: item.link,
+                      slug: item.slug,
+                      type: item.type,
+                    });
+                  }
+                  return acc;
+                },
+                []
               ),
             },
           };

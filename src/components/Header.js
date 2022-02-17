@@ -2,97 +2,80 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-// utils
-import client from "../utils/sanityClient";
-
 // material ui imports
 import { makeStyles, useTheme } from "@mui/styles";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Popover from '@mui/material/Popover';
+import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { visuallyHidden } from '@mui/utils';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { visuallyHidden } from "@mui/utils";
 
 // material ui icons
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
 // component imports
 import Logo from "./Logo";
-import { getPolicies } from "../utils";
-
-/** query to get topics in the db that have been published as a page 
- * && is not a draft */
-const query =
-  '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{displayTitle, link, slug, type}';
-
-let topics = [];
-
-client.fetch(query).then(allTopics => {
-  allTopics.forEach(topic => {
-    topics = [...topics, topic];
-  });
-});
 
 const useStyles = makeStyles(() => ({
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   header: {},
   link: {
     color: "#000 !important",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   logoLink: {
     color: "unset",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   nav: {},
   svg: {
     display: "block",
     maxHeight: 20,
     maxWidth: 20,
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
-function Header(props) {
+const Header = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { page } = props;
-  const [issues, setIssues] = useState(null);
-  const [policies, setPolicies] = useState(null);
-  const [countries, setCountries] = useState(null);
-  const [companies, setCompanies] = useState(null);
+  const { page, data } = props;
 
-  useEffect(() => {
-    if (topics) {
-      const topicIssues = topics.filter(topic => topic.type == "issue");
-      setIssues(topicIssues);
-
-      const topicPolicies = topics.filter(topic => topic.type == "policy");
-      setPolicies(topicPolicies);
-
-      const topicCountries = topics.filter(topic => topic.type == "country");
-      setCountries(topicCountries);
-
-      const topicCompanies = topics.filter(topic => topic.type == "company");
-      setCompanies(topicCompanies);
-    }
-  }, [topics]);
-
-  useEffect(() => { }, [issues, policies, countries, companies]);
+  const [issues, policies, countries, companies] = data.topics.reduce(
+    ([issues, policies, countries, companies], topic) => {
+      switch (topic.type) {
+        case "issue":
+          issues.push(topic);
+          break;
+        case "policy":
+          policies.push(topic);
+          break;
+        case "country":
+          countries.push(topic);
+          break;
+        case "company":
+          companies.push(topic);
+          break;
+        default:
+          break;
+      }
+      return [issues, policies, countries, companies];
+    },
+    [[], [], [], []]
+  );
 
   const [mobileEl, setMobileEl] = useState(null);
   const openMobile = Boolean(mobileEl);
@@ -103,11 +86,11 @@ function Header(props) {
     setMobileEl(null);
   };
 
-  const isMobile = useMediaQuery('(max-width:1244px)');
+  const isMobile = useMediaQuery("(max-width:1244px)");
 
   const [issueEl, setIssueEl] = useState(null);
   const openIssue = Boolean(issueEl);
-  const handleClickIssue = event => {
+  const handleClickIssue = (event) => {
     setIssueEl(event.currentTarget);
   };
   const handleCloseIssue = () => {
@@ -116,7 +99,7 @@ function Header(props) {
 
   const [policyEl, setPolicyEl] = useState(null);
   const openPolicy = Boolean(policyEl);
-  const handleClickPolicy = event => {
+  const handleClickPolicy = (event) => {
     setPolicyEl(event.currentTarget);
   };
   const handleClosePolicy = () => {
@@ -125,7 +108,7 @@ function Header(props) {
 
   const [countryEl, setCountryEl] = useState(null);
   const openCountry = Boolean(countryEl);
-  const handleClickCountry = event => {
+  const handleClickCountry = (event) => {
     setCountryEl(event.currentTarget);
   };
   const handleCloseCountry = () => {
@@ -134,7 +117,7 @@ function Header(props) {
 
   const [companyEl, setCompanyEl] = useState(null);
   const openCompany = Boolean(companyEl);
-  const handleClickCompany = event => {
+  const handleClickCompany = (event) => {
     setCompanyEl(event.currentTarget);
   };
   const handleCloseCompany = () => {
@@ -148,7 +131,7 @@ function Header(props) {
         backgroundColor:
           page.type && theme.palette[page.type]
             ? theme.palette[page.type].main
-            : theme.palette.secondary.main
+            : theme.palette.secondary.main,
       }}
     >
       <Box p={4}>
@@ -177,12 +160,10 @@ function Header(props) {
                   aria-expanded={openMobile ? "true" : undefined}
                   onClick={handleClickMobile}
                 >
-                  {openMobile ? (
-                    <CloseIcon />
-                  ) : (
-                    <MenuIcon />
-                  )}
-                  <Typography sx={visuallyHidden}>Open or Close Menu</Typography>
+                  {openMobile ? <CloseIcon /> : <MenuIcon />}
+                  <Typography sx={visuallyHidden}>
+                    Open or Close Menu
+                  </Typography>
                 </Button>
                 <Popover
                   id="mobile-menu"
@@ -190,32 +171,42 @@ function Header(props) {
                   anchorEl={mobileEl}
                   onClose={handleCloseMobile}
                   anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: "bottom",
+                    horizontal: "left",
                   }}
                   sx={{ mt: 2 }}
                 >
-                  <Box sx={{
-                    backgroundColor:
-                      page.type && theme.palette[page.type]
-                        ? theme.palette[page.type].main
-                        : theme.palette.secondary.main,
-                    p: 2,
-                    width: "90vw"
-                  }}>
-                    <Typography className={classes.em}>
-                      Explore by...
-                    </Typography>
-                    <Accordion sx={{
+                  <Box
+                    sx={{
                       backgroundColor:
                         page.type && theme.palette[page.type]
                           ? theme.palette[page.type].main
                           : theme.palette.secondary.main,
-                      border: "none",
-                      boxShadow: "none"
-                    }}>
-                      <AccordionSummary sx={{ display: "flex", marginLeft: 10, }}>
-                        <Typography component="span" variant="h4" sx={{ textTransform: "none" }}>
+                      p: 2,
+                      width: "90vw",
+                    }}
+                  >
+                    <Typography className={classes.em}>
+                      Explore by...
+                    </Typography>
+                    <Accordion
+                      sx={{
+                        backgroundColor:
+                          page.type && theme.palette[page.type]
+                            ? theme.palette[page.type].main
+                            : theme.palette.secondary.main,
+                        border: "none",
+                        boxShadow: "none",
+                      }}
+                    >
+                      <AccordionSummary
+                        sx={{ display: "flex", marginLeft: 10 }}
+                      >
+                        <Typography
+                          component="span"
+                          variant="h4"
+                          sx={{ textTransform: "none" }}
+                        >
                           Issue
                         </Typography>
                         {openIssue ? (
@@ -226,35 +217,43 @@ function Header(props) {
                       </AccordionSummary>
                       <AccordionDetails>
                         {issues && issues.length
-                          ? issues.map(issue => (
-                            <Typography
-                              key={issue.slug.current}
-                              onClick={handleCloseIssue}
-                              component="div"
-                              variant="h4"
-                              sx={{ marginLeft: 16, textTransform: "none" }}
-                            >
-                              <Link
-                                href={`/issue/${issue.slug.current}`}
-                                className={classes.link}
+                          ? issues.map((issue) => (
+                              <Typography
+                                key={issue.slug}
+                                onClick={handleCloseIssue}
+                                component="div"
+                                variant="h4"
+                                sx={{ marginLeft: 16, textTransform: "none" }}
                               >
-                                {issue.displayTitle}
-                              </Link>
-                            </Typography>
-                          ))
+                                <Link
+                                  href={`/issue/${issue.slug}`}
+                                  className={classes.link}
+                                >
+                                  {issue.displayTitle}
+                                </Link>
+                              </Typography>
+                            ))
                           : null}
                       </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{
-                      backgroundColor:
-                        page.type && theme.palette[page.type]
-                          ? theme.palette[page.type].main
-                          : theme.palette.secondary.main,
-                      border: "none",
-                      boxShadow: "none"
-                    }}>
-                      <AccordionSummary sx={{ display: "flex", marginLeft: 10, }}>
-                        <Typography component="span" variant="h4" sx={{ textTransform: "none" }}>
+                    <Accordion
+                      sx={{
+                        backgroundColor:
+                          page.type && theme.palette[page.type]
+                            ? theme.palette[page.type].main
+                            : theme.palette.secondary.main,
+                        border: "none",
+                        boxShadow: "none",
+                      }}
+                    >
+                      <AccordionSummary
+                        sx={{ display: "flex", marginLeft: 10 }}
+                      >
+                        <Typography
+                          component="span"
+                          variant="h4"
+                          sx={{ textTransform: "none" }}
+                        >
                           Policy
                         </Typography>
                         {openPolicy ? (
@@ -265,36 +264,44 @@ function Header(props) {
                       </AccordionSummary>
                       <AccordionDetails>
                         {policies && policies.length
-                          ? policies.map(policy => (
-                            <Typography
-                              key={policy.slug.current}
-                              onClick={handleClosePolicy}
-                              component="div"
-                              variant="h4"
-                              sx={{ marginLeft: 16, textTransform: "none" }}
-                            >
-                              <Link
-                                href={`/policy/${policy.slug.current}`}
-                                className={classes.link}
+                          ? policies.map((policy) => (
+                              <Typography
+                                key={policy.slug}
+                                onClick={handleClosePolicy}
+                                component="div"
+                                variant="h4"
+                                sx={{ marginLeft: 16, textTransform: "none" }}
                               >
-                                {policy.displayTitle}
-                              </Link>
-                            </Typography>
-                          ))
+                                <Link
+                                  href={`/policy/${policy.slug}`}
+                                  className={classes.link}
+                                >
+                                  {policy.displayTitle}
+                                </Link>
+                              </Typography>
+                            ))
                           : null}
                       </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{
-                      backgroundColor:
-                        page.type && theme.palette[page.type]
-                          ? theme.palette[page.type].main
-                          : theme.palette.secondary.main,
-                      border: "none",
-                      boxShadow: "none"
-                    }}>
-                      <AccordionSummary sx={{ display: "flex", marginLeft: 10, }}>
-                        <Typography component="span" variant="h4" sx={{ textTransform: "none" }}>
-                          Country
+                    <Accordion
+                      sx={{
+                        backgroundColor:
+                          page.type && theme.palette[page.type]
+                            ? theme.palette[page.type].main
+                            : theme.palette.secondary.main,
+                        border: "none",
+                        boxShadow: "none",
+                      }}
+                    >
+                      <AccordionSummary
+                        sx={{ display: "flex", marginLeft: 10 }}
+                      >
+                        <Typography
+                          component="span"
+                          variant="h4"
+                          sx={{ textTransform: "none" }}
+                        >
+                          Government
                         </Typography>
                         {openCountry ? (
                           <KeyboardArrowUpIcon />
@@ -304,35 +311,43 @@ function Header(props) {
                       </AccordionSummary>
                       <AccordionDetails>
                         {countries && countries.length
-                          ? countries.map(country => (
-                            <Typography
-                              key={country.slug.current}
-                              onClick={handleCloseCountry}
-                              component="div"
-                              variant="h4"
-                              sx={{ marginLeft: 16, textTransform: "none" }}
-                            >
-                              <Link
-                                href={`/country/${country.slug.current}`}
-                                className={classes.link}
+                          ? countries.map((country) => (
+                              <Typography
+                                key={country.slug}
+                                onClick={handleCloseCountry}
+                                component="div"
+                                variant="h4"
+                                sx={{ marginLeft: 16, textTransform: "none" }}
                               >
-                                {country.displayTitle}
-                              </Link>
-                            </Typography>
-                          ))
+                                <Link
+                                  href={`/country/${country.slug}`}
+                                  className={classes.link}
+                                >
+                                  {country.displayTitle}
+                                </Link>
+                              </Typography>
+                            ))
                           : null}
                       </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{
-                      backgroundColor:
-                        page.type && theme.palette[page.type]
-                          ? theme.palette[page.type].main
-                          : theme.palette.secondary.main,
-                      border: "none",
-                      boxShadow: "none"
-                    }}>
-                      <AccordionSummary sx={{ display: "flex", marginLeft: 10, }}>
-                        <Typography component="span" variant="h4" sx={{ textTransform: "none" }}>
+                    <Accordion
+                      sx={{
+                        backgroundColor:
+                          page.type && theme.palette[page.type]
+                            ? theme.palette[page.type].main
+                            : theme.palette.secondary.main,
+                        border: "none",
+                        boxShadow: "none",
+                      }}
+                    >
+                      <AccordionSummary
+                        sx={{ display: "flex", marginLeft: 10 }}
+                      >
+                        <Typography
+                          component="span"
+                          variant="h4"
+                          sx={{ textTransform: "none" }}
+                        >
                           Company
                         </Typography>
                         {openCompany ? (
@@ -343,28 +358,27 @@ function Header(props) {
                       </AccordionSummary>
                       <AccordionDetails>
                         {companies && companies.length
-                          ? companies.map(company => (
-                            <Typography
-                              key={company.slug.current}
-                              onClick={handleCloseCompany}
-                              component="div"
-                              variant="h4"
-                              sx={{ marginLeft: 16, textTransform: "none" }}
-                            >
-                              <Link
-                                href={`/company/${company.slug.current}`}
-                                className={classes.link}
+                          ? companies.map((company) => (
+                              <Typography
+                                key={company.slug}
+                                onClick={handleCloseCompany}
+                                component="div"
+                                variant="h4"
+                                sx={{ marginLeft: 16, textTransform: "none" }}
                               >
-                                {company.displayTitle}
-                              </Link>
-                            </Typography>
-                          ))
+                                <Link
+                                  href={`/company/${company.slug}`}
+                                  className={classes.link}
+                                >
+                                  {company.displayTitle}
+                                </Link>
+                              </Typography>
+                            ))
                           : null}
                       </AccordionDetails>
                     </Accordion>
                   </Box>
                 </Popover>
-
               </Grid>
             ) : (
               <>
@@ -403,23 +417,23 @@ function Header(props) {
                       open={openIssue}
                       onClose={handleCloseIssue}
                       MenuListProps={{
-                        "aria-labelledby": "issue-button"
+                        "aria-labelledby": "issue-button",
                       }}
                     >
                       {issues && issues.length
-                        ? issues.map(issue => (
-                          <MenuItem
-                            key={issue.slug.current}
-                            onClick={handleCloseIssue}
-                          >
-                            <Link
-                              href={`/issue/${issue.slug.current}`}
-                              className={classes.link}
+                        ? issues.map((issue) => (
+                            <MenuItem
+                              key={issue.slug}
+                              onClick={handleCloseIssue}
                             >
-                              {issue.displayTitle}
-                            </Link>
-                          </MenuItem>
-                        ))
+                              <Link
+                                href={`/issue/${issue.slug}`}
+                                className={classes.link}
+                              >
+                                {issue.displayTitle}
+                              </Link>
+                            </MenuItem>
+                          ))
                         : null}
                     </Menu>
                   </Grid>
@@ -444,23 +458,23 @@ function Header(props) {
                       open={openPolicy}
                       onClose={handleClosePolicy}
                       MenuListProps={{
-                        "aria-labelledby": "policy-button"
+                        "aria-labelledby": "policy-button",
                       }}
                     >
                       {policies && policies.length
-                        ? policies.map(policy => (
-                          <MenuItem
-                            key={policy.slug.current}
-                            onClick={handleCloseIssue}
-                          >
-                            <Link
-                              href={`/policy/${policy.slug.current}`}
-                              className={classes.link}
+                        ? policies.map((policy) => (
+                            <MenuItem
+                              key={policy.slug}
+                              onClick={handleCloseIssue}
                             >
-                              {policy.displayTitle}
-                            </Link>
-                          </MenuItem>
-                        ))
+                              <Link
+                                href={`/policy/${policy.slug}`}
+                                className={classes.link}
+                              >
+                                {policy.displayTitle}
+                              </Link>
+                            </MenuItem>
+                          ))
                         : null}
                     </Menu>
                   </Grid>
@@ -472,7 +486,7 @@ function Header(props) {
                       aria-expanded={openCountry ? "true" : undefined}
                       onClick={handleClickCountry}
                     >
-                      Country
+                      Government
                       {openCountry ? (
                         <KeyboardArrowUpIcon />
                       ) : (
@@ -485,23 +499,23 @@ function Header(props) {
                       open={openCountry}
                       onClose={handleCloseCountry}
                       MenuListProps={{
-                        "aria-labelledby": "country-button"
+                        "aria-labelledby": "country-button",
                       }}
                     >
                       {countries && countries.length
-                        ? countries.map(country => (
-                          <MenuItem
-                            key={country.slug.current}
-                            onClick={handleCloseIssue}
-                          >
-                            <Link
-                              href={`/country/${country.slug.current}`}
-                              className={classes.link}
+                        ? countries.map((country) => (
+                            <MenuItem
+                              key={country.slug}
+                              onClick={handleCloseIssue}
                             >
-                              {country.displayTitle}
-                            </Link>
-                          </MenuItem>
-                        ))
+                              <Link
+                                href={`/country/${country.slug}`}
+                                className={classes.link}
+                              >
+                                {country.displayTitle}
+                              </Link>
+                            </MenuItem>
+                          ))
                         : null}
                     </Menu>
                   </Grid>
@@ -526,23 +540,23 @@ function Header(props) {
                       open={openCompany}
                       onClose={handleCloseCompany}
                       MenuListProps={{
-                        "aria-labelledby": "company-button"
+                        "aria-labelledby": "company-button",
                       }}
                     >
                       {companies && companies.length
-                        ? companies.map(company => (
-                          <MenuItem
-                            key={company.slug.current}
-                            onClick={handleCloseIssue}
-                          >
-                            <Link
-                              href={`/company/${company.slug.current}`}
-                              className={classes.link}
+                        ? companies.map((company) => (
+                            <MenuItem
+                              key={company.slug}
+                              onClick={handleCloseIssue}
                             >
-                              {company.displayTitle}
-                            </Link>
-                          </MenuItem>
-                        ))
+                              <Link
+                                href={`/company/${company.slug}`}
+                                className={classes.link}
+                              >
+                                {company.displayTitle}
+                              </Link>
+                            </MenuItem>
+                          ))
                         : null}
                     </Menu>
                   </Grid>
@@ -578,11 +592,13 @@ function Header(props) {
       </Box>
     </header>
   );
-}
+};
 
 Header.propTypes = {
-  topics: PropTypes.array,
-  page: PropTypes.object
+  data: PropTypes.shape({
+    topics: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }),
+  page: PropTypes.object.isRequired,
 };
 
 export default Header;
