@@ -15,31 +15,12 @@ const client = sanityClient({
   useCdn: false, // We can't use the CDN for writing
 });
 
-const flatten = (arr) => {
-  if (arr) {
-    arr = arr.reduce((flat, toFlatten) => {
-      return flat.concat(
-        Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
-      );
-    }, []);
-    return arr.filter(
-      (item, index, self) =>
-        index ===
-        self.findIndex((a) => {
-          if (item !== undefined && a !== undefined) {
-            return a._id === item._id;
-          }
-        })
-    );
-  }
-};
-
 const transform = ([creators, tags, citations], externalCitation, idx) => {
   console.log(`Found citation ${externalCitation.key}`);
 
   if (externalCitation.data.itemType != "attachment") {
     if (externalCitation.data.creators) {
-      externalCitation.data.creators.map((creator, index) => {
+      externalCitation.data.creators.forEach((creator, index) => {
         const date = new Date();
         const now = date.getMilliseconds().toString();
         if (!creator.firstName || !creator.lastName) {
@@ -48,49 +29,65 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
           );
           return;
         }
-        const item = {
+        const id = `creator-${creator.lastName.replace(
+          /[^A-Z0-9]/gi,
+          "-"
+        )}-${creator.firstName.replace(/[^A-Z0-9]/gi, "-")}`;
+        const item = creators.get(id) || {
           _type: "creator",
-          _id: `creator-${creator.lastName.replace(
-            /[^A-Z0-9]/gi,
-            "-"
-          )}-${creator.firstName.replace(/[^A-Z0-9]/gi, "-")}`,
+          _id: id,
           _key: `creator-${now}-${idx}-${index}`,
           firstName: creator.firstName,
           lastName: creator.lastName,
           creatorType: creator.creatorType,
+          relatedCitations: [],
         };
-        return creators.push(item);
+        item.relatedCitations.push({
+          _type: "reference",
+          _ref: externalCitation.key,
+          _key: `ref-citation-${now}-${idx}-${index}`,
+          _weak: true,
+        });
+        return creators.set(id, item);
       });
     }
 
     if (externalCitation.data.tags) {
-      externalCitation.data.tags.map((tag, index) => {
+      externalCitation.data.tags.forEach((tag, index) => {
         if (tag.tag) {
           const date = new Date();
           const now = date.getMilliseconds().toString();
-          const item = {
+          const id = tag.tag.replace(/[^A-Z0-9]/gi, "-");
+          const item = tags.get(id) || {
             _type: "topic",
-            _id: tag.tag.replace(/[^A-Z0-9]/gi, "-"),
+            _id: id,
             _key: `topic-${now}-${idx}-${index}`,
             name: tag.tag,
+            relatedCitations: [],
           };
-          return tags.push(item);
+          item.relatedCitations.push({
+            _type: "reference",
+            _ref: externalCitation.key,
+            _key: `ref-citation-${now}-${idx}-${index}`,
+            _weak: true,
+          });
+          return tags.set(id, item);
         }
       });
     }
 
-    citations.push({
+    citations.set(externalCitation.key, {
       _id: externalCitation.key,
       _type: "citation",
       shortTitle: externalCitation.data.shortTitle,
       title: externalCitation.data.title,
       date: externalCitation.meta.parsedDate,
-      creators: creators.map((i, idx) => ({
+      creators: Array.from(creators.values()).forEach((i, idx) => ({
         _type: "reference",
         _ref: i._id,
         _key: `ref-creator-${idx}`,
       })),
-      topics: tags.map((i, idx) => ({
+      topics: Array.from(tags.values()).forEach((i, idx) => ({
         _type: "reference",
         _ref: i._id,
         _key: `ref-topic-${idx}`,
@@ -106,7 +103,7 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
       chicagoCitation: externalCitation.citation,
     });
   }
-  return [creators, tags, citations, raw];
+  return [creators, tags, citations];
 };
 
 async function fetchBackoff(url, options) {
@@ -130,14 +127,9 @@ function zoteroUrl(start, limit) {
 }
 
 const commit = async (documents, type) => {
-  if (documents.length > 0) {
-    const dedup = new Map();
-    documents.forEach((document) => {
-      dedup.set(document._id, document);
-    });
-    const deduped = Array.from(dedup.values());
-    console.log(`Deduplicated down to ${deduped.length} ${type} records.`);
+  if (documents.size > 0) {
     let processed = 0;
+    const deduped = Array.from(documents.values());
     do {
       const batch = deduped.slice(processed, processed + BATCH_SIZE - 1);
       const transaction = client.transaction();
@@ -160,9 +152,9 @@ const commit = async (documents, type) => {
 
 async function fetchAllCitations() {
   let finished = false;
-  let creators = [];
-  let tags = [];
-  let citations = [];
+  let creators = new Map();
+  let tags = new Map();
+  let citations = new Map();
   let start = 0;
   let limit = 25;
 
@@ -184,21 +176,15 @@ async function fetchAllCitations() {
         console.log(`Parsing batch starting at ${start}...`);
         start += results.length;
         if (results.length < limit) finished = true;
-        return results.reduce(transform, [[], [], []]);
-      })
-      .then(([cr, ta, ci]) => {
-        // docs is now an array of [creators, tags, citation], so we need to flatten it
-        creators = creators.concat(flatten(cr));
-        tags = tags.concat(flatten(ta));
-        citations = citations.concat(flatten(ci));
+        return results.reduce(transform, [creators, tags, citations]);
       })
       .catch((error) => {
         console.error(error);
       });
   }
-  console.log(`Fetched ${creators.length} creators.`);
-  console.log(`Fetched ${tags.length} tags.`);
-  console.log(`Fetched ${citations.length} citations.`);
+  console.log(`Fetched ${creators.size} creators.`);
+  console.log(`Fetched ${tags.size} tags.`);
+  console.log(`Fetched ${citations.size} citations.`);
 
   try {
     await commit(creators, "creators");
