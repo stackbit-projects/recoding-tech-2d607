@@ -7,7 +7,7 @@ import moment from "moment-strftime";
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,7 +15,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -81,12 +81,12 @@ const TrackerActions = (props) => {
   const classes = useStyles();
   const { page } = props;
 
-  const isMobile = useMediaQuery('(max-width:1064px)');
+  const isMobile = useMediaQuery("(max-width:1064px)");
 
   const headers = [
     { id: "title", label: "Name" },
     { id: "type", label: "Type" },
-    { id: "country.displayTitle", label: "Country" },
+    { id: "country.displayTitle", label: "Government" },
     { id: "dateInitiated", label: "Date Initiated" },
     { id: "status", label: "Status" },
     { id: "lastUpdate", label: "Last Updated" },
@@ -101,50 +101,125 @@ const TrackerActions = (props) => {
         </Link>
       </Typography>
       {isMobile ? (
-          <Paper elevation={0} sx={{ marginBottom: 4 }}>
-            <Grid container>
-              <Grid item xs={12} sx={{ backgroundColor: "#EFE9DA", padding: 2, marginBottom: 2 }}>
-                <Typography
-                  component="div"
-                  variant="h4"
-                  sx={{ color: "#000", marginBottom: 0 }}
-                >
-                  {page.title}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Type</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{page.type}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Country</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{page.country ? page.country.displayTitle : ""}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Date Initiated</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Status</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{page.status}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}>Last Updated</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h4" sx={{ borderBottom: "1px solid #ccc", fontWeight: "normal", paddingBottom: 2 }}>{moment(new Date(page.lastUpdate)).strftime("%b %d, %Y")}</Typography>
-              </Grid>
+        <Paper elevation={0} sx={{ marginBottom: 4 }}>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              sx={{ backgroundColor: "#EFE9DA", padding: 2, marginBottom: 2 }}
+            >
+              <Typography
+                component="div"
+                variant="h4"
+                sx={{ color: "#000", marginBottom: 0 }}
+              >
+                {page.title}
+              </Typography>
             </Grid>
-          </Paper>
-        ) : (<TableContainer sx={{ maxHeight: 440 }}>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+              >
+                Type
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{
+                  borderBottom: "1px solid #ccc",
+                  fontWeight: "normal",
+                  paddingBottom: 2,
+                }}
+              >
+                {page.type}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+              >
+                Government
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{
+                  borderBottom: "1px solid #ccc",
+                  fontWeight: "normal",
+                  paddingBottom: 2,
+                }}
+              >
+                {page.country ? page.country.displayTitle : ""}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+              >
+                Date Initiated
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{
+                  borderBottom: "1px solid #ccc",
+                  fontWeight: "normal",
+                  paddingBottom: 2,
+                }}
+              >
+                {moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+              >
+                Status
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{
+                  borderBottom: "1px solid #ccc",
+                  fontWeight: "normal",
+                  paddingBottom: 2,
+                }}
+              >
+                {page.status}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+              >
+                Last Updated
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                variant="h4"
+                sx={{
+                  borderBottom: "1px solid #ccc",
+                  fontWeight: "normal",
+                  paddingBottom: 2,
+                }}
+              >
+                {moment(new Date(page.lastUpdate)).strftime("%b %d, %Y")}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+      ) : (
+        <TableContainer sx={{ maxHeight: 440 }}>
           <Table
             aria-label="Law and Regulation Tracker Table"
             className={classes.table}
@@ -177,7 +252,6 @@ const TrackerActions = (props) => {
           </Table>
         </TableContainer>
       )}
-
     </>
   );
 };
