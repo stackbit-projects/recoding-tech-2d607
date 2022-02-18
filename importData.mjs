@@ -37,6 +37,8 @@ const flatten = (arr) => {
 const transform = ([creators, tags, citations], externalCitation, idx) => {
   console.log(`Found citation ${externalCitation.key}`);
 
+  const localCreators = [];
+  const localTags = [];
   if (externalCitation.data.itemType != "attachment") {
     if (externalCitation.data.creators) {
       externalCitation.data.creators.map((creator, index) => {
@@ -59,7 +61,7 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
           lastName: creator.lastName,
           creatorType: creator.creatorType,
         };
-        return creators.push(item);
+        return localCreators.push(item);
       });
     }
 
@@ -74,7 +76,7 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
             _key: `topic-${now}-${idx}-${index}`,
             name: tag.tag,
           };
-          return tags.push(item);
+          return localTags.push(item);
         }
       });
     }
@@ -85,12 +87,12 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
       shortTitle: externalCitation.data.shortTitle,
       title: externalCitation.data.title,
       date: externalCitation.meta.parsedDate,
-      creators: creators.map((i, idx) => ({
+      creators: localCreators.map((i, idx) => ({
         _type: "reference",
         _ref: i._id,
         _key: `ref-creator-${idx}`,
       })),
-      topics: tags.map((i, idx) => ({
+      topics: localTags.map((i, idx) => ({
         _type: "reference",
         _ref: i._id,
         _key: `ref-topic-${idx}`,
@@ -106,7 +108,7 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
       chicagoCitation: externalCitation.citation,
     });
   }
-  return [creators, tags, citations];
+  return [creators.concat(localCreators), tags.concat(localTags), citations];
 };
 
 async function fetchBackoff(url, options) {
