@@ -18,19 +18,19 @@ export default {
       name: "creatorType",
       title: "Type",
     },
-    {
-      title: "Related citations",
-      name: "relatedCitations",
-      type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "citation" }],
-          weak: true,
-          readOnly: true,
-        },
-      ],
-    },
+    //{
+    //  title: "Related citations",
+    //  name: "relatedCitations",
+    //  type: "array",
+    //  of: [
+    //    {
+    //      type: "reference",
+    //      to: [{ type: "citation" }],
+    //      weak: true,
+    //      readOnly: true,
+    //    },
+    //  ],
+    //},
   ],
   preview: {
     select: {

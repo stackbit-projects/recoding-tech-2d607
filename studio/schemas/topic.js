@@ -124,19 +124,19 @@ export default {
         },
       ],
     },
-    {
-      title: "Related citations",
-      name: "relatedCitations",
-      type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "citation" }],
-          weak: true,
-          readOnly: true,
-        },
-      ],
-    },
+    //{
+    //  title: "Related citations",
+    //  name: "relatedCitations",
+    //  type: "array",
+    //  of: [
+    //    {
+    //      type: "reference",
+    //      to: [{ type: "citation" }],
+    //      weak: true,
+    //      readOnly: true,
+    //    },
+    //  ],
+    //},
     {
       type: "string",
       name: "stackbit_model_type",
