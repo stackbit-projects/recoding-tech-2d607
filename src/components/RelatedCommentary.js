@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   citation: {
     borderBottom: "1px solid #000",
     marginBottom: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   citationTitle: {
     color: "#000 !important",
@@ -22,26 +22,26 @@ const useStyles = makeStyles(() => ({
     fontWeight: "bold",
     textDecoration: "none",
     "&:hover": {
-      textDecoration: "underline"
-    }
+      textDecoration: "underline",
+    },
   },
   citationPublication: {
-    marginTop: 10
+    marginTop: 10,
   },
   grid: {},
   gridTitle: {
     borderBottom: "1px solid #000",
     marginBottom: 32,
-    marginTop: 32
+    marginTop: 32,
   },
 }));
 
-const RelatedCommentary = props => {
+const RelatedCommentary = (props) => {
   const { commentary } = props;
   if (!Array.isArray(commentary) || !commentary.length) return null;
   const classes = useStyles();
   const [sortedCommentary, setSortedCommentary] = useState(null);
-  const title = _.get(props, 'title', 'Latest Headlines & Highlights')
+  const title = _.get(props, "title", "Latest Headlines & Highlights");
 
   useEffect(() => {
     const sort = commentary.sort((a, b) => {
@@ -80,14 +80,17 @@ const RelatedCommentary = props => {
         </Grid>
         <Grid container item flexDirection="column">
           {sortedCommentary && sortedCommentary.length
-            ? sortedCommentary.slice(0, 4).map(comment => (
+            ? sortedCommentary.slice(0, 4).map((comment) => (
                 <Grid
                   item
                   key={comment.__metadata ? comment.__metadata.id : comment._id}
                   className={classes.citation}
                 >
                   <Typography component="div" variant="body1">
-                    <Link className={classes.citationTitle} href={comment.url || `/${comment.layout}/${comment.slug}`}>
+                    <Link
+                      className={classes.citationTitle}
+                      href={comment.url || `/${comment.layout}/${comment.slug}`}
+                    >
                       {comment.title}
                     </Link>
                   </Typography>
@@ -113,7 +116,7 @@ const RelatedCommentary = props => {
 };
 
 RelatedCommentary.propTypes = {
-  commentary: PropTypes.array
+  commentary: PropTypes.array,
 };
 
 export default RelatedCommentary;
