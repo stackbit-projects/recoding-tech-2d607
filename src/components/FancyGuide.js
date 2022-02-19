@@ -9,27 +9,27 @@ import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     border: "1px solid #000",
     borderRadius: 0,
     height: 250,
     position: "relative",
-    width: 240
+    width: 240,
   },
   cardAction: {
     height: "100%",
     position: "absolute",
-    width: "100%"
+    width: "100%",
   },
   cardTitle: {
     fontSize: "1.5em",
     marginTop: 170,
-    textAlign: "left"
+    textAlign: "left",
   },
   guide: {
-    backgroundColor: theme.palette.secondary.main
-  }
+    backgroundColor: theme.palette.secondary.main,
+  },
 }));
 
 const FancyGuide = ({ guide, onClick = () => {} }) => {
@@ -61,7 +61,7 @@ const FancyGuide = ({ guide, onClick = () => {} }) => {
 
 FancyGuide.propTypes = {
   guide: PropTypes.object,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default FancyGuide;

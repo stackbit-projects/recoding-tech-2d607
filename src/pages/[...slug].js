@@ -5,7 +5,7 @@ import { withRemoteDataUpdates } from "sourcebit-target-next/with-remote-data-up
 
 import pageLayouts from "../layouts";
 
-const Page = props => {
+const Page = (props) => {
   // every page can have different layout, pick the layout based
   // on the model of the page (_type in Sanity CMS)
   let componentName;
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
   // filter out the root page as it has its own page file `src/pages/index.js`
   const paths = await sourcebitDataClient.getStaticPaths();
-  return { paths: _.reject(paths, path => path === "/"), fallback: false };
+  return { paths: _.reject(paths, (path) => path === "/"), fallback: false };
 }
 
 export async function getStaticProps({ params }) {

@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from "lodash";
 
 /**
  * Get all the pages located under the provided `urlPath`, not including the
@@ -26,8 +26,8 @@ import _ from 'lodash'
  * @return {Array}
  */
 export default function getPolicies(pages) {
-  return _.filter(pages, page => {
-    const layout = _.get(page, 'layout')
-    return layout == 'policy_action'
-  })
+  return _.filter(pages, (page) => {
+    const layout = _.get(page, "layout");
+    return layout == "policy_action";
+  });
 }

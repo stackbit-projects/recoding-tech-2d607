@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
   },
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   grid: {},
   gridTitle: {
@@ -55,12 +55,12 @@ const SectionCitations = () => {
   const [citations, setCitations] = useState([]);
 
   useEffect(() => {
-    client.fetch(query).then(cites => {
+    client.fetch(query).then((cites) => {
       let allCitations = [];
-      cites.forEach(citation => {
+      cites.forEach((citation) => {
         allCitations = [...allCitations, citation];
       });
-      setCitations(allCitations.slice(0,3));
+      setCitations(allCitations.slice(0, 3));
     });
   }, []);
 

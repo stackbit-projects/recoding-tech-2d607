@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import '../sass/main.scss'
+import "../sass/main.scss";
 import "../app.css";
 
 function MyApp({ Component, pageProps }) {
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
 
     if (window.onNextjsRouteChangeComplete) {
       console.log(window.onNextjsRouteChangeComplete());
-    
+
       window.onNextjsRouteChangeComplete();
     }
 
@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }) {
 
 MyApp.propTypes = {
   Component: PropTypes.func,
-  pageProps: PropTypes.object
+  pageProps: PropTypes.object,
 };
 
 export default MyApp;

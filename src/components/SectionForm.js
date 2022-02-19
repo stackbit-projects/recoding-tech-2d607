@@ -39,7 +39,8 @@ export default function SectionForm(props) {
       message: formData.message,
     };
 
-    if (!formData.botField) // submit only if botField is empty string
+    if (!formData.botField)
+      // submit only if botField is empty string
       client.create(toSubmit).then((res) => {
         alert("Thank you for submitting your message to Recoding.Tech!");
         reset();

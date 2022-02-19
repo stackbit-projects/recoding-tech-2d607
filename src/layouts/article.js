@@ -19,13 +19,13 @@ import SectionHero from "../components/SectionHero";
 import RelatedCommentary from "../components/RelatedCommentary";
 import RelatedTopics from "../components/RelatedTopics";
 
-const Article = props => {
+const Article = (props) => {
   const { page } = props;
   const [topics, setTopics] = useState(null);
 
   useEffect(() => {
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
-      setTopics(page.relatedTopics.filter(topic => topic.type));
+      setTopics(page.relatedTopics.filter((topic) => topic.type));
     }
   }, []);
 
@@ -68,7 +68,7 @@ const Article = props => {
 };
 
 Article.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default Article;

@@ -46,7 +46,7 @@ export default function htmlToReact(html) {
               </Link>
             );
           }
-        } 
+        }
     },
   });
 }

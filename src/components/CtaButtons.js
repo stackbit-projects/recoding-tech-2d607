@@ -8,15 +8,15 @@ import Link from "@mui/material/Link";
 // utils
 import { withPrefix } from "../utils";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.typography.link.color,
     fontFamily: theme.typography.link.fontFamily,
     fontWeight: "bold",
     textTransform: "uppercase",
     position: "relative",
-    zIndex: 1
-  }
+    zIndex: 1,
+  },
 }));
 
 function CtaButtons(props) {
@@ -33,7 +33,7 @@ function CtaButtons(props) {
         ? {
             rel:
               (_.get(action, "new_window", null) ? "noopener " : "") +
-              (_.get(action, "no_follow", null) ? "nofollow" : "")
+              (_.get(action, "no_follow", null) ? "nofollow" : ""),
           }
         : null)}
       className={classes.link}

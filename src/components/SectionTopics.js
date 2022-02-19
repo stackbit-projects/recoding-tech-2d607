@@ -52,7 +52,7 @@ const SectionTopics = (props) => {
                     href={`/${topic.type}/${
                       typeof topic.slug == "string"
                         ? topic.slug
-                        : typeof topic.slug == "object" 
+                        : typeof topic.slug == "object"
                         ? topic.slug.current
                         : topic.name
                     }`}
