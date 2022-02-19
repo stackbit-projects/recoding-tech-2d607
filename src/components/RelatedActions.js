@@ -97,7 +97,7 @@ const RelatedActions = (props) => {
   const headers = [
     { id: "title", label: "Name" },
     { id: "type", label: "Type" },
-    { id: "country.displayTitle", label: "Country" },
+    { id: "country.displayTitle", label: "Government" },
     { id: "dateInitiated", label: "Date Initiated" },
     { id: "status", label: "Status" },
     { id: "lastUpdate", label: "Last Updated" },
@@ -154,7 +154,7 @@ const RelatedActions = (props) => {
       <Box my={4} sx={{ borderTop: "1px solid #000" }}>
         {isMobile ? (
           actions
-            .sort((a,b) => a.lastUpdate < b.lastUpdate)
+            .sort((a, b) => a.lastUpdate < b.lastUpdate)
             .slice(current * rowsPerPage, current * rowsPerPage + rowsPerPage)
             .map((row) => (
               <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
@@ -206,7 +206,7 @@ const RelatedActions = (props) => {
                       variant="h4"
                       sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
                     >
-                      Country
+                      Government
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -301,7 +301,7 @@ const RelatedActions = (props) => {
               </TableHead>
               <TableBody>
                 {actions
-                  .sort((a,b) => a.lastUpdate < b.lastUpdate)
+                  .sort((a, b) => a.lastUpdate < b.lastUpdate)
                   .slice(
                     current * rowsPerPage,
                     current * rowsPerPage + rowsPerPage

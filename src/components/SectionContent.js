@@ -1,33 +1,41 @@
-import React from 'react';
-import _ from 'lodash';
+import React from "react";
+import _ from "lodash";
 
-import {withPrefix, markdownify} from '../utils';
-import CtaButtons from './CtaButtons';
+import { withPrefix, markdownify } from "../utils";
+import CtaButtons from "./CtaButtons";
 
-const SectionContent = props => {
-  let section = _.get(props, 'section', null);
+const SectionContent = (props) => {
+  let section = _.get(props, "section", null);
   return (
-      <section id={_.get(section, 'section_id', null)} className="block block-text">
-        {_.get(section, 'title', null) && (
-        <h2 className="block-title underline inner-sm">{_.get(section, 'title', null)}</h2>
-        )}
-        {_.get(section, 'image', null) && (
+    <section
+      id={_.get(section, "section_id", null)}
+      className="block block-text"
+    >
+      {_.get(section, "title", null) && (
+        <h2 className="block-title underline inner-sm">
+          {_.get(section, "title", null)}
+        </h2>
+      )}
+      {_.get(section, "image", null) && (
         <div className="block-image">
-          <img src={withPrefix(_.get(section, 'image', null))} alt={_.get(section, 'image_alt', null)} />
+          <img
+            src={withPrefix(_.get(section, "image", null))}
+            alt={_.get(section, "image_alt", null)}
+          />
         </div>
-        )}
-        {_.get(section, 'content', null) && (
+      )}
+      {_.get(section, "content", null) && (
         <div className="block-content inner-sm">
-          {markdownify(_.get(section, 'content', null))}
+          {markdownify(_.get(section, "content", null))}
         </div>
-        )}
-        {_.get(section, 'actions', null) && (
+      )}
+      {_.get(section, "actions", null) && (
         <div className="block-buttons inner-sm">
-          <CtaButtons {...props} actions={_.get(section, 'actions', null)} />
+          <CtaButtons {...props} actions={_.get(section, "actions", null)} />
         </div>
-        )}
-      </section>
+      )}
+    </section>
   );
-}
+};
 
 export default SectionContent;

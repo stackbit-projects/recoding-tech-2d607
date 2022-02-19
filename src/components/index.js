@@ -39,7 +39,7 @@ export {
   SectionSearch,
   SectionTopics,
   SectionTracker,
-  TrackerActions
+  TrackerActions,
 };
 
 export default {
@@ -62,5 +62,5 @@ export default {
   SectionSearch,
   SectionTopics,
   SectionTracker,
-  TrackerActions
+  TrackerActions,
 };

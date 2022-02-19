@@ -12,32 +12,32 @@ import Typography from "@mui/material/Typography";
 // components
 import FancyGuide from "./FancyGuide";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     border: "1px solid #000",
     borderRadius: 0,
     height: 250,
     position: "relative",
-    width: 240
+    width: 240,
   },
   cardAction: {
     height: "100%",
     position: "absolute",
-    width: "100%"
+    width: "100%",
   },
   cardTitle: {
     fontSize: "1.5em",
-    marginTop: 170
+    marginTop: 170,
   },
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   guide: {
-    backgroundColor: theme.palette.secondary.main
-  }
+    backgroundColor: theme.palette.secondary.main,
+  },
 }));
 
-const RelatedGuide = props => {
+const RelatedGuide = (props) => {
   const { page } = props;
   if (!page.quickStartGuide) return null;
   const classes = useStyles();
@@ -73,7 +73,7 @@ const RelatedGuide = props => {
 };
 
 RelatedGuide.propTypes = {
-  page: PropTypes.object
+  page: PropTypes.object,
 };
 
 export default RelatedGuide;

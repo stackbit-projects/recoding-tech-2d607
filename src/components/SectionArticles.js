@@ -13,7 +13,7 @@ import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   box: {
     border: "1px solid #000",
     borderRadius: 0,
@@ -29,26 +29,26 @@ const useStyles = makeStyles(theme => ({
       top: 5,
       transition: "left 250ms, top 250ms",
       width: "100%",
-      zIndex: "-1"
+      zIndex: "-1",
     },
     "&:active, &:focus, &:hover": {
       "&::before": {
         left: "-14px",
         top: 10,
-        transition: "left 250ms, top 250ms"
-      }
-    }
+        transition: "left 250ms, top 250ms",
+      },
+    },
   },
   em: {
     fontSize: "0.8em",
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   featured: {
-    backgroundColor: theme.palette.footer.main
+    backgroundColor: theme.palette.footer.main,
   },
   tracker: {
-    backgroundColor: theme.palette.policy.main
-  }
+    backgroundColor: theme.palette.policy.main,
+  },
 }));
 
 function SectionArticle(props) {
@@ -62,8 +62,8 @@ function SectionArticle(props) {
     }
   }, [article]);
 
-  const articleClick = url => {
-    Router.push({ pathname: '/article/' + url });
+  const articleClick = (url) => {
+    Router.push({ pathname: "/article/" + url });
   };
 
   const trackerClick = () => {
@@ -128,7 +128,7 @@ function SectionArticle(props) {
 }
 
 SectionArticle.propTypes = {
-  section: PropTypes.object
+  section: PropTypes.object,
 };
 
 export default SectionArticle;

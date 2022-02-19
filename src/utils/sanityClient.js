@@ -6,7 +6,7 @@ const client = sanityClient({
   dataset: process.env.sanityDataset || "production",
   apiVersion: process.env.sanityApiVersion || "2021-03-25",
   token: process.env.sanityAccessToken,
-  useCdn: false
+  useCdn: true,
 });
 /* eslint-enable no-undef */
 

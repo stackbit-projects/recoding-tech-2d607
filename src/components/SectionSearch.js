@@ -23,7 +23,8 @@ import SearchBar from "./SearchBar";
 const citationsQuery =
   '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics, title, url, websiteTitle} | order(date desc)';
 
-const topicsQuery = '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
+const topicsQuery =
+  '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
 
 const useStyles = makeStyles((theme) => ({
   citation: {

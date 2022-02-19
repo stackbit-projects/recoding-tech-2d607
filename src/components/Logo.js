@@ -5,19 +5,19 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   logo: {
     borderBottom: "2px solid transparent",
     display: "inline-block",
     transition: "border-bottom 500ms",
     "&:active, &:focus, &:hover": {
       borderBottom: `2px solid #000`,
-      transition: "border-bottom 500ms"
-    }
+      transition: "border-bottom 500ms",
+    },
   },
   name: {
     fontSize: "2em",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   nameCoding: {
     position: "relative",
@@ -31,13 +31,13 @@ const useStyles = makeStyles(theme => ({
       position: "absolute",
       top: "3px",
       transform: "translateX(-50%)",
-      width: "7px"
-    }
+      width: "7px",
+    },
   },
   nameDot: {
     color: theme.typography.link.color,
     fontSize: "2.5em",
-    marginLeft: "3px"
+    marginLeft: "3px",
   },
   nameRe: {
     marginRight: "6px",
@@ -53,9 +53,9 @@ const useStyles = makeStyles(theme => ({
       right: "-5px",
       top: "55%",
       transform: "translateY(-50%)",
-      width: "7px"
-    }
-  }
+      width: "7px",
+    },
+  },
 }));
 
 function Logo() {

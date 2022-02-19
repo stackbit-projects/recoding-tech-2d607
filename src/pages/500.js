@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   logo: {
     borderBottom: "2px solid transparent",
     display: "inline-block",
@@ -15,12 +15,12 @@ const useStyles = makeStyles(theme => ({
     transition: "border-bottom 500ms",
     "&:active, &:focus, &:hover": {
       borderBottom: `2px solid #000`,
-      transition: "border-bottom 500ms"
-    }
+      transition: "border-bottom 500ms",
+    },
   },
   name: {
     fontSize: "2em",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   nameCoding: {
     position: "relative",
@@ -34,13 +34,13 @@ const useStyles = makeStyles(theme => ({
       position: "absolute",
       top: "3px",
       transform: "translateX(-50%)",
-      width: "7px"
-    }
+      width: "7px",
+    },
   },
   nameDot: {
     color: "#FF0033",
     fontSize: "2.5em",
-    marginLeft: "3px"
+    marginLeft: "3px",
   },
   nameRe: {
     marginRight: "6px",
@@ -56,16 +56,18 @@ const useStyles = makeStyles(theme => ({
       right: "-5px",
       top: "55%",
       transform: "translateY(-50%)",
-      width: "7px"
-    }
-  }
+      width: "7px",
+    },
+  },
 }));
 
 export default function Custom500() {
   const classes = useStyles();
 
   return (
-    <Box sx={{ backgroundColor: "#C2CECC", height: "100vh", position: "relative" }}>
+    <Box
+      sx={{ backgroundColor: "#C2CECC", height: "100vh", position: "relative" }}
+    >
       <Container>
         <Typography component="h1" variant="body1" className={classes.logo}>
           <span className={`${classes.name} ${classes.nameRe}`}>Re</span>
@@ -75,16 +77,31 @@ export default function Custom500() {
           <span className={`${classes.name} ${classes.nameDot}`}>.</span>
           <span className={classes.name}>Tech</span>
         </Typography>
-        <Box sx={{ left: "50%", minWidth: { xs: 300, md: 600 }, position: "absolute", top: "50%", transform: "translate(-50%, -50%)" }}>
-          <Typography component="div" variant="h2" gutterBottom>(500) A server-side error has occurred</Typography>
-          <Typography component="div" variant="body1" sx={{ fontSize: 24, }}>
-            Return{' '}
-            <Link href="/" variant="body1" sx={{ color: "#FF0033", fontSize: 24, }}>home</Link>
+        <Box
+          sx={{
+            left: "50%",
+            minWidth: { xs: 300, md: 600 },
+            position: "absolute",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Typography component="div" variant="h2" gutterBottom>
+            (500) A server-side error has occurred
+          </Typography>
+          <Typography component="div" variant="body1" sx={{ fontSize: 24 }}>
+            Return{" "}
+            <Link
+              href="/"
+              variant="body1"
+              sx={{ color: "#FF0033", fontSize: 24 }}
+            >
+              home
+            </Link>
             .
           </Typography>
         </Box>
-
       </Container>
     </Box>
-  )
+  );
 }

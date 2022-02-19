@@ -14,41 +14,43 @@ import Typography from "@mui/material/Typography";
 
 import FancyCard from "./FancyCard";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     border: "1px solid #000",
     borderRadius: 0,
     height: 250,
     position: "relative",
-    width: 240
+    width: 240,
   },
   cardAction: {
     height: "100%",
     position: "absolute",
-    width: "100%"
+    width: "100%",
   },
   cardTitle: {
     fontSize: "1.5em",
-    marginTop: 170
+    marginTop: 170,
   },
   em: {
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   guide: {
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
-  title: {}
+  title: {},
 }));
 
-const RelatedReadings = props => {
+const RelatedReadings = (props) => {
   const { page, readings } = props;
 
   if (!Array.isArray(readings) || !readings.length) return null;
   const classes = useStyles();
 
-  const getHandler = article => {
+  const getHandler = (article) => {
     let slug;
-    typeof article.slug === "object" ? slug = article.slug.current : slug = article.slug
+    typeof article.slug === "object"
+      ? (slug = article.slug.current)
+      : (slug = article.slug);
     const handler = () => Router.push({ pathname: `/article/${slug}` });
     return handler;
   };
@@ -58,7 +60,7 @@ const RelatedReadings = props => {
     infinite: false,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
 
   return (
@@ -86,7 +88,7 @@ const RelatedReadings = props => {
                     marginBottom: 2,
                     marginLeft: 4,
                     marginRight: 4,
-                    width: "90% !important"
+                    width: "90% !important",
                   }}
                 >
                   <FancyCard
@@ -108,7 +110,7 @@ const RelatedReadings = props => {
 
 RelatedReadings.propTypes = {
   page: PropTypes.object,
-  readings: PropTypes.array
+  readings: PropTypes.array,
 };
 
 export default RelatedReadings;

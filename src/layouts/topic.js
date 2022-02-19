@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import _ from "lodash";
 
 import PropTypes from "prop-types";
 
@@ -45,21 +44,29 @@ const Topic = (props) => {
   const { page } = props;
 
   const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}") && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}`;
+  const relatedCitationsQuery = `*[!(_id in path("drafts.**")) && _type == "citation" && references("${page.__metadata.id}")]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle} | order(date desc)`;
 
   const [issues, setIssues] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [policies, setPolicies] = useState(null);
   const [readings, setReadings] = useState([]);
   const [headlines, setHeadlines] = useState([]);
   const [actions, setActions] = useState([]);
 
   useEffect(() => {
-    page.slug ? 
-     client.fetch(policyActionsQuery).then((actions) => {
-       setActions(actions)
-       setLoading(false)
-      }
-    ) : null
+    page.slug
+      ? client.fetch(policyActionsQuery).then((actions) => {
+          setActions(actions);
+          setLoading(false);
+        })
+      : null;
+
+    page.slug
+      ? client.fetch(relatedCitationsQuery).then((citations) => {
+          setHeadlines(citations);
+          setLoading(false);
+        })
+      : null;
 
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
       if (page.type === "issue" || page.type === "policy") {
@@ -83,19 +90,14 @@ const Topic = (props) => {
       Array.isArray(page.relatedCommentary) &&
       page.relatedCommentary.length
     ) {
-      const [r, h] = page.relatedCommentary.reduce(
-        ([r, h], comment) => {
-          if (comment._type === "citation") {
-            h.push(comment);
-          } else if (comment._type === "article") {
-            r.push(comment);
-          }
-          return [r, h];
-        },
-        [[], []]
-      );
+      const r = page.relatedCommentary.reduce((r, comment) => {
+        if (comment._type === "article") {
+          r.push(comment);
+        }
+        return r;
+      }, []);
       setReadings(r);
-      setHeadlines(h);
+      //setHeadlines(h);
     }
   }, []);
 
@@ -106,7 +108,7 @@ const Topic = (props) => {
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          <RelatedActions page={page} actions={actions} loading={loading} /> 
+          <RelatedActions page={page} actions={actions} loading={loading} />
           <Grid container spacing={8}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               {page.fastFacts && (
@@ -152,7 +154,7 @@ const Topic = (props) => {
                 <RelatedGuide {...props} />
               </Grid>
               <Grid item>
-                <RelatedCommentary commentary={[...headlines, ...readings]} />
+                <RelatedCommentary commentary={headlines} />
               </Grid>
               <Grid item>
                 <RelatedTopics title="Related Issues" topics={issues} />

@@ -8,10 +8,10 @@ import Container from "@mui/material/Container";
 
 import FancyCard from "./FancyCard";
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   const { content } = props;
 
-  const cardClick = path => {
+  const cardClick = (path) => {
     const handler = () => Router.push({ pathname: path });
     return handler;
   };
@@ -38,7 +38,7 @@ const Sidebar = props => {
 };
 
 Sidebar.propTypes = {
-  content: PropTypes.array
+  content: PropTypes.array,
 };
 
 export default Sidebar;

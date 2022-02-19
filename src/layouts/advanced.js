@@ -11,7 +11,6 @@ import Grid from "@mui/material/Grid";
 import components, { Layout } from "../components/index";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
-import SectionGuides from "../components/SectionGuides";
 
 function Advanced(props) {
   const { path } = props;
@@ -76,7 +75,7 @@ function Advanced(props) {
 
 Advanced.propTypes = {
   citations: PropTypes.array,
-  path: PropTypes.string
+  path: PropTypes.string,
 };
 
 export default Advanced;

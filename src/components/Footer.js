@@ -12,28 +12,28 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     fontSize: "0.8em",
-    maxWidth: 450
+    maxWidth: 450,
   },
   link: {
     color: "#000 !important",
     fontFamily: theme.typography.link.fontFamily,
     fontSize: "0.6em",
     fontWeight: "normal",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   links: {
     justifyContent: "flex-end",
     [theme.breakpoints.down("md")]: {
       justifyContent: "flex-start",
-      marginTop: 2
-    }
+      marginTop: 2,
+    },
   },
   logoLink: {
     color: "unset",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   subscribe: {
     border: "1px solid #000",
@@ -42,14 +42,14 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "normal",
     textTransform: "uppercase",
     [theme.breakpoints.down("md")]: {
-      marginBottom: 20
+      marginBottom: 20,
     },
     "&:active, &:focus, &:hover": {
       backgroundColor: "#000",
       border: "1px solid #fff",
-      color: "#fff"
-    }
-  }
+      color: "#fff",
+    },
+  },
 }));
 // component imports
 import Logo from "./Logo";
@@ -111,7 +111,7 @@ function Footer(props) {
                                 : "") +
                               (_.get(action, "no_follow", null)
                                 ? "nofollow"
-                                : "")
+                                : ""),
                           }
                         : null)}
                     >

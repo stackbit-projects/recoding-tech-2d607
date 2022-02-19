@@ -17,7 +17,7 @@ const client = sanityClient({
 
 const flatten = (arr) => {
   if (arr) {
-    arr = arr.reduce(function (flat, toFlatten) {
+    arr = arr.reduce((flat, toFlatten) => {
       return flat.concat(
         Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
       );
@@ -27,33 +27,26 @@ const flatten = (arr) => {
         index ===
         self.findIndex((a) => {
           if (item !== undefined && a !== undefined) {
-            if (a.name) {
-              return a.name === item.name;
-            } else if (a.lastName) {
-              return a.lastName === item.lastName;
-            } else {
-              return a.title === item.title;
-            }
+            return a._id === item._id;
           }
         })
     );
   }
 };
 
-const transform = (externalCitation) => {
+const transform = ([creators, tags, citations], externalCitation, idx) => {
   console.log(`Found citation ${externalCitation.key}`);
 
+  const localCreators = [];
+  const localTags = [];
   if (externalCitation.data.itemType != "attachment") {
-    const creators = [];
-    const tags = [];
-
     if (externalCitation.data.creators) {
       externalCitation.data.creators.map((creator, index) => {
         const date = new Date();
         const now = date.getMilliseconds().toString();
         if (!creator.firstName || !creator.lastName) {
           console.warn(
-            `Skipping creator with invalid name: ${creator.firstname} ${creator.lastName}`
+            `Skipping creator with invalid name: ${creator.firstName} ${creator.lastName}`
           );
           return;
         }
@@ -63,16 +56,16 @@ const transform = (externalCitation) => {
             /[^A-Z0-9]/gi,
             "-"
           )}-${creator.firstName.replace(/[^A-Z0-9]/gi, "-")}`,
-          _key: `creator-${now}-${index}`,
+          _key: `creator-${now}-${idx}-${index}`,
           firstName: creator.firstName,
           lastName: creator.lastName,
           creatorType: creator.creatorType,
         };
-        return creators.push(item);
+        return localCreators.push(item);
       });
     }
 
-    if (externalCitation.data.creators) {
+    if (externalCitation.data.tags) {
       externalCitation.data.tags.map((tag, index) => {
         if (tag.tag) {
           const date = new Date();
@@ -80,22 +73,30 @@ const transform = (externalCitation) => {
           const item = {
             _type: "topic",
             _id: tag.tag.replace(/[^A-Z0-9]/gi, "-"),
-            _key: `topic-${now}-${index}`,
+            _key: `topic-${now}-${idx}-${index}`,
             name: tag.tag,
           };
-          return tags.push(item);
+          return localTags.push(item);
         }
       });
     }
 
-    const citation = {
+    citations.push({
       _id: externalCitation.key,
       _type: "citation",
       shortTitle: externalCitation.data.shortTitle,
       title: externalCitation.data.title,
       date: externalCitation.meta.parsedDate,
-      creators: creators,
-      topics: tags,
+      creators: localCreators.map((i, idx) => ({
+        _type: "reference",
+        _ref: i._id,
+        _key: `ref-creator-${idx}`,
+      })),
+      topics: localTags.map((i, idx) => ({
+        _type: "reference",
+        _ref: i._id,
+        _key: `ref-topic-${idx}`,
+      })),
       url: externalCitation.data.url,
       websiteTitle: externalCitation.data.websiteTitle,
       institution: externalCitation.data.institution,
@@ -105,9 +106,9 @@ const transform = (externalCitation) => {
       blogTitle: externalCitation.data.blogTitle,
       network: externalCitation.data.network,
       chicagoCitation: externalCitation.citation,
-    };
-    return [creators, tags, citation];
+    });
   }
+  return [creators.concat(localCreators), tags.concat(localTags), citations];
 };
 
 async function fetchBackoff(url, options) {
@@ -130,9 +131,40 @@ function zoteroUrl(start, limit) {
   return `https://api.zotero.org/groups/${process.env.ZOTERO_GROUP_ID}/items?format=json&include=data,citation&style=chicago-fullnote-bibliography&limit=${limit}&start=${start}`;
 }
 
+const commit = async (documents, type) => {
+  if (documents.length > 0) {
+    const dedup = new Map();
+    documents.forEach((document) => {
+      dedup.set(document._id, document);
+    });
+    const deduped = Array.from(dedup.values());
+    console.log(`Deduplicated down to ${deduped.length} ${type} records.`);
+    let processed = 0;
+    do {
+      const batch = deduped.slice(processed, processed + BATCH_SIZE - 1);
+      const transaction = client.transaction();
+      batch.forEach((document) => {
+        transaction.createIfNotExists(document).patch(document._id, (p) => {
+          p.set(document);
+          return p;
+        });
+      });
+      console.log(
+        `Committing batch ${processed + 1} through ${
+          processed + batch.length
+        } of ${deduped.length} total ${type}...`
+      );
+      await transaction.commit();
+      processed += batch.length;
+    } while (processed < deduped.length);
+  }
+};
+
 async function fetchAllCitations() {
   let finished = false;
-  let documents = [];
+  let creators = [];
+  let tags = [];
+  let citations = [];
   let start = 0;
   let limit = 25;
 
@@ -150,50 +182,30 @@ async function fetchAllCitations() {
           `HTTP Error ${response.status}: ${response.statusText}`
         );
       })
-      .then((citations) => {
+      .then((results) => {
         console.log(`Parsing batch starting at ${start}...`);
-        start += citations.length;
-        if (citations.length < limit) finished = true;
-        return citations.map(transform);
+        start += results.length;
+        if (results.length < limit) finished = true;
+        return results.reduce(transform, [[], [], []]);
       })
-      .then(
-        (docs) =>
-          // docs is now an array of [creators, tags, citation], so we need to flatten it
-          (documents = documents.concat(flatten(docs)))
-      )
+      .then(([cr, ta, ci]) => {
+        // docs is now an array of [creators, tags, citation], so we need to flatten it
+        creators = creators.concat(flatten(cr));
+        tags = tags.concat(flatten(ta));
+        citations = citations.concat(flatten(ci));
+      })
       .catch((error) => {
         console.error(error);
       });
   }
-  console.log(`Fetched ${documents.length} records.`);
+  console.log(`Fetched ${creators.length} creators.`);
+  console.log(`Fetched ${tags.length} tags.`);
+  console.log(`Fetched ${citations.length} citations.`);
 
   try {
-    if (documents.length > 0) {
-      //const dedup = new Map();
-      //documents.forEach((document) => {
-      //  dedup.set(document._id, document);
-      //});
-      //const deduped = Array.from(dedup.values());
-      const deduped = documents;
-      let processed = 0;
-      do {
-        const batch = deduped.slice(processed, processed + BATCH_SIZE - 1);
-        const transaction = client.transaction();
-        batch.forEach((document) => {
-          transaction.createIfNotExists(document).patch(document._id, (p) => {
-            p.set(document);
-            return p;
-          });
-        });
-        console.log(
-          `Committing batch ${processed + 1} through ${
-            processed + batch.length
-          } of ${deduped.length} total...`
-        );
-        transaction.commit();
-        processed += batch.length;
-      } while (processed < deduped.length);
-    }
+    await commit(creators, "creators");
+    await commit(tags, "tags");
+    await commit(citations, "citations");
   } catch (error) {
     console.error(error.name + ": " + error.message);
   }
