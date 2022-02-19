@@ -16,6 +16,12 @@
     "compile": "babel importData.mjs -o importData.js; babel deleteData.mjs -o deleteData.js",
     "reset": "node deleteData.mjs"
   },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ]
+  },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@emotion/react": "^11.4.1",
@@ -25,7 +31,7 @@
     "@mui/styles": "^5.0.1",
     "@portabletext/react": "^1.0.3",
     "@sanity/block-content-to-react": "^3.0.0",
-    "@sanity/client": "^2.21.7",
+    "@sanity/client": "^3.1.0",
     "@sanity/image-url": "^1.0.1",
     "@snekcode/mui-search-bar": "^1.1.0",
     "babel-runtime": "^6.26.0",
