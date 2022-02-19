@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   logo: {
     borderBottom: "2px solid transparent",
     display: "inline-block",

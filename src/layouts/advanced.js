@@ -11,7 +11,6 @@ import Grid from "@mui/material/Grid";
 import components, { Layout } from "../components/index";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
-import SectionGuides from "../components/SectionGuides";
 
 function Advanced(props) {
   const { path } = props;

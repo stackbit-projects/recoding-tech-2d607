@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
     borderRadius: 12,
     backgroundColor: "#c2cecc",
@@ -41,7 +41,7 @@ export default function SectionForm(props) {
 
     if (!formData.botField)
       // submit only if botField is empty string
-      client.create(toSubmit).then((res) => {
+      client.create(toSubmit).then(() => {
         alert("Thank you for submitting your message to Recoding.Tech!");
         reset();
       });

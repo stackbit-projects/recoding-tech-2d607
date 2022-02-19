@@ -6,6 +6,8 @@
   "scripts": {
     "eslint": "eslint",
     "eslint:init": "eslint --init",
+    "prepare": "husky install",
+    "test": "eslint src/ --ext .js,.mjs,.jsx,.ts,.tsx",
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
@@ -13,7 +15,6 @@
     "build:netlify": "next build",
     "start": "next start",
     "import:citations": "node importData.mjs",
-    "compile": "babel importData.mjs -o importData.js; babel deleteData.mjs -o deleteData.js",
     "reset": "node deleteData.mjs"
   },
   "eslintConfig": {
@@ -81,6 +82,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.27.0",
+    "husky": "^7.0.4",
     "prettier": "^2.4.1"
   }
 }

@@ -36,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.8em",
     fontStyle: "italic",
   },
-  em: {
-    fontStyle: "italic",
-  },
   grid: {},
   gridTitle: {
     borderBottom: "1px solid #000",

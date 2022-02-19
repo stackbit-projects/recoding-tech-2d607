@@ -4,9 +4,6 @@ import ScriptTag from "react-script-tag";
 import Link from "./link";
 import _ from "lodash";
 
-// material ui imports
-import Typography from "@mui/material/Typography";
-
 // components
 import FancyCard from "../components/FancyCard";
 

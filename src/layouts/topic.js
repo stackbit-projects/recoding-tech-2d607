@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import _ from "lodash";
 
 import PropTypes from "prop-types";
 
@@ -91,17 +90,12 @@ const Topic = (props) => {
       Array.isArray(page.relatedCommentary) &&
       page.relatedCommentary.length
     ) {
-      const [r, h] = page.relatedCommentary.reduce(
-        ([r, h], comment) => {
-          if (comment._type === "citation") {
-            h.push(comment);
-          } else if (comment._type === "article") {
-            r.push(comment);
-          }
-          return [r, h];
-        },
-        [[], []]
-      );
+      const r = page.relatedCommentary.reduce((r, comment) => {
+        if (comment._type === "article") {
+          r.push(comment);
+        }
+        return r;
+      }, []);
       setReadings(r);
       //setHeadlines(h);
     }
