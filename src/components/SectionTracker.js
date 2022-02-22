@@ -470,6 +470,7 @@ function SectionTracker(props) {
       <Box my={4}>
         {isMobile ? (
           actions
+
             .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
             .reverse()
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -486,11 +487,11 @@ function SectionTracker(props) {
                     }}
                   >
                     <Link
-                      href={
+                      href={`/tracker/${
                         typeof row.slug === "object"
                           ? row.slug.current
                           : row.slug
-                      }
+                      }`}
                       underline="hover"
                       variant="h4"
                       sx={{ color: "#000" }}
@@ -501,7 +502,10 @@ function SectionTracker(props) {
                   <Grid item xs={6}>
                     <Typography
                       variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        paddingBottom: 2,
+                      }}
                     >
                       Type
                     </Typography>
@@ -521,7 +525,10 @@ function SectionTracker(props) {
                   <Grid item xs={6}>
                     <Typography
                       variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        paddingBottom: 2,
+                      }}
                     >
                       Government
                     </Typography>
@@ -541,7 +548,10 @@ function SectionTracker(props) {
                   <Grid item xs={6}>
                     <Typography
                       variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        paddingBottom: 2,
+                      }}
                     >
                       Date Initiated
                     </Typography>
@@ -563,7 +573,10 @@ function SectionTracker(props) {
                   <Grid item xs={6}>
                     <Typography
                       variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        paddingBottom: 2,
+                      }}
                     >
                       Status
                     </Typography>
@@ -583,7 +596,10 @@ function SectionTracker(props) {
                   <Grid item xs={6}>
                     <Typography
                       variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                      sx={{
+                        borderBottom: "1px solid #ccc",
+                        paddingBottom: 2,
+                      }}
                     >
                       Last Updated
                     </Typography>
@@ -624,7 +640,6 @@ function SectionTracker(props) {
                   .reverse()
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
-                    console.log("row", row);
                     return (
                       <TableRow
                         hover
@@ -656,11 +671,11 @@ function SectionTracker(props) {
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={
+                                  href={`/tracker/${
                                     typeof row.slug === "object"
                                       ? row.slug.current
                                       : row.slug
-                                  }
+                                  }`}
                                 >
                                   {value}
                                 </Link>
