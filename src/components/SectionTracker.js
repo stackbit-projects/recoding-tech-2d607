@@ -41,8 +41,6 @@ const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]
 const topicsQuery =
   '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{_id, _key, name, slug, type}';
 
-const isDev = process.env.NODE_ENV === "development";
-
 const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: "0.8em",
@@ -472,6 +470,8 @@ function SectionTracker(props) {
       <Box my={4}>
         {isMobile ? (
           actions
+            .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
+            .reverse()
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
               <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
@@ -487,15 +487,9 @@ function SectionTracker(props) {
                   >
                     <Link
                       href={
-                        isDev
-                          ? typeof row.slug === "object"
-                            ? row.slug.current
-                            : row.slug
-                          : `tracker/${
-                              typeof row.slug === "object"
-                                ? row.slug.current
-                                : row.slug
-                            }`
+                        typeof row.slug === "object"
+                          ? row.slug.current
+                          : row.slug
                       }
                       underline="hover"
                       variant="h4"
@@ -624,9 +618,13 @@ function SectionTracker(props) {
               </TableHead>
               <TableBody>
                 {actions
-                  .sort((a, b) => a.lastUpdate < b.lastUpdate)
+                  .sort(
+                    (a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate)
+                  )
+                  .reverse()
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
+                    console.log("row", row);
                     return (
                       <TableRow
                         hover
@@ -659,15 +657,9 @@ function SectionTracker(props) {
                                 <Link
                                   className={classes.tableLink}
                                   href={
-                                    isDev
-                                      ? typeof row.slug === "object"
-                                        ? row.slug.current
-                                        : row.slug
-                                      : `tracker/${
-                                          typeof row.slug === "object"
-                                            ? row.slug.current
-                                            : row.slug
-                                        }`
+                                    typeof row.slug === "object"
+                                      ? row.slug.current
+                                      : row.slug
                                   }
                                 >
                                   {value}

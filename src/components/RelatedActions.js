@@ -154,7 +154,8 @@ const RelatedActions = (props) => {
       <Box my={4} sx={{ borderTop: "1px solid #000" }}>
         {isMobile ? (
           actions
-            .sort((a, b) => a.lastUpdate < b.lastUpdate)
+            .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
+            .reverse()
             .slice(current * rowsPerPage, current * rowsPerPage + rowsPerPage)
             .map((row) => (
               <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
@@ -301,7 +302,10 @@ const RelatedActions = (props) => {
               </TableHead>
               <TableBody>
                 {actions
-                  .sort((a, b) => a.lastUpdate < b.lastUpdate)
+                  .sort(
+                    (a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate)
+                  )
+                  .reverse()
                   .slice(
                     current * rowsPerPage,
                     current * rowsPerPage + rowsPerPage
