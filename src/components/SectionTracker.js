@@ -472,6 +472,8 @@ function SectionTracker(props) {
       <Box my={4}>
         {isMobile ? (
           actions
+            .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
+            .reverse()
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
               <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
@@ -624,9 +626,13 @@ function SectionTracker(props) {
               </TableHead>
               <TableBody>
                 {actions
-                  .sort((a, b) => a.lastUpdate < b.lastUpdate)
+                  .sort(
+                    (a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate)
+                  )
+                  .reverse()
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
+                    console.log("row", row);
                     return (
                       <TableRow
                         hover
