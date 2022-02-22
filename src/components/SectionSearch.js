@@ -131,7 +131,6 @@ const SectionSearch = () => {
   useEffect(() => {
     if (allCitations.length) {
       let newCitations = allCitations;
-      console.log(allCitations);
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
