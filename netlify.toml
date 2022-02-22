@@ -5,3 +5,7 @@ functions = "functions/"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+ from = recoding-tech-v2.netlify.app
+ to = recoding.tech
