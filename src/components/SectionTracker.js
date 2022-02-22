@@ -470,139 +470,156 @@ function SectionTracker(props) {
       <Box my={4}>
         {isMobile ? (
           actions
+
             .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
             .reverse()
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row) => (
-              <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      backgroundColor: "#EFE9DA",
-                      padding: 2,
-                      marginBottom: 2,
-                    }}
-                  >
-                    <Link
-                      href={
-                        typeof row.slug === "object"
-                          ? row.slug.current
-                          : row.slug
-                      }
-                      underline="hover"
-                      variant="h4"
-                      sx={{ color: "#000" }}
-                    >
-                      {row.title}
-                    </Link>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Type
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
+            .map((row) =>(
+                <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
+                  <Grid container>
+                    <Grid
+                      item
+                      xs={12}
                       sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
+                        backgroundColor: "#EFE9DA",
+                        padding: 2,
+                        marginBottom: 2,
                       }}
                     >
-                      {row.type}
-                    </Typography>
+                      <Link
+                        href={`/tracker/${
+                          typeof row.slug === "object"
+                            ? row.slug.current
+                            : row.slug
+                        }`}
+                        underline="hover"
+                        variant="h4"
+                        sx={{ color: "#000" }}
+                      >
+                        {row.title}
+                      </Link>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Type
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.type}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Government
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.country.displayTitle}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Date Initiated
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {moment(new Date(row.dateInitiated)).strftime(
+                          "%b %d, %Y"
+                        )}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Status
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.status}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Last Updated
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Government
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.country.displayTitle}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Date Initiated
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {moment(new Date(row.dateInitiated)).strftime(
-                        "%b %d, %Y"
-                      )}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Status
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.status}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Last Updated
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            ))
+                </Paper>
+              )
+            )
         ) : (
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table
@@ -624,7 +641,6 @@ function SectionTracker(props) {
                   .reverse()
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
-                    console.log("row", row);
                     return (
                       <TableRow
                         hover
@@ -656,11 +672,11 @@ function SectionTracker(props) {
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={
+                                  href={`/tracker/${
                                     typeof row.slug === "object"
                                       ? row.slug.current
                                       : row.slug
-                                  }
+                                  }`}
                                 >
                                   {value}
                                 </Link>
