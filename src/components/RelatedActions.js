@@ -5,14 +5,13 @@ import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -24,7 +23,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const useStyles = makeStyles((theme) => ({
@@ -179,13 +178,20 @@ const RelatedActions = (props) => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <Grid container>
-                    <Grid container item xs={12} sx={{ mb: 2 }} alignItems="center">
+                    <Grid
+                      container
+                      item
+                      xs={12}
+                      sx={{ mb: 2 }}
+                      alignItems="center"
+                    >
                       <Grid item>
                         <Link
-                          href={`/tracker/${typeof row.slug === "object"
-                            ? row.slug.current
-                            : row.slug
-                            }`}
+                          href={`/tracker/${
+                            typeof row.slug === "object"
+                              ? row.slug.current
+                              : row.slug
+                          }`}
                           variant="body2"
                           sx={{ color: "#000" }}
                         >
@@ -316,7 +322,6 @@ const RelatedActions = (props) => {
                   </Grid>
                 </AccordionDetails>
               </Accordion>
-
             ))
         ) : (
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -372,15 +377,16 @@ const RelatedActions = (props) => {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                                column.id == "lastUpdate" ? (
+                              column.id == "lastUpdate" ? (
                                 moment(new Date(value)).strftime("%b %d, %Y")
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={`/tracker/${typeof row.slug === "object"
+                                  href={`/tracker/${
+                                    typeof row.slug === "object"
                                       ? row.slug.current
                                       : row.slug
-                                    }`}
+                                  }`}
                                 >
                                   {value}
                                 </Link>

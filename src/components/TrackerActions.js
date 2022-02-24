@@ -5,12 +5,11 @@ import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -21,7 +20,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const useStyles = makeStyles((theme) => ({
@@ -188,9 +187,7 @@ const TrackerActions = (props) => {
                     paddingBottom: 2,
                   }}
                 >
-                  {moment(new Date(page.dateInitiated)).strftime(
-                    "%b %d, %Y"
-                  )}
+                  {moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
