@@ -5,6 +5,9 @@ import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
@@ -21,6 +24,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const useStyles = makeStyles((theme) => ({
@@ -158,134 +162,161 @@ const RelatedActions = (props) => {
             .reverse()
             .slice(current * rowsPerPage, current * rowsPerPage + rowsPerPage)
             .map((row) => (
-              <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      backgroundColor: "#EFE9DA",
-                      padding: 2,
-                      marginBottom: 2,
-                    }}
-                  >
-                    <Link
-                      href={`/tracker/${
-                        typeof row.slug === "object"
-                          ? row.slug.current
-                          : row.slug
-                      }`}
-                      underline="hover"
-                      variant="h4"
-                      sx={{ color: "#000" }}
-                    >
-                      {row.title}
-                    </Link>
+              <Accordion key={row._key} sx={{ marginBottom: 4 }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={`content-${row._key}`}
+                  id={`header-${row._key}`}
+                  sx={{
+                    backgroundColor: "#EFE9DA",
+                    padding: 2,
+                    marginBottom: 2,
+                  }}
+                >
+                  <Typography component="div" variant="h4">
+                    {row.title}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container>
+                    <Grid container item xs={12} sx={{ mb: 2 }} alignItems="center">
+                      <Grid item>
+                        <Link
+                          href={`/tracker/${typeof row.slug === "object"
+                            ? row.slug.current
+                            : row.slug
+                            }`}
+                          variant="body2"
+                          sx={{ color: "#000" }}
+                        >
+                          View details
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <KeyboardArrowRightIcon />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Type
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.type}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Government
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.country.displayTitle}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Date Initiated
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {moment(new Date(row.dateInitiated)).strftime(
+                          "%b %d, %Y"
+                        )}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Status
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.status}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Last Updated
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Type
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.type}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Government
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.country.displayTitle}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Date Initiated
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {moment(new Date(row.dateInitiated)).strftime(
-                        "%b %d, %Y"
-                      )}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Status
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.status}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
-                    >
-                      Last Updated
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
+                </AccordionDetails>
+              </Accordion>
+
             ))
         ) : (
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -341,16 +372,15 @@ const RelatedActions = (props) => {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                              column.id == "lastUpdate" ? (
+                                column.id == "lastUpdate" ? (
                                 moment(new Date(value)).strftime("%b %d, %Y")
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={`/tracker/${
-                                    typeof row.slug === "object"
+                                  href={`/tracker/${typeof row.slug === "object"
                                       ? row.slug.current
                                       : row.slug
-                                  }`}
+                                    }`}
                                 >
                                   {value}
                                 </Link>

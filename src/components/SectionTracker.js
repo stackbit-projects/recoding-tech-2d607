@@ -9,6 +9,9 @@ import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -17,7 +20,6 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -29,6 +31,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // material ui icons
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -305,14 +308,14 @@ function SectionTracker(props) {
               >
                 {issues && issues.length
                   ? issues.map((issue) => (
-                      <MenuItem
-                        key={issue._id}
-                        onClick={handleCloseIssues(issue)}
-                        disableRipple
-                      >
-                        {issue.displayTitle || issue.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={issue._id}
+                      onClick={handleCloseIssues(issue)}
+                      disableRipple
+                    >
+                      {issue.displayTitle || issue.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -348,14 +351,14 @@ function SectionTracker(props) {
               >
                 {policies && policies.length
                   ? policies.map((policy) => (
-                      <MenuItem
-                        key={policy._id}
-                        onClick={handleClosePolicies(policy)}
-                        disableRipple
-                      >
-                        {policy.displayTitle || policy.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={policy._id}
+                      onClick={handleClosePolicies(policy)}
+                      disableRipple
+                    >
+                      {policy.displayTitle || policy.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -391,18 +394,18 @@ function SectionTracker(props) {
               >
                 {countries && countries.length
                   ? countries.map((country) => {
-                      if (country) {
-                        return (
-                          <MenuItem
-                            key={country._id}
-                            onClick={handleCloseCountries(country)}
-                            disableRipple
-                          >
-                            {country.displayTitle || country.name}
-                          </MenuItem>
-                        );
-                      }
-                    })
+                    if (country) {
+                      return (
+                        <MenuItem
+                          key={country._id}
+                          onClick={handleCloseCountries(country)}
+                          disableRipple
+                        >
+                          {country.displayTitle || country.name}
+                        </MenuItem>
+                      );
+                    }
+                  })
                   : null}
               </Menu>
             </Grid>
@@ -438,14 +441,14 @@ function SectionTracker(props) {
               >
                 {companies && companies.length
                   ? companies.map((company) => (
-                      <MenuItem
-                        key={company._key}
-                        onClick={handleCloseCompanies(company)}
-                        disableRipple
-                      >
-                        {company.displayTitle || company.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={company._key}
+                      onClick={handleCloseCompanies(company)}
+                      disableRipple
+                    >
+                      {company.displayTitle || company.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -456,14 +459,14 @@ function SectionTracker(props) {
         <Grid container spacing={2} justifyContent="flex-start">
           {filters.length
             ? filters.map((filter, idx) => (
-                <Grid key={`${filter._key + idx}`} item>
-                  <Chip
-                    label={filter.displayTitle || filter.name}
-                    color={filter.type}
-                    onDelete={handleDelete(filter)}
-                  />
-                </Grid>
-              ))
+              <Grid key={`${filter._key + idx}`} item>
+                <Chip
+                  label={filter.displayTitle || filter.name}
+                  color={filter.type}
+                  onDelete={handleDelete(filter)}
+                />
+              </Grid>
+            ))
             : null}
         </Grid>
       </Box>
@@ -475,149 +478,160 @@ function SectionTracker(props) {
             .reverse()
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
-              <Paper elevation={0} key={row._key} sx={{ marginBottom: 4 }}>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={12}
-                    sx={{
-                      backgroundColor: "#EFE9DA",
-                      padding: 2,
-                      marginBottom: 2,
-                    }}
-                  >
-                    <Link
-                      href={`/tracker/${
-                        typeof row.slug === "object"
-                          ? row.slug.current
-                          : row.slug
-                      }`}
-                      underline="hover"
-                      variant="h4"
-                      sx={{ color: "#000" }}
-                    >
-                      {row.title}
-                    </Link>
+              <Accordion key={row._key} sx={{ marginBottom: 4 }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={`content-${row._key}`}
+                  id={`header-${row._key}`}
+                  sx={{
+                    backgroundColor: "#EFE9DA",
+                    padding: 2,
+                    marginBottom: 2,
+                  }}
+                >
+                  <Typography component="div" variant="h4">
+                    {row.title}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container>
+                    <Grid container item xs={12} sx={{ mb: 2 }} alignItems="center">
+                      <Grid item>
+                        <Link
+                          href={`/tracker/${typeof row.slug === "object"
+                            ? row.slug.current
+                            : row.slug
+                            }`}
+                          variant="body2"
+                          sx={{ color: "#000" }}
+                        >
+                          View details
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <KeyboardArrowRightIcon />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Type
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.type}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Government
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.country.displayTitle}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Date Initiated
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {moment(new Date(row.dateInitiated)).strftime(
+                          "%b %d, %Y"
+                        )}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Status
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {row.status}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Last Updated
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #ccc",
+                          fontWeight: "normal",
+                          paddingBottom: 2,
+                        }}
+                      >
+                        {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      Type
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.type}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      Government
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.country.displayTitle}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      Date Initiated
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {moment(new Date(row.dateInitiated)).strftime(
-                        "%b %d, %Y"
-                      )}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      Status
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {row.status}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      Last Updated
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        fontWeight: "normal",
-                        paddingBottom: 2,
-                      }}
-                    >
-                      {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
+                </AccordionDetails>
+              </Accordion>
             ))
         ) : (
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -666,16 +680,15 @@ function SectionTracker(props) {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                              column.id == "lastUpdate" ? (
+                                column.id == "lastUpdate" ? (
                                 moment(new Date(value)).strftime("%b %d, %Y")
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={`/tracker/${
-                                    typeof row.slug === "object"
-                                      ? row.slug.current
-                                      : row.slug
-                                  }`}
+                                  href={`/tracker/${typeof row.slug === "object"
+                                    ? row.slug.current
+                                    : row.slug
+                                    }`}
                                 >
                                   {value}
                                 </Link>
@@ -707,7 +720,7 @@ function SectionTracker(props) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Box>
-    </section>
+    </section >
   );
 }
 
