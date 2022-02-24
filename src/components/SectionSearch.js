@@ -21,7 +21,7 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics, title, url, websiteTitle} | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics[]->{_key, _id, name, slug}, title, url, websiteTitle} | order(date desc)';
 
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
@@ -72,6 +72,7 @@ const SectionSearch = () => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
+    console.log("QUERY in the useEffect", query.filter);
     client.fetch(citationsQuery).then((cites) => {
       if (Array.isArray(cites) && cites.length) {
         setAllCitations(cites);
@@ -103,6 +104,7 @@ const SectionSearch = () => {
       });
     }
 
+    console.log("newTopics", newTopics);
     let newFilters = [];
     ["issue", "policy", "company", "country"].forEach((type) => {
       if (Array.isArray(query[type]) && query[type].length) {
@@ -136,13 +138,16 @@ const SectionSearch = () => {
           let matches = 0;
           if (Array.isArray(citation.topics) && citation.topics.length) {
             citation.topics.forEach((topic) => {
-              if (filters.findIndex((f) => f.name === topic.name) >= 0)
+              if (filters.findIndex((f) => f._id === topic._id) >= 0)
                 matches += 1;
             });
           }
           return matches >= filters.length;
         });
       }
+
+      console.log("FILTERS*******", filters);
+
       if (search) {
         newCitations = newCitations.filter((citation) => {
           const regex = new RegExp(`${search}`, "i");
@@ -155,6 +160,7 @@ const SectionSearch = () => {
           return false;
         });
       }
+      console.log("newCitations", newCitations);
       setCitations(newCitations);
     }
   }, [filters, search, allCitations]);

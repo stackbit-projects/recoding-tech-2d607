@@ -7,7 +7,7 @@ import moment from "moment-strftime";
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
-import Link from "./NextLinkComposed"
+import Link from "./NextLinkComposed";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(() => ({
@@ -73,7 +73,10 @@ const RelatedCommentary = (props) => {
           <Grid item xs={4}>
             <Typography component="div" variant="h4">
               <Link
-                href={{ pathname: "/search", query: { filter: topic, type: type } }}
+                href={{
+                  pathname: "/search",
+                  query: { filter: topic, type: type },
+                }}
                 className={classes.link}
               >
                 View all
@@ -120,6 +123,8 @@ const RelatedCommentary = (props) => {
 
 RelatedCommentary.propTypes = {
   commentary: PropTypes.array,
+  topic: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default RelatedCommentary;
