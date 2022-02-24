@@ -111,7 +111,7 @@ function SectionHero(props) {
             </Typography>
           ) : page.__metadata.modelName == "topic" ? (
             <Typography variant="h4" className={classes.superTitle}>
-              {page.type}
+              {page.type === "country" ? "Government" : page.type}
             </Typography>
           ) : page.__metadata.modelName == "article" ? (
             <Typography variant="h4" className={classes.superTitle}>
