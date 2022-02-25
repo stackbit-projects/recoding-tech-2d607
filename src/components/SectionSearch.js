@@ -183,6 +183,9 @@ const SectionSearch = () => {
   };
 
   const handleDelete = (topic) => () => {
+    if (query.filter && history) {
+      history.pushState(null, "", location.href.split("?")[0]);
+    }
     if (topic) {
       setFilters(filters.filter((f) => f.slug !== topic.slug));
     }
