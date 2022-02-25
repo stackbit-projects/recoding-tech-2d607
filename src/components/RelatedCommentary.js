@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const RelatedCommentary = (props) => {
-  const { commentary, topic, type } = props;
+  const { commentary, topic } = props;
   if (!Array.isArray(commentary) || !commentary.length) return null;
   const classes = useStyles();
   const [sortedCommentary, setSortedCommentary] = useState(null);
@@ -75,7 +75,7 @@ const RelatedCommentary = (props) => {
               <Link
                 href={{
                   pathname: "/search",
-                  query: { filter: topic, type: type },
+                  query: { filter: topic },
                 }}
                 className={classes.link}
               >
@@ -124,7 +124,6 @@ const RelatedCommentary = (props) => {
 RelatedCommentary.propTypes = {
   commentary: PropTypes.array,
   topic: PropTypes.string,
-  type: PropTypes.string,
 };
 
 export default RelatedCommentary;

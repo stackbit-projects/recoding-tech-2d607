@@ -72,7 +72,6 @@ const SectionSearch = () => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    console.log("QUERY in the useEffect", query.filter);
     client.fetch(citationsQuery).then((cites) => {
       if (Array.isArray(cites) && cites.length) {
         setAllCitations(cites);
@@ -104,23 +103,22 @@ const SectionSearch = () => {
       });
     }
 
-    console.log("newTopics", newTopics);
     let newFilters = [];
-    ["issue", "policy", "company", "country"].forEach((type) => {
-      if (Array.isArray(query[type]) && query[type].length) {
-        query[type].forEach((t) => {
-          const exists = newTopics[type].get(t);
-          if (exists) {
-            newFilters.push(exists);
-          }
-        });
-      } else {
-        const exists = newTopics[type].get(query[type]);
-        if (exists) {
-          newFilters.push(exists);
-        }
-      }
-    });
+    // ["issue", "policy", "company", "country"].forEach((type) => {
+    //   if (query[type]) {
+    //     query[type].forEach((t) => {
+    //       const exists = newTopics[type].get(t);
+    //       if (exists) {
+    //         newFilters.push(exists);
+    //       }
+    //     });
+    //   } else {
+    //     const exists = newTopics[type].get(query[type]);
+    //     if (exists) {
+    //       newFilters.push(exists);
+    //     }
+    //   }
+    // });
 
     setIssues(Array.from(newTopics.issue.values()));
     setPolicies(Array.from(newTopics.policy.values()));
@@ -128,11 +126,20 @@ const SectionSearch = () => {
     setCountries(Array.from(newTopics.country.values()));
     newFilters.sort();
     setFilters(newFilters);
+  }, [topics]);
+
+  useEffect(() => {
+    let filterTopic;
+    if (query.filter) {
+      filterTopic = topics.filter((topic) => topic._id === query.filter);
+      setFilters(filterTopic);
+    }
   }, [query, topics]);
 
   useEffect(() => {
     if (allCitations.length) {
       let newCitations = allCitations;
+
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
@@ -146,8 +153,6 @@ const SectionSearch = () => {
         });
       }
 
-      console.log("FILTERS*******", filters);
-
       if (search) {
         newCitations = newCitations.filter((citation) => {
           const regex = new RegExp(`${search}`, "i");
@@ -160,7 +165,6 @@ const SectionSearch = () => {
           return false;
         });
       }
-      console.log("newCitations", newCitations);
       setCitations(newCitations);
     }
   }, [filters, search, allCitations]);
