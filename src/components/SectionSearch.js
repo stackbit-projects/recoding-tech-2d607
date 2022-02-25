@@ -21,7 +21,7 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics, title, url, websiteTitle} | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics[]->{_key, _id, name, slug}, title, url, websiteTitle} | order(date desc)';
 
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
@@ -104,21 +104,21 @@ const SectionSearch = () => {
     }
 
     let newFilters = [];
-    ["issue", "policy", "company", "country"].forEach((type) => {
-      if (Array.isArray(query[type]) && query[type].length) {
-        query[type].forEach((t) => {
-          const exists = newTopics[type].get(t);
-          if (exists) {
-            newFilters.push(exists);
-          }
-        });
-      } else {
-        const exists = newTopics[type].get(query[type]);
-        if (exists) {
-          newFilters.push(exists);
-        }
-      }
-    });
+    // ["issue", "policy", "company", "country"].forEach((type) => {
+    //   if (query[type]) {
+    //     query[type].forEach((t) => {
+    //       const exists = newTopics[type].get(t);
+    //       if (exists) {
+    //         newFilters.push(exists);
+    //       }
+    //     });
+    //   } else {
+    //     const exists = newTopics[type].get(query[type]);
+    //     if (exists) {
+    //       newFilters.push(exists);
+    //     }
+    //   }
+    // });
 
     setIssues(Array.from(newTopics.issue.values()));
     setPolicies(Array.from(newTopics.policy.values()));
@@ -126,23 +126,33 @@ const SectionSearch = () => {
     setCountries(Array.from(newTopics.country.values()));
     newFilters.sort();
     setFilters(newFilters);
+  }, [topics]);
+
+  useEffect(() => {
+    let filterTopic;
+    if (query.filter) {
+      filterTopic = topics.filter((topic) => topic._id === query.filter);
+      setFilters(filterTopic);
+    }
   }, [query, topics]);
 
   useEffect(() => {
     if (allCitations.length) {
       let newCitations = allCitations;
+
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
           if (Array.isArray(citation.topics) && citation.topics.length) {
             citation.topics.forEach((topic) => {
-              if (filters.findIndex((f) => f.name === topic.name) >= 0)
+              if (filters.findIndex((f) => f._id === topic._id) >= 0)
                 matches += 1;
             });
           }
           return matches >= filters.length;
         });
       }
+
       if (search) {
         newCitations = newCitations.filter((citation) => {
           const regex = new RegExp(`${search}`, "i");
@@ -173,6 +183,9 @@ const SectionSearch = () => {
   };
 
   const handleDelete = (topic) => () => {
+    if (query.filter && history) {
+      history.pushState(null, "", location.href.split("?")[0]);
+    }
     if (topic) {
       setFilters(filters.filter((f) => f.slug !== topic.slug));
     }

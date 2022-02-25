@@ -154,7 +154,7 @@ const Topic = (props) => {
                 <RelatedGuide {...props} />
               </Grid>
               <Grid item>
-                <RelatedCommentary commentary={headlines} />
+                <RelatedCommentary commentary={headlines} topic={page.slug} />
               </Grid>
               <Grid item>
                 <RelatedTopics title="Related Issues" topics={issues} />
