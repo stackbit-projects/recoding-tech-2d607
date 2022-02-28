@@ -137,6 +137,7 @@ const SectionSearch = () => {
   }, [query, topics]);
 
   useEffect(() => {
+    console.log("allCitations************", allCitations);
     if (allCitations.length) {
       let newCitations = allCitations;
 
