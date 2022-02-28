@@ -138,22 +138,28 @@ const SectionSearch = () => {
 
   useEffect(() => {
     console.log("allCitations************", allCitations);
+    console.log("filters*********", filters);
     if (allCitations.length) {
-      let newCitations = allCitations;
+      let newCitations = allCitations.filter(
+        (citation) =>
+          Array.isArray(citation.topics) &&
+          citation.topics.length &&
+          citation.topics[0] != null &&
+          Object.keys(citation.topics[0]).length != 0
+      );
+
+      console.log(
+        "newCitations after filtering for ones with topics that are null: ",
+        newCitations
+      );
 
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
-          if (
-            Array.isArray(citation.topics) &&
-            citation.topics.length &&
-            Object.keys(citation.topics[0]).length != 0
-          ) {
-            citation.topics.forEach((topic) => {
-              if (filters.findIndex((f) => f._id === topic._id) >= 0)
-                matches += 1;
-            });
-          }
+          citation.topics.forEach((topic) => {
+            if (filters.findIndex((f) => f._id === topic._id) >= 0)
+              matches += 1;
+          });
           return matches >= filters.length;
         });
       }
