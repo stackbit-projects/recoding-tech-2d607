@@ -21,7 +21,7 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, topics[]->{_key, _id, name, slug}, title, url, websiteTitle} | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle} | order(date desc)';
 
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
@@ -137,8 +137,6 @@ const SectionSearch = () => {
   }, [query, topics]);
 
   useEffect(() => {
-    console.log("allCitations************", allCitations);
-    console.log("filters*********", filters);
     if (allCitations.length) {
       let newCitations = allCitations.filter(
         (citation) =>
@@ -146,11 +144,6 @@ const SectionSearch = () => {
           citation.topics.length &&
           citation.topics[0] != null &&
           Object.keys(citation.topics[0]).length != 0
-      );
-
-      console.log(
-        "newCitations after filtering for ones with topics that are null: ",
-        newCitations
       );
 
       if (filters.length) {
@@ -176,7 +169,6 @@ const SectionSearch = () => {
           return false;
         });
       }
-      console.log("newCitations after filter: ", newCitations);
       setCitations(newCitations);
     }
   }, [filters, search, allCitations]);
@@ -309,7 +301,7 @@ const SectionSearch = () => {
         >
           <Grid item xs={8}>
             <Typography component="h2" variant="h4">
-              Countries
+              Governments
             </Typography>
           </Grid>
           <Grid item>
