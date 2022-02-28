@@ -166,6 +166,7 @@ const SectionSearch = () => {
           return false;
         });
       }
+      console.log("newCitations after filter: ", newCitations);
       setCitations(newCitations);
     }
   }, [filters, search, allCitations]);
