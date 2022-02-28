@@ -11,8 +11,7 @@ import Typography from "@mui/material/Typography";
 // utils
 import client from "../utils/sanityClient";
 
-const query =
-  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, citation, citationPublication, citationTitle, date, publicationTitle, ref, title, url, websiteTitle} | order(date desc)';
+const query = `*[!(_id in path("drafts.**")) && _type == "citation"]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...3]`; // just get the three most recent citations
 
 const useStyles = makeStyles((theme) => ({
   citation: {
@@ -53,15 +52,9 @@ const SectionCitations = () => {
 
   useEffect(() => {
     client.fetch(query).then((cites) => {
-      let allCitations = [];
-      cites.forEach((citation) => {
-        allCitations = [...allCitations, citation];
-      });
-      setCitations(allCitations.slice(0, 3));
+      setCitations(cites);
     });
   }, []);
-
-  useEffect(() => {}, [citations]);
 
   return (
     <Grid container className={classes.grid}>
@@ -98,6 +91,10 @@ const SectionCitations = () => {
                   variant="h5"
                   className={classes.citationPublication}
                 >
+                  {citation.creators.length == 1
+                    ? `${citation.creators[0].firstName} ${citation.creators[0].lastName}`
+                    : ""}{" "}
+                  -{" "}
                   {citation.publicationTitle
                     ? citation.publicationTitle
                     : citation.websiteTitle}
