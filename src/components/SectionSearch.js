@@ -144,7 +144,11 @@ const SectionSearch = () => {
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
-          if (Array.isArray(citation.topics) && citation.topics.length) {
+          if (
+            Array.isArray(citation.topics) &&
+            citation.topics.length &&
+            Object.keys(citation.topics[0]).length != 0
+          ) {
             citation.topics.forEach((topic) => {
               if (filters.findIndex((f) => f._id === topic._id) >= 0)
                 matches += 1;
