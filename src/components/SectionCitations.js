@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 // utils
 import client from "../utils/sanityClient";
 
-const query = `*[!(_id in path("drafts.**")) && _type == "citation"]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...3]`; // just get the three most recent citations
+const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...3]`; // just get the three most recent citations
 
 const useStyles = makeStyles((theme) => ({
   citation: {
