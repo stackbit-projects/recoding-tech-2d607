@@ -12,6 +12,11 @@
       "api": {
         "dataset": "development2"
       }
+    },
+    "production": {
+      "api": {
+        "dataset": "production"
+      }
     }
   },
   "plugins": [
