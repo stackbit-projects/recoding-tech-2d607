@@ -32,7 +32,7 @@ export default {
         source: ({ theFile }) => {
           if (!theFile) return "Missing PDF File";
           const { asset } = tryGetFile(theFile?.asset?._ref, {
-            dataset: process.env.SANITY_STUDIO_API_DATASET,
+            dataset: "production",
             projectId: process.env.SANITY_STUDIO_API_PROJECT_ID,
           });
           return asset?.url;
