@@ -21,7 +21,7 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle} | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle, publisher } | order(date desc)';
 
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
@@ -350,7 +350,7 @@ const SectionSearch = () => {
                   (page - 1) * ROWS_PER_PAGE,
                   (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
                 )
-                .map((citation) => (
+                .map((citation, idx) => (
                   <Grid
                     key={citation._id}
                     container
@@ -365,8 +365,9 @@ const SectionSearch = () => {
                       className={classes.citation}
                     >
                       <FancyCard
-                        key={citation._id}
+                        key={`${citation._id + idx}`}
                         title={citation.title}
+                        citation={citation}
                         publication={
                           citation.publicationTitle
                             ? citation.publicationTitle
