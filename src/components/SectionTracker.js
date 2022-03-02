@@ -308,14 +308,14 @@ function SectionTracker(props) {
               >
                 {issues && issues.length
                   ? issues.map((issue) => (
-                      <MenuItem
-                        key={issue._id}
-                        onClick={handleCloseIssues(issue)}
-                        disableRipple
-                      >
-                        {issue.displayTitle || issue.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={issue._id}
+                      onClick={handleCloseIssues(issue)}
+                      disableRipple
+                    >
+                      {issue.displayTitle || issue.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -351,14 +351,14 @@ function SectionTracker(props) {
               >
                 {policies && policies.length
                   ? policies.map((policy) => (
-                      <MenuItem
-                        key={policy._id}
-                        onClick={handleClosePolicies(policy)}
-                        disableRipple
-                      >
-                        {policy.displayTitle || policy.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={policy._id}
+                      onClick={handleClosePolicies(policy)}
+                      disableRipple
+                    >
+                      {policy.displayTitle || policy.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -394,18 +394,18 @@ function SectionTracker(props) {
               >
                 {countries && countries.length
                   ? countries.map((country) => {
-                      if (country) {
-                        return (
-                          <MenuItem
-                            key={country._id}
-                            onClick={handleCloseCountries(country)}
-                            disableRipple
-                          >
-                            {country.displayTitle || country.name}
-                          </MenuItem>
-                        );
-                      }
-                    })
+                    if (country) {
+                      return (
+                        <MenuItem
+                          key={country._id}
+                          onClick={handleCloseCountries(country)}
+                          disableRipple
+                        >
+                          {country.displayTitle || country.name}
+                        </MenuItem>
+                      );
+                    }
+                  })
                   : null}
               </Menu>
             </Grid>
@@ -441,14 +441,14 @@ function SectionTracker(props) {
               >
                 {companies && companies.length
                   ? companies.map((company) => (
-                      <MenuItem
-                        key={company._key}
-                        onClick={handleCloseCompanies(company)}
-                        disableRipple
-                      >
-                        {company.displayTitle || company.name}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={company._key}
+                      onClick={handleCloseCompanies(company)}
+                      disableRipple
+                    >
+                      {company.displayTitle || company.name}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Grid>
@@ -459,21 +459,20 @@ function SectionTracker(props) {
         <Grid container spacing={2} justifyContent="flex-start">
           {filters.length
             ? filters.map((filter, idx) => (
-                <Grid key={`${filter._key + idx}`} item>
-                  <Chip
-                    label={filter.displayTitle || filter.name}
-                    color={filter.type}
-                    onDelete={handleDelete(filter)}
-                  />
-                </Grid>
-              ))
+              <Grid key={`${filter._key + idx}`} item>
+                <Chip
+                  label={filter.displayTitle || filter.name}
+                  color={filter.type}
+                  onDelete={handleDelete(filter)}
+                />
+              </Grid>
+            ))
             : null}
         </Grid>
       </Box>
       <Box my={4}>
         {isMobile ? (
           actions
-
             .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
             .reverse()
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -504,11 +503,10 @@ function SectionTracker(props) {
                     >
                       <Grid item>
                         <Link
-                          href={`/tracker/${
-                            typeof row.slug === "object"
+                          href={`/tracker/${typeof row.slug === "object"
                               ? row.slug.current
                               : row.slug
-                          }`}
+                            }`}
                           variant="body2"
                           sx={{ color: "#000" }}
                         >
@@ -519,119 +517,69 @@ function SectionTracker(props) {
                         <KeyboardArrowRightIcon />
                       </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          paddingBottom: 2,
-                        }}
-                      >
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", borderTop: "1px solid #ccc", paddingTop: 2 }}>
+                      <Typography variant="h4">
                         Type
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", borderTop: "1px solid #ccc", paddingTop: 2 }}>
                       <Typography
                         variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          fontWeight: "normal",
-                          paddingBottom: 2,
-                        }}
+                        sx={{ fontWeight: "normal", }}
                       >
                         {row.type}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          paddingBottom: 2,
-                        }}
-                      >
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
+                      <Typography variant="h4">
                         Government
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
                       <Typography
                         variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          fontWeight: "normal",
-                          paddingBottom: 2,
-                        }}
+                        sx={{ fontWeight: "normal", }}
                       >
                         {row.country.displayTitle}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          paddingBottom: 2,
-                        }}
-                      >
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
+                      <Typography variant="h4">
                         Date Initiated
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
                       <Typography
                         variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          fontWeight: "normal",
-                          paddingBottom: 2,
-                        }}
+                        sx={{ fontWeight: "normal", }}
                       >
                         {moment(new Date(row.dateInitiated)).strftime(
                           "%b %d, %Y"
                         )}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          paddingBottom: 2,
-                        }}
-                      >
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
+                      <Typography variant="h4"  >
                         Status
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
                       <Typography
                         variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          fontWeight: "normal",
-                          paddingBottom: 2,
-                        }}
+                        sx={{ fontWeight: "normal", }}
                       >
                         {row.status}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          paddingBottom: 2,
-                        }}
-                      >
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
+                      <Typography variant="h4"  >
                         Last Updated
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
                       <Typography
                         variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #ccc",
-                          fontWeight: "normal",
-                          paddingBottom: 2,
-                        }}
+                        sx={{ fontWeight: "normal", }}
                       >
                         {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
                       </Typography>
@@ -687,16 +635,15 @@ function SectionTracker(props) {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                              column.id == "lastUpdate" ? (
+                                column.id == "lastUpdate" ? (
                                 moment(new Date(value)).strftime("%b %d, %Y")
                               ) : column.id == "title" ? (
                                 <Link
                                   className={classes.tableLink}
-                                  href={`/tracker/${
-                                    typeof row.slug === "object"
+                                  href={`/tracker/${typeof row.slug === "object"
                                       ? row.slug.current
                                       : row.slug
-                                  }`}
+                                    }`}
                                 >
                                   {value}
                                 </Link>
