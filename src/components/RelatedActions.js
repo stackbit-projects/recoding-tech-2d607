@@ -202,70 +202,85 @@ const RelatedActions = (props) => {
                         <KeyboardArrowRightIcon />
                       </Grid>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography variant="h4">
-                        Type
-                      </Typography>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4">Type</Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography
-                        variant="h4"
-                        sx={{ fontWeight: "normal", }}
-                      >
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                         {row.type}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography variant="h4">
-                        Government
-                      </Typography>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4">Government</Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography
-                        variant="h4"
-                        sx={{ fontWeight: "normal", }}
-                      >
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                         {row.country.displayTitle}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography variant="h4">
-                        Date Initiated
-                      </Typography>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4">Date Initiated</Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography
-                        variant="h4"
-                        sx={{fontWeight: "normal",}}
-                      >
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                         {moment(new Date(row.dateInitiated)).strftime(
                           "%b %d, %Y"
                         )}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography variant="h4">
-                        Status
-                      </Typography>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4">Status</Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography
-                        variant="h4"
-                        sx={{ fontWeight: "normal",}}
-                      >
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                         {row.status}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography variant="h4">
-                        Last Updated
-                      </Typography>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4">Last Updated</Typography>
                     </Grid>
-                    <Grid item xs={6} sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}>
-                      <Typography
-                        variant="h4"
-                        sx={{ fontWeight: "normal", }}
-                      >
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+                    >
+                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                         {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
                       </Typography>
                     </Grid>

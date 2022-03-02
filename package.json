@@ -7,7 +7,7 @@
     "eslint": "eslint",
     "eslint:init": "eslint --init",
     "prepare": "husky install",
-    "test": "eslint src/ --ext .js,.mjs,.jsx,.ts,.tsx",
+    "test": "eslint src/ --ext .js,.mjs,.jsx,.ts,.tsx --fix",
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
