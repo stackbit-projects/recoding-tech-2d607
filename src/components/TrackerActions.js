@@ -121,118 +121,83 @@ const TrackerActions = (props) => {
           </AccordionSummary>
           <AccordionDetails>
             <Grid container>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Type
-                </Typography>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 1 }}
+              >
+                <Typography variant="h4">Type</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    fontWeight: "normal",
-                    paddingBottom: 2,
-                  }}
-                >
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 1 }}
+              >
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {page.type}
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Government
-                </Typography>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4">Government</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    fontWeight: "normal",
-                    paddingBottom: 2,
-                  }}
-                >
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {page.country.displayTitle}
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Date Initiated
-                </Typography>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4">Date Initiated</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    fontWeight: "normal",
-                    paddingBottom: 2,
-                  }}
-                >
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Status
-                </Typography>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4">Status</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    fontWeight: "normal",
-                    paddingBottom: 2,
-                  }}
-                >
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {page.status}
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Last Updated
-                </Typography>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4">Last Updated</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    borderBottom: "1px solid #ccc",
-                    fontWeight: "normal",
-                    paddingBottom: 2,
-                  }}
-                >
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
+              >
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {moment(new Date(page.lastUpdate)).strftime("%b %d, %Y")}
                 </Typography>
               </Grid>
