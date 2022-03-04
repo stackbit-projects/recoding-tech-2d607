@@ -7,7 +7,7 @@ import moment from "moment-strftime";
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+import Link from "./NextLinkComposed";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(() => ({
@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const RelatedCommentary = (props) => {
-  const { commentary } = props;
+  const { commentary, topic } = props;
   if (!Array.isArray(commentary) || !commentary.length) return null;
   const classes = useStyles();
   const [sortedCommentary, setSortedCommentary] = useState(null);
@@ -72,7 +72,13 @@ const RelatedCommentary = (props) => {
           </Grid>
           <Grid item xs={4}>
             <Typography component="div" variant="h4">
-              <Link href="/search" className={classes.link}>
+              <Link
+                href={{
+                  pathname: "/search",
+                  query: { filter: topic },
+                }}
+                className={classes.link}
+              >
                 View all
               </Link>
             </Typography>
@@ -117,6 +123,7 @@ const RelatedCommentary = (props) => {
 
 RelatedCommentary.propTypes = {
   commentary: PropTypes.array,
+  topic: PropTypes.string,
 };
 
 export default RelatedCommentary;

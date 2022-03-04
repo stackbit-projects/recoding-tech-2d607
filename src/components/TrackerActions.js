@@ -5,9 +5,11 @@ import moment from "moment-strftime";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const useStyles = makeStyles((theme) => ({
@@ -101,123 +104,106 @@ const TrackerActions = (props) => {
         </Link>
       </Typography>
       {isMobile ? (
-        <Paper elevation={0} sx={{ marginBottom: 4 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={12}
-              sx={{ backgroundColor: "#EFE9DA", padding: 2, marginBottom: 2 }}
-            >
-              <Typography
-                component="div"
-                variant="h4"
-                sx={{ color: "#000", marginBottom: 0 }}
+        <Accordion sx={{ marginBottom: 4 }}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls={`content-${page._key}`}
+            id={`header-${page._key}`}
+            sx={{
+              backgroundColor: "#EFE9DA",
+              padding: 2,
+              marginBottom: 2,
+            }}
+          >
+            <Typography component="div" variant="h4">
+              {page.title}
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 1 }}
               >
-                {page.title}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                <Typography variant="h4">Type</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 1 }}
               >
-                Type
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{
-                  borderBottom: "1px solid #ccc",
-                  fontWeight: "normal",
-                  paddingBottom: 2,
-                }}
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
+                  {page.type}
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                {page.type}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                <Typography variant="h4">Government</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                Government
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{
-                  borderBottom: "1px solid #ccc",
-                  fontWeight: "normal",
-                  paddingBottom: 2,
-                }}
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
+                  {page.country.displayTitle}
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                {page.country ? page.country.displayTitle : ""}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                <Typography variant="h4">Date Initiated</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                Date Initiated
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{
-                  borderBottom: "1px solid #ccc",
-                  fontWeight: "normal",
-                  paddingBottom: 2,
-                }}
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
+                  {moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                {moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                <Typography variant="h4">Status</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                Status
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{
-                  borderBottom: "1px solid #ccc",
-                  fontWeight: "normal",
-                  paddingBottom: 2,
-                }}
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
+                  {page.status}
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                {page.status}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{ borderBottom: "1px solid #ccc", paddingBottom: 2 }}
+                <Typography variant="h4">Last Updated</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
-                Last Updated
-              </Typography>
+                <Typography variant="h4" sx={{ fontWeight: "normal" }}>
+                  {moment(new Date(page.lastUpdate)).strftime("%b %d, %Y")}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="h4"
-                sx={{
-                  borderBottom: "1px solid #ccc",
-                  fontWeight: "normal",
-                  paddingBottom: 2,
-                }}
-              >
-                {moment(new Date(page.lastUpdate)).strftime("%b %d, %Y")}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Paper>
+          </AccordionDetails>
+        </Accordion>
       ) : (
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table
