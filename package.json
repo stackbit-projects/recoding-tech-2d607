@@ -1,8 +1,9 @@
 {
-  "name": "stackbit-fresh-theme",
-  "description": "Stackbit Fresh Theme",
+  "name": "recoding-tech",
+  "description": "Recoding Tech website",
   "version": "0.0.1",
   "license": "MIT",
+  "homepage": "test.recoding.tech",
   "scripts": {
     "eslint": "eslint",
     "eslint:init": "eslint --init",
