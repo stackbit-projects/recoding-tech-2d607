@@ -185,7 +185,7 @@ const FancyCard = ({
 FancyCard.propTypes = {
   author: PropTypes.string,
   category: PropTypes.string,
-  citation: PropTypes.obj,
+  citation: PropTypes.object,
   citationToParse: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.string,
