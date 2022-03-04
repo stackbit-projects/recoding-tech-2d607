@@ -13,6 +13,7 @@ import contact_submission from "./contact_submission.js"
 import creators from "./creators.js";
 import citation from "./citation.js";
 import article from "./article.js";
+import file from "./file.js"
 import page from "./page.js";
 import person from "./person.js";
 import guide from "./guide.js";
@@ -49,6 +50,7 @@ export default createSchema({
     article,
     creators,
     citation,
+    file,
     guide,
     page,
     person,
