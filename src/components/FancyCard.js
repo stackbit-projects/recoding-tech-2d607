@@ -146,7 +146,9 @@ const FancyCard = ({
                   : `${reading.creators[0].firstName} ${reading.creators[0].lastName}`
                 : author}
               {` - `}
-              {publication
+              {reading.institution
+                ? reading.institution
+                : publication
                 ? publication
                 : reading
                 ? reading.websiteTitle ||
