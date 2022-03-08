@@ -152,11 +152,50 @@ const commit = async (documents, type) => {
       console.log(
         `Committing batch ${processed + 1} through ${
           processed + batch.length
-        } of ${deduped.length} total ${type}...`
+        } of ${deduped.length} total ${type} records...`
       );
       await transaction.commit();
       processed += batch.length;
     } while (processed < deduped.length);
+  }
+};
+
+const prune = async (documents, type) => {
+  if (documents.length > 0) {
+    const old = await client.fetch(
+      '*[!(_id in path("drafts.**")) && _type == $type] {_id}',
+      { type }
+    );
+    const dedup = new Map();
+    documents.forEach((document) => {
+      dedup.set(document._id, document);
+    });
+    const deduped = Array.from(dedup.values());
+    console.log(`Deduplicated down to ${deduped.length} ${type} records.`);
+    const stale = old.reduce((acc, item) => {
+      if (deduped.findIndex((d) => d._id === item._id) < 0) {
+        acc.push(item._id);
+      }
+      return acc;
+    }, []);
+
+    console.log(`Found ${stale.length} ${type} records to prune:`, stale);
+
+    let pruned = 0;
+    do {
+      const batch = stale.slice(pruned, pruned + BATCH_SIZE - 1);
+      const transaction = client.transaction();
+      batch.forEach((document) => {
+        transaction.delete(document);
+      });
+      console.log(
+        `Deleted batch ${pruned + 1} through ${pruned + batch.length} of ${
+          stale.length
+        } total ${type} stale records...`
+      );
+      await transaction.commit();
+      pruned += batch.length;
+    } while (pruned < stale.length);
   }
 };
 
@@ -203,9 +242,11 @@ async function fetchAllCitations() {
   console.log(`Fetched ${citations.length} citations.`);
 
   try {
-    await commit(creators, "creators");
-    await commit(tags, "tags");
-    await commit(citations, "citations");
+    await commit(creators, "creator");
+    await commit(tags, "topic");
+    await commit(citations, "citation");
+    await prune(citations, "citation");
+    await prune(creators, "creator");
   } catch (error) {
     console.error(error.name + ": " + error.message);
   }
