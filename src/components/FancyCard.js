@@ -80,7 +80,6 @@ const FancyCard = ({
   author,
   category,
   citation,
-  citationToParse,
   content,
   date,
   publication,
@@ -94,24 +93,12 @@ const FancyCard = ({
   const [reading, setReading] = useState(null);
 
   useEffect(() => {
-    console.log("FancyCard******** citation", citation);
-    console.log("publicaiton", publication);
-    console.log("date", date);
     if (citation) {
-      setReading(citation);
-    }
-
-    if (citationToParse) {
-      console.log("yes there is citation to Parse");
-      client.fetch(`*[_id == "${citationToParse}"][0]`).then((ref) => {
+      client.fetch(`*[_id == "${citation}"][0]`).then((ref) => {
         setReading(ref);
       });
     }
-  }, [citation, citationToParse]);
-
-  useEffect(() => {
-    console.log("reading*********", reading);
-  }, [reading]);
+  }, []);
 
   return (
     <Card
@@ -142,25 +129,28 @@ const FancyCard = ({
             <Typography component="div" variant="subtitle1" gutterBottom>
               {reading && reading.creators.length
                 ? reading.creators.length > 1
-                  ? `${reading.creators[0].firstName} ${reading.creators[0].lastName}, et al`
+                  ? `${reading.creators[0].firstName} ${reading.creators[0].lastName} et al`
                   : `${reading.creators[0].firstName} ${reading.creators[0].lastName}`
                 : author}
-              {` - `}
-              {reading.institution
+            </Typography>
+          )}
+          {(reading || publication) && (
+            <Typography component="div" variant="subtitle1" gutterBottom>
+              {reading
                 ? reading.institution
-                : publication
-                ? publication
-                : reading
-                ? reading.websiteTitle ||
-                  reading.publicationTitle ||
-                  reading.publisher
-                : ""}
+                  ? reading.institution
+                  : reading.websiteTitle
+                  ? reading.websiteTitle
+                  : reading.place
+                  ? reading.place
+                  : reading.publisher
+                : publication}
             </Typography>
           )}
           {(reading || date) && (
             <Typography component="div" variant="body1" className={classes.em}>
               {reading ? (
-                <>{moment(reading.date).strftime("%B %e, %Y")}</>
+                <>{moment(reading.date).strftime("%B %Y")}</>
               ) : (
                 moment(date).strftime("%B %Y")
               )}
@@ -187,8 +177,7 @@ const FancyCard = ({
 FancyCard.propTypes = {
   author: PropTypes.string,
   category: PropTypes.string,
-  citation: PropTypes.object,
-  citationToParse: PropTypes.string,
+  citation: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.string,
   isSidebar: PropTypes.bool,

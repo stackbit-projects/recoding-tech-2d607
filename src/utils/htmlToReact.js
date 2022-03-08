@@ -19,7 +19,7 @@ export default function htmlToReact(html) {
   return ReactHtmlParser(html, {
     transform: (node, index) => {
       if (node.attribs && node.attribs.class == "citation") {
-        return <FancyCard citationToParse={node.children[0].data} />;
+        return <FancyCard citation={node.children[0].data} />;
       }
       if (node.data)
         if (node.type === "script") {

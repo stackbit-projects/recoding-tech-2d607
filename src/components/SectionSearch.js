@@ -21,7 +21,7 @@ import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle, publisher, institution } | order(date desc)';
+  '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle} | order(date desc)';
 
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
@@ -138,17 +138,21 @@ const SectionSearch = () => {
 
   useEffect(() => {
     if (allCitations.length) {
-      let newCitations = allCitations;
+      let newCitations = allCitations.filter(
+        (citation) =>
+          Array.isArray(citation.topics) &&
+          citation.topics.length &&
+          citation.topics[0] != null &&
+          Object.keys(citation.topics[0]).length != 0
+      );
 
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
-          if (Array.isArray(citation.topics) && citation.topics.length) {
-            citation.topics.forEach((topic) => {
-              if (filters.findIndex((f) => f._id === topic._id) >= 0)
-                matches += 1;
-            });
-          }
+          citation.topics.forEach((topic) => {
+            if (filters.findIndex((f) => f._id === topic._id) >= 0)
+              matches += 1;
+          });
           return matches >= filters.length;
         });
       }
@@ -350,7 +354,7 @@ const SectionSearch = () => {
                   (page - 1) * ROWS_PER_PAGE,
                   (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
                 )
-                .map((citation, idx) => (
+                .map((citation) => (
                   <Grid
                     key={citation._id}
                     container
@@ -365,9 +369,8 @@ const SectionSearch = () => {
                       className={classes.citation}
                     >
                       <FancyCard
-                        key={`${citation._id + idx}`}
+                        key={citation._id}
                         title={citation.title}
-                        citation={citation}
                         publication={
                           citation.publicationTitle
                             ? citation.publicationTitle
