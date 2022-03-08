@@ -28,39 +28,59 @@ module.exports = {
       options: {
         liveUpdate: isDev,
         flattenAssetUrls: true,
-        pages: [
-          {
-            path: "/{stackbit_url_path}",
-            predicate: _.matchesProperty("__metadata.modelName", "advanced"),
-          },
-          {
-            path: "/article/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "article"),
-          },
-          {
-            path: "/{stackbit_url_path}",
-            predicate: _.matchesProperty("__metadata.modelName", "page"),
-          },
-          {
-            path: "/tracker/{slug}",
-            predicate: _.matchesProperty(
-              "__metadata.modelName",
-              "policy_action"
-            ),
-          },
-          {
-            path: "/{type}/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "topic"),
-          },
-          {
-            path: "/{stackbit_url_path}",
-            predicate: _.matchesProperty("__metadata.modelName", "post"),
-          },
-          {
-            path: "/guide/{slug}",
-            predicate: _.matchesProperty("__metadata.modelName", "guide"),
-          },
-        ],
+        pages: (objects) => {
+          return _.reduce(
+            objects,
+            (accum, object) => {
+              switch (object.__metadata.modelName) {
+                case "advanced":
+                  accum.push({
+                    path: object.stackbit_url_path,
+                    page: object,
+                  });
+                  break;
+                case "article":
+                  accum.push({
+                    path: `/article/${object.slug}`,
+                    page: object,
+                  });
+                  break;
+                case "page":
+                  accum.push({
+                    path: object.stackbit_url_path,
+                    page: object,
+                  });
+                  break;
+                case "policy_action":
+                  if (Array.isArray(object.relatedTopics)) {
+                    let topics = object.relatedTopics.map((topic) =>
+                        _.pick(topic, ["displayTitle", "name", "type", "slug", "stackbit_model_type"])
+                      )
+                      object.relatedTopics = topics
+                  }
+                  accum.push({
+                    path: `/tracker/${object.slug}`,
+                    page: object,
+                  });
+                  break;
+                case "topic":
+                  accum.push({
+                    path: `/${object.type}/${object.slug}`,
+                    page: object,
+                  });
+                  break;
+                case "guide":
+                  accum.push({
+                    path: `/guide/${object.slug}`,
+                    page: object,
+                  });
+                  break;
+              }
+              return accum;
+            },
+            []
+          );
+        },
         commonProps: (items) => {
           return {
             data: {
