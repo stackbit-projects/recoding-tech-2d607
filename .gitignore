@@ -108,6 +108,10 @@ lib
 # Sanity.io studio dist directory
 studio/dist
 
+# studio env files
+studio/.env.development
+studio/.env.production
+
 # compiled scripts
 importData.js
 deleteData.js
