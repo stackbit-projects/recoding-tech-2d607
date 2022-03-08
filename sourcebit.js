@@ -54,9 +54,15 @@ module.exports = {
                 case "policy_action":
                   if (Array.isArray(object.relatedTopics)) {
                     let topics = object.relatedTopics.map((topic) =>
-                        _.pick(topic, ["displayTitle", "name", "type", "slug", "stackbit_model_type"])
-                      )
-                      object.relatedTopics = topics
+                      _.pick(topic, [
+                        "displayTitle",
+                        "name",
+                        "type",
+                        "slug",
+                        "stackbit_model_type",
+                      ])
+                    );
+                    object.relatedTopics = topics;
                   }
                   accum.push({
                     path: `/tracker/${object.slug}`,
@@ -64,10 +70,12 @@ module.exports = {
                   });
                   break;
                 case "topic":
-                  accum.push({
-                    path: `/${object.type}/${object.slug}`,
-                    page: object,
-                  });
+                  if (object.type && object.slug) {
+                    accum.push({
+                      path: `/${object.type}/${object.slug}`,
+                      page: object,
+                    });
+                  }
                   break;
                 case "guide":
                   accum.push({
