@@ -91,10 +91,12 @@ const SectionCitations = () => {
                   variant="h5"
                   className={classes.citationPublication}
                 >
-                  {citation.creators.length == 1
-                    ? `${citation.creators[0].firstName} ${citation.creators[0].lastName}`
-                    : ""}{" "}
-                  -{" "}
+                  {citation.creators.length
+                    ? citation.creators.length > 1
+                      ? `${citation.creators[0].firstName} ${citation.creators[0].lastName}, et al`
+                      : `${citation.creators[0].firstName} ${citation.creators[0].lastName}`
+                    : ``}
+                    { citation.creators.length && (citation.publicationTitle || citation.websiteTitle) ? ` - ` : ` `}
                   {citation.publicationTitle
                     ? citation.publicationTitle
                     : citation.websiteTitle}

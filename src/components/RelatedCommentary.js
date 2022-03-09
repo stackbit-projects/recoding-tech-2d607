@@ -54,8 +54,6 @@ const RelatedCommentary = (props) => {
     setSortedCommentary(sort);
   }, []);
 
-  useEffect(() => {}, [sortedCommentary]);
-
   return (
     <section>
       <Grid container className={classes.grid}>
@@ -105,6 +103,15 @@ const RelatedCommentary = (props) => {
                     variant="h5"
                     className={classes.citationPublication}
                   >
+                    {/* {comment.creators.length
+                      ? comment.creators.length > 1
+                        ? `${comment.creators[0].firstName} ${comment.creators[0].lastName}, et al`
+                        : `${comment.creators[0].firstName} ${comment.creators[0].lastName}`
+                      : ``}
+                    {comment.creators.length &&
+                    (comment.publicationTitle || comment.websiteTitle)
+                      ? ` - `
+                      : ` `} */}
                     {comment.publicationTitle
                       ? comment.publicationTitle
                       : comment.websiteTitle}

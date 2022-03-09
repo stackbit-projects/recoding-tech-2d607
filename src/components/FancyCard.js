@@ -94,15 +94,11 @@ const FancyCard = ({
   const [reading, setReading] = useState(null);
 
   useEffect(() => {
-    console.log("FancyCard******** citation", citation);
-    console.log("publicaiton", publication);
-    console.log("date", date);
     if (citation) {
       setReading(citation);
     }
 
     if (citationToParse) {
-      console.log("yes there is citation to Parse");
       client.fetch(`*[_id == "${citationToParse}"][0]`).then((ref) => {
         setReading(ref);
       });
@@ -145,7 +141,12 @@ const FancyCard = ({
                   ? `${reading.creators[0].firstName} ${reading.creators[0].lastName}, et al`
                   : `${reading.creators[0].firstName} ${reading.creators[0].lastName}`
                 : author}
-              {` - `}
+              {reading.creators.length &&
+              (reading.publicationTitle ||
+                reading.websiteTitle ||
+                reading.institution)
+                ? ` - `
+                : ` `}
               {reading.institution
                 ? reading.institution
                 : publication
@@ -154,7 +155,7 @@ const FancyCard = ({
                 ? reading.websiteTitle ||
                   reading.publicationTitle ||
                   reading.publisher
-                : ""}
+                : ` `}
             </Typography>
           )}
           {(reading || date) && (
