@@ -105,10 +105,6 @@ const FancyCard = ({
     }
   }, [citation, citationToParse]);
 
-  useEffect(() => {
-    console.log("reading*********", reading);
-  }, [reading]);
-
   return (
     <Card
       variant="outlined"
