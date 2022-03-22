@@ -4,6 +4,9 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
 
+// utils
+import process from "../utils/processCitations";
+
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
@@ -27,6 +30,10 @@ const useStyles = makeStyles(() => ({
   },
   citationPublication: {
     marginTop: 10,
+  },
+  em: {
+    fontSize: "0.8em",
+    fontStyle: "italic",
   },
   grid: {},
   gridTitle: {
@@ -103,20 +110,9 @@ const RelatedCommentary = (props) => {
                     variant="h5"
                     className={classes.citationPublication}
                   >
-                    {/* {comment.creators.length
-                      ? comment.creators.length > 1
-                        ? `${comment.creators[0].firstName} ${comment.creators[0].lastName}, et al`
-                        : `${comment.creators[0].firstName} ${comment.creators[0].lastName}`
-                      : ``}
-                    {comment.creators.length &&
-                    (comment.publicationTitle || comment.websiteTitle)
-                      ? ` - `
-                      : ` `} */}
-                    {comment.publicationTitle
-                      ? comment.publicationTitle
-                      : comment.websiteTitle}
+                    {process(comment)}
                   </Typography>
-                  <Typography>
+                  <Typography className={classes.em}>
                     {moment(comment.date).strftime("%B %e, %Y")}
                   </Typography>
                 </Grid>

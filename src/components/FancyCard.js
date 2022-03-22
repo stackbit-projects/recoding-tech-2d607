@@ -6,6 +6,7 @@ import moment from "moment-strftime";
 
 // utils
 import client from "../utils/sanityClient";
+import process from "../utils/processCitations";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -83,9 +84,9 @@ const FancyCard = ({
   citationToParse,
   content,
   date,
-  publication,
   notClickable,
   lastUpdated,
+  isArticle,
   isSidebar,
   title,
   onClick = () => {},
@@ -132,26 +133,7 @@ const FancyCard = ({
           )}
           {(reading || author) && (
             <Typography component="div" variant="subtitle1" gutterBottom>
-              {reading && reading.creators.length
-                ? reading.creators.length > 1
-                  ? `${reading.creators[0].firstName} ${reading.creators[0].lastName}, et al`
-                  : `${reading.creators[0].firstName} ${reading.creators[0].lastName}`
-                : author}
-              {reading.creators.length &&
-              (reading.publicationTitle ||
-                reading.websiteTitle ||
-                reading.institution)
-                ? ` - `
-                : ` `}
-              {reading.institution
-                ? reading.institution
-                : publication
-                ? publication
-                : reading
-                ? reading.websiteTitle ||
-                  reading.publicationTitle ||
-                  reading.publisher
-                : ` `}
+              {!isArticle ? process(reading) : author}
             </Typography>
           )}
           {(reading || date) && (
@@ -159,7 +141,7 @@ const FancyCard = ({
               {reading ? (
                 <>{moment(reading.date).strftime("%B %e, %Y")}</>
               ) : (
-                moment(date).strftime("%B %Y")
+                moment(date).strftime("%B %e, %Y")
               )}
             </Typography>
           )}
@@ -188,6 +170,7 @@ FancyCard.propTypes = {
   citationToParse: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.string,
+  isArticle: PropTypes.bool,
   isSidebar: PropTypes.bool,
   notClickable: PropTypes.bool,
   publication: PropTypes.string,
