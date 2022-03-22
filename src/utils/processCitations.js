@@ -12,9 +12,9 @@ export default function process(reading) {
   if (reading.websiteTitle) publication = reading.websiteTitle;
   if (reading.publicationTitle) publication = reading.publicationTitle;
   if (reading.institution) publication = reading.institution;
-  if (reading.place) publication = reading.place;
   if (reading.publisher) publication = reading.publisher;
   if (reading.blogTitle) publication = reading.blogTitle;
+  if (reading.place) publication = reading.place;
 
   if (authors && publication) return authors + ` - ` + publication;
   if (authors && !publication) return authors;
