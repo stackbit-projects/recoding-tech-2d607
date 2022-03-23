@@ -37,17 +37,18 @@ const SectionTopics = (props) => {
 
   return (
     <section>
-      <Box my={4}>
-        <Container>
+      <Container>
+        <Box my={4}>
           <Typography component="h2" variant="h3" gutterBottom>
             Featured Topics
           </Typography>
-          <Stack direction="row" spacing={3}>
+          <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
             {topics
               ? topics.map((topic, i) => (
                   <Chip
                     key={i}
                     label={topic.name}
+                    sx={{ marginBottom: "6px !important" }}
                     component="a"
                     href={`/${topic.type}/${
                       typeof topic.slug == "string"
@@ -68,8 +69,8 @@ const SectionTopics = (props) => {
                 ))
               : null}
           </Stack>
-        </Container>
-      </Box>
+        </Box>
+      </Container>
     </section>
   );
 };
