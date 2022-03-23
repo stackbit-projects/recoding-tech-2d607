@@ -14,6 +14,9 @@ export default function process(reading) {
   if (reading.institution) publication = reading.institution;
   if (reading.publisher) publication = reading.publisher;
   if (reading.blogTitle) publication = reading.blogTitle;
+  if (!!reading.place && !!reading.institution)
+    publication = reading.institution + ", " + reading.place;
+  if (!reading.institution && !!reading.place) publication = reading.place;
 
   if (authors && publication) return authors + ` - ` + publication;
   if (authors && !publication) return authors;
