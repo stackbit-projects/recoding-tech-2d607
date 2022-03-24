@@ -38,7 +38,7 @@ function Topics(props) {
                 .map((topic, i) => (
                   <Chip
                     key={i}
-                    label={topic.name}
+                    label={topic.displayTitle || topic.name}
                     style={{
                       backgroundColor:
                         topic.type && theme.palette[topic.type]

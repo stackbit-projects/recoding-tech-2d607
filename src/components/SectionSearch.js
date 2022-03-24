@@ -24,7 +24,7 @@ const citationsQuery =
   '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle, publisher, institution, place, network, blogTitle } | order(date desc)';
 
 const topicsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, slug, type}';
+  '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, displayTitle, slug, type}';
 
 const useStyles = makeStyles((theme) => ({
   citation: {
@@ -169,6 +169,10 @@ const SectionSearch = () => {
     }
   }, [filters, search, allCitations]);
 
+  useEffect(() => {
+    console.log("policies", policies);
+  }, [policies]);
+
   // table pagination
   const [page, setPage] = React.useState(1);
 
@@ -227,7 +231,7 @@ const SectionSearch = () => {
               {issues.map((topic, i) => (
                 <Chip
                   key={i}
-                  label={topic.name}
+                  label={topic.displayTitle || topic.name}
                   color={topic.type}
                   clickable
                   onClick={handleClick(topic)}
@@ -253,7 +257,7 @@ const SectionSearch = () => {
               {policies.map((topic, i) => (
                 <Chip
                   key={i}
-                  label={topic.name}
+                  label={topic.displayTitle || topic.name}
                   color={topic.type}
                   clickable
                   onClick={handleClick(topic)}
@@ -279,7 +283,7 @@ const SectionSearch = () => {
               {companies.map((topic, i) => (
                 <Chip
                   key={i}
-                  label={topic.name}
+                  label={topic.displayTitle || topic.name}
                   color={topic.type}
                   clickable
                   onClick={handleClick(topic)}
@@ -305,7 +309,7 @@ const SectionSearch = () => {
               {countries.map((topic, i) => (
                 <Chip
                   key={`chip-${i}`}
-                  label={topic.name}
+                  label={topic.displayTitle || topic.name}
                   color={topic.type}
                   clickable
                   onClick={handleClick(topic)}
