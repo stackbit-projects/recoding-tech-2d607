@@ -6,6 +6,7 @@ import moment from "moment-strftime";
 
 // utils
 import client from "../utils/sanityClient";
+import process from "../utils/processCitations";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -80,11 +81,12 @@ const FancyCard = ({
   author,
   category,
   citation,
+  citationToFetch,
   content,
   date,
-  publication,
   notClickable,
   lastUpdated,
+  isArticle,
   isSidebar,
   title,
   onClick = () => {},
@@ -94,11 +96,15 @@ const FancyCard = ({
 
   useEffect(() => {
     if (citation) {
-      client.fetch(`*[_id == "${citation}"][0]`).then((ref) => {
+      setReading(citation);
+    }
+
+    if (citationToFetch) {
+      client.fetch(`*[_id == "${citationToFetch}"][0]`).then((ref) => {
         setReading(ref);
       });
     }
-  }, []);
+  }, [citation, citationToFetch]);
 
   return (
     <Card
@@ -127,24 +133,7 @@ const FancyCard = ({
           )}
           {(reading || author) && (
             <Typography component="div" variant="subtitle1" gutterBottom>
-              {reading && reading.creators.length
-                ? reading.creators.length > 1
-                  ? `${reading.creators[0].firstName} ${reading.creators[0].lastName} et al`
-                  : `${reading.creators[0].firstName} ${reading.creators[0].lastName}`
-                : author}
-            </Typography>
-          )}
-          {(reading || publication) && (
-            <Typography component="div" variant="subtitle1" gutterBottom>
-              {reading
-                ? reading.institution
-                  ? reading.institution
-                  : reading.websiteTitle
-                  ? reading.websiteTitle
-                  : reading.place
-                  ? reading.place
-                  : reading.publisher
-                : publication}
+              {!isArticle ? process(reading) : author}
             </Typography>
           )}
           {(reading || date) && (
@@ -152,7 +141,7 @@ const FancyCard = ({
               {reading ? (
                 <>{moment(reading.date).strftime("%B %Y")}</>
               ) : (
-                moment(date).strftime("%B %Y")
+                moment(date).strftime("%B %e, %Y")
               )}
             </Typography>
           )}
@@ -177,9 +166,11 @@ const FancyCard = ({
 FancyCard.propTypes = {
   author: PropTypes.string,
   category: PropTypes.string,
-  citation: PropTypes.string,
+  citation: PropTypes.object,
+  citationToFetch: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.string,
+  isArticle: PropTypes.bool,
   isSidebar: PropTypes.bool,
   notClickable: PropTypes.bool,
   publication: PropTypes.string,

@@ -92,6 +92,7 @@ const RelatedReadings = (props) => {
                   }}
                 >
                   <FancyCard
+                    isArticle={true}
                     category={article.category}
                     title={article.title}
                     author={article.author.name}

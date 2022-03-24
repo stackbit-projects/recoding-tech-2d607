@@ -38,7 +38,7 @@ function Topics(props) {
                 .map((topic, i) => (
                   <Chip
                     key={i}
-                    label={topic.name}
+                    label={topic.displayTitle || topic.name}
                     style={{
                       backgroundColor:
                         topic.type && theme.palette[topic.type]
@@ -52,7 +52,7 @@ function Topics(props) {
                         : topic.slug.current
                     }`}
                     clickable
-                    sx={{ marginBottom: 1 }}
+                    sx={{ marginBottom: "6px !important" }}
                   />
                 ))}
             </Stack>

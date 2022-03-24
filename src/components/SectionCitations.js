@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 
 // utils
 import client from "../utils/sanityClient";
+import process from "../utils/processCitations";
 
 const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...3]`; // just get the three most recent citations
 
@@ -91,13 +92,7 @@ const SectionCitations = () => {
                   variant="h5"
                   className={classes.citationPublication}
                 >
-                  {citation.creators.length == 1
-                    ? `${citation.creators[0].firstName} ${citation.creators[0].lastName}`
-                    : ""}{" "}
-                  -{" "}
-                  {citation.publicationTitle
-                    ? citation.publicationTitle
-                    : citation.websiteTitle}
+                  {process(citation)}
                 </Typography>
                 <Typography className={classes.em}>
                   {moment(citation.date).strftime("%B %e, %Y")}
