@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     transition: "right 250ms",
   },
   tableCellTitle: {
-    minWidth: 150,
     position: "relative",
     textTransform: "none",
     "&:after": {
@@ -47,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
       content: "''",
       display: "block",
       left: 0,
-      minHeight: 40,
+      height: "75%",
+      // minHeight: 40,
       position: "absolute",
       top: "50%",
       transform: "translateY(-50%)",
