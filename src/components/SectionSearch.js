@@ -138,21 +138,17 @@ const SectionSearch = () => {
 
   useEffect(() => {
     if (allCitations.length) {
-      let newCitations = allCitations.filter(
-        (citation) =>
-          Array.isArray(citation.topics) &&
-          citation.topics.length &&
-          citation.topics[0] != null &&
-          Object.keys(citation.topics[0]).length != 0
-      );
+      let newCitations = allCitations;
 
       if (filters.length) {
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
-          citation.topics.forEach((topic) => {
-            if (filters.findIndex((f) => f._id === topic._id) >= 0)
-              matches += 1;
-          });
+          if (Array.isArray(citation.topics) && citation.topics.length) {
+            citation.topics.forEach((topic) => {
+              if (filters.findIndex((f) => f._id === topic._id) >= 0)
+                matches += 1;
+            });
+          }
           return matches >= filters.length;
         });
       }
