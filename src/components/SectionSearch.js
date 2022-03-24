@@ -169,10 +169,6 @@ const SectionSearch = () => {
     }
   }, [filters, search, allCitations]);
 
-  useEffect(() => {
-    console.log("policies", policies);
-  }, [policies]);
-
   // table pagination
   const [page, setPage] = React.useState(1);
 
