@@ -52,7 +52,7 @@ function Topics(props) {
                         : topic.slug.current
                     }`}
                     clickable
-                    sx={{ marginBottom: 1 }}
+                    sx={{ marginBottom: "6px !important" }}
                   />
                 ))}
             </Stack>

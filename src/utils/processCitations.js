@@ -4,7 +4,7 @@
 export default function process(reading) {
   // per https://github.com/ResetNetwork/recoding-tech/issues/103#issuecomment-1077674309
   // we're not including authors in the display, i'm commenting it out for now in case we want it in the future
-   
+
   // let authors;
   // if (reading.creators && reading.creators.length === 1) {
   //   authors = `${reading.creators[0].firstName} ${reading.creators[0].lastName}`;
