@@ -66,8 +66,10 @@ const useStyles = makeStyles((theme) => ({
   },
   tableLink: {
     color: "#000",
+    display: "block",
     position: "relative",
     textDecoration: "none",
+    maxWidth: "85%",
   },
   title: {
     borderRight: "2px solid #000",
