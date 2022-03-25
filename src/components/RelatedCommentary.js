@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const RelatedCommentary = (props) => {
-  const { commentary, topic } = props;
+  const { commentary, topic, isPolicyDetail } = props;
   if (!Array.isArray(commentary) || !commentary.length) return null;
   const classes = useStyles();
   const [sortedCommentary, setSortedCommentary] = useState(null);
@@ -75,19 +75,21 @@ const RelatedCommentary = (props) => {
               {title}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Typography component="div" variant="h4">
-              <Link
-                href={{
-                  pathname: "/search",
-                  query: { filter: topic },
-                }}
-                className={classes.link}
-              >
-                View all
-              </Link>
-            </Typography>
-          </Grid>
+          {!isPolicyDetail ? (
+            <Grid item xs={4}>
+              <Typography component="div" variant="h4">
+                <Link
+                  href={{
+                    pathname: "/search",
+                    query: { filter: topic },
+                  }}
+                  className={classes.link}
+                >
+                  View all
+                </Link>
+              </Typography>
+            </Grid>
+          ) : null}
         </Grid>
         <Grid container item flexDirection="column">
           {sortedCommentary && sortedCommentary.length
@@ -127,6 +129,7 @@ const RelatedCommentary = (props) => {
 RelatedCommentary.propTypes = {
   commentary: PropTypes.array,
   topic: PropTypes.string,
+  isPolicyDetail: PropTypes.bool,
 };
 
 export default RelatedCommentary;

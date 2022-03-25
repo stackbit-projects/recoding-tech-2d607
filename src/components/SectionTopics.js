@@ -47,7 +47,7 @@ const SectionTopics = (props) => {
               ? topics.map((topic, i) => (
                   <Chip
                     key={i}
-                    label={topic.name}
+                    label={topic.displayTitle || topic.name}
                     sx={{ marginBottom: "6px !important" }}
                     component="a"
                     href={`/${topic.type}/${
