@@ -68,7 +68,13 @@ function Footer(props) {
               </Link>
             </Grid>
             <Grid item>
-              <Button href="#" variant="outlined" className={classes.subscribe}>
+              <Button
+                href="https://news.recoding.tech/"
+                rel="noopener noreferrer"
+                target="_blank"
+                variant="outlined"
+                className={classes.subscribe}
+              >
                 Subscribe
               </Button>
             </Grid>
