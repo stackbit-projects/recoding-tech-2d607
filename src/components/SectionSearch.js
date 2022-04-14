@@ -1,6 +1,5 @@
 // base imports
 import React, { useEffect, useState } from "react";
-import moment from "moment-strftime";
 import Router, { useRouter } from "next/router";
 
 // utils
@@ -373,7 +372,7 @@ const SectionSearch = () => {
                             : citation.websiteTitle
                         }
                         citation={citation}
-                        date={moment(citation.date).strftime("%B %e, %Y")}
+                        date={citation.date}
                         onClick={getHandler(citation)}
                       />
                     </Grid>

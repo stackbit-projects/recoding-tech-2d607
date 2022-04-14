@@ -138,11 +138,7 @@ const FancyCard = ({
           )}
           {(reading || date) && (
             <Typography component="div" variant="body1" className={classes.em}>
-              {reading ? (
-                <>{moment(reading.date).strftime("%B %Y")}</>
-              ) : (
-                moment(date).strftime("%B %e, %Y")
-              )}
+              {moment(date).strftime("%B %e, %Y")}
             </Typography>
           )}
           {lastUpdated && (
