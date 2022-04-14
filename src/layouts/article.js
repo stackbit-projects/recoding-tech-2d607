@@ -55,8 +55,9 @@ const Article = (props) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <RelatedCommentary
-                title="Further Readings"
+                title="Further Reading"
                 commentary={page.relatedCommentary}
+                noFilter={true}
               />
               <RelatedTopics topics={topics} />
             </Grid>

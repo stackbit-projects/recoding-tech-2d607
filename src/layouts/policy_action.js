@@ -41,7 +41,7 @@ const PolicyAction = (props) => {
                   title={"Further reading"}
                   page={page}
                   commentary={page.relatedCitations}
-                  isPolicyDetail={true}
+                  noFilter={true}
                 />
               </Grid>
               <Grid item sx={{ width: "100%" }}>
