@@ -40,11 +40,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+      <Script src="https://sa.recoding.tech/latest.js" />
       <noscript>
         {/* eslint-disable @next/next/no-img-element */}
         <img
-          src="https://queue.simpleanalyticscdn.com/noscript.gif"
+          src="https://sa.recoding.tech/noscript.gif"
           alt=""
           referrerPolicy="no-referrer-when-downgrade"
         />
