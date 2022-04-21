@@ -40,6 +40,18 @@ module.exports = {
                   });
                   break;
                 case "article":
+                  if (Array.isArray(object.relatedTopics)) {
+                    let topics = object.relatedTopics.map((topic) =>
+                      _.pick(topic, [
+                        "displayTitle",
+                        "name",
+                        "type",
+                        "slug",
+                        "stackbit_model_type",
+                      ])
+                    );
+                    object.relatedTopics = topics;
+                  }
                   accum.push({
                     path: `/article/${object.slug}`,
                     page: object,
