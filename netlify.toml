@@ -4,7 +4,7 @@ command = "./stackbit-build.sh"
 functions = "functions/"
 
 [build.environment]
-NETLIFY_NEXT_PLUGIN_SKIP = true
+NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 [dev]
 framework = "#static"
