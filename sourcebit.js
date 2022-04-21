@@ -52,6 +52,12 @@ module.exports = {
                     );
                     object.relatedTopics = topics;
                   }
+                  if (Array.isArray(object.relatedCommentary)) {
+                    let comms = object.relatedCommentary.map((topic) =>
+                      _.omit(topic, ["topics", "creators"])
+                    );
+                    object.relatedCommentary = comms;
+                  }
                   accum.push({
                     path: `/article/${object.slug}`,
                     page: object,

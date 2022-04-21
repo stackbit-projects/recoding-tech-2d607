@@ -20,7 +20,6 @@ import RelatedTopics from "../components/RelatedTopics";
 
 const PolicyAction = (props) => {
   const { page } = props;
-
   return (
     <Layout {...props}>
       <SectionHero {...props} />
