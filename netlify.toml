@@ -1,11 +1,15 @@
 [build]
-publish = ".next"
+publish = "out"
 command = "./stackbit-build.sh"
 functions = "functions/"
 
-[[plugins]]
-package = "@netlify/plugin-nextjs"
+[build.environment]
+NETLIFY_NEXT_PLUGIN_SKIP = true
+
+[dev]
+framework = "#static"
 
 [[redirects]]
- from = "recoding-tech-v2.netlify.app"
- to = "recoding.tech"
+from = "recoding-tech-v2.netlify.app"
+to = "recoding.tech"
+

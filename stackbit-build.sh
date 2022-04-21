@@ -12,7 +12,7 @@ initialGitHash=$(git rev-list --max-parents=0 HEAD)
 node ./studio-build.js $initialGitHash &
 
 # build site
-npm run build:netlify
+npm run build
 
 # wait for studio-build.js
 wait
