@@ -34,6 +34,44 @@ module.exports = {
             (accum, object) => {
               switch (object.__metadata.modelName) {
                 case "advanced":
+                  if (
+                    Array.isArray(object.sections) &&
+                    object.sections.length
+                  ) {
+                    let sections = object.sections.map((section) => {
+                      if (
+                        Array.isArray(section.featuredTopics) &&
+                        section.featuredTopics.length
+                      ) {
+                        let topics = section.featuredTopics.map((topic) =>
+                          _.pick(topic, [
+                            "displayTitle",
+                            "name",
+                            "type",
+                            "slug",
+                            "stackbit_model_type",
+                          ])
+                        );
+                        section.featuredTopics = topics;
+                      }
+
+                      if (section.featuredArticle) {
+                        section.featuredArticle = _.pick(
+                          section.featuredArticle,
+                          [
+                            "title",
+                            "author",
+                            "date",
+                            "type",
+                            "slug",
+                            "stackbit_model_type",
+                          ]
+                        );
+                      }
+                      return section;
+                    });
+                    object.sections = sections;
+                  }
                   accum.push({
                     path: object.stackbit_url_path,
                     page: object,
