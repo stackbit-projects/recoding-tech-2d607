@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   const paths = await sourcebitDataClient.getStaticPaths();
   return {
     paths: _.reject(paths, (path) => path === "/"),
-    "fallback": "blocking",
+    fallback: "blocking",
   };
 }
 
