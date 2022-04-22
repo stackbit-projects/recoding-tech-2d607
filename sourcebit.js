@@ -126,32 +126,6 @@ module.exports = {
                   });
                   break;
                 case "topic":
-                  if (Array.isArray(object.relatedTopics)) {
-                    let topics = object.relatedTopics.map((topic) =>
-                      _.pick(topic, [
-                        "displayTitle",
-                        "name",
-                        "type",
-                        "slug",
-                        "stackbit_model_type",
-                      ])
-                    );
-                    object.relatedTopics = topics;
-                  }
-                  if (Array.isArray(object.relatedCommentary)) {
-                    let commentaries = object.relatedCommentary.map((topic) =>
-                      _.pick(topic, [
-                        "author",
-                        "category",
-                        "title",
-                        "date",
-                        "type",
-                        "slug",
-                        "stackbit_model_type",
-                      ])
-                    );
-                    object.relatedCommentary = commentaries;
-                  }
                   if (object.type && object.slug) {
                     accum.push({
                       path: `/${object.type}/${object.slug}`,
