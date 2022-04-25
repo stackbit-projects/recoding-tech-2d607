@@ -15,7 +15,8 @@ import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(() => ({
   citation: {
-    borderBottom: "1px solid #000",
+    borderBottom: "1px solid",
+    borderBottomColor: "#DCDCDC",
     marginBottom: 20,
     paddingBottom: 20,
   },
