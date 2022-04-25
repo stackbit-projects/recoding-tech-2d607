@@ -26,6 +26,11 @@ const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, displayTitle, slug, type}';
 
 const useStyles = makeStyles((theme) => ({
+  chip: {
+    fontFamily: theme.typography.link.fontFamily,
+    fontWeight: 500,
+    textTransform: "uppercase",
+  },
   citation: {
     marginBottom: 20,
     paddingBottom: 20,
@@ -225,6 +230,7 @@ const SectionSearch = () => {
             <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
               {issues.map((topic, i) => (
                 <Chip
+                  className={classes.chip}
                   key={i}
                   label={topic.displayTitle || topic.name}
                   color={topic.type}
@@ -251,6 +257,7 @@ const SectionSearch = () => {
             <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
               {policies.map((topic, i) => (
                 <Chip
+                  className={classes.chip}
                   key={i}
                   label={topic.displayTitle || topic.name}
                   color={topic.type}
@@ -278,6 +285,7 @@ const SectionSearch = () => {
               {companies.map((topic, i) => (
                 <Chip
                   key={i}
+                  className={classes.chip}
                   label={topic.displayTitle || topic.name}
                   color={topic.type}
                   clickable
@@ -304,6 +312,7 @@ const SectionSearch = () => {
               {countries.map((topic, i) => (
                 <Chip
                   key={`chip-${i}`}
+                  className={classes.chip}
                   label={topic.displayTitle || topic.name}
                   color={topic.type}
                   clickable
@@ -332,6 +341,7 @@ const SectionSearch = () => {
             {filters.length
               ? filters.map((filter) => (
                   <Chip
+                    className={classes.chip}
                     key={filter._id}
                     item
                     label={filter.displayTitle || filter.name}

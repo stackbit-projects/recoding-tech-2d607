@@ -4,13 +4,23 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 // material ui imports
-import { useTheme } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-function Topics(props) {
+
+const useStyles = makeStyles((theme) => ({
+  chip: {
+    fontFamily: theme.typography.link.fontFamily,
+    fontWeight: 500,
+    textTransform: "uppercase",
+  },
+}));
+
+const Topics = (props) => {
+  const classes = useStyles();
   const theme = useTheme();
   const { topics } = props;
 
@@ -46,6 +56,7 @@ function Topics(props) {
                           : theme.palette.secondary.main,
                     }}
                     component="a"
+                    className={classes.chip}
                     href={`/${topic.type}/${
                       typeof topic.slug == "string"
                         ? topic.slug
@@ -61,7 +72,7 @@ function Topics(props) {
       </Grid>
     </section>
   );
-}
+};
 
 Topics.propTypes = {
   section: PropTypes.object,
