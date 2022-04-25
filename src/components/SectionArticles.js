@@ -80,7 +80,7 @@ function SectionArticle(props) {
           >
             <CardActionArea onClick={trackerClick}>
               <CardContent>
-                <Typography component="div" variant="h4">
+                <Typography component="div" variant="supertitle">
                   Keep up with how governments are recoding tech
                 </Typography>
                 <Typography gutterBottom component="div" variant="h2">
@@ -101,7 +101,7 @@ function SectionArticle(props) {
             >
               <CardActionArea onClick={() => articleClick(article.slug)}>
                 <CardContent>
-                  <Typography component="div" variant="h4">
+                  <Typography component="div" variant="supertitle">
                     Featured Article
                   </Typography>
                   <Typography gutterBottom component="div" variant="h2">
