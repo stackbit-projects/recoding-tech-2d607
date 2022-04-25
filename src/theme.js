@@ -133,7 +133,7 @@ const theme = createTheme({
     h4: {
       fontFamily: sansSerifFont,
       fontSize: "1.1em",
-      fontWeight: "bold",
+      fontWeight: "500",
       marginBottom: 20,
       textTransform: "uppercase",
     },

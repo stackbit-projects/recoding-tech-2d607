@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 const useStyles = makeStyles((theme) => ({
   chip: {
     fontFamily: theme.typography.link.fontFamily,
-    fontWeight: "bold",
+    fontWeight: 500,
     textTransform: "uppercase",
   },
 }));
