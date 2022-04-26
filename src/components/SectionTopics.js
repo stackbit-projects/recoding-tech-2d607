@@ -7,6 +7,7 @@ import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -15,6 +16,15 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.link.fontFamily,
     fontWeight: 500,
     textTransform: "uppercase",
+  },
+  em: {
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: "0.9em",
+  },
+  title: {
+    borderRight: "2px solid #000",
+    paddingRight: 20,
   },
 }));
 
@@ -39,9 +49,35 @@ const SectionTopics = (props) => {
     <section>
       <Container>
         <Box my={4}>
-          <Typography component="h2" variant="h3" gutterBottom>
-            Featured Topics
-          </Typography>
+          <Grid
+            container
+            item
+            justifyContent="space-between"
+            className={classes.gridTitle}
+            marginBottom
+            sx={{ borderBottom: 1 }}
+          >
+            <Grid container spacing={2} item xs={12} md={11}>
+              <Grid item>
+                <Typography
+                  component="h2"
+                  variant="h4"
+                  className={classes.title}
+                >
+                  Featured Topics
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography
+                  component="div"
+                  variant="body1"
+                  className={classes.em}
+                >
+                  New issues, policies, governments, & companies we’re covering
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
           <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
             {topics
               ? topics.map((topic, i) => (
