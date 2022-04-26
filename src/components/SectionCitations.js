@@ -16,7 +16,8 @@ const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != n
 
 const useStyles = makeStyles((theme) => ({
   citation: {
-    borderBottom: "1px solid #000",
+    borderBottom: "1px solid",
+    borderBottomColor: "#DCDCDC",
     marginBottom: 20,
     paddingBottom: 20,
   },
