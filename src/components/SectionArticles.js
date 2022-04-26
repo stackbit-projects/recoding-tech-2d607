@@ -13,6 +13,9 @@ import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
+// components
+import FancyTitle from "./FancyTitle";
+
 const useStyles = makeStyles((theme) => ({
   box: {
     border: "1px solid #000",
@@ -73,6 +76,41 @@ function SectionArticle(props) {
   return (
     <section>
       <Container>
+        {article ? (
+          <>
+            <FancyTitle
+              title={"Commentary & Analysis"}
+              subtitle={"The latest from our staff and network of experts"}
+            />
+            <Box mb={4}>
+              <Card
+                variant="outlined"
+                className={`${classes.box} ${classes.featured}`}
+              >
+                <CardActionArea onClick={() => articleClick(article.slug)}>
+                  <CardContent>
+                    <Typography component="div" variant="supertitle">
+                      Featured Article
+                    </Typography>
+                    <Typography gutterBottom component="div" variant="h2">
+                      {article.title}
+                    </Typography>
+                    <Typography gutterBottom component="div" variant="h5">
+                      {article.author.name}
+                    </Typography>
+                    <Typography
+                      component="div"
+                      variant="body1"
+                      className={classes.em}
+                    >
+                      {moment(article.date).strftime("%B %e, %Y")}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Box>
+          </>
+        ) : null}
         <Box my={4}>
           <Card
             variant="outlined"
@@ -93,35 +131,6 @@ function SectionArticle(props) {
             </CardActionArea>
           </Card>
         </Box>
-        {article ? (
-          <Box mb={4}>
-            <Card
-              variant="outlined"
-              className={`${classes.box} ${classes.featured}`}
-            >
-              <CardActionArea onClick={() => articleClick(article.slug)}>
-                <CardContent>
-                  <Typography component="div" variant="supertitle">
-                    Featured Article
-                  </Typography>
-                  <Typography gutterBottom component="div" variant="h2">
-                    {article.title}
-                  </Typography>
-                  <Typography gutterBottom component="div" variant="h5">
-                    {article.author.name}
-                  </Typography>
-                  <Typography
-                    component="div"
-                    variant="body1"
-                    className={classes.em}
-                  >
-                    {moment(article.date).strftime("%B %e, %Y")}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Box>
-        ) : null}
       </Container>
     </section>
   );
