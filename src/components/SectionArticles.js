@@ -144,6 +144,7 @@ function SectionArticle(props) {
       <FancyTitle
         title={"Law & Regulation Tracker"}
         subtitle={"Keep up with how governments are recoding tech"}
+        isTracker={true}
       />
       <Box my={4} mt={2} mb={10}>
         <HomepageActions />

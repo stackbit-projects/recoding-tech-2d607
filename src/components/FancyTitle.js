@@ -3,23 +3,27 @@ import PropTypes from "prop-types";
 
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   em: {
     fontStyle: "italic",
     textAlign: "center",
-    fontSize: "0.9em",
+    fontSize: "0.8em",
   },
   title: {
     borderRight: "2px solid #000",
     paddingRight: 20,
   },
+  link: {
+    color: theme.typography.link.color,
+  },
 }));
 
 const FancyTitle = (props) => {
   const classes = useStyles();
-  const { title, subtitle } = props;
+  const { title, subtitle, isTracker } = props;
   return (
     <Grid container item sx={{ borderBottom: 1, mb: 3, rowGap: 1 }}>
       <Grid container spacing={2} item xs={12} md={11}>
@@ -38,6 +42,15 @@ const FancyTitle = (props) => {
             {subtitle}
           </Typography>
         </Grid>
+        {isTracker ? (
+          <Grid item>
+            <Typography component="div" variant="h5">
+              <Link href="/tracker" className={classes.link}>
+                See all
+              </Link>
+            </Typography>
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
   );
@@ -46,6 +59,7 @@ const FancyTitle = (props) => {
 FancyTitle.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
+  isTracker: PropTypes.bool,
 };
 
 export default FancyTitle;
