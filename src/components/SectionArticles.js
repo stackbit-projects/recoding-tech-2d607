@@ -67,25 +67,54 @@ function SectionArticle(props) {
     setArticle(featuredArticle);
   }, []);
 
-  useEffect(() => {
-    console.log("featuredArticle********", featuredArticle);
-    console.log("alsoFeatured*************", alsoFeatured);
-  }, []);
-
   const articleClick = (url) => {
     Router.push({ pathname: "/article/" + url });
   };
 
   return (
-    <section>
-      <Container>
-        {article ? (
-          <>
-            <FancyTitle
-              title={"Commentary & Analysis"}
-              subtitle={"The latest from our staff and network of experts"}
-            />
-            <Box mb={alsoFeatured ? 1 : 10}>
+    <Container>
+      {article ? (
+        <>
+          <FancyTitle
+            title={"Commentary & Analysis"}
+            subtitle={"The latest from our staff and network of experts"}
+          />
+          <Box mb={alsoFeatured ? 1 : 10}>
+            <Card
+              variant="outlined"
+              className={`${classes.box} ${classes.featured}`}
+            >
+              <CardActionArea onClick={() => articleClick(article.slug)}>
+                <CardContent>
+                  <Typography gutterBottom component="div" variant="h2">
+                    {article.title}
+                  </Typography>
+                  <Typography gutterBottom component="div" variant="h5">
+                    {article.author.name}
+                  </Typography>
+                  <Typography
+                    component="div"
+                    variant="body1"
+                    className={classes.em}
+                  >
+                    {moment(article.date).strftime("%B %e, %Y")}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Box>
+        </>
+      ) : null}
+      {alsoFeatured && alsoFeatured.length ? (
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          spacing={{ xs: 2, md: 3 }}
+          mb={10}
+        >
+          {alsoFeatured.map((article, idx) => (
+            <Grid item key={idx} xs={6} mt={2}>
               <Card
                 variant="outlined"
                 className={`${classes.box} ${classes.featured}`}
@@ -108,54 +137,18 @@ function SectionArticle(props) {
                   </CardContent>
                 </CardActionArea>
               </Card>
-            </Box>
-          </>
-        ) : null}
-        {alsoFeatured && alsoFeatured.length ? (
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            spacing={{ xs: 2, md: 3 }}
-            mb={10}
-          >
-            {alsoFeatured.map((article, idx) => (
-              <Grid item key={idx} xs={6} mt={2}>
-                <Card
-                  variant="outlined"
-                  className={`${classes.box} ${classes.featured}`}
-                >
-                  <CardActionArea onClick={() => articleClick(article.slug)}>
-                    <CardContent>
-                      <Typography gutterBottom component="div" variant="h2">
-                        {article.title}
-                      </Typography>
-                      <Typography gutterBottom component="div" variant="h5">
-                        {article.author.name}
-                      </Typography>
-                      <Typography
-                        component="div"
-                        variant="body1"
-                        className={classes.em}
-                      >
-                        {moment(article.date).strftime("%B %e, %Y")}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        ) : null}
-        <FancyTitle
-          title={"Law & Regulation Tracker"}
-          subtitle={"Keep up with how governments are recoding tech"}
-        />
-        <Box my={4} mb={10}>
-          <HomepageActions />
-        </Box>
-      </Container>
-    </section>
+            </Grid>
+          ))}
+        </Grid>
+      ) : null}
+      <FancyTitle
+        title={"Law & Regulation Tracker"}
+        subtitle={"Keep up with how governments are recoding tech"}
+      />
+      <Box my={4} mt={2} mb={10}>
+        <HomepageActions />
+      </Box>
+    </Container>
   );
 }
 

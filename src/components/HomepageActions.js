@@ -241,7 +241,7 @@ const HomepageActions = () => {
             </Accordion>
           ))
         ) : (
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer>
             <Table
               aria-label="Law and Regulation Tracker Table"
               className={classes.table}
