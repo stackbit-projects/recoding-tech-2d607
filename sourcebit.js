@@ -68,6 +68,24 @@ module.exports = {
                           ]
                         );
                       }
+
+                      if (
+                        section.alsoFeatured &&
+                        Array.isArray(section.alsoFeatured) &&
+                        section.alsoFeatured.length
+                      ) {
+                        let articles = section.alsoFeatured.map((article) =>
+                          _.pick(article, [
+                            "title",
+                            "author",
+                            "date",
+                            "type",
+                            "slug",
+                            "stackbit_model_type",
+                          ])
+                        );
+                        section.alsoFeatured = articles;
+                      }
                       return section;
                     });
                     object.sections = sections;
