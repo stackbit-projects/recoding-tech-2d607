@@ -82,7 +82,7 @@ function SectionArticle(props) {
               title={"Commentary & Analysis"}
               subtitle={"The latest from our staff and network of experts"}
             />
-            <Box mb={4}>
+            <Box mb={10}>
               <Card
                 variant="outlined"
                 className={`${classes.box} ${classes.featured}`}
@@ -111,7 +111,11 @@ function SectionArticle(props) {
             </Box>
           </>
         ) : null}
-        <Box my={4}>
+        <FancyTitle
+          title={"Law & Regulation Tracker"}
+          subtitle={"Keep up with how governments are recoding tech"}
+        />
+        <Box my={4} mb={10}>
           <Card
             variant="outlined"
             className={`${classes.box} ${classes.tracker}`}

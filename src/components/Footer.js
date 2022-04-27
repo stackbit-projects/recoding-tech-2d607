@@ -56,6 +56,7 @@ import Logo from "./Logo";
 
 function Footer(props) {
   const classes = useStyles();
+  console.log("props", props);
 
   return (
     <footer style={{ backgroundColor: "#EFE9DA" }}>

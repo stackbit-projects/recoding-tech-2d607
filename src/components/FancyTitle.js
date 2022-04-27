@@ -25,8 +25,7 @@ const FancyTitle = (props) => {
       container
       item
       className={classes.gridTitle}
-      marginBottom
-      sx={{ borderBottom: 1 }}
+      sx={{ borderBottom: 1, mb: 3 }}
     >
       <Grid container spacing={2} item xs={12} md={11}>
         <Grid item>

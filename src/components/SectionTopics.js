@@ -49,7 +49,7 @@ const SectionTopics = (props) => {
   return (
     <section>
       <Container>
-        <Box my={4}>
+        <Box my={4} mb={10}>
           <FancyTitle
             title="Featured Topics"
             subtitle="New issues, policies, governments, and companies we’re covering"
