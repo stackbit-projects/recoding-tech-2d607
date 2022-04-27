@@ -1,6 +1,7 @@
 // base imports
 import React from "react";
 import _ from "lodash";
+import PropTypes from "prop-types";
 
 import { htmlToReact, Link, withPrefix } from "../utils";
 
@@ -51,14 +52,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 // component imports
 import Logo from "./Logo";
 
 function Footer(props) {
   const classes = useStyles();
+  const { path } = props;
 
   return (
-    <footer style={{ backgroundColor: "#EFE9DA" }}>
+    <footer style={{ backgroundColor: path === "/" ? "#C2CECC" : "#EFE9DA" }}>
       <Box py={4}>
         <Container>
           <Grid container alignItems="center" spacing={3}>
@@ -142,5 +145,9 @@ function Footer(props) {
     </footer>
   );
 }
+
+Footer.propTypes = {
+  path: PropTypes.string,
+};
 
 export default Footer;

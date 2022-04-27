@@ -11,7 +11,12 @@ import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+
+// components
+import HomepageActions from "./HomepageActions";
+import FancyTitle from "./FancyTitle";
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -53,57 +58,34 @@ const useStyles = makeStyles((theme) => ({
 
 function SectionArticle(props) {
   const classes = useStyles();
-  const { section } = props;
+  const {
+    section: { featuredArticle, alsoFeatured },
+  } = props;
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
-    if (!article) {
-      setArticle(section.featuredArticle);
-    }
-  }, [article]);
+    setArticle(featuredArticle);
+  }, []);
 
   const articleClick = (url) => {
     Router.push({ pathname: "/article/" + url });
   };
 
-  const trackerClick = () => {
-    Router.push({ pathname: "/tracker" });
-  };
-
   return (
-    <section>
-      <Container>
-        <Box my={4}>
-          <Card
-            variant="outlined"
-            className={`${classes.box} ${classes.tracker}`}
-          >
-            <CardActionArea onClick={trackerClick}>
-              <CardContent>
-                <Typography component="div" variant="supertitle">
-                  Keep up with how governments are recoding tech
-                </Typography>
-                <Typography gutterBottom component="div" variant="h2">
-                  Law &amp; Regulation Tracker
-                </Typography>
-                <Typography component="div" variant="h5">
-                  Recoding.tech
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Box>
-        {article ? (
-          <Box mb={4}>
+    <Container>
+      {article ? (
+        <>
+          <FancyTitle
+            title={"Commentary & Analysis"}
+            subtitle={"The latest from our staff and network of experts"}
+          />
+          <Box mb={alsoFeatured ? 1 : 10}>
             <Card
               variant="outlined"
               className={`${classes.box} ${classes.featured}`}
             >
               <CardActionArea onClick={() => articleClick(article.slug)}>
                 <CardContent>
-                  <Typography component="div" variant="supertitle">
-                    Featured Article
-                  </Typography>
                   <Typography gutterBottom component="div" variant="h2">
                     {article.title}
                   </Typography>
@@ -121,9 +103,52 @@ function SectionArticle(props) {
               </CardActionArea>
             </Card>
           </Box>
-        ) : null}
-      </Container>
-    </section>
+        </>
+      ) : null}
+      {alsoFeatured && alsoFeatured.length ? (
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          spacing={{ xs: 2, md: 3 }}
+          mb={10}
+        >
+          {alsoFeatured.map((article, idx) => (
+            <Grid item key={idx} xs={6} mt={2}>
+              <Card
+                variant="outlined"
+                className={`${classes.box} ${classes.featured}`}
+              >
+                <CardActionArea onClick={() => articleClick(article.slug)}>
+                  <CardContent>
+                    <Typography gutterBottom component="div" variant="h2">
+                      {article.title}
+                    </Typography>
+                    <Typography gutterBottom component="div" variant="h5">
+                      {article.author.name}
+                    </Typography>
+                    <Typography
+                      component="div"
+                      variant="body1"
+                      className={classes.em}
+                    >
+                      {moment(article.date).strftime("%B %e, %Y")}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      ) : null}
+      <FancyTitle
+        title={"Law & Regulation Tracker"}
+        subtitle={"Keep up with how governments are recoding tech"}
+      />
+      <Box my={4} mt={2} mb={10}>
+        <HomepageActions />
+      </Box>
+    </Container>
   );
 }
 

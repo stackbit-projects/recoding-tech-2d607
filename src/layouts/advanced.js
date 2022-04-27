@@ -4,15 +4,37 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 
 // Material UI imports
+import { makeStyles } from "@mui/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 // components
 import components, { Layout } from "../components/index";
+import Logo from "../components/Logo";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
-function Advanced(props) {
+const useStyles = makeStyles(() => ({
+  subscribe: {
+    border: "1px solid #000",
+    borderRadius: 0,
+    fontSize: "0.8em",
+    fontWeight: "normal",
+    textTransform: "uppercase",
+    "&:active, &:focus, &:hover": {
+      backgroundColor: "#000",
+      border: "1px solid #fff",
+      color: "#fff",
+    },
+  },
+}));
+
+const Advanced = (props) => {
+  const classes = useStyles();
+
   const { path } = props;
 
   return (
@@ -45,8 +67,32 @@ function Advanced(props) {
                 }
               )}
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <SectionCitations />
+            <Grid container item xs={12} sm={4}>
+              <Grid item mt={2}>
+                <Box sx={{ p: 4, bgcolor: "#EFE9DA", textAlign: "center" }}>
+                  <Typography
+                    component="div"
+                    variant="supertitle"
+                    alignItems={"center"}
+                  >
+                    Our Monthly update on Gov’t Policy And the latest News and
+                    Research
+                  </Typography>
+                  <Logo /> <Typography component="div">Newsletter</Typography>
+                  <Button
+                    href="https://news.recoding.tech/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    variant="outlined"
+                    className={classes.subscribe}
+                  >
+                    Subscribe
+                  </Button>
+                </Box>
+              </Grid>
+              <Grid item>
+                <SectionCitations />
+              </Grid>
             </Grid>
             {/* <Grid item xs={12}>
               <SectionGuides />
@@ -71,7 +117,7 @@ function Advanced(props) {
       </Container>
     </Layout>
   );
-}
+};
 
 Advanced.propTypes = {
   citations: PropTypes.array,

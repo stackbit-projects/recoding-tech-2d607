@@ -8,13 +8,24 @@ import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+
+// components
+import FancyTitle from "./FancyTitle";
 
 const useStyles = makeStyles((theme) => ({
   chip: {
     fontFamily: theme.typography.link.fontFamily,
     fontWeight: 500,
     textTransform: "uppercase",
+  },
+  em: {
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: "0.9em",
+  },
+  title: {
+    borderRight: "2px solid #000",
+    paddingRight: 20,
   },
 }));
 
@@ -38,10 +49,11 @@ const SectionTopics = (props) => {
   return (
     <section>
       <Container>
-        <Box my={4}>
-          <Typography component="h2" variant="h3" gutterBottom>
-            Featured Topics
-          </Typography>
+        <Box my={4} mb={10}>
+          <FancyTitle
+            title="Featured Topics"
+            subtitle="New issues, policies, governments, and companies we’re covering"
+          />
           <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
             {topics
               ? topics.map((topic, i) => (
