@@ -21,15 +21,15 @@ const FancyTitle = (props) => {
   const classes = useStyles();
   const { title, subtitle } = props;
   return (
-    <Grid
-      container
-      item
-      className={classes.gridTitle}
-      sx={{ borderBottom: 1, mb: 3 }}
-    >
+    <Grid container item sx={{ borderBottom: 1, mb: 3, rowGap: 1 }}>
       <Grid container spacing={2} item xs={12} md={11}>
         <Grid item>
-          <Typography component="h2" variant="h4" className={classes.title}>
+          <Typography
+            component="h2"
+            variant="h4"
+            mb={1}
+            className={classes.title}
+          >
             {title}
           </Typography>
         </Grid>
