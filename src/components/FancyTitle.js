@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 const useStyles = makeStyles((theme) => ({
   em: {
     fontStyle: "italic",
-    textAlign: "center",
-    fontSize: "0.8em",
+    fontSize: "1.1em",
   },
   title: {
     borderRight: "2px solid #000",
@@ -27,7 +26,7 @@ const FancyTitle = (props) => {
   return (
     <Grid container item sx={{ borderBottom: 1, mb: 3, rowGap: 1 }}>
       <Grid container spacing={2} item xs={12} md={11}>
-        <Grid item>
+        <Grid item xs={12} sm={4}>
           <Typography
             component="h2"
             variant="h4"
@@ -37,14 +36,14 @@ const FancyTitle = (props) => {
             {title}
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={!isTracker ? 8 : 6} sm={!isTracker ? 8 : 6}>
           <Typography component="div" variant="body1" className={classes.em}>
             {subtitle}
           </Typography>
         </Grid>
         {isTracker ? (
           <Grid item>
-            <Typography component="div" variant="h5">
+            <Typography component="div" variant="h4">
               <Link href="/tracker" className={classes.link}>
                 See all
               </Link>
