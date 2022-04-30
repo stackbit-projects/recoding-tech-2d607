@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   em: {
-    fontSize: "0.8em",
+    fontSize: "1em",
     fontStyle: "italic",
   },
   featured: {
@@ -86,10 +87,15 @@ function SectionArticle(props) {
             >
               <CardActionArea onClick={() => articleClick(article.slug)}>
                 <CardContent>
-                  <Typography gutterBottom component="div" variant="h2">
-                    {article.title}
+                  {article.category && (
+                    <Typography component="div" variant="supertitle">
+                      {article.category}
+                    </Typography>
+                  )}
+                  <Typography gutterBottom component="div" variant="h2_article">
+                    {titleCase(article.title)}
                   </Typography>
-                  <Typography gutterBottom component="div" variant="h5">
+                  <Typography gutterBottom component="div" variant="subtitle1">
                     {article.author.name}
                   </Typography>
                   <Typography
@@ -114,17 +120,30 @@ function SectionArticle(props) {
           mb={10}
         >
           {alsoFeatured.map((article, idx) => (
-            <Grid item key={idx} xs={6} mt={2}>
+            <Grid item key={idx} xs={12} sm={6} mt={2}>
               <Card
                 variant="outlined"
                 className={`${classes.box} ${classes.featured}`}
               >
                 <CardActionArea onClick={() => articleClick(article.slug)}>
                   <CardContent>
-                    <Typography gutterBottom component="div" variant="h2">
-                      {article.title}
+                    {article.category && (
+                      <Typography component="div" variant="supertitle">
+                        {article.category}
+                      </Typography>
+                    )}
+                    <Typography
+                      gutterBottom
+                      component="div"
+                      variant="h2_article"
+                    >
+                      {titleCase(article.title)}
                     </Typography>
-                    <Typography gutterBottom component="div" variant="h5">
+                    <Typography
+                      gutterBottom
+                      component="div"
+                      variant="subtitle1"
+                    >
                       {article.author.name}
                     </Typography>
                     <Typography

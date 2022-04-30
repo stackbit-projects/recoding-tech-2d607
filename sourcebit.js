@@ -61,6 +61,7 @@ module.exports = {
                           [
                             "title",
                             "author",
+                            "category",
                             "date",
                             "type",
                             "slug",
@@ -78,6 +79,7 @@ module.exports = {
                           _.pick(article, [
                             "title",
                             "author",
+                            "category",
                             "date",
                             "type",
                             "slug",

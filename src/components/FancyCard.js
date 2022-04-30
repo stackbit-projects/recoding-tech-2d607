@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // utils
 import client from "../utils/sanityClient";
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
   },
   em: {
-    fontSize: "0.8em",
+    fontSize: "1em",
     fontStyle: "italic",
   },
   featured: {
@@ -122,13 +123,13 @@ const FancyCard = ({
       >
         <CardContent>
           {category && (
-            <Typography component="div" variant="h4">
+            <Typography component="div" variant="supertitle">
               {category}
             </Typography>
           )}
           {(reading || title) && (
-            <Typography component="div" variant="h2" gutterBottom>
-              {reading ? reading.title : title}
+            <Typography component="div" variant="h2_article" gutterBottom>
+              {reading ? titleCase(reading.title) : titleCase(title)}
             </Typography>
           )}
           {(reading || author) && (
