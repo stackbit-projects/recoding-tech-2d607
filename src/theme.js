@@ -13,7 +13,7 @@ const theme = createTheme({
           color: "#000",
           fontFamily: sansSerifFont,
           fontSize: "1.2em",
-          fontWeight: "bold",
+          fontWeight: "700",
           textAlign: "center",
           textTransform: "none",
         },
@@ -23,7 +23,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: sansSerifFont,
-          fontWeight: "bold",
+          fontWeight: "500",
           textTransform: "uppercase",
         },
       },
@@ -149,10 +149,27 @@ const theme = createTheme({
       marginBottom: 20,
       textTransform: "uppercase",
     },
+    tableHeader: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "600",
+      textTransform: "uppercase",
+    },
+    trackerTitle: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.2em",
+      fontWeight: "700",
+    },
+    trackerRow: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "500",
+      textTransform: "uppercase",
+    },
     subtitle1: {
       fontFamily: sansSerifFont,
-      fontSize: "1.0em",
-      fontWeight: "200",
+      fontSize: "1.1em",
+      fontWeight: "500",
       textTransform: "uppercase",
     },
     supertitle: {
@@ -169,7 +186,7 @@ const theme = createTheme({
     overline: {
       fontFamily: sansSerifFont,
       fontSize: "1.2em",
-      fontWeight: "bold",
+      fontWeight: "700",
       textTransform: "none",
     },
   },

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // utils
 import client from "../utils/sanityClient";
@@ -84,8 +85,15 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  tableHeader: {
+    fontSize: "1em",
+    fontWeight: "200",
+    textTransform: "uppercase",
+  },
   tableLink: {
     color: "#000",
+    fontSize: "1.2em",
+    fontWeight: "500",
     display: "block",
     position: "relative",
     textDecoration: "none",
@@ -489,7 +497,7 @@ function SectionTracker(props) {
                   }}
                 >
                   <Typography component="div" variant="h4">
-                    {row.title}
+                    {titleCase(row.title)}
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -621,7 +629,11 @@ function SectionTracker(props) {
               <TableHead>
                 <TableRow>
                   {headers.map((column) => (
-                    <TableCell key={column.id}>{column.label}</TableCell>
+                    <TableCell key={column.id}>
+                      <Typography component="div" variant="tableHeader">
+                        {column.label}
+                      </Typography>
+                    </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
@@ -670,10 +682,20 @@ function SectionTracker(props) {
                                       : row.slug
                                   }`}
                                 >
-                                  {value}
+                                  <Typography
+                                    component="div"
+                                    variant="trackerTitle"
+                                  >
+                                    {titleCase(value)}
+                                  </Typography>
                                 </Link>
                               ) : (
-                                value
+                                <Typography
+                                  component="div"
+                                  variant="trackerRow"
+                                >
+                                  {value}
+                                </Typography>
                               )}
                               {column.id == "title" ? (
                                 <KeyboardArrowRightIcon

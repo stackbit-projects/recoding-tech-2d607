@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -175,7 +176,7 @@ const RelatedActions = (props) => {
                   }}
                 >
                   <Typography component="div" variant="h4">
-                    {row.title}
+                    {titleCase(row.title)}
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -299,7 +300,9 @@ const RelatedActions = (props) => {
               <TableHead>
                 <TableRow>
                   {headers.map((column) => (
-                    <TableCell key={column.id}>{column.label}</TableCell>
+                    <TableCell key={column.id}>
+                      <Typography>{column.label}</Typography>
+                    </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
@@ -355,7 +358,7 @@ const RelatedActions = (props) => {
                                       : row.slug
                                   }`}
                                 >
-                                  {value}
+                                  {titleCase(value)}
                                 </Link>
                               ) : (
                                 value

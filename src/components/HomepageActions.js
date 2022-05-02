@@ -1,6 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // utils
 import client from "../utils/sanityClient";
@@ -249,7 +250,11 @@ const HomepageActions = () => {
               <TableHead>
                 <TableRow>
                   {headers.map((column) => (
-                    <TableCell key={column.id}>{column.label}</TableCell>
+                    <TableCell key={column.id}>
+                      <Typography component="div" variant="tableHeader">
+                        {column.label}
+                      </Typography>
+                    </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
@@ -296,7 +301,12 @@ const HomepageActions = () => {
                                     : row.slug
                                 }`}
                               >
-                                {value}
+                                <Typography
+                                  component="div"
+                                  variant="trackerTitle"
+                                >
+                                  {titleCase(value)}
+                                </Typography>
                               </Link>
                             ) : (
                               value
