@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
-                            relatedTopics[]->{_id, _key, name, slug, type}, type}|order(date desc)[0...4]`;
+                            relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)[0...4]`;
 
 const HomepageActions = () => {
   const classes = useStyles();
