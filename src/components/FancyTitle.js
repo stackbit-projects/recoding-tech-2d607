@@ -25,7 +25,7 @@ const FancyTitle = (props) => {
   const { title, subtitle, isTracker } = props;
   return (
     <Grid container item sx={{ borderBottom: 1, mb: 3, rowGap: 1 }}>
-      <Grid container spacing={2} item xs={12} md={11}>
+      <Grid container spacing={2} item xs={12} md={11} justify="space-between">
         <Grid item xs={12} sm={4}>
           <Typography
             component="h2"
@@ -36,14 +36,14 @@ const FancyTitle = (props) => {
             {title}
           </Typography>
         </Grid>
-        <Grid item xs={!isTracker ? 8 : 6} sm={!isTracker ? 8 : 6}>
+        <Grid item xs={12} sm={!isTracker ? 8 : 6}>
           <Typography component="div" variant="body1" className={classes.em}>
             {subtitle}
           </Typography>
         </Grid>
         {isTracker ? (
-          <Grid item>
-            <Typography component="div" variant="h4">
+          <Grid item xs={12} sm={2}>
+            <Typography component="div" variant="h4" align="center">
               <Link href="/tracker" className={classes.link}>
                 See all
               </Link>
