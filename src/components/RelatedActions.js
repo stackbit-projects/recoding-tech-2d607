@@ -175,7 +175,7 @@ const RelatedActions = (props) => {
                     marginBottom: 2,
                   }}
                 >
-                  <Typography component="div" variant="h4">
+                  <Typography component="div" variant="trackerTitle">
                     {titleCase(row.title)}
                   </Typography>
                 </AccordionSummary>
@@ -301,7 +301,9 @@ const RelatedActions = (props) => {
                 <TableRow>
                   {headers.map((column) => (
                     <TableCell key={column.id}>
-                      <Typography>{column.label}</Typography>
+                      <Typography component="div" variant="tableHeader">
+                        {column.label}
+                      </Typography>
                     </TableCell>
                   ))}
                 </TableRow>
@@ -350,18 +352,28 @@ const RelatedActions = (props) => {
                               column.id == "lastUpdate" ? (
                                 moment(new Date(value)).strftime("%b %d, %Y")
                               ) : column.id == "title" ? (
-                                <Link
-                                  className={classes.tableLink}
-                                  href={`/tracker/${
-                                    typeof row.slug === "object"
-                                      ? row.slug.current
-                                      : row.slug
-                                  }`}
+                                <Typography
+                                  component="div"
+                                  variant="trackerTitle"
                                 >
-                                  {titleCase(value)}
-                                </Link>
+                                  <Link
+                                    className={classes.tableLink}
+                                    href={`/tracker/${
+                                      typeof row.slug === "object"
+                                        ? row.slug.current
+                                        : row.slug
+                                    }`}
+                                  >
+                                    {titleCase(value)}
+                                  </Link>
+                                </Typography>
                               ) : (
-                                value
+                                <Typography
+                                  component="div"
+                                  variant="trackerRow"
+                                >
+                                  {value}
+                                </Typography>
                               )}
                               {column.id == "title" ? (
                                 <KeyboardArrowRightIcon

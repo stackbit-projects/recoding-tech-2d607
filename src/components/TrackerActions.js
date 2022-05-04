@@ -213,25 +213,45 @@ const TrackerActions = (props) => {
             <TableHead>
               <TableRow>
                 {headers.map((column) => (
-                  <TableCell key={column.id}>{column.label}</TableCell>
+                  <TableCell key={column.id}>
+                    <Typography component="div" variant="tableHeader">
+                      {column.label}
+                    </Typography>
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow hover role="checkbox" tabIndex={-1}>
                 <TableCell className={classes.tableCellTitle}>
-                  {page.title}
-                </TableCell>
-                <TableCell>{page.type}</TableCell>
-                <TableCell>
-                  {page.country ? page.country.displayTitle : ""}
+                  <Typography component="div" variant="trackerTitle">
+                    {page.title}
+                  </Typography>
                 </TableCell>
                 <TableCell>
-                  {moment(page.dateInitiated).strftime("%b %e, %Y")}
+                  <Typography component="div" variant="trackerRow">
+                    {page.type}
+                  </Typography>
                 </TableCell>
-                <TableCell>{page.status}</TableCell>
                 <TableCell>
-                  {moment(page.lastUpdate).strftime("%b %e, %Y")}
+                  <Typography component="div" variant="trackerRow">
+                    {page.country ? page.country.displayTitle : ""}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography component="div" variant="trackerRow">
+                    {moment(page.dateInitiated).strftime("%b %e, %Y")}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography component="div" variant="trackerRow">
+                    {page.status}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography component="div" variant="trackerRow">
+                    {moment(page.lastUpdate).strftime("%b %e, %Y")}
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>
