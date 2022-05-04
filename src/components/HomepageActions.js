@@ -293,21 +293,21 @@ const HomepageActions = () => {
                             column.id == "lastUpdate" ? (
                               moment(new Date(value)).strftime("%b %d, %Y")
                             ) : column.id == "title" ? (
-                              <Link
-                                className={classes.tableLink}
-                                href={`/tracker/${
-                                  typeof row.slug === "object"
-                                    ? row.slug.current
-                                    : row.slug
-                                }`}
+                              <Typography
+                                component="div"
+                                variant="trackerTitle"
                               >
-                                <Typography
-                                  component="div"
-                                  variant="trackerTitle"
+                                <Link
+                                  className={classes.tableLink}
+                                  href={`/tracker/${
+                                    typeof row.slug === "object"
+                                      ? row.slug.current
+                                      : row.slug
+                                  }`}
                                 >
                                   {titleCase(value)}
-                                </Typography>
-                              </Link>
+                                </Link>
+                              </Typography>
                             ) : (
                               value
                             )}
