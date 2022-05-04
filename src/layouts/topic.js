@@ -18,7 +18,6 @@ import Typography from "@mui/material/Typography";
 // components
 import { Layout } from "../components/index";
 import RelatedCommentary from "../components/RelatedCommentary";
-import RelatedGuide from "../components/RelatedGuide";
 import RelatedReadings from "../components/RelatedReadings";
 import RelatedTopics from "../components/RelatedTopics";
 import RelatedActions from "../components/RelatedActions";
@@ -141,17 +140,16 @@ const Topic = (props) => {
                 >
                   {markdownify(page.topicDescription)}
                 </Typography>
+              </Grid>
+            </Grid>
+            <Grid container spacing={4} direction="column" item sm={12} md={4}>
+              <Grid item sx={{ width: "100%" }}>
                 {page.relatedCommentary && page.relatedCommentary.length ? (
                   <RelatedReadings
                     page={page}
                     readings={page.relatedCommentary}
                   />
                 ) : null}
-              </Grid>
-            </Grid>
-            <Grid container spacing={4} direction="column" item sm={12} md={4}>
-              <Grid item>
-                <RelatedGuide {...props} />
               </Grid>
               <Grid item>
                 <RelatedCommentary commentary={headlines} topic={page.slug} />

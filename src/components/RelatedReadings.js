@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import FancyCard from "./FancyCard";
@@ -64,20 +65,33 @@ const RelatedReadings = (props) => {
   };
 
   return (
-    <section>
+    <Grid container>
       <Container>
-        <Box my={4} pt={8} sx={{ borderTop: "1px solid #000" }}>
-          <Typography component="h2" variant="h4" className={classes.title}>
-            Related Reading
-          </Typography>
-          <Typography
-            component="div"
-            variant="body1"
-            sx={{ fontStyle: "italic" }}
+        <Box xs={12} sm={12}>
+          <Grid
+            sx={{
+              borderBottom: "1px solid #000",
+              marginBottom: 2,
+              marginTop: 2,
+            }}
           >
-            Our latest thinking about{" "}
-            {page.displayTitle ? page.displayTitle : page.title}
-          </Typography>
+            <Typography
+              component="h2"
+              variant="h4"
+              gutterBottom
+              className={classes.title}
+            >
+              Related Reading
+            </Typography>
+            <Typography
+              component="div"
+              variant="body1"
+              sx={{ fontStyle: "italic", marginBottom: 3 }}
+            >
+              Our latest thinking about{" "}
+              {page.displayTitle ? page.displayTitle : page.title}
+            </Typography>
+          </Grid>
           <Box mt={4}>
             <Slider {...sliderSettings}>
               {readings.map((article, index) => (
@@ -86,8 +100,8 @@ const RelatedReadings = (props) => {
                   sx={{
                     height: "90%",
                     marginBottom: 2,
-                    marginLeft: 4,
-                    marginRight: 4,
+                    marginLeft: 2,
+                    marginRight: 2,
                     width: "90% !important",
                   }}
                 >
@@ -105,7 +119,7 @@ const RelatedReadings = (props) => {
           </Box>
         </Box>
       </Container>
-    </section>
+    </Grid>
   );
 };
 
