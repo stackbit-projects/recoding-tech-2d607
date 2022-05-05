@@ -8,7 +8,7 @@ export default {
       name: "title",
       title: "Title",
       description: "The title of the post.",
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     },
     {
       title: "Slug",
@@ -16,30 +16,30 @@ export default {
       type: "slug",
       description:
         "The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.",
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
         source: "title",
         maxLength: 200, // will be ignored if slugify is set
-        slugify: input =>
+        slugify: (input) =>
           input
             .toLowerCase()
             .replace(/[^\w\s]/gi, "")
             .replace(/\s+/g, "-")
-            .slice(0, 200)
-      }
+            .slice(0, 200),
+      },
     },
     {
       title: "Author",
       name: "author",
       type: "reference",
-      to: [{ type: "person" }]
+      to: [{ type: "person" }],
     },
     {
       type: "string",
       name: "category",
       title: "Category",
       description: "What type of article is this? (ex: commentary)",
-      validation: null
+      validation: null,
     },
     {
       title: "Further Reading",
@@ -50,14 +50,14 @@ export default {
           type: "reference",
           to: [
             {
-              type: "citation"
+              type: "citation",
             },
             {
-              type: "article"
-            }
-          ]
-        }
-      ]
+              type: "article",
+            },
+          ],
+        },
+      ],
     },
     {
       title: "Related topics",
@@ -66,29 +66,29 @@ export default {
       of: [
         {
           type: "reference",
-          to: [{ type: "topic" }]
-        }
-      ]
+          to: [{ type: "topic" }],
+        },
+      ],
     },
     {
       type: "date",
       name: "date",
       title: "Date",
-      validation: Rule => Rule.required()
+      validation: (Rule) => Rule.required(),
     },
     {
       type: "image",
       name: "img_path",
       title: "Image",
       description: "A featured image for the article, if any.",
-      validation: null
+      validation: null,
     },
     {
       type: "string",
       name: "img_alt",
       title: "Image alt text",
       description: "The alt text of the featured image.",
-      validation: null
+      validation: null,
     },
     {
       name: "links",
@@ -99,41 +99,48 @@ export default {
           type: "reference",
           to: [
             {
-              type: "citation"
-            }
-          ]
-        }
-      ]
+              type: "citation",
+            },
+          ],
+        },
+      ],
     },
     {
       type: "markdown",
       name: "key_takeaways",
       title: "Key takeaways",
       description: "Key points from the article",
-      validation: null
+      validation: null,
+    },
+    {
+      type: "markdown",
+      name: "toc",
+      title: "Table of contents",
+      description: "Numbered list of your subheadings",
+      validation: null,
     },
     {
       type: "markdown",
       name: "content",
       title: "Content",
       description: "Page content",
-      validation: null
+      validation: null,
     },
     {
       type: "stackbit_page_meta",
       name: "seo",
       title: "Seo",
-      validation: null
+      validation: null,
     },
     {
       type: "string",
       name: "layout",
       title: "Layout",
       hidden: false,
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
-        list: ["article"]
-      }
+        list: ["article"],
+      },
     },
     {
       type: "string",
@@ -141,10 +148,10 @@ export default {
       title: "Directory",
       description: "The directory path where this file is stored",
       hidden: false,
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
-        list: ["content/pages"]
-      }
+        list: ["content/pages"],
+      },
     },
     {
       type: "string",
@@ -152,15 +159,15 @@ export default {
       title: "Stackbit Model Type",
       description: "Stackbit model type",
       hidden: false,
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
-        list: ["page"]
-      }
-    }
+        list: ["page"],
+      },
+    },
   ],
   preview: {
     select: {
-      title: "title"
-    }
-  }
+      title: "title",
+    },
+  },
 };
