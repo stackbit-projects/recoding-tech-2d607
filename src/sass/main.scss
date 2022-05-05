@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 
 .html-to-react {
+  ol {
+    font-family: "Libre Baskerville";
+    font-size: 1.1250em;
+    line-height: 2.375em;
+    font-weight: 400;
+  }
   h1 {
     font-family: "Lexend";
     font-size: 1.9em;
@@ -15,7 +21,6 @@
     font-family: "Lexend";
     font-size: 1.4em;
     font-weight: bold;
-    text-transform: uppercase;
   }
   h4 {
     font-family: "Lexend";

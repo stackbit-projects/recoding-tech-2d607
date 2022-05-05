@@ -5,7 +5,9 @@ import Link from "./link";
 import _ from "lodash";
 
 // components
+import Box from "@mui/material/Box";
 import FancyCard from "../components/FancyCard";
+import Typography from "@mui/material/Typography";
 
 const convertChildren = (children, index) =>
   _.map(children, (childNode) =>
@@ -16,8 +18,18 @@ export default function htmlToReact(html) {
   if (!html) {
     return null;
   }
+
   return ReactHtmlParser(html, {
     transform: (node, index) => {
+      if (node.name === "blockquote" && node.children[1] && node.children[0]) {
+        return (
+          <Box p={4} sx={{ border: "1px solid #000" }}>
+            <Typography component="div" variant="quote">
+              {node.children[1].children[0].data}
+            </Typography>
+          </Box>
+        );
+      }
       if (node.attribs && node.attribs.class == "citation") {
         return <FancyCard citationToFetch={node.children[0].data} />;
       }

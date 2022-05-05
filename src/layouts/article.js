@@ -35,7 +35,7 @@ const Article = (props) => {
       <Box my={6}>
         <Container>
           <Grid container spacing={8}>
-            <Grid container spacing={12} item xs={12} md={8} direction="column">
+            <Grid container spacing={4} item xs={12} md={8} direction="row">
               {page.key_takeaways ? (
                 <Grid item>
                   <FancyCard
@@ -47,6 +47,16 @@ const Article = (props) => {
                   />
                 </Grid>
               ) : null}
+              <Grid item xs={12} sm={12} mt={2}>
+                <Box sx={{ p: 2, bgcolor: "#EFE9DA" }}>
+                  <Typography component="div" variant="h4">
+                    Table of Contents
+                  </Typography>
+                  <Typography component="div" className="html-to-react">
+                    {markdownify(_.get(props, "page.toc", null))}
+                  </Typography>
+                </Box>
+              </Grid>{" "}
               <Grid item>
                 <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}

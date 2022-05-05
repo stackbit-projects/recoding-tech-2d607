@@ -149,6 +149,16 @@ const theme = createTheme({
       marginBottom: 20,
       textTransform: "uppercase",
     },
+    quote: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.1250em",
+      fontWeight: "600",
+    },
+    tocText: {
+      fontSize: "1.1250em",
+      fontWeight: "400",
+      lineHeight: "2.4em",
+    },
     tableHeader: {
       fontFamily: sansSerifFont,
       fontSize: "1em",

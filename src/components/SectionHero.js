@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // Material UI imports
 import { makeStyles, useTheme } from "@mui/styles";
@@ -120,11 +121,13 @@ function SectionHero(props) {
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
             <Typography variant="h1" className={classes.title}>
-              {page.displayTitle
-                ? page.displayTitle
-                : page.heroContent
-                ? page.heroContent
-                : page.title}
+              {titleCase(
+                page.displayTitle
+                  ? page.displayTitle
+                  : page.heroContent
+                  ? page.heroContent
+                  : page.title
+              )}
             </Typography>
           )}
           {page.heroLinkUrl && (
