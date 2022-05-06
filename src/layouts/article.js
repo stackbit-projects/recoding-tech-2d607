@@ -48,7 +48,7 @@ const Article = (props) => {
                 </Grid>
               ) : null}
               <Grid item xs={12} sm={12} mt={2}>
-                <Box sx={{ p: 2, bgcolor: "#EFE9DA" }}>
+                <Box sx={{ p: 4, bgcolor: "#EFE9DA" }}>
                   <Typography component="div" variant="h4">
                     Table of Contents
                   </Typography>

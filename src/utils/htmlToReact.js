@@ -1,7 +1,10 @@
 import React from "react";
 import ReactHtmlParser, { convertNodeToElement } from "react-html-parser";
 import ScriptTag from "react-script-tag";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 import Link from "./link";
+import slugify from "slugify";
 import _ from "lodash";
 
 // components
@@ -19,8 +22,23 @@ export default function htmlToReact(html) {
     return null;
   }
 
+  const router = useRouter();
+
   return ReactHtmlParser(html, {
     transform: (node, index) => {
+      if (node.name === "li") {
+        let slug = `#${slugify(node.children[0].data.toLowerCase())}`; // creates a hash link for each headline in the article
+        return (
+          <li>
+            <NextLink
+              href={`${router.asPath.split("#")[0]}${slug}`}
+              scroll={false}
+            >
+              {node.children[0].data}
+            </NextLink>
+          </li>
+        );
+      }
       if (node.name === "blockquote" && node.children[1] && node.children[0]) {
         return (
           <Box p={4} sx={{ border: "1px solid #000" }}>

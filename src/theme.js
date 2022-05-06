@@ -149,6 +149,11 @@ const theme = createTheme({
       marginBottom: 20,
       textTransform: "uppercase",
     },
+    li: {
+      fontSize: "1.1250em",
+      lineHeight: "2.375em",
+      fontWeight: "400",
+    },
     quote: {
       fontFamily: sansSerifFont,
       fontSize: "1.1250em",
