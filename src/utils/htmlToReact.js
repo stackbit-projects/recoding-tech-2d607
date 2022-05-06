@@ -21,13 +21,12 @@ export default function htmlToReact(html) {
   if (!html) {
     return null;
   }
-
   const router = useRouter();
 
   return ReactHtmlParser(html, {
     transform: (node, index) => {
-      if (node.name === "li") {
-        let slug = `#${slugify(node.children[0].data.toLowerCase())}`; // creates a hash link for each headline in the article
+      if (node.name === "li" && node.children[0].data) {
+        let slug = `#${slugify(node.children[0].data.toLowerCase())}`;
         return (
           <li>
             <NextLink
