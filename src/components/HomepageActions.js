@@ -129,7 +129,7 @@ const HomepageActions = () => {
         justifyContent="space-between"
         className={classes.gridTitle}
       ></Grid>
-      <Box my={4}>
+      <Box my={1}>
         {isMobile ? (
           actions.map((row) => (
             <Accordion key={row._key} sx={{ marginBottom: 4 }}>
