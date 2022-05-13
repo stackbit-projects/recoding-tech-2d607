@@ -25,8 +25,14 @@ export default function htmlToReact(html) {
 
   return ReactHtmlParser(html, {
     transform: (node, index) => {
-      if (node.name === "li" && node.children[0].data) {
-        let slug = `#${slugify(node.children[0].data.toLowerCase())}`;
+      if (
+        node.name === "li" &&
+        node.parent.name === "ol" &&
+        node.children[0].data
+      ) {
+        let slug = `#${slugify(node.children[0].data.toLowerCase(), {
+          remove: /[*+~.()'"!:@?]/g,
+        })}`;
         return (
           <li>
             <NextLink
