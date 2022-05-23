@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-strftime";
+import { titleCase } from "title-case";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCellTitle: {
     minWidth: 150,
+    maxWidth: 200,
     position: "relative",
     textTransform: "none",
     "&:after": {
@@ -116,7 +118,7 @@ const TrackerActions = (props) => {
             }}
           >
             <Typography component="div" variant="h4">
-              {page.title}
+              {titleCase(page.title)}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -225,7 +227,7 @@ const TrackerActions = (props) => {
               <TableRow hover role="checkbox" tabIndex={-1}>
                 <TableCell className={classes.tableCellTitle}>
                   <Typography component="div" variant="trackerTitle">
-                    {page.title}
+                    {titleCase(page.title)}
                   </Typography>
                 </TableCell>
                 <TableCell>

@@ -113,6 +113,9 @@ const HomepageActions = () => {
     { id: "lastUpdate", label: "Last Updated" },
   ];
 
+  const truncate = (title) =>
+    title.length > 35 ? `${title.substring(0, 35)}...` : title;
+
   useEffect(() => {
     client.fetch(policyActionsQuery).then((actions) => {
       if (Array.isArray(actions) && actions.length) {
@@ -305,7 +308,7 @@ const HomepageActions = () => {
                                       : row.slug
                                   }`}
                                 >
-                                  {titleCase(value)}
+                                  {titleCase(truncate(value))}
                                 </Link>
                               </Typography>
                             ) : (
