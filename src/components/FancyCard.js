@@ -18,6 +18,7 @@ import CardContent from "@mui/material/CardContent";
 
 const useStyles = makeStyles((theme) => ({
   box: {
+    padding: "20px",
     border: "1px solid #000",
     borderRadius: 0,
     overflow: "unset",
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
   },
   em: {
-    fontSize: "0.9em",
+    fontSize: "0.81em",
     fontStyle: "italic",
   },
   featured: {
