@@ -119,7 +119,7 @@ const theme = createTheme({
     },
     h2_article: {
       fontFamily: sansSerifFont,
-      fontSize: "2em",
+      fontSize: "1.7em",
       fontWeight: "500",
       marginBottom: 40,
     },
@@ -183,7 +183,7 @@ const theme = createTheme({
     },
     subtitle1: {
       fontFamily: sansSerifFont,
-      fontSize: "1.1em",
+      fontSize: "0.9em",
       fontWeight: "500",
       textTransform: "uppercase",
     },

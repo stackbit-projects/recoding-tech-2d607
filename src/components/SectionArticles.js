@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   em: {
-    fontSize: "1em",
+    fontSize: "0.9em",
     fontStyle: "italic",
   },
   featured: {

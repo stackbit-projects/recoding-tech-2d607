@@ -8,8 +8,8 @@ import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    paddingBottom: 10,
-    fontSize: "1.67em",
+    fontSize: "1.3em",
+    lineHeight: "0.5em",
   },
   subtitle: {
     paddingBottom: 10,
