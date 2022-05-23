@@ -105,6 +105,13 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: serifFont,
+    blurb: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "500",
+      marginBottom: 20,
+      textTransform: "uppercase",
+    },
     h1: {
       fontFamily: sansSerifFont,
       fontSize: "2.4em",
@@ -169,27 +176,29 @@ const theme = createTheme({
       fontSize: "1em",
       fontWeight: "600",
       textTransform: "uppercase",
+      textAlign: "center",
     },
     trackerTitle: {
       fontFamily: sansSerifFont,
-      fontSize: "1.2em",
+      fontSize: "1.075em",
       fontWeight: "700",
     },
     trackerRow: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: "500",
+      textAlign: "center",
       textTransform: "uppercase",
     },
     subtitle1: {
       fontFamily: sansSerifFont,
-      fontSize: "0.9em",
+      fontSize: "0.81em",
       fontWeight: "500",
       textTransform: "uppercase",
     },
     supertitle: {
       fontFamily: sansSerifFont,
-      fontSize: "1em",
+      fontSize: "1.2em",
       fontWeight: "500",
       marginBottom: 20,
       textTransform: "uppercase",
