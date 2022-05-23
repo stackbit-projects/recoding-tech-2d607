@@ -12,12 +12,16 @@ import Typography from "@mui/material/Typography";
 import client from "../utils/sanityClient";
 import process from "../utils/processCitations";
 
-const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...3]`; // just get the three most recent citations
+const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...4]`; // just get the four most recent citations
 
 const useStyles = makeStyles((theme) => ({
   citation: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
+    marginBottom: 20,
+    paddingBottom: 20,
+  },
+  lastCitation: {
     marginBottom: 20,
     paddingBottom: 20,
   },
@@ -31,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   citationPublication: {
-    marginTop: 10,
+    marginTop: 25,
+    marginBottom: 8,
   },
   em: {
     fontSize: "0.8em",
@@ -81,8 +86,16 @@ const SectionCitations = () => {
       </Grid>
       <Grid container item flexDirection="column">
         {citations && citations.length
-          ? citations.map((citation) => (
-              <Grid item key={citation._id} className={classes.citation}>
+          ? citations.map((citation, idx) => (
+              <Grid
+                item
+                key={citation._id}
+                className={
+                  idx === citations.length - 1
+                    ? classes.lastCitation
+                    : classes.citation
+                }
+              >
                 <Typography component="div" variant="body1">
                   <Link className={classes.citationTitle} href={citation.url}>
                     {citation.title}

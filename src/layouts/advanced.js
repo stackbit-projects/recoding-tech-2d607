@@ -72,7 +72,7 @@ const Advanced = (props) => {
                 <Box sx={{ p: 4, bgcolor: "#EFE9DA", textAlign: "center" }}>
                   <Typography
                     component="div"
-                    variant="supertitle"
+                    variant="blurb"
                     alignItems={"center"}
                   >
                     Our Monthly update on Gov’t Policy And the latest News and

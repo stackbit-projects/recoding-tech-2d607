@@ -21,6 +21,7 @@ import FancyTitle from "./FancyTitle";
 
 const useStyles = makeStyles((theme) => ({
   box: {
+    padding: "20px",
     border: "1px solid #000",
     borderRadius: 0,
     overflow: "unset",

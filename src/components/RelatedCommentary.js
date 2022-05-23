@@ -20,6 +20,10 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     paddingBottom: 20,
   },
+  lastCitation: {
+    marginBottom: 20,
+    paddingBottom: 20,
+  },
   citationTitle: {
     color: "#000 !important",
     fontSize: "1.2em",
@@ -30,7 +34,8 @@ const useStyles = makeStyles(() => ({
     },
   },
   citationPublication: {
-    marginTop: 10,
+    marginTop: 25,
+    marginBottom: 8,
   },
   em: {
     fontSize: "0.8em",
@@ -94,11 +99,13 @@ const RelatedCommentary = (props) => {
         </Grid>
         <Grid container item flexDirection="column">
           {sortedCommentary && sortedCommentary.length
-            ? sortedCommentary.slice(0, 4).map((comment) => (
+            ? sortedCommentary.slice(0, 4).map((comment, idx) => (
                 <Grid
                   item
                   key={comment.__metadata ? comment.__metadata.id : comment._id}
-                  className={classes.citation}
+                  className={
+                    idx === 3 ? classes.lastCitation : classes.citation
+                  }
                 >
                   <Typography component="div" variant="body1">
                     <Link

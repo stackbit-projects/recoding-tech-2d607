@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "1.3em",
-    lineHeight: "0.5em",
+    lineHeight: "1em",
   },
   subtitle: {
     paddingBottom: 10,

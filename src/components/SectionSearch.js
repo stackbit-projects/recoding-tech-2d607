@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   citationPublication: {
-    marginTop: 10,
+    marginTop: 25,
+    marginBottom: 8,
   },
   grid: {},
   gridTitle: {
