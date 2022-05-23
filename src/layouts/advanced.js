@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 
 // components
 import components, { Layout } from "../components/index";
+import LogoSmall from "../components/LogoSmall";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
@@ -78,7 +79,7 @@ const Advanced = (props) => {
                     Research
                   </Typography>
                   <Typography component="div" mb={2}>
-                    Recoding.Tech Newsletter
+                    <LogoSmall /> Newsletter
                   </Typography>
                   <Button
                     href="https://news.recoding.tech/"

@@ -138,7 +138,7 @@ const theme = createTheme({
     },
     h4: {
       fontFamily: sansSerifFont,
-      fontSize: "1.1em",
+      fontSize: "1em",
       fontWeight: "bold",
       marginBottom: 20,
       textTransform: "uppercase",
@@ -189,7 +189,7 @@ const theme = createTheme({
     },
     supertitle: {
       fontFamily: sansSerifFont,
-      fontSize: "1.2em",
+      fontSize: "1em",
       fontWeight: "500",
       marginBottom: 20,
       textTransform: "uppercase",
