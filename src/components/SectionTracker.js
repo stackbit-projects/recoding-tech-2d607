@@ -40,7 +40,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
-                            relatedTopics[]->{_id, _key, name, slug, type}, type}`;
+                            relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
 
 const topicsQuery =
   '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{_id, _key, name, slug, type}';
