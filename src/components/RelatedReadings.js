@@ -66,32 +66,34 @@ const RelatedReadings = (props) => {
 
   return (
     <Grid container>
+      <Grid
+        container
+        item
+        sx={{
+          borderBottom: "1px solid #000",
+          marginBottom: 2,
+          marginTop: 2,
+        }}
+      >
+        <Typography
+          component="h2"
+          variant="h4"
+          gutterBottom
+          className={classes.title}
+        >
+          Related Reading
+        </Typography>
+        <Typography
+          component="div"
+          variant="body1"
+          sx={{ fontStyle: "italic", marginBottom: 3 }}
+        >
+          Our latest thinking about{" "}
+          {page.displayTitle ? page.displayTitle : page.title}
+        </Typography>
+      </Grid>
       <Container>
         <Box xs={12} sm={12}>
-          <Grid
-            sx={{
-              borderBottom: "1px solid #000",
-              marginBottom: 2,
-              marginTop: 2,
-            }}
-          >
-            <Typography
-              component="h2"
-              variant="h4"
-              gutterBottom
-              className={classes.title}
-            >
-              Related Reading
-            </Typography>
-            <Typography
-              component="div"
-              variant="body1"
-              sx={{ fontStyle: "italic", marginBottom: 3 }}
-            >
-              Our latest thinking about{" "}
-              {page.displayTitle ? page.displayTitle : page.title}
-            </Typography>
-          </Grid>
           <Box mt={4}>
             <Slider {...sliderSettings}>
               {readings.map((article, index) => (
