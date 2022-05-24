@@ -2,41 +2,31 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
-import moment from "moment-strftime";
-import { titleCase } from "title-case";
 
 // utils
 import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // material ui icons
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
+// components
+import PolicyActionTable from "./PolicyActionTable";
+import PolicyActionMobile from "./PolicyActionMobile";
+
+// SANITY QUERIES
 const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
@@ -45,52 +35,11 @@ const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]
 const topicsQuery =
   '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{_id, _key, name, slug, type}';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
     fontSize: "0.8em",
     textTransform: "uppercase",
     width: 180,
-  },
-  icon: {
-    position: "absolute",
-    right: 20,
-    top: "50%",
-    transform: "translateY(-50%)",
-    transition: "right 250ms",
-  },
-  table: {},
-  tableCellTitle: {
-    position: "relative",
-    textTransform: "none",
-    "&:after": {
-      backgroundColor: theme.palette.footer.main,
-      content: "''",
-      display: "block",
-      left: 0,
-      height: "75%",
-      // minHeight: 40,
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
-      width: "100%",
-      zIndex: "-1",
-    },
-    "&:hover": {
-      "& a": {
-        textDecoration: "underline",
-      },
-      "& svg": {
-        right: 10,
-        transition: "right 250ms",
-      },
-    },
-  },
-  tableLink: {
-    color: "#000",
-    display: "block",
-    position: "relative",
-    textDecoration: "none",
-    maxWidth: "85%",
   },
 }));
 
@@ -104,15 +53,6 @@ function SectionTracker(props) {
   const [filters, setFilters] = useState([]);
 
   const isMobile = useMediaQuery("(max-width:1064px)");
-
-  const headers = [
-    { id: "title", label: "Name" },
-    { id: "type", label: "Type" },
-    { id: "country.displayTitle", label: "Government" },
-    { id: "dateInitiated", label: "Date Initiated" },
-    { id: "status", label: "Status" },
-    { id: "lastUpdate", label: "Last Updated" },
-  ];
 
   // filters
   const [issues, setIssues] = useState([]);
@@ -247,19 +187,6 @@ function SectionTracker(props) {
   const handleCloseCompanies = (topic) => () => {
     setCompaniesEl(null);
     handleClose(topic);
-  };
-
-  // table pagination
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
   };
 
   return (
@@ -473,247 +400,10 @@ function SectionTracker(props) {
       </Box>
       <Box my={4}>
         {isMobile ? (
-          actions
-            .sort((a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate))
-            .reverse()
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row) => (
-              <Accordion key={row._key} sx={{ marginBottom: 4 }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls={`content-${row._key}`}
-                  id={`header-${row._key}`}
-                  sx={{
-                    backgroundColor: "#EFE9DA",
-                    padding: 2,
-                    marginBottom: 2,
-                  }}
-                >
-                  <Typography component="div" variant="h4">
-                    {titleCase(row.title)}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid container>
-                    <Grid
-                      container
-                      item
-                      xs={12}
-                      sx={{ mb: 2 }}
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <Link
-                          href={`/tracker/${
-                            typeof row.slug === "object"
-                              ? row.slug.current
-                              : row.slug
-                          }`}
-                          variant="body2"
-                          sx={{ color: "#000" }}
-                        >
-                          View details
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <KeyboardArrowRightIcon />
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        borderTop: "1px solid #ccc",
-                        paddingTop: 2,
-                      }}
-                    >
-                      <Typography variant="h4">Type</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{
-                        borderBottom: "1px solid #ccc",
-                        borderTop: "1px solid #ccc",
-                        paddingTop: 2,
-                      }}
-                    >
-                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                        {row.type}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4">Government</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                        {row.country.displayTitle}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4">Date Initiated</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                        {moment(new Date(row.dateInitiated)).strftime(
-                          "%b %d, %Y"
-                        )}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4">Status</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                        {row.status}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4">Last Updated</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
-                    >
-                      <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                        {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
-            ))
+          <PolicyActionMobile actions={actions} isHomepage={false} />
         ) : (
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table
-              aria-label="Law and Regulation Tracker Table"
-              className={classes.table}
-            >
-              <TableHead>
-                <TableRow>
-                  {headers.map((column) => (
-                    <TableCell key={column.id}>
-                      <Typography component="div" variant="tableHeader">
-                        {column.label}
-                      </Typography>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {actions
-                  .sort(
-                    (a, b) => new Date(a.lastUpdate) - new Date(b.lastUpdate)
-                  )
-                  .reverse()
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row._key}
-                      >
-                        {headers.map((column) => {
-                          let value = row[column.id];
-                          if (!value) {
-                            if (row.country) {
-                              value = row.country.displayTitle; // #FIXME
-                            } else {
-                              value = "";
-                            }
-                          }
-                          return (
-                            <TableCell
-                              key={column.id}
-                              className={
-                                column.id == "title"
-                                  ? classes.tableCellTitle
-                                  : null
-                              }
-                            >
-                              {column.id == "dateInitiated" ||
-                              column.id == "lastUpdate" ? (
-                                moment(new Date(value)).strftime("%b %d, %Y")
-                              ) : column.id == "title" ? (
-                                <Typography
-                                  component="div"
-                                  variant="trackerTitle"
-                                >
-                                  <Link
-                                    className={classes.tableLink}
-                                    href={`/tracker/${
-                                      typeof row.slug === "object"
-                                        ? row.slug.current
-                                        : row.slug
-                                    }`}
-                                  >
-                                    {titleCase(value)}
-                                  </Link>
-                                </Typography>
-                              ) : (
-                                <Typography
-                                  component="div"
-                                  variant="trackerRow"
-                                >
-                                  {value}
-                                </Typography>
-                              )}
-                              {column.id == "title" ? (
-                                <KeyboardArrowRightIcon
-                                  className={classes.icon}
-                                />
-                              ) : null}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <PolicyActionTable actions={actions} isHomepage={false} />
         )}
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={actions.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Box>
     </section>
   );

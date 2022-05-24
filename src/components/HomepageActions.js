@@ -36,9 +36,9 @@ const HomepageActions = () => {
       <Grid container item justifyContent="space-between"></Grid>
       <Box my={1}>
         {isMobile ? (
-          <PolicyActionMobile actions={actions} />
+          <PolicyActionMobile actions={actions} isHomepage />
         ) : (
-          <PolicyActionTable actions={actions} isHomepage={true} />
+          <PolicyActionTable actions={actions} isHomepage />
         )}
       </Box>
     </section>
