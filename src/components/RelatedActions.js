@@ -350,7 +350,14 @@ const RelatedActions = (props) => {
                             >
                               {column.id == "dateInitiated" ||
                               column.id == "lastUpdate" ? (
-                                moment(new Date(value)).strftime("%b %d, %Y")
+                                <Typography
+                                  component="div"
+                                  variant="trackerRow"
+                                >
+                                  {moment(new Date(value)).strftime(
+                                    "%b %d, %Y"
+                                  )}
+                                </Typography>
                               ) : column.id == "title" ? (
                                 <Typography
                                   component="div"
