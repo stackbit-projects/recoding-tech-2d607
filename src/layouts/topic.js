@@ -42,7 +42,7 @@ const Topic = (props) => {
   const classes = useStyles();
   const { page } = props;
 
-  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}") && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}`;
+  const policyActionsQuery = `*[_type == "policy_action" && references("${page.slug}") && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
   const relatedCitationsQuery = `*[!(_id in path("drafts.**")) && _type == "citation" && references("${page.__metadata.id}")]{_id, chicagoCitation, creators[]->{firstName, lastName}, date, publicationTitle, ref, title, url, websiteTitle, institution, place, publisher, blogTitle, network } | order(date desc)`;
 
   const [issues, setIssues] = useState(null);
