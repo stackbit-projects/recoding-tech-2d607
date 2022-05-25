@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       content: "''",
       display: "block",
       left: 0,
-      minHeight: 40,
+      minHeight: "80%",
       position: "absolute",
       top: "50%",
       transform: "translateY(-50%)",
