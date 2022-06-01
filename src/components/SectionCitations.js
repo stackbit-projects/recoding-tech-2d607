@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 8,
   },
   em: {
-    fontSize: "0.8em",
+    fontSize: "0.81em",
     fontStyle: "italic",
   },
   grid: {},
@@ -108,7 +108,11 @@ const SectionCitations = () => {
                 >
                   {process(citation)}
                 </Typography>
-                <Typography className={classes.em}>
+                <Typography
+                  component="div"
+                  variant="body1"
+                  className={classes.em}
+                >
                   {moment(citation.date).strftime("%B %e, %Y")}
                 </Typography>
               </Grid>

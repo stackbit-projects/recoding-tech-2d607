@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   em: {
-    fontSize: "0.9em",
+    fontSize: "0.95em",
     fontStyle: "italic",
   },
   featured: {
@@ -96,7 +96,12 @@ function SectionArticle(props) {
                   <Typography gutterBottom component="div" variant="h2_article">
                     {titleCase(article.title)}
                   </Typography>
-                  <Typography gutterBottom component="div" variant="subtitle1">
+                  <Typography
+                    gutterBottom
+                    component="div"
+                    variant="h5_card"
+                    className={classes.author}
+                  >
                     {article.author.name}
                   </Typography>
                   <Typography
@@ -140,11 +145,7 @@ function SectionArticle(props) {
                     >
                       {titleCase(article.title)}
                     </Typography>
-                    <Typography
-                      gutterBottom
-                      component="div"
-                      variant="subtitle1"
-                    >
+                    <Typography gutterBottom component="div" variant="h5_card">
                       {article.author.name}
                     </Typography>
                     <Typography

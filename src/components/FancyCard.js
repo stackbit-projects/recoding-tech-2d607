@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "italic",
   },
   em: {
-    fontSize: "0.81em",
+    fontSize: "0.95em",
     fontStyle: "italic",
   },
   featured: {
@@ -134,7 +134,7 @@ const FancyCard = ({
             </Typography>
           )}
           {(reading || author) && (
-            <Typography component="div" variant="subtitle1" gutterBottom>
+            <Typography gutterBottom component="div" variant="h5_card">
               {!isArticle ? process(reading) : author}
             </Typography>
           )}

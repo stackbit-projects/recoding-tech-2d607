@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
       left: 0,
       height: "75%",
-      // minHeight: 40,
+      minHeight: "80%",
       position: "absolute",
       top: "50%",
       transform: "translateY(-50%)",
@@ -131,7 +131,7 @@ function PolicyActionTable(props) {
                       return (
                         <TableCell
                           key={column.id}
-                          width={column.id == "title" ? "30%" : null}
+                          width={column.id == "title" ? "250px" : null}
                           className={
                             column.id == "title" ? classes.tableCellTitle : null
                           }
