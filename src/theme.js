@@ -159,6 +159,7 @@ const theme = createTheme({
     h5_card: {
       fontFamily: sansSerifFont,
       fontSize: "0.95em",
+      marginTop: 25,
       marginBottom: 20,
       textTransform: "uppercase",
     },

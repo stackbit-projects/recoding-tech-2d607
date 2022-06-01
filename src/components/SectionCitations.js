@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import client from "../utils/sanityClient";
 import process from "../utils/processCitations";
 
-const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, websiteTitle, publicationTitle}|order(date desc)[0...4]`; // just get the four most recent citations
+const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, institution, place, blogTitle, websiteTitle, publicationTitle}|order(date desc)[0...4]`; // just get the four most recent citations
 
 const useStyles = makeStyles((theme) => ({
   citation: {

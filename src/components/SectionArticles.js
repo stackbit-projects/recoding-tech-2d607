@@ -88,11 +88,6 @@ function SectionArticle(props) {
             >
               <CardActionArea onClick={() => articleClick(article.slug)}>
                 <CardContent>
-                  {article.category && (
-                    <Typography component="div" variant="supertitle">
-                      {article.category}
-                    </Typography>
-                  )}
                   <Typography gutterBottom component="div" variant="h2_article">
                     {titleCase(article.title)}
                   </Typography>
@@ -133,11 +128,6 @@ function SectionArticle(props) {
               >
                 <CardActionArea onClick={() => articleClick(article.slug)}>
                   <CardContent>
-                    {article.category && (
-                      <Typography component="div" variant="supertitle">
-                        {article.category}
-                      </Typography>
-                    )}
                     <Typography
                       gutterBottom
                       component="div"
