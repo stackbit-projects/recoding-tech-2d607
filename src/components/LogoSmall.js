@@ -17,18 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
   nameCoding: {
     position: "relative",
-    "&::after": {
-      backgroundColor: theme.typography.link.color,
-      borderRadius: "50%",
-      content: "''",
-      display: "block",
-      height: "5px",
-      left: "50%",
-      position: "absolute",
-      top: "3px",
-      transform: "translate(-55%,-50%)",
-      width: "5px",
-    },
   },
   nameDot: {
     color: theme.typography.link.color,
@@ -36,21 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "3px",
   },
   nameRe: {
-    marginRight: "6px",
-    paddingRight: "4px",
     position: "relative",
-    "&::after": {
-      backgroundColor: theme.typography.link.color,
-      borderRadius: "50%",
-      content: "''",
-      display: "block",
-      height: "5px",
-      position: "absolute",
-      right: "-5px",
-      top: "55%",
-      transform: "translateY(-50%)",
-      width: "5px",
-    },
   },
 }));
 
