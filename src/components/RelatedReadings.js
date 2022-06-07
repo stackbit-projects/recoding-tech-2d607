@@ -1,10 +1,12 @@
 // base imports
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -43,6 +45,17 @@ const useStyles = makeStyles((theme) => ({
 
 const RelatedReadings = (props) => {
   const { page, readings } = props;
+
+  useEffect(() => {
+    readings.map((article) => {
+      //workaround for when the author is inexplicably a reference object
+      if (article.author._type == "reference") {
+        client.fetch(`*[_id == "${article.author._ref}"]`).then((person) => {
+          article.author = person[0];
+        });
+      }
+    });
+  }, [readings]);
 
   if (!Array.isArray(readings) || !readings.length) return null;
   const classes = useStyles();
