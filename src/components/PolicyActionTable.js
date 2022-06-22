@@ -117,7 +117,10 @@ function PolicyActionTable(props) {
             <TableRow>
               {headers.map((column) => (
                 <TableCell key={column.id}>
-                  <Typography component="div" variant="tableHeader">
+                  <Typography
+                    component="div"
+                    variant={isHomepage ? `tableHeaderHome` : `tableHeader`}
+                  >
                     {column.label}
                   </Typography>
                 </TableCell>
@@ -142,18 +145,30 @@ function PolicyActionTable(props) {
                       return (
                         <TableCell
                           key={column.id}
-                          width={column.id == "title" ? "250px" : null}
+                          width={
+                            column.id == "title" && isHomepage ? "250px" : null
+                          }
                           className={
                             column.id == "title" ? classes.tableCellTitle : null
                           }
                         >
                           {column.id == "dateInitiated" ||
                           column.id == "lastUpdate" ? (
-                            <Typography component="div" variant="trackerRow">
+                            <Typography
+                              component="div"
+                              variant={
+                                isHomepage ? "trackerRowHome" : "trackerRow"
+                              }
+                            >
                               {moment(new Date(value)).strftime("%b %d, %Y")}
                             </Typography>
                           ) : column.id == "title" ? (
-                            <Typography component="div" variant="trackerTitle">
+                            <Typography
+                              component="div"
+                              variant={
+                                isHomepage ? "trackerTitleHome" : "trackerTitle"
+                              }
+                            >
                               <Link
                                 className={classes.tableLink}
                                 href={`/tracker/${
@@ -168,7 +183,12 @@ function PolicyActionTable(props) {
                               </Link>
                             </Typography>
                           ) : (
-                            <Typography component="div" variant="trackerRow">
+                            <Typography
+                              component="div"
+                              variant={
+                                isHomepage ? "trackerRowHome" : "trackerRow"
+                              }
+                            >
                               {value}
                             </Typography>
                           )}
