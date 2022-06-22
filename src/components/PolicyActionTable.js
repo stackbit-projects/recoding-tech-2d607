@@ -74,13 +74,24 @@ function PolicyActionTable(props) {
   const truncate = (title) =>
     title.length > 35 ? `${title.substring(0, 35)}...` : title;
 
-  const headers = [
-    { id: "title", label: "Name" },
-    { id: "type", label: "Type" },
-    { id: "country.displayTitle", label: "Gov't" },
-    { id: "status", label: "Status" },
-    { id: "lastUpdate", label: "Last Updated" },
-  ];
+  let headers;
+
+  isHomepage
+    ? (headers = [
+        { id: "title", label: "Name" },
+        { id: "type", label: "Type" },
+        { id: "country.displayTitle", label: "Gov't" },
+        { id: "status", label: "Status" },
+        { id: "lastUpdate", label: "Last Updated" },
+      ])
+    : (headers = [
+        { id: "title", label: "Name" },
+        { id: "type", label: "Type" },
+        { id: "country.displayTitle", label: `Government` },
+        { id: "dateInitiated", label: "Date Initiated" },
+        { id: "status", label: "Status" },
+        { id: "lastUpdate", label: "Last Updated" },
+      ]);
 
   // PAGINATION
   const [current, setCurrent] = useState(0);
