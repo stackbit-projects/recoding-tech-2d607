@@ -34,6 +34,12 @@ module.exports = {
             (accum, object) => {
               switch (object.__metadata.modelName) {
                 case "advanced":
+                  console.log(
+                    "object*********",
+                    object.__metadata.modelName,
+                    object.__metadata.id,
+                    object.__metadata.updatedAt
+                  );
                   if (
                     Array.isArray(object.sections) &&
                     object.sections.length
@@ -98,6 +104,12 @@ module.exports = {
                   });
                   break;
                 case "article":
+                  console.log(
+                    "object*********",
+                    object.__metadata.modelName,
+                    object.__metadata.id,
+                    object.__metadata.updatedAt
+                  );
                   if (Array.isArray(object.relatedTopics)) {
                     let topics = object.relatedTopics.map((topic) =>
                       _.pick(topic, [
@@ -122,12 +134,24 @@ module.exports = {
                   });
                   break;
                 case "page":
+                  console.log(
+                    "object*********",
+                    object.__metadata.modelName,
+                    object.__metadata.id,
+                    object.__metadata.updatedAt
+                  );
                   accum.push({
                     path: object.stackbit_url_path,
                     page: object,
                   });
                   break;
                 case "policy_action":
+                  console.log(
+                    "object*********",
+                    object.__metadata.modelName,
+                    object.__metadata.id,
+                    object.__metadata.updatedAt
+                  );
                   if (Array.isArray(object.relatedTopics)) {
                     let topics = object.relatedTopics.map((topic) =>
                       _.pick(topic, [
@@ -146,6 +170,12 @@ module.exports = {
                   });
                   break;
                 case "topic":
+                  console.log(
+                    "object*********",
+                    object.__metadata.modelName,
+                    object.__metadata.id,
+                    object.__metadata.updatedAt
+                  );
                   if (object.type && object.slug) {
                     accum.push({
                       path: `/${object.type}/${object.slug}`,
@@ -154,6 +184,12 @@ module.exports = {
                   }
                   break;
                 case "guide":
+                  console.log(
+                    "object*********",
+                    object.__metadata.modelName,
+                    object.__metadata.id,
+                    object.__metadata.updatedAt
+                  );
                   accum.push({
                     path: `/guide/${object.slug}`,
                     page: object,
