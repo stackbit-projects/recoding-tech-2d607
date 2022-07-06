@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   subtitle: {
     paddingBottom: 10,
     fontStyle: "italic",
-    fontSize: "1.17em",
+    fontSize: "1em",
   },
   link: {
     color: theme.typography.link.color,
