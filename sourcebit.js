@@ -116,12 +116,24 @@ module.exports = {
                     );
                     object.relatedCommentary = comms;
                   }
+                  if (Array.isArray(object.links)) {
+                    let links = object.links.map((link) =>
+                      _.omit(link, ["topics", "creators"])
+                    );
+                    object.relatedCommentary = links;
+                  }
                   accum.push({
                     path: `/article/${object.slug}`,
                     page: object,
                   });
                   break;
                 case "page":
+                  if (Array.isArray(object.sidebar_content)) {
+                    let contents = object.sidebar_content.map((content) =>
+                      _.omit(content, ["sidebar_content"])
+                    );
+                    object.sidebar_content = contents;
+                  }
                   accum.push({
                     path: object.stackbit_url_path,
                     page: object,
@@ -140,12 +152,59 @@ module.exports = {
                     );
                     object.relatedTopics = topics;
                   }
+                  if (Array.isArray(object.relatedCommentary)) {
+                    let comms = object.relatedCommentary.map((topic) =>
+                      _.omit(topic, ["topics", "creators"])
+                    );
+                    object.relatedCommentary = comms;
+                  }
+                  if (Array.isArray(object.relatedCitations)) {
+                    let citations = object.relatedCitations.map((citation) =>
+                      _.omit(citation, ["topics", "creators"])
+                    );
+                    object.relatedCitations = citations;
+                  }
+                  if (object.country) {
+                    object.country = _.pick(object.country, [
+                      "displayTitle",
+                      "name",
+                      "type",
+                      "slug",
+                      "stackbit_model_type",
+                    ]);
+                  }
                   accum.push({
                     path: `/tracker/${object.slug}`,
                     page: object,
                   });
                   break;
+                case "citation":
+                  if (Array.isArray(object.topics)) {
+                    let topics = object.topics.map((topic) =>
+                      _.pick(topic, [
+                        "displayTitle",
+                        "name",
+                        "type",
+                        "slug",
+                        "stackbit_model_type",
+                      ])
+                    );
+                    object.topics = topics;
+                  }
+                  break;
                 case "topic":
+                  if (Array.isArray(object.relatedTopics)) {
+                    let topics = object.relatedTopics.map((topic) =>
+                      _.pick(topic, [
+                        "displayTitle",
+                        "name",
+                        "type",
+                        "slug",
+                        "stackbit_model_type",
+                      ])
+                    );
+                    object.relatedTopics = topics;
+                  }
                   if (object.type && object.slug) {
                     accum.push({
                       path: `/${object.type}/${object.slug}`,
