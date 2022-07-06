@@ -1,14 +1,10 @@
 const path = require("path");
-const sourcebit = require("sourcebit");
+const withSourcebit = require("sourcebit").sourcebitNext();
 const dotenv = require("dotenv");
-
-const sourcebitConfig = require("./sourcebit.js");
-
-sourcebit.fetch(sourcebitConfig);
 
 dotenv.config();
 
-module.exports = {
+module.exports = withSourcebit({
   env: {
     sanityAccessToken: process.env.SANITY_ACCESS_TOKEN,
     sanityProjectId: process.env.SANITY_PROJECT_ID,
@@ -45,4 +41,4 @@ module.exports = {
     );
     return config;
   }
-};
+});
