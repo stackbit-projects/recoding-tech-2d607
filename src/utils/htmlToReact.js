@@ -1,6 +1,6 @@
 import React from "react";
-import ReactHtmlParser, { convertNodeToElement } from "react-html-parser";
-import ScriptTag from "react-script-tag";
+import ReactHtmlParser, { convertNodeToReactElement } from "@hedgedoc/html-to-react";
+import ScriptTag from "next/script";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 import Link from "./link";
@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 
 const convertChildren = (children, index) =>
   _.map(children, (childNode) =>
-    convertNodeToElement(childNode, index, _.noop())
+    convertNodeToReactElement(childNode, index, _.noop())
   );
 
 export default function htmlToReact(html) {

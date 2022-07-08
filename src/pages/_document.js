@@ -1,6 +1,6 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import ScriptTag from "react-script-tag";
+import ScriptTag from "next/script";
 import { withPrefix } from "../utils";
 import { ServerStyleSheets } from "@mui/styles";
 
