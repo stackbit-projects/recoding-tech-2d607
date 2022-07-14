@@ -69,7 +69,7 @@ const Advanced = (props) => {
             </Grid>
             <Grid container item xs={12} sm={4}>
               <Grid item xs={12} sm={12} mt={2}>
-                <Box sx={{ p: 4, bgcolor: "#EFE9DA", textAlign: "center" }}>
+                <Box sx={{ p: 4, bgcolor: "#84A4CC", textAlign: "center" }}>
                   <Typography
                     component="div"
                     variant="blurb"

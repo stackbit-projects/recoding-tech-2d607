@@ -72,16 +72,14 @@ function PolicyActionTable(props) {
   const { actions, isHomepage } = props;
 
   const truncate = (title) =>
-    title.length > 35 ? `${title.substring(0, 35)}...` : title;
+    title.length > 42 ? `${title.substring(0, 42)}...` : title;
 
   let headers;
 
   isHomepage
     ? (headers = [
         { id: "title", label: "Name" },
-        { id: "type", label: "Type" },
         { id: "country.displayTitle", label: "Gov't" },
-        { id: "status", label: "Status" },
         { id: "lastUpdate", label: "Last Updated" },
       ])
     : (headers = [

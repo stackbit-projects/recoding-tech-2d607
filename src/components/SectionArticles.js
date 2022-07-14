@@ -77,53 +77,14 @@ function SectionArticle(props) {
 
   return (
     <Container>
-      {article ? (
-        <>
-          <FancyTitle
-            title={"Commentary & Analysis"}
-            subtitle={"The latest from our staff and network of experts"}
-          />
-          <Box mb={alsoFeatured ? 1 : 10}>
-            <Card
-              variant="outlined"
-              className={`${classes.box} ${classes.featured}`}
-            >
-              <CardActionArea onClick={() => articleClick(article.slug)}>
-                <CardContent>
-                  <Typography gutterBottom component="div" variant="h2_article">
-                    {titleCase(article.title)}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    component="div"
-                    variant="h5_card"
-                    className={classes.author}
-                  >
-                    {article.author.name}
-                  </Typography>
-                  <Typography
-                    component="div"
-                    variant="body1"
-                    className={classes.em}
-                  >
-                    {moment(article.date).strftime("%B %e, %Y")}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Box>
-        </>
-      ) : null}
-      {alsoFeatured && alsoFeatured.length ? (
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          spacing={{ xs: 2, md: 3 }}
-          mb={10}
-        >
-          {alsoFeatured.map((article, idx) => (
-            <Grid item key={idx} xs={12} sm={6} mt={2}>
+      <Box my={4} mb={10}>
+        {article ? (
+          <>
+            <FancyTitle
+              title={"Commentary & Analysis"}
+              subtitle={"The latest from our staff and network of experts"}
+            />
+            <Box mb={alsoFeatured ? 1 : 10}>
               <Card
                 variant="outlined"
                 className={`${classes.box} ${classes.featured}`}
@@ -137,7 +98,12 @@ function SectionArticle(props) {
                     >
                       {titleCase(article.title)}
                     </Typography>
-                    <Typography gutterBottom component="div" variant="h5_card">
+                    <Typography
+                      gutterBottom
+                      component="div"
+                      variant="h5_card"
+                      className={classes.author}
+                    >
                       {article.author.name}
                     </Typography>
                     <Typography
@@ -150,17 +116,61 @@ function SectionArticle(props) {
                   </CardContent>
                 </CardActionArea>
               </Card>
-            </Grid>
-          ))}
-        </Grid>
-      ) : null}
-      <FancyTitle
-        title={"Law & Regulation Tracker"}
-        subtitle={"Keep up with how governments are recoding tech"}
-        isTracker={true}
-      />
-      <Box my={4} mt={2} mb={10}>
-        <HomepageActions />
+            </Box>
+          </>
+        ) : null}
+        {alsoFeatured && alsoFeatured.length ? (
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            spacing={{ xs: 2, md: 3 }}
+            mb={10}
+          >
+            {alsoFeatured.map((article, idx) => (
+              <Grid item key={idx} xs={12} sm={6} mt={2}>
+                <Card
+                  variant="outlined"
+                  className={`${classes.box} ${classes.featured}`}
+                >
+                  <CardActionArea onClick={() => articleClick(article.slug)}>
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        component="div"
+                        variant="h2_article"
+                      >
+                        {titleCase(article.title)}
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        component="div"
+                        variant="h5_card"
+                      >
+                        {article.author.name}
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="body1"
+                        className={classes.em}
+                      >
+                        {moment(article.date).strftime("%B %e, %Y")}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        ) : null}
+        <FancyTitle
+          title={"Law & Regulation Tracker"}
+          subtitle={"Keep up with how governments are recoding tech"}
+          isTracker={true}
+        />
+        <Box my={4} mt={2} mb={10}>
+          <HomepageActions />
+        </Box>
       </Box>
     </Container>
   );
