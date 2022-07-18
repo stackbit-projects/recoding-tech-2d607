@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     position: "relative",
     textDecoration: "none",
-    maxWidth: "75%",
+    maxWidth: "85%",
   },
 }));
 
@@ -72,7 +72,7 @@ function PolicyActionTable(props) {
   const { actions, isHomepage } = props;
 
   const truncate = (title) =>
-    title.length > 42 ? `${title.substring(0, 42)}...` : title;
+    title.length > 62 ? `${title.substring(0, 62)}...` : title;
 
   let headers;
 
@@ -144,7 +144,7 @@ function PolicyActionTable(props) {
                         <TableCell
                           key={column.id}
                           width={
-                            column.id == "title" && isHomepage ? "250px" : null
+                            column.id == "title" && isHomepage ? "350px" : null
                           }
                           className={
                             column.id == "title" ? classes.tableCellTitle : null

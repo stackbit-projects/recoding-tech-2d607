@@ -65,8 +65,6 @@ function SectionArticle(props) {
   } = props;
   const [article, setArticle] = useState(null);
 
-  console.log("in SectionArticles, alsoFeatured**********", alsoFeatured);
-
   useEffect(() => {
     setArticle(featuredArticle);
   }, []);
