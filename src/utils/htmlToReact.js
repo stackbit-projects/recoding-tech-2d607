@@ -1,5 +1,7 @@
 import React from "react";
-import ReactHtmlParser, { convertNodeToReactElement } from "@hedgedoc/html-to-react";
+import ReactHtmlParser, {
+  convertNodeToReactElement,
+} from "@hedgedoc/html-to-react";
 import ScriptTag from "next/script";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
