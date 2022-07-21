@@ -127,6 +127,13 @@ export default {
       validation: null,
     },
     {
+      type: "portable_text",
+      name: "new_content",
+      title: "New content section",
+      description: "Page content",
+      validation: null,
+    },
+    {
       type: "stackbit_page_meta",
       name: "seo",
       title: "Seo",

@@ -4,7 +4,7 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 
 // utils
-import { markdownify } from "../utils";
+import { markdownify, htmlToReact } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -55,6 +55,9 @@ const Article = (props) => {
                     </Typography>
                     <Typography component="div" className="html-to-react">
                       {markdownify(_.get(props, "page.toc", null))}
+                    </Typography>
+                    <Typography component="div" className="html-to-react">
+                      {htmlToReact(page.new_content)}
                     </Typography>
                   </Box>
                 </Grid>
