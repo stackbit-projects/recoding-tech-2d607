@@ -105,6 +105,13 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: serifFont,
+    blurb: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "500",
+      marginBottom: 20,
+      textTransform: "uppercase",
+    },
     h1: {
       fontFamily: sansSerifFont,
       fontSize: "2.4em",
@@ -119,7 +126,7 @@ const theme = createTheme({
     },
     h2_article: {
       fontFamily: sansSerifFont,
-      fontSize: "2em",
+      fontSize: "1.7em",
       fontWeight: "500",
       marginBottom: 40,
     },
@@ -138,14 +145,21 @@ const theme = createTheme({
     },
     h4: {
       fontFamily: sansSerifFont,
-      fontSize: "1.1em",
+      fontSize: "1em",
       fontWeight: "bold",
       marginBottom: 20,
       textTransform: "uppercase",
     },
     h5: {
       fontFamily: sansSerifFont,
-      fontSize: "0.8em",
+      fontSize: "0.81em",
+      marginBottom: 20,
+      textTransform: "uppercase",
+    },
+    h5_card: {
+      fontFamily: sansSerifFont,
+      fontSize: "0.95em",
+      marginTop: 25,
       marginBottom: 20,
       textTransform: "uppercase",
     },
@@ -164,6 +178,13 @@ const theme = createTheme({
       fontWeight: "400",
       lineHeight: "2.4em",
     },
+    tableHeaderHome: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "600",
+      textTransform: "uppercase",
+      textAlign: "center",
+    },
     tableHeader: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
@@ -172,8 +193,20 @@ const theme = createTheme({
     },
     trackerTitle: {
       fontFamily: sansSerifFont,
-      fontSize: "1.2em",
+      fontSize: "1em",
+      fontWeight: "500",
+    },
+    trackerTitleHome: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.075em",
       fontWeight: "700",
+    },
+    trackerRowHome: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: "500",
+      textAlign: "center",
+      textTransform: "uppercase",
     },
     trackerRow: {
       fontFamily: sansSerifFont,
@@ -183,7 +216,7 @@ const theme = createTheme({
     },
     subtitle1: {
       fontFamily: sansSerifFont,
-      fontSize: "1.1em",
+      fontSize: "0.81em",
       fontWeight: "500",
       textTransform: "uppercase",
     },

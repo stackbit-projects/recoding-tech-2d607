@@ -8,13 +8,13 @@ import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    paddingBottom: 10,
-    fontSize: "1.67em",
+    fontSize: "1.3em",
+    lineHeight: "1em",
   },
   subtitle: {
     paddingBottom: 10,
     fontStyle: "italic",
-    fontSize: "1.17em",
+    fontSize: "1em",
   },
   link: {
     color: theme.typography.link.color,

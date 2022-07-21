@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 
 // components
 import components, { Layout } from "../components/index";
+import LogoSmall from "../components/LogoSmall";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
@@ -67,18 +68,18 @@ const Advanced = (props) => {
               )}
             </Grid>
             <Grid container item xs={12} sm={4}>
-              <Grid item xs={12} sm={12} mt={2}>
-                <Box sx={{ p: 4, bgcolor: "#EFE9DA", textAlign: "center" }}>
+              <Grid item xs={12} sm={12} mt={2} my={4}>
+                <Box sx={{ p: 4, bgcolor: "#84A4CC", textAlign: "center" }}>
                   <Typography
                     component="div"
-                    variant="supertitle"
+                    variant="blurb"
                     alignItems={"center"}
                   >
                     Our Monthly update on Gov’t Policy And the latest News and
                     Research
                   </Typography>
                   <Typography component="div" mb={2}>
-                    Recoding.Tech Newsletter
+                    <LogoSmall /> Newsletter
                   </Typography>
                   <Button
                     href="https://news.recoding.tech/"

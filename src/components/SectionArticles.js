@@ -21,6 +21,7 @@ import FancyTitle from "./FancyTitle";
 
 const useStyles = makeStyles((theme) => ({
   box: {
+    padding: "20px",
     border: "1px solid #000",
     borderRadius: 0,
     overflow: "unset",
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   em: {
-    fontSize: "1em",
+    fontSize: "0.95em",
     fontStyle: "italic",
   },
   featured: {
@@ -74,64 +75,20 @@ function SectionArticle(props) {
 
   return (
     <Container>
-      {article ? (
-        <>
-          <FancyTitle
-            title={"Commentary & Analysis"}
-            subtitle={"The latest from our staff and network of experts"}
-          />
-          <Box mb={alsoFeatured ? 1 : 10}>
-            <Card
-              variant="outlined"
-              className={`${classes.box} ${classes.featured}`}
-            >
-              <CardActionArea onClick={() => articleClick(article.slug)}>
-                <CardContent>
-                  {article.category && (
-                    <Typography component="div" variant="supertitle">
-                      {article.category}
-                    </Typography>
-                  )}
-                  <Typography gutterBottom component="div" variant="h2_article">
-                    {titleCase(article.title)}
-                  </Typography>
-                  <Typography gutterBottom component="div" variant="subtitle1">
-                    {article.author.name}
-                  </Typography>
-                  <Typography
-                    component="div"
-                    variant="body1"
-                    className={classes.em}
-                  >
-                    {moment(article.date).strftime("%B %e, %Y")}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Box>
-        </>
-      ) : null}
-      {alsoFeatured && alsoFeatured.length ? (
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          spacing={{ xs: 2, md: 3 }}
-          mb={10}
-        >
-          {alsoFeatured.map((article, idx) => (
-            <Grid item key={idx} xs={12} sm={6} mt={2}>
+      <Box my={4} mb={10}>
+        {article ? (
+          <>
+            <FancyTitle
+              title={"Commentary & Analysis"}
+              subtitle={"The latest from our staff and network of experts"}
+            />
+            <Box mb={alsoFeatured ? 1 : 10}>
               <Card
                 variant="outlined"
                 className={`${classes.box} ${classes.featured}`}
               >
                 <CardActionArea onClick={() => articleClick(article.slug)}>
                   <CardContent>
-                    {article.category && (
-                      <Typography component="div" variant="supertitle">
-                        {article.category}
-                      </Typography>
-                    )}
                     <Typography
                       gutterBottom
                       component="div"
@@ -142,7 +99,8 @@ function SectionArticle(props) {
                     <Typography
                       gutterBottom
                       component="div"
-                      variant="subtitle1"
+                      variant="h5_card"
+                      className={classes.author}
                     >
                       {article.author.name}
                     </Typography>
@@ -156,17 +114,61 @@ function SectionArticle(props) {
                   </CardContent>
                 </CardActionArea>
               </Card>
-            </Grid>
-          ))}
-        </Grid>
-      ) : null}
-      <FancyTitle
-        title={"Law & Regulation Tracker"}
-        subtitle={"Keep up with how governments are recoding tech"}
-        isTracker={true}
-      />
-      <Box my={4} mt={2} mb={10}>
-        <HomepageActions />
+            </Box>
+          </>
+        ) : null}
+        {alsoFeatured && alsoFeatured.length ? (
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            spacing={{ xs: 2, md: 3 }}
+            mb={10}
+          >
+            {alsoFeatured.map((article, idx) => (
+              <Grid item key={idx} xs={12} sm={6} mt={2}>
+                <Card
+                  variant="outlined"
+                  className={`${classes.box} ${classes.featured}`}
+                >
+                  <CardActionArea onClick={() => articleClick(article.slug)}>
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        component="div"
+                        variant="h2_article"
+                      >
+                        {titleCase(article.title)}
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        component="div"
+                        variant="h5_card"
+                      >
+                        {article.author.name}
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="body1"
+                        className={classes.em}
+                      >
+                        {moment(article.date).strftime("%B %e, %Y")}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        ) : null}
+        <FancyTitle
+          title={"Law & Regulation Tracker"}
+          subtitle={"Keep up with how governments are recoding tech"}
+          isTracker={true}
+        />
+        <Box my={4} mt={2} mb={10}>
+          <HomepageActions />
+        </Box>
       </Box>
     </Container>
   );
