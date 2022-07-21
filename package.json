@@ -12,8 +12,8 @@
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
-    "build": "next build --debug && next export",
-    "build:netlify": "next build --debug",
+    "build": "next build && next export",
+    "build:netlify": "next build",
     "start": "next start",
     "import:citations": "node importData.mjs",
     "reset": "node deleteData.mjs"
