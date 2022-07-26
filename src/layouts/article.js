@@ -65,18 +65,13 @@ const Article = (props) => {
                 </Grid>
               )}
               <Grid item>
-                <Typography component="div" className="html-to-react">
+                {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
-                </Typography>
-                <Typography component="div">
-                  {"******************************************************"}
-                </Typography>
-                {page.new_content ? (
+                </Typography> */}
+                {page.new_content && (
                   <Typography component="div" className="html-to-react-article">
                     {htmlToReact(page.new_content)}
                   </Typography>
-                ) : (
-                  "Nothing to see here"
                 )}
               </Grid>
             </Grid>

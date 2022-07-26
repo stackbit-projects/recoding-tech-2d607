@@ -25,6 +25,15 @@ export default function htmlToReact(html) {
 
   return ReactHtmlParser(html, {
     transform: (node, index) => {
+      /** the next two if statements ensure the Table of Contents section in the articles work */
+
+      if (node.name === "h4" && node.children[0].data) {
+        let slug = `${slugify(node.children[0].data.toLowerCase(), {
+          remove: /[*+~.()'"!:@?/]/g,
+        })}`;
+        return <h4 id={slug}>{node.children[0].data}</h4>;
+      }
+
       if (
         node.name === "li" &&
         node.parent.name === "ol" &&
@@ -44,6 +53,7 @@ export default function htmlToReact(html) {
           </li>
         );
       }
+
       if (node.name === "blockquote" && node.children[1] && node.children[0]) {
         return (
           <Box p={4} sx={{ border: "1px solid #000" }}>
