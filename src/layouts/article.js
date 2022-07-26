@@ -4,7 +4,7 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 
 // utils
-import { markdownify } from "../utils";
+import { markdownify, htmlToReact } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -49,7 +49,12 @@ const Article = (props) => {
               )}
               {page.toc && (
                 <Grid item xs={12} sm={12} mt={2}>
-                  <Box sx={{ p: 4, bgcolor: "#EFE9DA" }}>
+                  <Box
+                    sx={{
+                      p: 4,
+                      bgcolor: "#EFE9DA",
+                    }}
+                  >
                     <Typography component="div" variant="h4">
                       Table of Contents
                     </Typography>
@@ -60,9 +65,14 @@ const Article = (props) => {
                 </Grid>
               )}
               <Grid item>
-                <Typography component="div" className="html-to-react">
+                {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
-                </Typography>
+                </Typography> */}
+                {page.new_content && (
+                  <Typography component="div" className="html-to-react-article">
+                    {htmlToReact(page.new_content)}
+                  </Typography>
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12} md={4}>
