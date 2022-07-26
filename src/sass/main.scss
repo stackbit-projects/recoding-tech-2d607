@@ -28,8 +28,57 @@
     font-weight: bold;
     text-transform: uppercase;
   }
+  blockquote {
+    border: 1px solid black;
+    padding: 25px;
+    font-family: "Lexend";
+    font-size: 1.250em;
+    font-weight: 600;
+  }
   a {
     color: black;
+    &:hover {
+      color: #ff0033;
+    }
+  }
+}
+
+.html-to-react-article {
+  ol {
+    font-family: "Libre Baskerville";
+    font-size: 1.1250em;
+    line-height: 2.375em;
+    font-weight: 400;
+  }
+
+  h1 {
+    font-family: "Lexend";
+    font-size: 1.9em;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-family: "Lexend";
+    font-size: 1.9em;
+    font-weight: bold;
+  }
+  h4 {
+  font-family: "Lexend";
+  font-size: 1.4em;
+  font-weight: bold;
+  }
+
+  blockquote {
+    border: 1px solid black;
+    padding: 25px;
+    font-family: "Lexend";
+    font-size: 1.250em;
+    font-weight: 600;
+  }
+
+  a {
+    color: black;
+
     &:hover {
       color: #ff0033;
     }

@@ -31,7 +31,7 @@ export default function htmlToReact(html) {
         node.children[0].data
       ) {
         let slug = `#${slugify(node.children[0].data.toLowerCase(), {
-          remove: /[*+~.()'"!:@?]/g,
+          remove: /[*+~.()'"!:@?/]/g,
         })}`;
         return (
           <li>

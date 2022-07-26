@@ -49,15 +49,17 @@ const Article = (props) => {
               )}
               {page.toc && (
                 <Grid item xs={12} sm={12} mt={2}>
-                  <Box sx={{ p: 4, bgcolor: "#EFE9DA" }}>
+                  <Box
+                    sx={{
+                      p: 4,
+                      bgcolor: "#EFE9DA",
+                    }}
+                  >
                     <Typography component="div" variant="h4">
                       Table of Contents
                     </Typography>
                     <Typography component="div" className="html-to-react">
                       {markdownify(_.get(props, "page.toc", null))}
-                    </Typography>
-                    <Typography component="div" className="html-to-react">
-                      {htmlToReact(page.new_content)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -66,6 +68,16 @@ const Article = (props) => {
                 <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
                 </Typography>
+                <Typography component="div">
+                  {"******************************************************"}
+                </Typography>
+                {page.new_content ? (
+                  <Typography component="div" className="html-to-react-article">
+                    {htmlToReact(page.new_content)}
+                  </Typography>
+                ) : (
+                  "Nothing to see here"
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12} md={4}>
