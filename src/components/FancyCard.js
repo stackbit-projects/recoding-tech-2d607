@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import PropTypes from "prop-types";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // utils
@@ -140,12 +140,13 @@ const FancyCard = ({
           )}
           {(reading || date) && (
             <Typography component="div" variant="body1" className={classes.em}>
-              {moment(date).strftime("%B %e, %Y")}
+              {DateTime.fromISO(date).toLocaleString(DateTime.DATE_FULL)}
             </Typography>
           )}
           {lastUpdated && (
             <Typography component="div" variant="body1" className={classes.em}>
-              Last updated: {moment(lastUpdated).strftime("%B %e, %Y")}
+              Last updated:{" "}
+              {DateTime.fromISO(lastUpdated).toLocaleString(DateTime.DATE_FULL)}
             </Typography>
           )}
           <Typography

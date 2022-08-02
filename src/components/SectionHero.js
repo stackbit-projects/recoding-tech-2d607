@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // Material UI imports
@@ -150,10 +150,12 @@ function SectionHero(props) {
             >
               {page.author ? `${page.author.name} – ` : ""}
               {page.__metadata.modelName == "guide"
-                ? `Last updated: ${moment(page.__metadata.updatedAt).strftime(
-                    "%B %e, %Y"
-                  )}`
-                : moment(page.date).strftime("%B %e, %Y")}
+                ? `Last updated: ${DateTime.fromISO(
+                    page.__metadata.updatedAt
+                  ).toLocaleString(DateTime.DATE_FULL)}`
+                : DateTime.fromISO(page.date).toLocaleString(
+                    DateTime.DATE_FULL
+                  )}
             </Typography>
           )}
         </Container>

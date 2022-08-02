@@ -1,7 +1,7 @@
 // base imports
 import React from "react";
 import PropTypes from "prop-types";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // Material UI imports
@@ -168,7 +168,9 @@ const TrackerActions = (props) => {
                 sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
                 <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                  {moment(new Date(page.dateInitiated)).strftime("%b %d, %Y")}
+                  {DateTime.fromISO(page.dateInitiated).toLocaleString(
+                    DateTime.DATE_MED
+                  )}
                 </Typography>
               </Grid>
               <Grid
@@ -200,7 +202,9 @@ const TrackerActions = (props) => {
                 sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
                 <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                  {moment(new Date(page.lastUpdate)).strftime("%b %d, %Y")}
+                  {DateTime.fromISO(page.lastUpdate).toLocaleString(
+                    DateTime.DATE_MED
+                  )}
                 </Typography>
               </Grid>
             </Grid>
@@ -242,7 +246,9 @@ const TrackerActions = (props) => {
                 </TableCell>
                 <TableCell>
                   <Typography component="div" variant="trackerRow">
-                    {moment(page.dateInitiated).strftime("%b %e, %Y")}
+                    {DateTime.fromISO(page.dateInitiated).toLocaleString(
+                      DateTime.DATE_MED
+                    )}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -252,7 +258,9 @@ const TrackerActions = (props) => {
                 </TableCell>
                 <TableCell>
                   <Typography component="div" variant="trackerRow">
-                    {moment(page.lastUpdate).strftime("%b %e, %Y")}
+                    {DateTime.fromISO(page.lastUpdate).toLocaleString(
+                      DateTime.DATE_MED
+                    )}
                   </Typography>
                 </TableCell>
               </TableRow>

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 
 // utils
 import process from "../utils/processCitations";
@@ -123,7 +123,9 @@ const RelatedCommentary = (props) => {
                     {process(comment)}
                   </Typography>
                   <Typography className={classes.em}>
-                    {moment(comment.date).strftime("%B %e, %Y")}
+                    {DateTime.fromISO(comment.date).toLocaleString(
+                      DateTime.DATE_FULL
+                    )}
                   </Typography>
                 </Grid>
               ))

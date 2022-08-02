@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 import PropTypes from "prop-types";
 
@@ -133,7 +133,9 @@ function PolicyActionMobile(props) {
                   sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
                 >
                   <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                    {moment(new Date(row.lastUpdate)).strftime("%b %d, %Y")}
+                    {DateTime.fromISO(row.lastUpdate).toLocaleString(
+                      DateTime.DATE_MED
+                    )}
                   </Typography>
                 </Grid>
               </Grid>

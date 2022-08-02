@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 import PropTypes from "prop-types";
 
@@ -158,7 +158,9 @@ function PolicyActionTable(props) {
                                 isHomepage ? "trackerRowHome" : "trackerRow"
                               }
                             >
-                              {moment(new Date(value)).strftime("%b %d, %Y")}
+                              {DateTime.fromISO(value).toLocaleString(
+                                DateTime.DATE_MED
+                              )}
                             </Typography>
                           ) : column.id == "title" ? (
                             <Typography

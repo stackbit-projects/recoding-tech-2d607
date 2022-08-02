@@ -1,6 +1,6 @@
 // base imports
 import React, { useEffect, useState } from "react";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -113,7 +113,9 @@ const SectionCitations = () => {
                   variant="body1"
                   className={classes.em}
                 >
-                  {moment(citation.date).strftime("%B %e, %Y")}
+                  {DateTime.fromISO(citation.date).toLocaleString(
+                    DateTime.DATE_FULL
+                  )}
                 </Typography>
               </Grid>
             ))

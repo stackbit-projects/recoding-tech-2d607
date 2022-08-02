@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // material ui imports
@@ -109,7 +109,9 @@ function SectionArticle(props) {
                       variant="body1"
                       className={classes.em}
                     >
-                      {moment(article.date).strftime("%B %e, %Y")}
+                      {DateTime.fromISO(article.date).toLocaleString(
+                        DateTime.DATE_FULL
+                      )}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -152,7 +154,9 @@ function SectionArticle(props) {
                         variant="body1"
                         className={classes.em}
                       >
-                        {moment(article.date).strftime("%B %e, %Y")}
+                        {DateTime.fromISO(article.date).toLocaleString(
+                          DateTime.DATE_FULL
+                        )}
                       </Typography>
                     </CardContent>
                   </CardActionArea>

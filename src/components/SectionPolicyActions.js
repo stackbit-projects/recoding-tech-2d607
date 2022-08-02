@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import moment from "moment-strftime";
+import { DateTime } from "luxon";
 
 import { Link, withPrefix } from "../utils";
 import CtaButtons from "./CtaButtons";
@@ -86,13 +86,13 @@ const SectionPolicyActions = (props) => {
                 <footer className="post-meta">
                   <time
                     className="published"
-                    dateTime={moment(
+                    dateTime={DateTime.fromISO(
                       _.get(policy, "dateInitiated", null)
-                    ).strftime("%Y-%m-%d %H:%M")}
+                    ).toLocaleString(DateTime.DATETIME_SHORT)}
                   >
-                    {moment(_.get(policy, "dateInitiated", null)).strftime(
-                      "%B %d, %Y"
-                    )}
+                    {DateTime.fromISO(
+                      _.get(policy, "dateInitiated", null)
+                    ).toLocaleString(DateTime.DATE_FULL)}
                   </time>
                 </footer>
               </div>
