@@ -77,20 +77,6 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      type: "image",
-      name: "img_path",
-      title: "Image",
-      description: "A featured image for the article, if any.",
-      validation: null,
-    },
-    {
-      type: "string",
-      name: "img_alt",
-      title: "Image alt text",
-      description: "The alt text of the featured image.",
-      validation: null,
-    },
-    {
       name: "links",
       title: "Related Links",
       type: "array",
@@ -120,16 +106,10 @@ export default {
       validation: null,
     },
     {
-      type: "markdown",
-      name: "content",
-      title: "Content",
+      type: "portable_text",
+      name: "new_content",
+      title: "New content section",
       description: "Page content",
-      validation: null,
-    },
-    {
-      type: "stackbit_page_meta",
-      name: "seo",
-      title: "Seo",
       validation: null,
     },
     {
@@ -144,6 +124,37 @@ export default {
     },
     {
       type: "string",
+      name: "stackbit_model_type",
+      title: "Stackbit Model Type",
+      description: "Stackbit model type",
+      hidden: false,
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: ["page"],
+      },
+    },
+    {
+      type: "image",
+      name: "img_path",
+      title: "Image",
+      description: "A featured image for the article, if any.",
+      validation: null,
+    },
+    {
+      type: "string",
+      name: "img_alt",
+      title: "Image alt text",
+      description: "The alt text of the featured image.",
+      validation: null,
+    },
+    {
+      type: "stackbit_page_meta",
+      name: "seo",
+      title: "Seo",
+      validation: null,
+    },
+    {
+      type: "string",
       name: "stackbit_dir",
       title: "Directory",
       description: "The directory path where this file is stored",
@@ -153,16 +164,14 @@ export default {
         list: ["content/pages"],
       },
     },
+
     {
-      type: "string",
-      name: "stackbit_model_type",
-      title: "Stackbit Model Type",
-      description: "Stackbit model type",
-      hidden: false,
-      validation: (Rule) => Rule.required(),
-      options: {
-        list: ["page"],
-      },
+      type: "markdown",
+      name: "content",
+      title: "Content",
+      description:
+        "THIS IS THE ARCHIVED CONTENT SECTION. DO NOT USE THIS SECTION FOR ARTICLE CONTENT. THIS IS KEPT HERE IN CASE WE NEED TO REFER TO THE CONTENT.",
+      validation: null,
     },
   ],
   preview: {

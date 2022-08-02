@@ -1,21 +1,22 @@
+/**
+ * @type {import('next').NextConfig}
+ */
+
 const path = require("path");
 const withSourcebit = require("sourcebit").sourcebitNext();
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-module.exports = withSourcebit({
+const nextConfig = withSourcebit({
   env: {
     sanityAccessToken: process.env.SANITY_ACCESS_TOKEN,
     sanityProjectId: process.env.SANITY_PROJECT_ID,
     sanityApiVersion: process.env.SANITY_API_VERSION,
     sanityDataset: process.env.SANITY_DATASET
   },
-  errorOnExist: false,
+  //errorOnExist: false,
   trailingSlash: true,
-  devIndicators: {
-    autoPrerender: false
-  },
   sassOptions: {
     // scss files might import plain css files from the "public" folder:
     // @import "example.css";
@@ -42,3 +43,5 @@ module.exports = withSourcebit({
     return config;
   }
 });
+
+module.exports = nextConfig;

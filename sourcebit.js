@@ -27,7 +27,7 @@ module.exports = {
       module: require("sourcebit-target-next"),
       options: {
         liveUpdate: isDev,
-        flattenAssetUrls: true,
+        flattenAssetUrls: false,
         pages: (objects) => {
           return _.reduce(
             objects,
