@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }) {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </noscript>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </>
   );
 }
