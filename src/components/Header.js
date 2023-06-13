@@ -3,16 +3,11 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // material ui imports
-import { makeStyles, useTheme } from "@mui/styles";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -20,8 +15,6 @@ import { visuallyHidden } from "@mui/utils";
 
 // material ui icons
 import CloseIcon from "@mui/icons-material/Close";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import MenuIcon from "@mui/icons-material/Menu";
 
 // component imports
@@ -49,33 +42,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header = (props) => {
+const Header = () => {
   const classes = useStyles();
-  const theme = useTheme();
-  const { page, data } = props;
-
-  const [issues, policies, countries, companies] = data.topics.reduce(
-    ([issues, policies, countries, companies], topic) => {
-      switch (topic.type) {
-        case "issue":
-          issues.push(topic);
-          break;
-        case "policy":
-          policies.push(topic);
-          break;
-        case "country":
-          countries.push(topic);
-          break;
-        case "company":
-          companies.push(topic);
-          break;
-        default:
-          break;
-      }
-      return [issues, policies, countries, companies];
-    },
-    [[], [], [], []]
-  );
 
   const [mobileEl, setMobileEl] = useState(null);
   const openMobile = Boolean(mobileEl);
@@ -88,45 +56,14 @@ const Header = (props) => {
 
   const isMobile = useMediaQuery("(max-width:1244px)");
 
-  const [issueEl, setIssueEl] = useState(null);
-  const openIssue = Boolean(issueEl);
-  const handleClickIssue = (event) => {
-    setIssueEl(event.currentTarget);
-  };
-  const handleCloseIssue = () => {
-    setIssueEl(null);
-  };
-
-  const [policyEl, setPolicyEl] = useState(null);
-  const openPolicy = Boolean(policyEl);
-  const handleClickPolicy = (event) => {
-    setPolicyEl(event.currentTarget);
-  };
-  const handleClosePolicy = () => {
-    setPolicyEl(null);
-  };
-
-  const [countryEl, setCountryEl] = useState(null);
-  const openCountry = Boolean(countryEl);
-  const handleClickCountry = (event) => {
-    setCountryEl(event.currentTarget);
-  };
-  const handleCloseCountry = () => {
-    setCountryEl(null);
-  };
-
-  const [companyEl, setCompanyEl] = useState(null);
-  const openCompany = Boolean(companyEl);
-  const handleClickCompany = (event) => {
-    setCompanyEl(event.currentTarget);
-  };
-  const handleCloseCompany = () => {
-    setCompanyEl(null);
-  };
-
   return (
-    <header className={classes.header} >
-      <Box p={4} sx={{ boxShadow: isMobile ? '' : '0px 2px 1px -1px rgba(0, 0, 0, 0.2)' }}>
+    <header className={classes.header}>
+      <Box
+        p={4}
+        sx={{
+          boxShadow: isMobile ? "" : "0px 2px 1px -1px rgba(0, 0, 0, 0.2)",
+        }}
+      >
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={10} sm={3}>
             <Link href="/" className={classes.logoLink}>
@@ -180,10 +117,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`/topics`}
-                          className={classes.link}
-                        >
+                        <Link href={`/topics`} className={classes.link}>
                           Topics
                         </Link>
                       </Typography>
@@ -192,10 +126,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`/tracker`}
-                          className={classes.link}
-                        >
+                        <Link href={`/tracker`} className={classes.link}>
                           Law & Regulation Tracker
                         </Link>
                       </Typography>
@@ -204,10 +135,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`#FIXME`}
-                          className={classes.link}
-                        >
+                        <Link href={`#FIXME`} className={classes.link}>
                           Newsletter
                         </Link>
                       </Typography>
@@ -216,10 +144,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`#FIXME`}
-                          className={classes.link}
-                        >
+                        <Link href={`#FIXME`} className={classes.link}>
                           Podcast
                         </Link>
                       </Typography>
@@ -228,10 +153,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`#FIXME`}
-                          className={classes.link}
-                        >
+                        <Link href={`#FIXME`} className={classes.link}>
                           Projects
                         </Link>
                       </Typography>
@@ -240,10 +162,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`#FIXME`}
-                          className={classes.link}
-                        >
+                        <Link href={`#FIXME`} className={classes.link}>
                           Contributors
                         </Link>
                       </Typography>
@@ -252,10 +171,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link
-                          href={`#FIXME`}
-                          className={classes.link}
-                        >
+                        <Link href={`#FIXME`} className={classes.link}>
                           About
                         </Link>
                       </Typography>
@@ -279,10 +195,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`/topics`}
-                        className={classes.link}
-                      >
+                      <Link href={`/topics`} className={classes.link}>
                         Topics
                       </Link>
                     </Typography>
@@ -293,10 +206,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`/tracker`}
-                        className={classes.link}
-                      >
+                      <Link href={`/tracker`} className={classes.link}>
                         Law & Regulation Tracker
                       </Link>
                     </Typography>
@@ -307,10 +217,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`#FIXME`}
-                        className={classes.link}
-                      >
+                      <Link href={`#FIXME`} className={classes.link}>
                         Newsletter
                       </Link>
                     </Typography>
@@ -321,10 +228,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`#FIXME`}
-                        className={classes.link}
-                      >
+                      <Link href={`#FIXME`} className={classes.link}>
                         Podcast
                       </Link>
                     </Typography>
@@ -335,10 +239,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`#FIXME`}
-                        className={classes.link}
-                      >
+                      <Link href={`#FIXME`} className={classes.link}>
                         Projects
                       </Link>
                     </Typography>
@@ -349,10 +250,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`#FIXME`}
-                        className={classes.link}
-                      >
+                      <Link href={`#FIXME`} className={classes.link}>
                         Contributors
                       </Link>
                     </Typography>
@@ -363,10 +261,7 @@ const Header = (props) => {
                       variant="h4"
                       sx={{ textTransform: "none" }}
                     >
-                      <Link
-                        href={`#FIXME`}
-                        className={classes.link}
-                      >
+                      <Link href={`#FIXME`} className={classes.link}>
                         About
                       </Link>
                     </Typography>

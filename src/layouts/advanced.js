@@ -13,12 +13,11 @@ import Typography from "@mui/material/Typography";
 
 // components
 import components, { Layout } from "../components/index";
-import LogoSmall from "../components/LogoSmall";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
 // material ui icons
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const useStyles = makeStyles(() => ({
   subscribe: {
@@ -44,14 +43,22 @@ const Advanced = (props) => {
       <Box>
         {path === "/" ? (
           <>
-            <Box sx={{ p: 2, bgcolor: "#225C9D", color: "#F3F0E6", textAlign: "center" }}>
+            <Box
+              sx={{
+                p: 2,
+                bgcolor: "#225C9D",
+                color: "#F3F0E6",
+                textAlign: "center",
+              }}
+            >
               <Typography
                 component="span"
                 variant="blurb"
                 alignItems={"center"}
                 pr={4}
               >
-                Subscribe for our monthly update on Government Policy, Tech News and Research
+                Subscribe for our monthly update on Government Policy, Tech News
+                and Research
               </Typography>
               <Button
                 href="https://news.recoding.tech/"
@@ -106,8 +113,9 @@ const Advanced = (props) => {
           <>
             <Container>
               <SectionHero {...props} />
-              {
-                _.map(_.get(props, "page.sections", null), (section, section_idx) => {
+              {_.map(
+                _.get(props, "page.sections", null),
+                (section, section_idx) => {
                   let component = _.upperFirst(
                     _.camelCase(_.get(section, "type", null))
                   );
@@ -120,8 +128,8 @@ const Advanced = (props) => {
                       site={props}
                     />
                   );
-                })
-              }
+                }
+              )}
             </Container>
           </>
         )}
