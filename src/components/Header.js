@@ -125,18 +125,10 @@ const Header = (props) => {
   };
 
   return (
-    <header
-      className={classes.header}
-      style={{
-        backgroundColor:
-          page.type && theme.palette[page.type]
-            ? theme.palette[page.type].main
-            : theme.palette.secondary.main,
-      }}
-    >
-      <Box p={4}>
+    <header className={classes.header} >
+      <Box p={4} sx={{ boxShadow: isMobile ? '' : '0px 2px 1px -1px rgba(0, 0, 0, 0.2)' }}>
         <Grid container spacing={3} justifyContent="space-between">
-          <Grid item xs={10} sm={4}>
+          <Grid item xs={10} sm={3}>
             <Link href="/" className={classes.logoLink}>
               <Logo />
             </Link>
@@ -145,7 +137,7 @@ const Header = (props) => {
             container
             item
             xs={2}
-            sm={8}
+            sm={9}
             className={classes.nav}
             alignItems="center"
             spacing={4}
@@ -178,387 +170,206 @@ const Header = (props) => {
                 >
                   <Box
                     sx={{
-                      backgroundColor:
-                        page.type && theme.palette[page.type]
-                          ? theme.palette[page.type].main
-                          : theme.palette.secondary.main,
                       p: 2,
                       width: "90vw",
                     }}
                   >
-                    <Typography className={classes.em}>
-                      Explore by...
-                    </Typography>
-                    <Accordion
-                      sx={{
-                        backgroundColor:
-                          page.type && theme.palette[page.type]
-                            ? theme.palette[page.type].main
-                            : theme.palette.secondary.main,
-                        border: "none",
-                        boxShadow: "none",
-                      }}
-                    >
-                      <AccordionSummary
-                        sx={{ display: "flex", marginLeft: 10 }}
+                    <nav>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
                       >
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ textTransform: "none" }}
+                        <Link
+                          href={`/topics`}
+                          className={classes.link}
                         >
-                          Issue
-                        </Typography>
-                        {openIssue ? (
-                          <KeyboardArrowUpIcon />
-                        ) : (
-                          <KeyboardArrowDownIcon />
-                        )}
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {issues && issues.length
-                          ? issues.map((issue) => (
-                              <Typography
-                                key={issue.slug}
-                                onClick={handleCloseIssue}
-                                component="div"
-                                variant="h4"
-                                sx={{ marginLeft: 16, textTransform: "none" }}
-                              >
-                                <Link
-                                  href={`/issue/${issue.slug}`}
-                                  className={classes.link}
-                                >
-                                  {issue.displayTitle}
-                                </Link>
-                              </Typography>
-                            ))
-                          : null}
-                      </AccordionDetails>
-                    </Accordion>
-                    <Accordion
-                      sx={{
-                        backgroundColor:
-                          page.type && theme.palette[page.type]
-                            ? theme.palette[page.type].main
-                            : theme.palette.secondary.main,
-                        border: "none",
-                        boxShadow: "none",
-                      }}
-                    >
-                      <AccordionSummary
-                        sx={{ display: "flex", marginLeft: 10 }}
+                          Topics
+                        </Link>
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
                       >
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ textTransform: "none" }}
+                        <Link
+                          href={`/tracker`}
+                          className={classes.link}
                         >
-                          Policy
-                        </Typography>
-                        {openPolicy ? (
-                          <KeyboardArrowUpIcon />
-                        ) : (
-                          <KeyboardArrowDownIcon />
-                        )}
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {policies && policies.length
-                          ? policies.map((policy) => (
-                              <Typography
-                                key={policy.slug}
-                                onClick={handleClosePolicy}
-                                component="div"
-                                variant="h4"
-                                sx={{ marginLeft: 16, textTransform: "none" }}
-                              >
-                                <Link
-                                  href={`/policy/${policy.slug}`}
-                                  className={classes.link}
-                                >
-                                  {policy.displayTitle}
-                                </Link>
-                              </Typography>
-                            ))
-                          : null}
-                      </AccordionDetails>
-                    </Accordion>
-                    <Accordion
-                      sx={{
-                        backgroundColor:
-                          page.type && theme.palette[page.type]
-                            ? theme.palette[page.type].main
-                            : theme.palette.secondary.main,
-                        border: "none",
-                        boxShadow: "none",
-                      }}
-                    >
-                      <AccordionSummary
-                        sx={{ display: "flex", marginLeft: 10 }}
+                          Law & Regulation Tracker
+                        </Link>
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
                       >
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ textTransform: "none" }}
+                        <Link
+                          href={`#FIXME`}
+                          className={classes.link}
                         >
-                          Government
-                        </Typography>
-                        {openCountry ? (
-                          <KeyboardArrowUpIcon />
-                        ) : (
-                          <KeyboardArrowDownIcon />
-                        )}
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {countries && countries.length
-                          ? countries.map((country) => (
-                              <Typography
-                                key={country.slug}
-                                onClick={handleCloseCountry}
-                                component="div"
-                                variant="h4"
-                                sx={{ marginLeft: 16, textTransform: "none" }}
-                              >
-                                <Link
-                                  href={`/country/${country.slug}`}
-                                  className={classes.link}
-                                >
-                                  {country.displayTitle}
-                                </Link>
-                              </Typography>
-                            ))
-                          : null}
-                      </AccordionDetails>
-                    </Accordion>
-                    <Accordion
-                      sx={{
-                        backgroundColor:
-                          page.type && theme.palette[page.type]
-                            ? theme.palette[page.type].main
-                            : theme.palette.secondary.main,
-                        border: "none",
-                        boxShadow: "none",
-                      }}
-                    >
-                      <AccordionSummary
-                        sx={{ display: "flex", marginLeft: 10 }}
+                          Newsletter
+                        </Link>
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
                       >
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ textTransform: "none" }}
+                        <Link
+                          href={`#FIXME`}
+                          className={classes.link}
                         >
-                          Company
-                        </Typography>
-                        {openCompany ? (
-                          <KeyboardArrowUpIcon />
-                        ) : (
-                          <KeyboardArrowDownIcon />
-                        )}
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {companies && companies.length
-                          ? companies.map((company) => (
-                              <Typography
-                                key={company.slug}
-                                onClick={handleCloseCompany}
-                                component="div"
-                                variant="h4"
-                                sx={{ marginLeft: 16, textTransform: "none" }}
-                              >
-                                <Link
-                                  href={`/company/${company.slug}`}
-                                  className={classes.link}
-                                >
-                                  {company.displayTitle}
-                                </Link>
-                              </Typography>
-                            ))
-                          : null}
-                      </AccordionDetails>
-                    </Accordion>
+                          Podcast
+                        </Link>
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link
+                          href={`#FIXME`}
+                          className={classes.link}
+                        >
+                          Projects
+                        </Link>
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link
+                          href={`#FIXME`}
+                          className={classes.link}
+                        >
+                          Contributors
+                        </Link>
+                      </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link
+                          href={`#FIXME`}
+                          className={classes.link}
+                        >
+                          About
+                        </Link>
+                      </Typography>
+                    </nav>
                   </Box>
                 </Popover>
               </Grid>
             ) : (
               <>
-                <Grid item xs={12} sm={3}>
-                  <Typography id="menu-toggle" className={classes.em}>
-                    Explore by...
-                  </Typography>
-                </Grid>
                 <Grid
                   container
                   item
                   xs={12}
-                  sm={9}
                   spacing={2}
                   justifyContent="space-between"
                   alignItems="center"
                 >
                   <Grid item>
-                    <Button
-                      id="issue-button"
-                      aria-controls="issue-menu"
-                      aria-haspopup="true"
-                      aria-expanded={openIssue ? "true" : undefined}
-                      onClick={handleClickIssue}
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
                     >
-                      Issue
-                      {openIssue ? (
-                        <KeyboardArrowUpIcon />
-                      ) : (
-                        <KeyboardArrowDownIcon />
-                      )}
-                    </Button>
-                    <Menu
-                      id="issue-menu"
-                      anchorEl={issueEl}
-                      open={openIssue}
-                      onClose={handleCloseIssue}
-                      MenuListProps={{
-                        "aria-labelledby": "issue-button",
-                      }}
-                    >
-                      {issues && issues.length
-                        ? issues.map((issue) => (
-                            <MenuItem
-                              key={issue.slug}
-                              onClick={handleCloseIssue}
-                            >
-                              <Link
-                                href={`/issue/${issue.slug}`}
-                                className={classes.link}
-                              >
-                                {issue.displayTitle}
-                              </Link>
-                            </MenuItem>
-                          ))
-                        : null}
-                    </Menu>
+                      <Link
+                        href={`/topics`}
+                        className={classes.link}
+                      >
+                        Topics
+                      </Link>
+                    </Typography>
                   </Grid>
                   <Grid item>
-                    <Button
-                      id="policy-button"
-                      aria-controls="policy-menu"
-                      aria-haspopup="true"
-                      aria-expanded={openPolicy ? "true" : undefined}
-                      onClick={handleClickPolicy}
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
                     >
-                      Policy
-                      {openPolicy ? (
-                        <KeyboardArrowUpIcon />
-                      ) : (
-                        <KeyboardArrowDownIcon />
-                      )}
-                    </Button>
-                    <Menu
-                      id="policy-menu"
-                      anchorEl={policyEl}
-                      open={openPolicy}
-                      onClose={handleClosePolicy}
-                      MenuListProps={{
-                        "aria-labelledby": "policy-button",
-                      }}
-                    >
-                      {policies && policies.length
-                        ? policies.map((policy) => (
-                            <MenuItem
-                              key={policy.slug}
-                              onClick={handleCloseIssue}
-                            >
-                              <Link
-                                href={`/policy/${policy.slug}`}
-                                className={classes.link}
-                              >
-                                {policy.displayTitle}
-                              </Link>
-                            </MenuItem>
-                          ))
-                        : null}
-                    </Menu>
+                      <Link
+                        href={`/tracker`}
+                        className={classes.link}
+                      >
+                        Law & Regulation Tracker
+                      </Link>
+                    </Typography>
                   </Grid>
                   <Grid item>
-                    <Button
-                      id="country-button"
-                      aria-controls="country-menu"
-                      aria-haspopup="true"
-                      aria-expanded={openCountry ? "true" : undefined}
-                      onClick={handleClickCountry}
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
                     >
-                      Government
-                      {openCountry ? (
-                        <KeyboardArrowUpIcon />
-                      ) : (
-                        <KeyboardArrowDownIcon />
-                      )}
-                    </Button>
-                    <Menu
-                      id="country-menu"
-                      anchorEl={countryEl}
-                      open={openCountry}
-                      onClose={handleCloseCountry}
-                      MenuListProps={{
-                        "aria-labelledby": "country-button",
-                      }}
-                    >
-                      {countries && countries.length
-                        ? countries.map((country) => (
-                            <MenuItem
-                              key={country.slug}
-                              onClick={handleCloseIssue}
-                            >
-                              <Link
-                                href={`/country/${country.slug}`}
-                                className={classes.link}
-                              >
-                                {country.displayTitle}
-                              </Link>
-                            </MenuItem>
-                          ))
-                        : null}
-                    </Menu>
+                      <Link
+                        href={`#FIXME`}
+                        className={classes.link}
+                      >
+                        Newsletter
+                      </Link>
+                    </Typography>
                   </Grid>
                   <Grid item>
-                    <Button
-                      id="company-button"
-                      aria-controls="company-menu"
-                      aria-haspopup="true"
-                      aria-expanded={openCompany ? "true" : undefined}
-                      onClick={handleClickCompany}
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
                     >
-                      Company
-                      {openCompany ? (
-                        <KeyboardArrowUpIcon />
-                      ) : (
-                        <KeyboardArrowDownIcon />
-                      )}
-                    </Button>
-                    <Menu
-                      id="company-menu"
-                      anchorEl={companyEl}
-                      open={openCompany}
-                      onClose={handleCloseCompany}
-                      MenuListProps={{
-                        "aria-labelledby": "company-button",
-                      }}
+                      <Link
+                        href={`#FIXME`}
+                        className={classes.link}
+                      >
+                        Podcast
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
                     >
-                      {companies && companies.length
-                        ? companies.map((company) => (
-                            <MenuItem
-                              key={company.slug}
-                              onClick={handleCloseIssue}
-                            >
-                              <Link
-                                href={`/company/${company.slug}`}
-                                className={classes.link}
-                              >
-                                {company.displayTitle}
-                              </Link>
-                            </MenuItem>
-                          ))
-                        : null}
-                    </Menu>
+                      <Link
+                        href={`#FIXME`}
+                        className={classes.link}
+                      >
+                        Projects
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
+                    >
+                      <Link
+                        href={`#FIXME`}
+                        className={classes.link}
+                      >
+                        Contributors
+                      </Link>
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      component="div"
+                      variant="h4"
+                      sx={{ textTransform: "none" }}
+                    >
+                      <Link
+                        href={`#FIXME`}
+                        className={classes.link}
+                      >
+                        About
+                      </Link>
+                    </Typography>
                   </Grid>
                   <Grid item>
                     <Button href="/search">

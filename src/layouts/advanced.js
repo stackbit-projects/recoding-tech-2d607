@@ -17,17 +17,19 @@ import LogoSmall from "../components/LogoSmall";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
+// material ui icons
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 const useStyles = makeStyles(() => ({
   subscribe: {
-    border: "1px solid #000",
-    borderRadius: 0,
+    borderRadius: 2,
+    boxShadow: "none",
+    color: "#fff",
     fontSize: "0.8em",
     fontWeight: "normal",
     textTransform: "uppercase",
     "&:active, &:focus, &:hover": {
       backgroundColor: "#000",
-      border: "1px solid #fff",
-      color: "#fff",
     },
   },
 }));
@@ -39,19 +41,73 @@ const Advanced = (props) => {
 
   return (
     <Layout {...props}>
-      <SectionHero {...props} />
-      <Container>
+      <Box>
         {path === "/" ? (
-          <Grid
-            container
-            spacing={4}
-            alignItems="flex-start"
-            justifyContent="space-between"
-          >
-            <Grid item xs={12} sm={8}>
-              {_.map(
-                _.get(props, "page.sections", null),
-                (section, section_idx) => {
+          <>
+            <Box sx={{ p: 2, bgcolor: "#225C9D", color: "#F3F0E6", textAlign: "center" }}>
+              <Typography
+                component="span"
+                variant="blurb"
+                alignItems={"center"}
+                pr={4}
+              >
+                Subscribe for our monthly update on Government Policy, Tech News and Research
+              </Typography>
+              <Button
+                href="https://news.recoding.tech/"
+                rel="noopener noreferrer"
+                target="_blank"
+                variant="contained"
+                color="info"
+                className={classes.subscribe}
+              >
+                Subscribe
+                <ArrowForwardIosIcon sx={{ ml: 2, width: 12 }} />
+              </Button>
+            </Box>
+            <Container>
+              <Grid
+                container
+                spacing={4}
+                alignItems="flex-start"
+                justifyContent="space-between"
+              >
+                <Grid item xs={12} sm={8}>
+                  {_.map(
+                    _.get(props, "page.sections", null),
+                    (section, section_idx) => {
+                      let component = _.upperFirst(
+                        _.camelCase(_.get(section, "type", null))
+                      );
+                      let Component = components[component];
+                      return (
+                        <Component
+                          key={section_idx}
+                          {...props}
+                          section={section}
+                          site={props}
+                        />
+                      );
+                    }
+                  )}
+                </Grid>
+                <Grid container item xs={12} sm={4}>
+                  <Grid item>
+                    <SectionCitations />
+                  </Grid>
+                </Grid>
+                {/* <Grid item xs={12}>
+                <SectionGuides />
+                </Grid> */}
+              </Grid>
+            </Container>
+          </>
+        ) : (
+          <>
+            <Container>
+              <SectionHero {...props} />
+              {
+                _.map(_.get(props, "page.sections", null), (section, section_idx) => {
                   let component = _.upperFirst(
                     _.camelCase(_.get(section, "type", null))
                   );
@@ -64,59 +120,12 @@ const Advanced = (props) => {
                       site={props}
                     />
                   );
-                }
-              )}
-            </Grid>
-            <Grid container item xs={12} sm={4}>
-              <Grid item xs={12} sm={12} mt={2} my={4}>
-                <Box sx={{ p: 4, bgcolor: "#84A4CC", textAlign: "center" }}>
-                  <Typography
-                    component="div"
-                    variant="blurb"
-                    alignItems={"center"}
-                  >
-                    Our Monthly update on Gov’t Policy And the latest News and
-                    Research
-                  </Typography>
-                  <Typography component="div" mb={2}>
-                    <LogoSmall /> Newsletter
-                  </Typography>
-                  <Button
-                    href="https://news.recoding.tech/"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    variant="outlined"
-                    className={classes.subscribe}
-                  >
-                    Subscribe
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid item>
-                <SectionCitations />
-              </Grid>
-            </Grid>
-            {/* <Grid item xs={12}>
-              <SectionGuides />
-              </Grid> */}
-          </Grid>
-        ) : (
-          _.map(_.get(props, "page.sections", null), (section, section_idx) => {
-            let component = _.upperFirst(
-              _.camelCase(_.get(section, "type", null))
-            );
-            let Component = components[component];
-            return (
-              <Component
-                key={section_idx}
-                {...props}
-                section={section}
-                site={props}
-              />
-            );
-          })
+                })
+              }
+            </Container>
+          </>
         )}
-      </Container>
+      </Box>
     </Layout>
   );
 };

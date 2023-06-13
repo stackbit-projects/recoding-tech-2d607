@@ -67,6 +67,9 @@ const theme = createTheme({
     secondary: {
       main: "#C2CECC",
     },
+    info: {
+      main: "#589383",
+    },
     issue: defaultTheme.palette.augmentColor({
       name: "issue",
       color: {
@@ -110,7 +113,6 @@ const theme = createTheme({
       fontSize: "1em",
       fontWeight: "500",
       marginBottom: 20,
-      textTransform: "uppercase",
     },
     h1: {
       fontFamily: sansSerifFont,
