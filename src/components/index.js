@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import FormField from "./FormField";
 import Header from "./Header";
 import Layout from "./Layout";
+import Logo from "./Logo";
 import Icon from "./Icon";
 import RelatedCommentary from "./RelatedCommentary";
 import RelatedTopics from "./RelatedTopics";
@@ -26,6 +27,7 @@ export {
   FormField,
   Header,
   Layout,
+  Logo,
   Icon,
   RelatedCommentary,
   RelatedTopics,
@@ -49,6 +51,7 @@ export default {
   FormField,
   Header,
   Layout,
+  Logo,
   Icon,
   RelatedCommentary,
   RelatedTopics,

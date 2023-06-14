@@ -70,6 +70,10 @@ const theme = createTheme({
     info: {
       main: "#589383",
     },
+    error: {
+      light: "#FFE5EA",
+      main: "#FF0033",
+    },
     issue: defaultTheme.palette.augmentColor({
       name: "issue",
       color: {
@@ -114,6 +118,9 @@ const theme = createTheme({
       fontWeight: "500",
       marginBottom: 20,
     },
+    body1: {
+      fontSize: 14,
+    },
     h1: {
       fontFamily: sansSerifFont,
       fontSize: "2.4em",
@@ -127,7 +134,7 @@ const theme = createTheme({
       marginBottom: 40,
     },
     h2_article: {
-      fontFamily: sansSerifFont,
+      fontFamily: serifFont,
       fontSize: "1.7em",
       fontWeight: "500",
       marginBottom: 40,
@@ -159,9 +166,10 @@ const theme = createTheme({
       textTransform: "uppercase",
     },
     h5_card: {
+      color: "rgba(0, 0, 0, 0.6)",
       fontFamily: sansSerifFont,
-      fontSize: "0.95em",
-      marginTop: 25,
+      fontSize: 12,
+      marginTop: 10,
       marginBottom: 20,
       textTransform: "uppercase",
     },

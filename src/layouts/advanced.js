@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 
 // components
 import components, { Layout } from "../components/index";
+import HomepageActions from "../components/HomepageActions";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
@@ -107,6 +108,9 @@ const Advanced = (props) => {
                 <SectionGuides />
                 </Grid> */}
               </Grid>
+              <Box my={4} mt={2} mb={10}>
+                <HomepageActions />
+              </Box>
             </Container>
           </>
         ) : (

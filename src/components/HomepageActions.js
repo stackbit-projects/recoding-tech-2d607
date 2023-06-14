@@ -6,7 +6,6 @@ import client from "../utils/sanityClient";
 
 // Material UI imports
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // components
@@ -33,7 +32,6 @@ const HomepageActions = () => {
 
   return Array.isArray(actions) && actions.length ? (
     <section>
-      <Grid container item justifyContent="space-between"></Grid>
       <Box my={1}>
         {isMobile ? (
           <PolicyActionMobile actions={actions} isHomepage />

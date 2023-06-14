@@ -1,12 +1,14 @@
 // base imports
 import React, { useEffect, useState } from "react";
-import { DateTime } from "luxon";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+
+// MUI icons
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 // utils
 import client from "../utils/sanityClient";
@@ -15,6 +17,14 @@ import process from "../utils/processCitations";
 const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, institution, place, blogTitle, websiteTitle, publicationTitle}|order(date desc)[0...4]`; // just get the four most recent citations
 
 const useStyles = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.error.main,
+    paddingLeft: 10,
+    position: "absolute",
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: 16,
+  },
   citation: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
@@ -29,14 +39,15 @@ const useStyles = makeStyles((theme) => ({
     color: "#000 !important",
     fontSize: "1.2em",
     fontWeight: "bold",
-    textDecoration: "none",
     "&:hover": {
       textDecoration: "underline",
     },
   },
   citationPublication: {
+    color: "rgba(0, 0, 0, 0.6)",
     marginTop: 25,
     marginBottom: 8,
+    position: "relative",
   },
   em: {
     fontSize: "0.81em",
@@ -47,9 +58,10 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid #000",
     marginBottom: 32,
     marginTop: 32,
+    width: "100%",
   },
   link: {
-    color: theme.typography.link.color,
+    textDecoration: "none !important",
   },
 }));
 
@@ -65,24 +77,10 @@ const SectionCitations = () => {
 
   return (
     <Grid container className={classes.grid}>
-      <Grid
-        container
-        item
-        justifyContent="space-between"
-        className={classes.gridTitle}
-      >
-        <Grid item xs={8}>
-          <Typography component="h2" variant="h4">
-            Latest Headlines &amp; Highlights
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography component="div" variant="h4">
-            <Link href="/search" className={classes.link}>
-              View all
-            </Link>
-          </Typography>
-        </Grid>
+      <Grid item className={classes.gridTitle}>
+        <Typography component="h2" variant="h4">
+          New by our contributors
+        </Typography>
       </Grid>
       <Grid container item flexDirection="column">
         {citations && citations.length
@@ -96,27 +94,23 @@ const SectionCitations = () => {
                     : classes.citation
                 }
               >
-                <Typography component="div" variant="body1">
-                  <Link className={classes.citationTitle} href={citation.url}>
+                <Link href={citation.url} className={classes.link}>
+                  <Typography
+                    component="div"
+                    variant="body1"
+                    className={classes.citationTitle}
+                  >
                     {citation.title}
-                  </Link>
-                </Typography>
-                <Typography
-                  component="div"
-                  variant="h5"
-                  className={classes.citationPublication}
-                >
-                  {process(citation)}
-                </Typography>
-                <Typography
-                  component="div"
-                  variant="body1"
-                  className={classes.em}
-                >
-                  {DateTime.fromISO(citation.date).toLocaleString(
-                    DateTime.DATE_FULL
-                  )}
-                </Typography>
+                  </Typography>
+                  <Typography
+                    component="div"
+                    variant="h5"
+                    className={classes.citationPublication}
+                  >
+                    {process(citation)}
+                    <ArrowForwardIcon className={classes.arrow} />
+                  </Typography>
+                </Link>
               </Grid>
             ))
           : null}
