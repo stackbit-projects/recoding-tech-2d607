@@ -21,6 +21,9 @@ import Typography from "@mui/material/Typography";
 // material ui icons
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
+// images
+import TrackerBackground from "../assets/tracker-bg.jpg";
+
 const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: "0.8em",
@@ -34,12 +37,15 @@ const useStyles = makeStyles((theme) => ({
     transform: "translateY(-50%)",
     transition: "right 250ms",
   },
-  table: {},
+  table: {
+    backgroundColor: theme.palette.footer.main,
+    maxHeight: null,
+    padding: 20
+  },
   tableCellTitle: {
     position: "relative",
     textTransform: "none",
     "&:after": {
-      backgroundColor: theme.palette.footer.main,
       content: "''",
       display: "block",
       left: 0,
@@ -61,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  tableHeader: {
+    borderBottom: "1px solid #000",
+  },
   tableLink: {
     color: "#000",
     display: "block",
@@ -81,18 +90,18 @@ function PolicyActionTable(props) {
 
   isHomepage
     ? (headers = [
-        { id: "title", label: "Name" },
-        { id: "country.displayTitle", label: "Gov't" },
-        { id: "lastUpdate", label: "Last Updated" },
-      ])
+      { id: "title", label: "Name" },
+      { id: "assetType", label: "Asset type FIXME" },
+      { id: "country.displayTitle", label: "Gov't" },
+    ])
     : (headers = [
-        { id: "title", label: "Name" },
-        { id: "type", label: "Type" },
-        { id: "country.displayTitle", label: `Government` },
-        { id: "dateInitiated", label: "Date Initiated" },
-        { id: "status", label: "Status" },
-        { id: "lastUpdate", label: "Last Updated" },
-      ]);
+      { id: "title", label: "Name" },
+      { id: "type", label: "Type" },
+      { id: "country.displayTitle", label: `Government` },
+      { id: "dateInitiated", label: "Date Initiated" },
+      { id: "status", label: "Status" },
+      { id: "lastUpdate", label: "Last Updated" },
+    ]);
 
   // PAGINATION
   const [current, setCurrent] = useState(0);
@@ -110,39 +119,51 @@ function PolicyActionTable(props) {
   return (
     <>
       {isHomepage ? (
-        <Grid container alignItems={"center"}>
+        <Grid container alignItems={"stretch"}>
           <Grid item xs={12} md={6}>
             <Box
-              m={4}
-              p={4}
               sx={{
-                background: "#677975",
-                color: "#FFF",
-                mixBlendMode: "multiply",
+                backgroundImage: `url(${TrackerBackground.src})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                height: "100%",
+                position: "relative",
               }}
             >
-              <Typography component="h2" variant="h2">
-                Law & Regulation Tracker
-              </Typography>
-              <Typography component="div" variant="body1">
-                We track existing and proposed laws and regulations, along with
-                government investigations and litigation from across the U.S.
-                and Europe, that will shape the rules and accountability for Big
-                Tech.
-              </Typography>
-              <Button>See all</Button>
+              <Box
+                px={4}
+                py={6}
+                sx={{
+                  background: "#677975",
+                  color: "#FFF",
+                  left: "50%",
+                  mixBlendMode: "multiply",
+                  position: "absolute",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 448,
+                }}
+              >
+                <Typography component="h2" variant="h2">
+                  Law & Regulation Tracker
+                </Typography>
+                <Typography component="div" variant="body1">
+                  We track existing and proposed laws and regulations, along with
+                  government investigations and litigation from across the U.S.
+                  and Europe, that will shape the rules and accountability for Big
+                  Tech.
+                </Typography>
+                <Button>See all</Button>
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TableContainer sx={{ maxHeight: null }}>
-              <Table
-                aria-label="Law and Regulation Tracker Table"
-                className={classes.table}
-              >
+            <TableContainer className={classes.table}>
+              <Table aria-label="Law and Regulation Tracker Table" >
                 <TableHead>
                   <TableRow>
                     {headers.map((column) => (
-                      <TableCell key={column.id}>
+                      <TableCell key={column.id} className={classes.tableHeader}>
                         <Typography component="div" variant={"tableHeaderHome"}>
                           {column.label}
                         </Typography>
@@ -184,7 +205,7 @@ function PolicyActionTable(props) {
                                 }
                               >
                                 {column.id == "dateInitiated" ||
-                                column.id == "lastUpdate" ? (
+                                  column.id == "lastUpdate" ? (
                                   <Typography
                                     component="div"
                                     variant={"trackerRowHome"}
@@ -200,11 +221,10 @@ function PolicyActionTable(props) {
                                   >
                                     <Link
                                       className={classes.tableLink}
-                                      href={`/tracker/${
-                                        typeof row.slug === "object"
+                                      href={`/tracker/${typeof row.slug === "object"
                                           ? row.slug.current
                                           : row.slug
-                                      }`}
+                                        }`}
                                     >
                                       {titleCase(truncate(value))}
                                     </Link>
@@ -217,11 +237,6 @@ function PolicyActionTable(props) {
                                     {value}
                                   </Typography>
                                 )}
-                                {column.id == "title" ? (
-                                  <KeyboardArrowRightIcon
-                                    className={classes.icon}
-                                  />
-                                ) : null}
                               </TableCell>
                             );
                           })}
@@ -285,7 +300,7 @@ function PolicyActionTable(props) {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                              column.id == "lastUpdate" ? (
+                                column.id == "lastUpdate" ? (
                                 <Typography
                                   component="div"
                                   variant={"trackerRow"}
@@ -301,11 +316,10 @@ function PolicyActionTable(props) {
                                 >
                                   <Link
                                     className={classes.tableLink}
-                                    href={`/tracker/${
-                                      typeof row.slug === "object"
+                                    href={`/tracker/${typeof row.slug === "object"
                                         ? row.slug.current
                                         : row.slug
-                                    }`}
+                                      }`}
                                   >
                                     {titleCase(value)}
                                   </Link>

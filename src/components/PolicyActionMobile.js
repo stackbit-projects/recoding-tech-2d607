@@ -3,6 +3,9 @@ import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 import PropTypes from "prop-types";
 
+// components
+import FancyTitle from "./FancyTitle";
+
 // material ui
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -34,6 +37,7 @@ function PolicyActionMobile(props) {
 
   return (
     <>
+      <FancyTitle title="Law and Regulation Tracker" />
       {actions
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row) => (
