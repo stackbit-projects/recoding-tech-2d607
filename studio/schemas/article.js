@@ -113,6 +113,51 @@ export default {
       validation: null,
     },
     {
+      title: "Body",
+      name: "body",
+      type: "array",
+      of: [
+        {
+          type: "block",
+          marks: [
+            {
+              name: "link",
+              type: "url",
+              validation: (Rule) => Rule.uri({ allowRelative: true }),
+            },
+          ],
+        },
+        {
+          name: "code",
+          type: "object",
+          title: "Code",
+          fields: [
+            {
+              title: "Code",
+              name: "code",
+              type: "text",
+            },
+            {
+              name: "language",
+              title: "Language",
+              type: "string",
+            },
+            {
+              title: "Highlighted lines",
+              name: "highlightedLines",
+              type: "array",
+              of: [
+                {
+                  type: "number",
+                  title: "Highlighted line",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
       type: "string",
       name: "layout",
       title: "Layout",

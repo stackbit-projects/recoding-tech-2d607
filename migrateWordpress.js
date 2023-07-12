@@ -1,6 +1,9 @@
 const fs = require("fs");
 const { log } = console;
 const XmlStream = require("xml-stream");
+const slugify = require("slugify");
+const parseBody = require("./parseBody.js");
+
 function generateAuthorId(id) {
   return `author-${id}`;
 }
@@ -49,42 +52,41 @@ const buildJSONfromStream = async (stream) => {
 
     const meta = {};
     xml.on("text: wp:base_site_url", (url) => {
-      console.log("url", url);
       meta.rootUrl = url.$text;
     });
 
     /**
      * Get the categories
      */
-    const categories = [];
-    xml.on("endElement: category", (wpCategory) => {
-      const { nicename } = wpCategory.$;
-      const category = {
-        _type: "category",
-        _id: generateCategoryId(nicename),
-        title: nicename,
-      };
-      categories.push(category);
-    });
+    // const categories = [];
+    // xml.on("endElement: category", (wpCategory) => {
+    //   const { nicename } = wpCategory.$;
+    //   const category = {
+    //     _type: "category",
+    //     _id: generateCategoryId(nicename),
+    //     title: nicename,
+    //   };
+    //   // console.log("category>>>>", category);
+    //   categories.push(category);
+    // });
 
     // /**
     //  * Get the users
     //  */
-    const users = [];
-    xml.on("endElement: wp:author", (author) => {
-      console.log("author*********", author);
-      const user = {
-        _type: "author",
-        // _id: generateAuthorId(author["wp:author_id"]),
-        name: author["wp:author_display_name"],
-        // slug: {
-        //   current: slugify(author["wp:author_login"], { lower: true }),
-        // },
-        email: author["wp:author_email"],
-      };
-      console.log("user?", user);
-      users.push(user);
-    });
+    // const users = [];
+    // xml.on("endElement: wp:author", (author) => {
+    //   const user = {
+    //     _type: "author",
+    //     _id: generateAuthorId(author["wp:author_id"]),
+    //     name: author["wp:author_display_name"],
+    //     slug: {
+    //       current: slugify(author["wp:author_login"], { lower: true }),
+    //     },
+    //     email: author["wp:author_email"],
+    //   };
+    //   // console.log("user>>>", user);
+    //   users.push(user);
+    // });
 
     /**
      * Get the posts
@@ -93,30 +95,35 @@ const buildJSONfromStream = async (stream) => {
     xml.collect("wp:postmeta");
     xml.on("endElement: item", (item) => {
       const { title, category, link: permalink, description } = item;
+      console.log("Processing posts.");
       if (item["wp:post_type"] != "post" && item["wp:post_type"] != "page") {
+        console.log("This item is not a post.");
         return;
       }
+      console.log("This item is a post.");
+      console.log("ITEM>>>>>", item);
       const post = {
         _type: "post",
         title,
         slug: {
           current: slugify(title, { lower: true }),
         },
-        categories: [
-          {
-            _type: "reference",
-            _ref: generateCategoryId(category.$.nicename),
-          },
-        ],
+        // categories: [
+        //   {
+        //     _type: "reference",
+        //     _ref: generateCategoryId(category.$.nicename),
+        //   },
+        // ],
         description,
         body: parseBody(item["content:encoded"]),
         publishedAt: parseDate(item),
-        /* author: {
-          _type: 'reference',
-          _ref: users.find(user => user.slug.current === item['dc:creator'])._id
-        },
-        */
+        // author: {
+        //   _type: "reference",
+        //   _ref: users.find((user) => user.slug.current === item["dc:creator"])
+        //     ._id,
+        // },
       };
+      console.log("post>>>>>>>>>>", post);
       posts.push(post);
     });
 
@@ -128,9 +135,9 @@ const buildJSONfromStream = async (stream) => {
     xml.on("end", () => {
       const output = [
         /* meta, */
-        ...users,
-        // ...posts,
-        ...categories,
+        // ...users,
+        ...posts,
+        // ...categories,
       ];
 
       return res(output);
@@ -139,10 +146,11 @@ const buildJSONfromStream = async (stream) => {
 };
 
 const main = async () => {
+  console.log("Starting to parse XML.");
   const filename = "./techpolicypress.WordPress.2023-06-23.xml";
   const stream = await readFile(filename);
   const output = await buildJSONfromStream(stream);
-  output.forEach((doc) => log(JSON.stringify(doc, null, 0)));
+  // output.forEach((doc) => log(JSON.stringify(doc, null, 0)));
   console.log("Finished parsing.");
 };
 
