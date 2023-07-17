@@ -121,6 +121,10 @@ const theme = createTheme({
     body1: {
       fontSize: 14,
     },
+    body2: {
+      fontFamily: sansSerifFont,
+      fontWeight: 300,
+    },
     h1: {
       fontFamily: sansSerifFont,
       fontSize: "2.4em",

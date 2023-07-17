@@ -18,7 +18,7 @@ const SearchBar = () => {
     // const url = "/search?" + encodeURI(value);
     // if (router && router.push) {
     //   console.log(router);
-      // router.push(url);
+    // router.push(url);
     // }
   };
 

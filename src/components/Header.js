@@ -71,6 +71,7 @@ const Header = () => {
           <Grid item xs={10} sm={2}>
             <Link href="/" className={classes.logoLink}>
               <Logo />
+              <Typography sx={{ display: "none" }}>Home</Typography>
             </Link>
           </Grid>
           <Grid
