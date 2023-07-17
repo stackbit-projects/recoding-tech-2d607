@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   table: {
     backgroundColor: theme.palette.footer.main,
     maxHeight: null,
-    padding: 20
+    padding: 20,
   },
   tableCellTitle: {
     position: "relative",
@@ -90,18 +90,18 @@ function PolicyActionTable(props) {
 
   isHomepage
     ? (headers = [
-      { id: "title", label: "Name" },
-      { id: "assetType", label: "Asset type FIXME" },
-      { id: "country.displayTitle", label: "Gov't" },
-    ])
+        { id: "title", label: "Name" },
+        { id: "assetType", label: "Asset type FIXME" },
+        { id: "country.displayTitle", label: "Gov't" },
+      ])
     : (headers = [
-      { id: "title", label: "Name" },
-      { id: "type", label: "Type" },
-      { id: "country.displayTitle", label: `Government` },
-      { id: "dateInitiated", label: "Date Initiated" },
-      { id: "status", label: "Status" },
-      { id: "lastUpdate", label: "Last Updated" },
-    ]);
+        { id: "title", label: "Name" },
+        { id: "type", label: "Type" },
+        { id: "country.displayTitle", label: `Government` },
+        { id: "dateInitiated", label: "Date Initiated" },
+        { id: "status", label: "Status" },
+        { id: "lastUpdate", label: "Last Updated" },
+      ]);
 
   // PAGINATION
   const [current, setCurrent] = useState(0);
@@ -148,10 +148,10 @@ function PolicyActionTable(props) {
                   Law & Regulation Tracker
                 </Typography>
                 <Typography component="div" variant="body1">
-                  We track existing and proposed laws and regulations, along with
-                  government investigations and litigation from across the U.S.
-                  and Europe, that will shape the rules and accountability for Big
-                  Tech.
+                  We track existing and proposed laws and regulations, along
+                  with government investigations and litigation from across the
+                  U.S. and Europe, that will shape the rules and accountability
+                  for Big Tech.
                 </Typography>
                 <Button>See all</Button>
               </Box>
@@ -159,11 +159,14 @@ function PolicyActionTable(props) {
           </Grid>
           <Grid item xs={12} md={6}>
             <TableContainer className={classes.table}>
-              <Table aria-label="Law and Regulation Tracker Table" >
+              <Table aria-label="Law and Regulation Tracker Table">
                 <TableHead>
                   <TableRow>
                     {headers.map((column) => (
-                      <TableCell key={column.id} className={classes.tableHeader}>
+                      <TableCell
+                        key={column.id}
+                        className={classes.tableHeader}
+                      >
                         <Typography component="div" variant={"tableHeaderHome"}>
                           {column.label}
                         </Typography>
@@ -205,7 +208,7 @@ function PolicyActionTable(props) {
                                 }
                               >
                                 {column.id == "dateInitiated" ||
-                                  column.id == "lastUpdate" ? (
+                                column.id == "lastUpdate" ? (
                                   <Typography
                                     component="div"
                                     variant={"trackerRowHome"}
@@ -221,10 +224,11 @@ function PolicyActionTable(props) {
                                   >
                                     <Link
                                       className={classes.tableLink}
-                                      href={`/tracker/${typeof row.slug === "object"
+                                      href={`/tracker/${
+                                        typeof row.slug === "object"
                                           ? row.slug.current
                                           : row.slug
-                                        }`}
+                                      }`}
                                     >
                                       {titleCase(truncate(value))}
                                     </Link>
@@ -300,7 +304,7 @@ function PolicyActionTable(props) {
                               }
                             >
                               {column.id == "dateInitiated" ||
-                                column.id == "lastUpdate" ? (
+                              column.id == "lastUpdate" ? (
                                 <Typography
                                   component="div"
                                   variant={"trackerRow"}
@@ -316,10 +320,11 @@ function PolicyActionTable(props) {
                                 >
                                   <Link
                                     className={classes.tableLink}
-                                    href={`/tracker/${typeof row.slug === "object"
+                                    href={`/tracker/${
+                                      typeof row.slug === "object"
                                         ? row.slug.current
                                         : row.slug
-                                      }`}
+                                    }`}
                                   >
                                     {titleCase(value)}
                                   </Link>

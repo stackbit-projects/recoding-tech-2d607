@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 // component imports
 import Logo from "./Logo";
+import SearchBarHeader from "./SearchBarHeader";
 
 const useStyles = makeStyles(() => ({
   em: {
@@ -54,18 +55,20 @@ const Header = () => {
     setMobileEl(null);
   };
 
-  const isMobile = useMediaQuery("(max-width:1244px)");
+  const isMobile = useMediaQuery("(max-width:1264px)");
 
   return (
     <header className={classes.header}>
       <Box
         p={4}
+        mb={4}
+        mt={isMobile ? 0 : 4}
         sx={{
           boxShadow: isMobile ? "" : "0px 2px 1px -1px rgba(0, 0, 0, 0.2)",
         }}
       >
         <Grid container spacing={3} justifyContent="space-between">
-          <Grid item xs={10} sm={3}>
+          <Grid item xs={10} sm={2}>
             <Link href="/" className={classes.logoLink}>
               <Logo />
             </Link>
@@ -74,7 +77,7 @@ const Header = () => {
             container
             item
             xs={2}
-            sm={9}
+            sm={10}
             className={classes.nav}
             alignItems="center"
             spacing={4}
@@ -127,7 +130,7 @@ const Header = () => {
                         sx={{ textTransform: "none" }}
                       >
                         <Link href={`/tracker`} className={classes.link}>
-                          Law & Regulation Tracker
+                          Policy Tracker
                         </Link>
                       </Typography>
                       <Typography
@@ -175,6 +178,15 @@ const Header = () => {
                           About
                         </Link>
                       </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`/search`} className={classes.link}>
+                          Search
+                        </Link>
+                      </Typography>
                     </nav>
                   </Box>
                 </Popover>
@@ -185,110 +197,99 @@ const Header = () => {
                   container
                   item
                   xs={12}
+                  alignItems="flex-end"
+                  justifyContent="flex-end"
                   spacing={2}
-                  justifyContent="space-between"
-                  alignItems="center"
                 >
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`/topics`} className={classes.link}>
-                        Topics
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`/tracker`} className={classes.link}>
-                        Law & Regulation Tracker
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`#FIXME`} className={classes.link}>
-                        Newsletter
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`#FIXME`} className={classes.link}>
-                        Podcast
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`#FIXME`} className={classes.link}>
-                        Projects
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`#FIXME`} className={classes.link}>
-                        Contributors
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component="div"
-                      variant="h4"
-                      sx={{ textTransform: "none" }}
-                    >
-                      <Link href={`#FIXME`} className={classes.link}>
-                        About
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button href="/search">
-                      <svg
-                        className={classes.svg}
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 17 16"
+                  <Grid
+                    container
+                    item
+                    xs={8}
+                    spacing={2}
+                    mt={1}
+                    flexWrap={"nowrap"}
+                    justifyContent="space-between"
+                  >
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
                       >
-                        <circle
-                          cx="5.65"
-                          cy="5.65"
-                          r="4.65"
-                          stroke="#000"
-                          strokeWidth="2"
-                        />
-                        <path
-                          stroke="#000"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          d="m9.88 9.41 5.18 5.18"
-                        />
-                      </svg>
-                    </Button>
+                        <Link href={`/topics`} className={classes.link}>
+                          Topics
+                        </Link>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`/tracker`} className={classes.link}>
+                          Policy Tracker
+                        </Link>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`#FIXME`} className={classes.link}>
+                          Newsletter
+                        </Link>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`#FIXME`} className={classes.link}>
+                          Podcast
+                        </Link>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`#FIXME`} className={classes.link}>
+                          Projects
+                        </Link>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`#FIXME`} className={classes.link}>
+                          Contributors
+                        </Link>
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ textTransform: "none" }}
+                      >
+                        <Link href={`#FIXME`} className={classes.link}>
+                          About
+                        </Link>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={4} flexGrow={2}>
+                    <SearchBarHeader />
                   </Grid>
                 </Grid>
               </>
