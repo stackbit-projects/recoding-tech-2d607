@@ -3,28 +3,21 @@ import React, { useEffect, useState } from "react";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-// MUI icons
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
 // utils
 import client from "../utils/sanityClient";
-import process from "../utils/processCitations";
 
-const query = `*[!(_id in path("drafts.**")) && _type == "citation" && date != null]{_id, date, title, shortTitle, url, creators[]->{firstName, lastName}, institution, place, blogTitle, websiteTitle, publicationTitle}|order(date desc)[0...4]`; // just get the four most recent citations
+// MUI icons
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import PodcastsIcon from "@mui/icons-material/Podcasts";
 
-const useStyles = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.error.main,
-    paddingLeft: 10,
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    width: 16,
-  },
+const query = `*[!(_id in path("drafts.**")) && _type == "article" && date != null]{_id, title, slug}|order(date desc)[0...5]`; // just get the four most recent citations
+
+const useStyles = makeStyles(() => ({
   citation: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
@@ -33,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
   lastCitation: {
     marginBottom: 20,
-    paddingBottom: 20,
   },
   citationTitle: {
     color: "#000 !important",
-    fontSize: "1.2em",
-    fontWeight: "bold",
+    fontSize: "1em",
+    fontWeight: "700",
     "&:hover": {
-      textDecoration: "underline",
+      color: "#225C9D !important",
+      textDecoration: "none",
     },
   },
   citationPublication: {
@@ -62,6 +55,19 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none !important",
+  },
+  more: {
+    textDecoration: "none",
+    width: 162,
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  moreText: {
+    backgroundColor: "#FFE5EA",
+    borderRadius: 2,
+    color: "#FF0033",
+    padding: 6,
   },
 }));
 
@@ -94,7 +100,10 @@ const SectionCitations = () => {
                     : classes.citation
                 }
               >
-                <Link href={citation.url} className={classes.link}>
+                <Link
+                  href={`/article/${citation.slug.current}`}
+                  className={classes.link}
+                >
                   <Typography
                     component="div"
                     variant="body1"
@@ -102,18 +111,75 @@ const SectionCitations = () => {
                   >
                     {citation.title}
                   </Typography>
-                  <Typography
-                    component="div"
-                    variant="h5"
-                    className={classes.citationPublication}
-                  >
-                    {process(citation)}
-                    <ArrowForwardIcon className={classes.arrow} />
-                  </Typography>
                 </Link>
               </Grid>
             ))
           : null}
+        <Link href="#FIXME" className={classes.more}>
+          <Typography component="div" variant="h5" className={classes.moreText}>
+            More Contributors
+          </Typography>
+        </Link>
+      </Grid>
+      <Grid
+        item
+        sx={{
+          backgroundColor: "#589383",
+          color: "#F3F0E6",
+          paddingX: 8,
+          paddingY: 4,
+          textAlign: "center",
+          width: "100%",
+        }}
+      >
+        <PodcastsIcon sx={{ fill: "#273649", width: 30 }} />
+        <Typography
+          component="div"
+          variant="body1"
+          sx={{
+            fontSize: 20,
+            fontWeight: 700,
+            marginTop: 2,
+            textTransform: "uppercase",
+          }}
+        >
+          The Sunday Show
+        </Typography>
+        <Typography
+          component="div"
+          variant="body2"
+          sx={{
+            marginTop: 1,
+          }}
+        >
+          Tech Policy Press&apos;s Weekly Podcast
+        </Typography>
+        <Button
+          href="#FIXME"
+          color="tertiary"
+          variant="contained"
+          sx={{
+            borderRadius: "2px",
+            color: "#FFF",
+            fontFamily: `"Roboto", sans-serif`,
+            fontSize: 14,
+            fontWeight: 300,
+            marginTop: 2,
+            paddingRight: 4,
+            position: "relative",
+            textTransform: "uppercase",
+          }}
+        >
+          Subscribe Today
+          <KeyboardArrowRightIcon
+            sx={{
+              position: "absolute",
+              right: "4px",
+              top: "49%",
+              transform: "translateY(-50%)",
+            }}
+          />
+        </Button>
       </Grid>
     </Grid>
   );

@@ -99,6 +99,13 @@ function SectionArticle(props) {
               <Card
                 variant="outlined"
                 className={`${classes.box} ${classes.featured}`}
+                sx={{
+                  backgroundImage: article.featuredImage
+                    ? `url(${article.featuredImage})`
+                    : "",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
               >
                 <CardActionArea
                   onClick={() => articleClick(article.slug)}
@@ -130,7 +137,7 @@ function SectionArticle(props) {
         ) : null}
         {alsoFeatured && alsoFeatured.length ? (
           <>
-            <FancyTitle title={"Most recent from TPP"} />
+            <FancyTitle title={"Most recent from Tech Policy Press"} />
             <Grid
               container
               direction="row"
@@ -147,25 +154,11 @@ function SectionArticle(props) {
                     <CardActionArea onClick={() => articleClick(article.slug)}>
                       <CardContent>
                         <Typography
-                          className={classes.alsoFeaturedTag}
-                          component="div"
-                          variant="subtitle1"
-                        >
-                          Article #FIXME
-                        </Typography>
-                        <Typography
                           gutterBottom
                           component="div"
                           sx={{ fontWeight: "bold" }}
                         >
                           {titleCase(article.title)}
-                        </Typography>
-                        <Typography
-                          gutterBottom
-                          component="div"
-                          variant="h5_card"
-                        >
-                          {article.author.name}
                         </Typography>
                       </CardContent>
                     </CardActionArea>

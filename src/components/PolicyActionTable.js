@@ -30,17 +30,9 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
     width: 180,
   },
-  icon: {
-    position: "absolute",
-    right: 20,
-    top: "50%",
-    transform: "translateY(-50%)",
-    transition: "right 250ms",
-  },
   table: {
     backgroundColor: theme.palette.footer.main,
     maxHeight: null,
-    padding: 20,
   },
   tableCellTitle: {
     position: "relative",
@@ -48,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     "&:after": {
       content: "''",
       display: "block",
+      fontWeight: 500,
       left: 0,
       height: "75%",
       minHeight: "80%",
@@ -56,15 +49,6 @@ const useStyles = makeStyles((theme) => ({
       transform: "translateY(-50%)",
       width: "100%",
       zIndex: "-1",
-    },
-    "&:hover": {
-      "& a": {
-        textDecoration: "underline",
-      },
-      "& svg": {
-        right: 10,
-        transition: "right 250ms",
-      },
     },
   },
   tableHeader: {
@@ -134,26 +118,57 @@ function PolicyActionTable(props) {
                 px={4}
                 py={6}
                 sx={{
-                  background: "#677975",
-                  color: "#FFF",
+                  backgroundImage: `url(${TrackerBackground.src})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "50% 17%",
+                  backgroundSize: "112%",
                   left: "50%",
-                  mixBlendMode: "multiply",
                   position: "absolute",
                   top: "50%",
                   transform: "translate(-50%, -50%)",
                   width: 448,
+                  "&:before": {
+                    background: "#677975",
+                    content: "''",
+                    height: "100%",
+                    left: 0,
+                    mixBlendMode: "multiply",
+                    position: "absolute",
+                    top: 0,
+                    width: "100%",
+                  },
                 }}
               >
-                <Typography component="h2" variant="h2">
-                  Law & Regulation Tracker
-                </Typography>
-                <Typography component="div" variant="body1">
-                  We track existing and proposed laws and regulations, along
-                  with government investigations and litigation from across the
-                  U.S. and Europe, that will shape the rules and accountability
-                  for Big Tech.
-                </Typography>
-                <Button>See all</Button>
+                <Box
+                  sx={{ color: "#F3F0E6", position: "relative", marginTop: 2 }}
+                >
+                  <Typography
+                    component="h2"
+                    variant="h2"
+                    sx={{ marginBottom: 1, textTransform: "uppercase" }}
+                  >
+                    Law & Regulation Tracker
+                  </Typography>
+                  <Typography component="div" variant="body1">
+                    We track existing and proposed laws and regulations, along
+                    with government investigations and litigation from across
+                    the U.S. and Europe, that will shape the rules and
+                    accountability for Big Tech.
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="fourth"
+                    sx={{
+                      borderRadius: "2px",
+                      color: "#FFF",
+                      fontSize: 14,
+                      marginTop: 2,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    See all
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Grid>

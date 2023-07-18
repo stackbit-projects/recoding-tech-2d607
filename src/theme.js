@@ -67,6 +67,12 @@ const theme = createTheme({
     secondary: {
       main: "#C2CECC",
     },
+    tertiary: {
+      main: "#273649",
+    },
+    fourth: {
+      main: "#589383",
+    },
     info: {
       main: "#589383",
     },

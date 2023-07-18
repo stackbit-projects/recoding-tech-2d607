@@ -108,7 +108,7 @@ const Advanced = (props) => {
                 <SectionGuides />
                 </Grid> */}
               </Grid>
-              <Box my={4} mt={2} mb={10}>
+              <Box mt={8} mb={10}>
                 <HomepageActions />
               </Box>
             </Container>
