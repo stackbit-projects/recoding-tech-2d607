@@ -90,6 +90,7 @@ function Footer(props) {
                 (action, action_idx) => (
                   <Grid item key={action_idx} sx={{ my: 1 }}>
                     <Link
+                      style={{ textDecoration: "none !important" }}
                       href={withPrefix(_.get(action, "url", null))}
                       {...(_.get(action, "new_window", null)
                         ? { target: "_blank" }

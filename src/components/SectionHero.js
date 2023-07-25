@@ -70,6 +70,8 @@ function SectionHero(props) {
   const theme = useTheme();
   let { page } = props;
 
+  console.log(page);
+
   return (
     <section id={page.__metadata.id} className="block block-hero">
       <Box

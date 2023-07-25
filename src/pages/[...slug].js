@@ -9,13 +9,20 @@ const Page = (props) => {
   // every page can have different layout, pick the layout based
   // on the model of the page (_type in Sanity CMS)
   let componentName;
+  let PageLayout;
 
   if (_.get(props, "page.__metadata.modelName") === "topic") {
     componentName = _.get(props, "page.type");
   } else {
     componentName = _.get(props, "page.__metadata.modelName");
   }
-  const PageLayout = pageLayouts[componentName];
+
+  if (!componentName) {
+    PageLayout = pageLayouts["page"];
+  } else {
+    PageLayout = pageLayouts[componentName];
+  }
+
   return <PageLayout {...props} />;
 };
 
@@ -23,9 +30,10 @@ export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
   // filter out the root page as it has its own page file `src/pages/index.js`
   const paths = await sourcebitDataClient.getStaticPaths();
+
   return {
     paths: _.reject(paths, (path) => path === "/"),
-    fallback: "blocking",
+    fallback: false,
   };
 }
 

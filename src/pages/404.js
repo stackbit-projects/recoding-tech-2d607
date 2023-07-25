@@ -1,82 +1,21 @@
 import React from "react";
 
 // material ui imports
-import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(() => ({
-  logo: {
-    borderBottom: "2px solid transparent",
-    display: "inline-block",
-    fontFamily: "'Libre Baskerville', serif",
-    transition: "border-bottom 500ms",
-    "&:active, &:focus, &:hover": {
-      borderBottom: `2px solid #000`,
-      transition: "border-bottom 500ms",
-    },
-  },
-  name: {
-    fontSize: "2em",
-    fontWeight: "bold",
-  },
-  nameCoding: {
-    position: "relative",
-    "&::after": {
-      backgroundColor: "#FF0033",
-      borderRadius: "50%",
-      content: "''",
-      display: "block",
-      height: "7px",
-      left: "50%",
-      position: "absolute",
-      top: "3px",
-      transform: "translateX(-50%)",
-      width: "7px",
-    },
-  },
-  nameDot: {
-    color: "#FF0033",
-    fontSize: "2.5em",
-    marginLeft: "3px",
-  },
-  nameRe: {
-    marginRight: "6px",
-    paddingRight: "4px",
-    position: "relative",
-    "&::after": {
-      backgroundColor: "#FF0033",
-      borderRadius: "50%",
-      content: "''",
-      display: "block",
-      height: "7px",
-      position: "absolute",
-      right: "-5px",
-      top: "55%",
-      transform: "translateY(-50%)",
-      width: "7px",
-    },
-  },
-}));
+// logo
+import Logo from "../components/Logo";
 
 export default function Custom404() {
-  const classes = useStyles();
-
   return (
     <Box
       sx={{ backgroundColor: "#C2CECC", height: "100vh", position: "relative" }}
     >
-      <Container>
-        <Typography component="h1" variant="body1" className={classes.logo}>
-          <span className={`${classes.name} ${classes.nameRe}`}>Re</span>
-          <span className={classes.name}>cod</span>
-          <span className={`${classes.name} ${classes.nameCoding}`}>i</span>
-          <span className={classes.name}>ng</span>
-          <span className={`${classes.name} ${classes.nameDot}`}>.</span>
-          <span className={classes.name}>Tech</span>
-        </Typography>
+      <Container sx={{ paddingTop: 4 }}>
+        <Logo />
         <Box
           sx={{
             left: "50%",

@@ -16,9 +16,13 @@ import SectionHero from "../components/SectionHero";
 import Sidebar from "../components/Sidebar";
 
 const Page = (props) => {
-  const {
-    page: { sidebar_content = {} },
-  } = props;
+  // const {
+  //   page: { sidebar_content = {} },
+  // } = props;
+
+  const { page } = props;
+
+  console.log(page);
 
   return (
     <Layout {...props}>
@@ -37,8 +41,8 @@ const Page = (props) => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>
-              {sidebar_content.length ? (
-                <Sidebar content={sidebar_content} />
+              {page && page.sidebar_content && page.sidebar_content.length ? (
+                <Sidebar content={page.sidebar_content} />
               ) : null}
             </Grid>
             <Grid item xs={12} sm={8}>
