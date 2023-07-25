@@ -1,34 +1,73 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { markdownify } from "../utils";
+import { useRouter } from "next/router";
 
 // Material UI imports
 import Box from "@mui/material/Box";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 import components, { Layout } from "../components/index";
 
-import SectionHero from "../components/SectionHero";
+// components
 import Sidebar from "../components/Sidebar";
 
+// icons
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+function handleClick(event) {
+  event.preventDefault();
+}
+
+function format(crumb) {
+  return crumb.split("-").join(" ");
+}
+
 const Page = (props) => {
-  // const {
-  //   page: { sidebar_content = {} },
-  // } = props;
+  const router = useRouter();
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const {
+    page: { sidebar_content = {} },
+  } = props;
 
-  const { page } = props;
+  useEffect(() => {
+    if (router) {
+      setBreadcrumbs(router.query.slug);
+    }
+  }, [router]);
 
-  console.log(page);
+  useEffect(() => {}, [breadcrumbs]);
 
   return (
     <Layout {...props}>
-      <SectionHero {...props} />
-      <Box my={4}>
+      <Box mb={4}>
         <Container>
+          <Box
+            role="presentation"
+            onClick={handleClick}
+            sx={{ marginBottom: 6 }}
+          >
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+            >
+              <Typography variant="body2" color="text.primary">
+                home
+              </Typography>
+              {breadcrumbs.length
+                ? breadcrumbs.map((crumb) => (
+                    <Typography key={crumb} variant="body2" color="text.primary">
+                      {format(crumb)}
+                    </Typography>
+                  ))
+                : null}
+            </Breadcrumbs>
+          </Box>
           <Grid
             container
             spacing={4}
@@ -36,13 +75,16 @@ const Page = (props) => {
             justifyContent="space-between"
           >
             <Grid item xs={12} sm={8}>
-              <Typography component="div" className="html-to-react">
+              <Typography
+                component="div"
+                className="html-to-react html-to-react-page"
+              >
                 {markdownify(_.get(props, "page.content", null))}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>
-              {page && page.sidebar_content && page.sidebar_content.length ? (
-                <Sidebar content={page.sidebar_content} />
+              {sidebar_content && sidebar_content.length ? (
+                <Sidebar content={sidebar_content} />
               ) : null}
             </Grid>
             <Grid item xs={12} sm={8}>

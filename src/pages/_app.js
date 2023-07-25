@@ -5,7 +5,6 @@ import Router from "next/router";
 import Script from "next/script";
 import "../sass/main.scss";
 import "../app.css";
-import ErrorBoundary from "../components/ErrorBoundary";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -50,9 +49,7 @@ function MyApp({ Component, pageProps }) {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </noscript>
-      <ErrorBoundary>
-        <Component {...pageProps} />
-      </ErrorBoundary>
+      <Component {...pageProps} />
     </>
   );
 }
