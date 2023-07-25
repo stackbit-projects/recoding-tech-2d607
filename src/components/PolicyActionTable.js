@@ -24,14 +24,14 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 // images
 import TrackerBackground from "../assets/tracker-bg.jpg";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   button: {
     fontSize: "0.8em",
     textTransform: "uppercase",
     width: 180,
   },
   table: {
-    backgroundColor: theme.palette.footer.main,
+    backgroundColor: "#F3F0E680",
     maxHeight: null,
   },
   tableCellTitle: {
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableHeader: {
     borderBottom: "1px solid #000",
+    paddingTop: 30,
   },
   tableLink: {
     color: "#000",
@@ -75,7 +76,7 @@ function PolicyActionTable(props) {
   isHomepage
     ? (headers = [
         { id: "title", label: "Name" },
-        { id: "assetType", label: "Asset type FIXME" },
+        { id: "type", label: "Type" },
         { id: "country.displayTitle", label: "Gov't" },
       ])
     : (headers = [
@@ -209,7 +210,7 @@ function PolicyActionTable(props) {
                               if (row.country) {
                                 value = row.country.displayTitle; // #FIXME
                               } else {
-                                value = "";
+                                value = row.type;
                               }
                             }
                             return (
@@ -247,6 +248,13 @@ function PolicyActionTable(props) {
                                     >
                                       {titleCase(truncate(value))}
                                     </Link>
+                                  </Typography>
+                                ) : column.id == "type" ? (
+                                  <Typography
+                                    component="div"
+                                    variant={"trackerRowHome"}
+                                  >
+                                    {row.type}
                                   </Typography>
                                 ) : (
                                   <Typography

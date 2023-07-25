@@ -203,7 +203,6 @@ const theme = createTheme({
       fontSize: "1em",
       fontWeight: "600",
       textTransform: "uppercase",
-      textAlign: "center",
     },
     tableHeader: {
       fontFamily: sansSerifFont,
@@ -219,13 +218,12 @@ const theme = createTheme({
     trackerTitleHome: {
       fontFamily: sansSerifFont,
       fontSize: "1.075em",
-      fontWeight: "700",
+      fontWeight: "500",
     },
     trackerRowHome: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
-      fontWeight: "500",
-      textAlign: "center",
+      fontWeight: "400",
       textTransform: "uppercase",
     },
     trackerRow: {

@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 // components
 import components, { Layout } from "../components/index";
 import HomepageActions from "../components/HomepageActions";
+import HomepageRecents from "../components/HomepageRecents";
 import SectionHero from "../components/SectionHero";
 import SectionCitations from "../components/SectionCitations";
 
@@ -108,8 +109,11 @@ const Advanced = (props) => {
                 <SectionGuides />
                 </Grid> */}
               </Grid>
-              <Box mt={8} mb={10}>
+              <Box mt={8} mb={4}>
                 <HomepageActions />
+              </Box>
+              <Box mt={8} mb={10}>
+                <HomepageRecents />
               </Box>
             </Container>
           </>
