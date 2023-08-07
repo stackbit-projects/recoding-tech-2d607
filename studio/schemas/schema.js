@@ -9,11 +9,11 @@ import config from "./config.js";
 import header from "./header.js";
 import footer from "./footer.js";
 import advanced from "./advanced.js";
-import contact_submission from "./contact_submission.js"
+import contact_submission from "./contact_submission.js";
 import creators from "./creators.js";
 import citation from "./citation.js";
 import article from "./article.js";
-import file from "./file.js"
+import file from "./file.js";
 import page from "./page.js";
 import person from "./person.js";
 import guide from "./guide.js";
@@ -34,6 +34,10 @@ import action from "./action.js";
 import form_field from "./form_field.js";
 import stackbit_page_meta from "./stackbit_page_meta.js";
 
+// new models
+import author from "./author.js";
+import post from "./post.js";
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -43,17 +47,19 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     config,
-    contact_submission,
+    // contact_submission,
     header,
     footer,
     advanced,
-    article,
+    // article,
+    author,
     creators,
     citation,
     file,
-    guide,
+    // guide,
     page,
     person,
+    post,
     policy_action,
     portable_text,
     section_hero,
@@ -61,7 +67,7 @@ export default createSchema({
     section_citations,
     section_content,
     section_form,
-    section_guides,
+    // section_guides,
     section_search,
     section_topics,
     section_tracker,
@@ -69,6 +75,6 @@ export default createSchema({
     topic,
     action,
     form_field,
-    stackbit_page_meta
-  ])
+    stackbit_page_meta,
+  ]),
 });
