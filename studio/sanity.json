@@ -10,12 +10,12 @@
   "env": {
     "development": {
       "api": {
-        "dataset": "development2"
+        "dataset": "tpp-development"
       }
     },
     "production": {
       "api": {
-        "dataset": "production"
+        "dataset": "tpp-development"
       }
     }
   },
