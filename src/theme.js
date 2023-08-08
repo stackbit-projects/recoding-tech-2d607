@@ -9,11 +9,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
           color: "#000",
           fontFamily: sansSerifFont,
-          fontSize: "1.2em",
-          fontWeight: "700",
           textAlign: "center",
           textTransform: "none",
         },

@@ -16,6 +16,7 @@ import components, { Layout } from "../components/index";
 import HomepageActions from "../components/HomepageActions";
 import HomepageRecents from "../components/HomepageRecents";
 import SectionHero from "../components/SectionHero";
+import SectionHeroTracker from "../components/SectionHeroTracker";
 import SectionCitations from "../components/SectionCitations";
 
 // material ui icons
@@ -119,8 +120,12 @@ const Advanced = (props) => {
           </>
         ) : (
           <>
-            <Container>
+            {path === "/tracker" ? (
+              <SectionHeroTracker {...props} />
+            ) : (
               <SectionHero {...props} />
+            )}
+            <Container>
               {_.map(
                 _.get(props, "page.sections", null),
                 (section, section_idx) => {

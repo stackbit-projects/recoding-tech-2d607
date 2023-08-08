@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import { titleCase } from "title-case";
 
 // utils
 import { markdownify, htmlToReact, urlFor } from "../utils";
@@ -29,7 +30,7 @@ function handleClick(event) {
 }
 
 function format(crumb) {
-  return crumb.split("-").join(" ");
+  return titleCase(crumb.split("-").join(" "));
 }
 
 const Article = (props) => {

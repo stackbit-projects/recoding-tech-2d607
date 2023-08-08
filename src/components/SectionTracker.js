@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import client from "../utils/sanityClient";
 
 // material ui imports
-import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -15,12 +14,13 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // material ui icons
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 // components
 import PolicyActionTable from "./PolicyActionTable";
@@ -35,18 +35,9 @@ const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]
 const topicsQuery =
   '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{_id, _key, name, slug, type}';
 
-const useStyles = makeStyles(() => ({
-  button: {
-    fontSize: "0.8em",
-    textTransform: "uppercase",
-    width: 180,
-  },
-}));
-
-function SectionTracker(props) {
-  const classes = useStyles();
+function SectionTracker() {
   const { query } = useRouter();
-  const { section } = props;
+  // const { section } = props;
   const [actions, setActions] = useState([]);
   const [allActions, setAllActions] = useState([]);
   const [topics, setTopics] = useState([]);
@@ -192,195 +183,166 @@ function SectionTracker(props) {
   return (
     <section>
       <Box my={4}>
-        <Container maxWidth="md">
-          <Typography variant="body1" component="div">
-            {section.intro}
-          </Typography>
-        </Container>
-      </Box>
-      <Box my={4}>
         <Container>
-          <Typography component="div" variant="h3">
-            Filter by:
-          </Typography>
-          <Grid container spacing={2} justifyContent="flex-start">
-            <Grid item xs={12} sm={6} md={3}>
-              <Button
-                id="issues-button"
-                color="issue"
-                aria-controls="issues-menu"
-                aria-haspopup="true"
-                aria-expanded={openIssues ? "true" : undefined}
-                variant="contained"
-                disableElevation
-                className={classes.button}
-                onClick={handleClickIssues}
-                endIcon={
-                  openIssues ? (
-                    <KeyboardArrowUpIcon />
-                  ) : (
-                    <KeyboardArrowDownIcon />
-                  )
-                }
-              >
-                Issue
-              </Button>
-              <Menu
-                id="issues-menu"
-                MenuListProps={{
-                  "aria-labelledby": "issues-button",
-                }}
-                anchorEl={issueEl}
-                open={openIssues}
-                onClose={handleCloseIssues()}
-              >
-                {issues && issues.length
-                  ? issues.map((issue) => (
-                      <MenuItem
-                        key={issue._id}
-                        onClick={handleCloseIssues(issue)}
-                        disableRipple
-                      >
-                        {issue.displayTitle || issue.name}
-                      </MenuItem>
-                    ))
-                  : null}
-              </Menu>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Button
-                id="policies-button"
-                color="policy"
-                aria-controls="policies-menu"
-                aria-haspopup="true"
-                aria-expanded={openPolicies ? "true" : undefined}
-                variant="contained"
-                disableElevation
-                className={classes.button}
-                onClick={handleClickPolicies}
-                endIcon={
-                  openPolicies ? (
-                    <KeyboardArrowUpIcon />
-                  ) : (
-                    <KeyboardArrowDownIcon />
-                  )
-                }
-              >
-                Policy
-              </Button>
-              <Menu
-                id="policies-menu"
-                MenuListProps={{
-                  "aria-labelledby": "policies-button",
-                }}
-                anchorEl={policiesEl}
-                open={openPolicies}
-                onClose={handleClosePolicies()}
-              >
-                {policies && policies.length
-                  ? policies.map((policy) => (
-                      <MenuItem
-                        key={policy._id}
-                        onClick={handleClosePolicies(policy)}
-                        disableRipple
-                      >
-                        {policy.displayTitle || policy.name}
-                      </MenuItem>
-                    ))
-                  : null}
-              </Menu>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Button
-                id="countries-button"
-                color="country"
-                aria-controls="countries-menu"
-                aria-haspopup="true"
-                aria-expanded={openCountries ? "true" : undefined}
-                variant="contained"
-                disableElevation
-                className={classes.button}
-                onClick={handleClickCountries}
-                endIcon={
-                  openCountries ? (
-                    <KeyboardArrowUpIcon />
-                  ) : (
-                    <KeyboardArrowDownIcon />
-                  )
-                }
-              >
-                Government
-              </Button>
-              <Menu
-                id="countries-menu"
-                MenuListProps={{
-                  "aria-labelledby": "countries-button",
-                }}
-                anchorEl={countriesEl}
-                open={openCountries}
-                onClose={handleCloseCountries()}
-              >
-                {countries && countries.length
-                  ? countries.map((country) => {
-                      if (country) {
-                        return (
-                          <MenuItem
-                            key={country._id}
-                            onClick={handleCloseCountries(country)}
-                            disableRipple
-                          >
-                            {country.displayTitle || country.name}
-                          </MenuItem>
-                        );
-                      }
-                    })
-                  : null}
-              </Menu>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Button
-                id="companies-button"
-                color="company"
-                aria-controls="companies-menu"
-                aria-haspopup="true"
-                aria-expanded={openCompanies ? "true" : undefined}
-                variant="contained"
-                disableElevation
-                className={classes.button}
-                onClick={handleClickCompanies}
-                endIcon={
-                  openCompanies ? (
-                    <KeyboardArrowUpIcon />
-                  ) : (
-                    <KeyboardArrowDownIcon />
-                  )
-                }
-              >
-                Company
-              </Button>
-              <Menu
-                id="companies-menu"
-                MenuListProps={{
-                  "aria-labelledby": "companies-button",
-                }}
-                anchorEl={companiesEl}
-                open={openCompanies}
-                onClose={handleCloseCompanies()}
-              >
-                {companies && companies.length
-                  ? companies.map((company) => (
-                      <MenuItem
-                        key={company._key}
-                        onClick={handleCloseCompanies(company)}
-                        disableRipple
-                      >
-                        {company.displayTitle || company.name}
-                      </MenuItem>
-                    ))
-                  : null}
-              </Menu>
-            </Grid>
-          </Grid>
+          <Stack alignItems="baseline" direction="row" spacing={4}>
+            <Typography component="div" variant="h4">
+              Filter by:
+            </Typography>
+            <Stack direction="row" spacing={2}>
+              <Box>
+                <Button
+                  sx={{ border: "1px solid #DEDEDE" }}
+                  id="issues-button"
+                  aria-controls="issues-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openIssues ? "true" : undefined}
+                  disableElevation
+                  onClick={handleClickIssues}
+                  endIcon={
+                    openIssues ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                >
+                  Issue
+                </Button>
+                <Menu
+                  id="issues-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "issues-button",
+                  }}
+                  anchorEl={issueEl}
+                  open={openIssues}
+                  onClose={handleCloseIssues()}
+                >
+                  {issues && issues.length
+                    ? issues.map((issue) => (
+                        <MenuItem
+                          key={issue._id}
+                          onClick={handleCloseIssues(issue)}
+                          disableRipple
+                        >
+                          {issue.displayTitle || issue.name}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Box>
+              <Box>
+                <Button
+                  sx={{ border: "1px solid #DEDEDE" }}
+                  id="policies-button"
+                  aria-controls="policies-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openPolicies ? "true" : undefined}
+                  disableElevation
+                  onClick={handleClickPolicies}
+                  endIcon={
+                    openPolicies ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                >
+                  Policy
+                </Button>
+                <Menu
+                  id="policies-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "policies-button",
+                  }}
+                  anchorEl={policiesEl}
+                  open={openPolicies}
+                  onClose={handleClosePolicies()}
+                >
+                  {policies && policies.length
+                    ? policies.map((policy) => (
+                        <MenuItem
+                          key={policy._id}
+                          onClick={handleClosePolicies(policy)}
+                          disableRipple
+                        >
+                          {policy.displayTitle || policy.name}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Box>
+              <Box>
+                <Button
+                  sx={{ border: "1px solid #DEDEDE" }}
+                  id="countries-button"
+                  aria-controls="countries-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openCountries ? "true" : undefined}
+                  disableElevation
+                  onClick={handleClickCountries}
+                  endIcon={
+                    openCountries ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                >
+                  Government
+                </Button>
+                <Menu
+                  id="countries-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "countries-button",
+                  }}
+                  anchorEl={countriesEl}
+                  open={openCountries}
+                  onClose={handleCloseCountries()}
+                >
+                  {countries && countries.length
+                    ? countries.map((country) => {
+                        if (country) {
+                          return (
+                            <MenuItem
+                              key={country._id}
+                              onClick={handleCloseCountries(country)}
+                              disableRipple
+                            >
+                              {country.displayTitle || country.name}
+                            </MenuItem>
+                          );
+                        }
+                      })
+                    : null}
+                </Menu>
+              </Box>
+              <Box>
+                <Button
+                  sx={{ border: "1px solid #DEDEDE" }}
+                  id="companies-button"
+                  aria-controls="companies-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openCompanies ? "true" : undefined}
+                  disableElevation
+                  onClick={handleClickCompanies}
+                  endIcon={
+                    openCompanies ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                >
+                  Company
+                </Button>
+                <Menu
+                  id="companies-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "companies-button",
+                  }}
+                  anchorEl={companiesEl}
+                  open={openCompanies}
+                  onClose={handleCloseCompanies()}
+                >
+                  {companies && companies.length
+                    ? companies.map((company) => (
+                        <MenuItem
+                          key={company._key}
+                          onClick={handleCloseCompanies(company)}
+                          disableRipple
+                        >
+                          {company.displayTitle || company.name}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Box>
+            </Stack>
+          </Stack>
         </Container>
       </Box>
       <Box my={4}>
