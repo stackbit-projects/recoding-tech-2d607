@@ -12,6 +12,7 @@ module.exports = {
       options: {
         accessToken: process.env.SANITY_ACCESS_TOKEN,
         projectId: process.env.SANITY_PROJECT_ID,
+        apiVersion: process.env.SANITY_API_VERSION,
         dataset: process.env.SANITY_DATASET || "production",
         isPreview: isDev,
         watch: isDev,

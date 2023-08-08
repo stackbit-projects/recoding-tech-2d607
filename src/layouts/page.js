@@ -61,7 +61,11 @@ const Page = (props) => {
               </Typography>
               {breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (
-                    <Typography key={crumb} variant="body2" color="text.primary">
+                    <Typography
+                      key={crumb}
+                      variant="body2"
+                      color="text.primary"
+                    >
                       {format(crumb)}
                     </Typography>
                   ))

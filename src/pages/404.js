@@ -14,7 +14,7 @@ export default function Custom404() {
     <Box
       sx={{ backgroundColor: "#C2CECC", height: "100vh", position: "relative" }}
     >
-      <Container sx={{ paddingTop: 4 }}>
+      <Container maxWidth="xl" sx={{ paddingTop: 4 }}>
         <Logo />
         <Box
           sx={{
@@ -25,16 +25,12 @@ export default function Custom404() {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <Typography component="div" variant="h2" gutterBottom>
+          <Typography component="div" variant="h3" gutterBottom>
             (404) Page Not Found
           </Typography>
           <Typography component="div" variant="body1" sx={{ fontSize: 24 }}>
             Return{" "}
-            <Link
-              href="/"
-              variant="body1"
-              sx={{ color: "#FF0033", fontSize: 24 }}
-            >
+            <Link href="/" variant="body1" sx={{ fontSize: 24 }}>
               home
             </Link>
             .
