@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 // material ui imports
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
@@ -21,12 +21,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Topics = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
   const { topics } = props;
 
   if (!Array.isArray(topics) || !topics.length) return null;
 
-  const title = _.get(props, "title", "Related Topics");
+  const title = _.get(props, "title", "Topics");
 
   return (
     <section>
@@ -40,7 +39,7 @@ const Topics = (props) => {
           <Box
             mb={4}
             pt={2}
-            sx={{ borderTop: "1px solid #000", width: "100%" }}
+            sx={{ borderTop: "1px solid #8AA29D", width: "100%" }}
           >
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
               {topics
@@ -50,10 +49,9 @@ const Topics = (props) => {
                     key={i}
                     label={topic.displayTitle || topic.name}
                     style={{
-                      backgroundColor:
-                        topic.type && theme.palette[topic.type]
-                          ? theme.palette[topic.type].main
-                          : theme.palette.secondary.main,
+                      backgroundColor: "#EFE9DA",
+                      fontWeight: 300,
+                      textTransform: "none",
                     }}
                     component="a"
                     className={classes.chip}

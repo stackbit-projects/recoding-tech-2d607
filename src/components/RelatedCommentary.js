@@ -44,8 +44,8 @@ const useStyles = makeStyles(() => ({
   grid: {},
   gridTitle: {
     borderBottom: "1px solid #000",
-    marginBottom: 32,
-    marginTop: 32,
+    marginBottom: 6,
+    marginTop: 6,
   },
 }));
 
@@ -54,7 +54,7 @@ const RelatedCommentary = (props) => {
   if (!Array.isArray(commentary) || !commentary.length) return null;
   const classes = useStyles();
   const [sortedCommentary, setSortedCommentary] = useState(null);
-  const title = _.get(props, "title", "Latest Headlines & Highlights");
+  const title = _.get(props, "title", "Related");
 
   useEffect(() => {
     const sort = commentary.sort((a, b) => {

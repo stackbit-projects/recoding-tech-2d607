@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 import PropTypes from "prop-types";
+import _ from "lodash";
 
 // utils
-import { htmlToReact } from "../utils";
+import { markdownify, htmlToReact, urlFor } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 // components
 import { Layout } from "../components/index";
 import RelatedCommentary from "../components/RelatedCommentary";
 import RelatedTopics from "../components/RelatedTopics";
+import SectionSubscribe from "../components/SectionSubscribe";
 
 // icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -84,13 +87,53 @@ const Article = (props) => {
                 {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
                 </Typography> */}
-                <Typography component="h1" variant="h2_article">
+                <Typography
+                  component="h1"
+                  variant="h2_article"
+                  sx={{ borderBottom: "1px solid #8AA29D", paddingBottom: 2 }}
+                >
                   {page.title}
+                </Typography>
+                <Typography
+                  component="div"
+                  variant="body2"
+                  sx={{
+                    color: "#616161",
+                    fontSize: 12,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {page.author.name} / {page.__metadata.createdAt}
                 </Typography>
                 {page.key_takeaways && (
                   <Typography component="div" variant="body2">
                     {page.key_taekaways}
                   </Typography>
+                )}
+                {page.toc && (
+                  <Grid item xs={12} sm={12} mt={2}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        bgcolor: "#F3F0E699",
+                      }}
+                    >
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{
+                          borderBottom: "1px solid #8AA29D",
+                          marginBottom: 2,
+                          paddingBottom: 2,
+                        }}
+                      >
+                        Table of Contents
+                      </Typography>
+                      <Typography component="div" className="html-to-react">
+                        {markdownify(_.get(props, "page.toc", null))}
+                      </Typography>
+                    </Box>
+                  </Grid>
                 )}
                 {page.new_content && (
                   <Typography component="div" className="html-to-react-article">
@@ -100,12 +143,51 @@ const Article = (props) => {
               </Grid>
             </Grid>
             <Grid item xs={12} md={4}>
+              <Box marginBottom={6}>
+                <Typography
+                  component="h2"
+                  variant="h4"
+                  sx={{
+                    borderBottom: "1px solid #8AA29D",
+                    paddingBottom: 2,
+                    width: "100%",
+                  }}
+                >
+                  Author
+                </Typography>
+                <Stack direction="row">
+                  {page.author.image && (
+                    <Image
+                      src={urlFor(page.author.image).width(40).url()}
+                      height={40}
+                      width={40}
+                      alt=""
+                      style={{ borderRadius: 50 }}
+                    />
+                  )}
+                  <Typography
+                    component="div"
+                    variant="h3"
+                    sx={{ fontWeight: 500 }}
+                  >
+                    {page.author.name}
+                  </Typography>
+                </Stack>
+                <Typography
+                  component="div"
+                  variant="body2"
+                  sx={{ color: "#616161" }}
+                >
+                  {page.author.name} is...
+                </Typography>
+              </Box>
               <RelatedCommentary
                 title="Further Reading"
                 commentary={page.relatedCommentary}
                 noFilter={true}
               />
               <RelatedTopics topics={topics} />
+              <SectionSubscribe />
             </Grid>
           </Grid>
         </Container>

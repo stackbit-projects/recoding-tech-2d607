@@ -9,10 +9,14 @@ import Link from "./link";
 import slugify from "slugify";
 import _ from "lodash";
 
-// components
+// MUI components
 import Box from "@mui/material/Box";
-import FancyCard from "../components/FancyCard";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
+
+// custom components
+import FancyCard from "../components/FancyCard";
 
 const convertChildren = (children, index) =>
   _.map(children, (childNode) =>
@@ -36,23 +40,42 @@ export default function htmlToReact(html) {
         return <h4 id={slug}>{node.children[0].data}</h4>;
       }
 
-      if (
-        node.name === "li" &&
-        node.parent.name === "ol" &&
-        node.children[0].data
-      ) {
-        let slug = `#${slugify(node.children[0].data.toLowerCase(), {
-          remove: /[*+~.()'"!:@?/]/g,
-        })}`;
+      if (node.name === "ol") {
+        console.log(node);
         return (
-          <li>
-            <NextLink
-              href={`${router.asPath.split("#")[0]}${slug}`}
-              scroll={false}
-            >
-              {node.children[0].data}
-            </NextLink>
-          </li>
+          <List>
+            {node.children && node.children.length
+              ? node.children.map((child) => {
+                  if (child.name === "li") {
+                    console.log(child);
+                    let slug = `#${slugify(
+                      child.children[0].data.toLowerCase(),
+                      {
+                        remove: /[*+~.()'"!:@?/]/g,
+                      }
+                    )}`;
+                    return (
+                      <ListItem sx={{ marginLeft: 0, paddingLeft: 0 }}>
+                        <NextLink
+                          href={`${router.asPath.split("#")[0]}${slug}`}
+                          scroll={false}
+                        >
+                          <Typography
+                            component="span"
+                            style={{
+                              cursor: "pointer",
+                              fontFamily: "'Lexend', sans-serif",
+                            }}
+                          >
+                            {child.children[0].data}
+                          </Typography>
+                        </NextLink>
+                      </ListItem>
+                    );
+                  }
+                })
+              : null}
+          </List>
         );
       }
 

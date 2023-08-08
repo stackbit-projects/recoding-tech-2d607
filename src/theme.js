@@ -145,9 +145,9 @@ const theme = createTheme({
     },
     h2_article: {
       fontFamily: serifFont,
-      fontSize: "1.7em",
+      fontSize: "2em",
       fontWeight: 700,
-      marginBottom: 40,
+      marginBottom: 16,
     },
     h3: {
       fontFamily: sansSerifFont,
