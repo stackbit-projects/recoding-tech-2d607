@@ -183,9 +183,25 @@ function SectionTracker() {
   return (
     <section>
       <Box my={4}>
-        <Container>
-          <Stack alignItems="baseline" direction="row" spacing={4}>
-            <Typography component="div" variant="h4">
+        <Container
+          sx={{
+            borderBottom: "1px solid #8AA29D",
+            paddingBottom: 2,
+            paddingLeft: "0 !important",
+            paddingRight: "0 !important",
+          }}
+        >
+          <Stack
+            alignItems="end"
+            justifyContent="flex-start"
+            direction="row"
+            spacing={6}
+          >
+            <Typography
+              component="div"
+              variant="h4"
+              sx={{ marginBottom: "0 !important" }}
+            >
               Filter by:
             </Typography>
             <Stack direction="row" spacing={2}>

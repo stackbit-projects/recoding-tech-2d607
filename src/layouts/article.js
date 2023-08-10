@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { DateTime } from "luxon";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
@@ -104,7 +105,10 @@ const Article = (props) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {page.author.name} / {page.__metadata.createdAt}
+                  {page.author.name} /{" "}
+                  {DateTime.fromISO(page.__metadata.createdAt).toLocaleString(
+                    DateTime.DATE_MED
+                  )}
                 </Typography>
                 {page.key_takeaways && (
                   <Typography component="div" variant="body2">

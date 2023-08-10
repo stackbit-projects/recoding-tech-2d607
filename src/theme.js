@@ -35,10 +35,35 @@ const theme = createTheme({
         },
       },
     },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          // borderCollapse: 'unset',
+          // borderSpacing: "0 16px",
+          tableLayout: "auto",
+          width: "100%",
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          borderBottom: "1px solid #E3DCC1",
+          "&:hover": {
+            backgroundColor: "#F3F0E6 !important",
+          },
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         root: {
+          borderBottom: "none",
           fontFamily: sansSerifFont,
+          paddingBottom: 16,
+          paddingLeft: 0,
+          paddingRight: 16,
+          paddingTop: 16,
           textTransform: "uppercase",
         },
       },

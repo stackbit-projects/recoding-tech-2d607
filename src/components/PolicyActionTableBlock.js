@@ -18,6 +18,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
+// material ui icons
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+
 // images
 import TrackerBackground from "../assets/tracker-bg.jpg";
 
@@ -27,16 +30,37 @@ const useStyles = makeStyles(() => ({
     textTransform: "uppercase",
     width: 180,
   },
+  table: {
+    backgroundColor: "#F3F0E680",
+    maxHeight: null,
+  },
   tableCellTitle: {
     position: "relative",
     textTransform: "none",
+    "&:after": {
+      content: "''",
+      display: "block",
+      fontWeight: 500,
+      left: 0,
+      height: "75%",
+      minHeight: "80%",
+      position: "absolute",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: "100%",
+      zIndex: "-1",
+    },
+  },
+  tableHeader: {
+    borderBottom: "1px solid #000",
+    paddingTop: 30,
   },
   tableLink: {
     color: "#000",
     display: "block",
     position: "relative",
     textDecoration: "none",
-    // maxWidth: "85%",
+    maxWidth: "85%",
   },
 }));
 
@@ -59,7 +83,6 @@ function PolicyActionTable(props) {
         { id: "title", label: "Name" },
         { id: "type", label: "Type" },
         { id: "country.displayTitle", label: `Government` },
-        { id: "country.state", label: `State (US)` },
         { id: "dateInitiated", label: "Date Initiated" },
         { id: "status", label: "Status" },
         { id: "lastUpdate", label: "Last Updated" },
@@ -151,12 +174,15 @@ function PolicyActionTable(props) {
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TableContainer>
+            <TableContainer className={classes.table}>
               <Table aria-label="Law and Regulation Tracker Table">
                 <TableHead>
                   <TableRow>
                     {headers.map((column) => (
-                      <TableCell key={column.id}>
+                      <TableCell
+                        key={column.id}
+                        className={classes.tableHeader}
+                      >
                         <Typography component="div" variant={"tableHeaderHome"}>
                           {column.label}
                         </Typography>
@@ -190,6 +216,7 @@ function PolicyActionTable(props) {
                             return (
                               <TableCell
                                 key={column.id}
+                                width={column.id == "title" && "350px"}
                                 className={
                                   column.id == "title"
                                     ? classes.tableCellTitle
@@ -250,7 +277,7 @@ function PolicyActionTable(props) {
         </Grid>
       ) : (
         <>
-          <TableContainer>
+          <TableContainer sx={{ maxHeight: 440 }}>
             <Table
               aria-label="Law and Regulation Tracker Table"
               className={classes.table}
@@ -292,15 +319,7 @@ function PolicyActionTable(props) {
                           return (
                             <TableCell
                               key={column.id}
-                              width={
-                                column.id == "title"
-                                  ? 340
-                                  : column.id == "status"
-                                  ? 200
-                                  : column.id == "dateInitiated"
-                                  ? 150
-                                  : 130
-                              }
+                              width={column.id == "title" && null}
                               className={
                                 column.id == "title"
                                   ? classes.tableCellTitle
@@ -341,6 +360,11 @@ function PolicyActionTable(props) {
                                   {value}
                                 </Typography>
                               )}
+                              {column.id == "title" ? (
+                                <KeyboardArrowRightIcon
+                                  className={classes.icon}
+                                />
+                              ) : null}
                             </TableCell>
                           );
                         })}

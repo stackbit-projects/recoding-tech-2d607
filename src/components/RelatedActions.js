@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // components
-import PolicyActionTable from "./PolicyActionTable";
+import PolicyActionTableBlock from "./PolicyActionTableBlock";
 import PolicyActionMobile from "./PolicyActionMobile";
 
 const useStyles = makeStyles(() => ({
@@ -66,7 +66,7 @@ const RelatedActions = (props) => {
         {isMobile ? (
           <PolicyActionMobile actions={actions} isHomepage={false} />
         ) : (
-          <PolicyActionTable actions={actions} isHomepage={false} />
+          <PolicyActionTableBlock actions={actions} isHomepage={false} />
         )}
       </Box>
     </section>
