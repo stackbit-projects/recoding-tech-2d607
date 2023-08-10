@@ -65,6 +65,20 @@ const theme = createTheme({
           paddingRight: 16,
           paddingTop: 16,
           textTransform: "uppercase",
+          // "&:hover": {
+          //   "&:after": {
+          //     backgroundColor: "#F3F0E6",
+          //     content: "''",
+          //     display: "block",
+          //     height: "60%",
+          //     left: 0,
+          //     position: "absolute",
+          //     top: "50%",
+          //     transform: "translateY(-50%)",
+          //     width: "100%",
+          //     zIndex: "-1",
+          //   },
+          // }
         },
       },
     },
@@ -87,7 +101,7 @@ const theme = createTheme({
       main: "#FF0033",
     },
     secondary: {
-      main: "#C2CECC",
+      main: "#427569",
     },
     tertiary: {
       main: "#273649",
@@ -251,7 +265,7 @@ const theme = createTheme({
     trackerRow: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
-      fontWeight: 500,
+      fontWeight: 400,
       textTransform: "uppercase",
     },
     subtitle1: {

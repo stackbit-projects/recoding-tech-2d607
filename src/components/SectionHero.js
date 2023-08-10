@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
 import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // Material UI imports
 import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 // utils
 import { withPrefix } from "../utils";
+
+// icons
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const useStyles = makeStyles((theme) => ({
   author: {
@@ -21,15 +26,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     zIndex: 1,
   },
-  box: {
-    paddingBottom: 120,
-    paddingTop: 120,
-    // [theme.breakpoints.up("sm")]: {
-    //   paddingBottom: 120,
-    //   paddingTop: 120
-    // }
-  },
   hero: {
+    marginBottom: 60,
+    marginTop: 70,
+    paddingBottom: 150,
+    paddingTop: 40,
     position: "relative",
   },
   link: {
@@ -50,12 +51,12 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   svg: {
-    height: 250,
+    height: 350,
     left: "50%",
     position: "absolute",
     top: "40%",
     transform: "translate(-50%, -50%)",
-    width: 650,
+    width: 750,
     zIndex: 0,
   },
 
@@ -65,17 +66,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleClick(event) {
+  event.preventDefault();
+}
+
+function format(crumb) {
+  return titleCase(crumb.split("-").join(" "));
+}
+
 function SectionHero(props) {
+  const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
   let { page } = props;
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  console.log(page);
+  useEffect(() => {
+    if (router) {
+      setBreadcrumbs(router.query.slug);
+    }
+  }, [router]);
+
+  useEffect(() => {}, [breadcrumbs]);
 
   return (
     <section id={page.__metadata.id} className="block block-hero">
       <Box
-        className={classes.box}
         style={{
           backgroundColor:
             page.type && theme.palette[page.type]
@@ -83,6 +99,26 @@ function SectionHero(props) {
               : theme.palette.secondary.main,
         }}
       >
+        <Container maxWidth="xl">
+          <Box role="presentation" onClick={handleClick} sx={{ paddingY: 6 }}>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+              sx={{ color: "#FFF" }}
+            >
+              <Typography variant="body2" color="#FFF">
+                home
+              </Typography>
+              {breadcrumbs.length
+                ? breadcrumbs.map((crumb) => (
+                    <Typography key={crumb} variant="body2" color="#FFF">
+                      {format(crumb)}
+                    </Typography>
+                  ))
+                : null}
+            </Breadcrumbs>
+          </Box>
+        </Container>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg
@@ -92,8 +128,7 @@ function SectionHero(props) {
             >
               <path
                 d="M705 2H445c-78.4 0-78.4 78.6-156.7 78.6H0V277h288.3c78.3 0 78.3-78.6 156.6-78.6H705V2Z"
-                fill="#DFE7E6"
-                opacity=".3"
+                fill="#3C6E63"
               />
               <path
                 d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
@@ -105,7 +140,11 @@ function SectionHero(props) {
             </svg>
           </Box>
           {page.__metadata.modelName == "policy_action" ? (
-            <Typography variant="h4" className={classes.superTitle}>
+            <Typography
+              variant="h4"
+              className={classes.superTitle}
+              color="#FFF"
+            >
               Tracker Detail
             </Typography>
           ) : page.__metadata.modelName == "guide" ? (
@@ -122,7 +161,7 @@ function SectionHero(props) {
             </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
-            <Typography variant="h1" className={classes.title}>
+            <Typography variant="h1" className={classes.title} color="#FFF">
               {titleCase(
                 page.displayTitle
                   ? page.displayTitle

@@ -21,10 +21,10 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   icon: {
     position: "absolute",
     right: 20,
@@ -37,18 +37,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 200,
     position: "relative",
     textTransform: "none",
-    "&:after": {
-      backgroundColor: theme.palette.footer.main,
-      content: "''",
-      display: "block",
-      left: 0,
-      minHeight: "80%",
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
-      width: "100%",
-      zIndex: "-1",
-    },
     "&:hover": {
       "& a": {
         textDecoration: "underline",
@@ -65,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
   trackerIcon: {
+    color: "#FF0033",
     left: 0,
     position: "absolute",
     top: "50%",
@@ -72,10 +61,11 @@ const useStyles = makeStyles((theme) => ({
   },
   trackerLink: {
     color: "#000",
-    fontStyle: "italic",
+    fontWeight: 500,
     paddingLeft: 40,
     position: "relative",
     textDecoration: "none",
+    textTransform: "uppercase",
     "&:hover": {
       textDecoration: "underline",
     },
@@ -99,9 +89,9 @@ const TrackerActions = (props) => {
 
   return (
     <>
-      <Typography gutterBottom>
+      <Typography variant="body2" gutterBottom>
         <Link href="/tracker" className={classes.trackerLink}>
-          <KeyboardArrowLeftIcon className={classes.trackerIcon} />
+          <ArrowBackIcon className={classes.trackerIcon} />
           Return to law & regulation tracker
         </Link>
       </Typography>
