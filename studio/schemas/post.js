@@ -72,7 +72,7 @@ export default {
       validation: null,
     },
     {
-      type: "date",
+      type: "datetime",
       name: "date",
       title: "Published date",
     },
@@ -98,6 +98,11 @@ export default {
           to: [{ type: "topic" }],
         },
       ],
+    },
+    {
+      type: "image",
+      name: "postImage",
+      title: "Image for the post",
     },
   ],
   orderings: [
