@@ -39,9 +39,8 @@ import author from './author.js'
 import post from './post.js'
 
 // Then we give our schema to the builder and provide the result to Sanity
-export default [
-  /* Your types here! */
-  config,
+export const schemaTypes = [
+  /* Your types here! */ config,
   // contact_submission,
   header,
   footer,

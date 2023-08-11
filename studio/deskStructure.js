@@ -1,21 +1,21 @@
-import S from "@sanity/desk-tool/structure-builder";
+import {SEOPane} from 'sanity-plugin-seo-pane'
 
-function transformType(type) {
-    let schemaType = type.getSchemaType();
-    if (schemaType.singleInstance === true) {
-        return type.child(
-            S.editor()
-                .id(schemaType.name)
-                .schemaType(schemaType.name)
-                .documentId(schemaType.name)
-        )
-    }
-    return type;
+export const getDefaultDocumentNode = (S, {schemaType}) => {
+  // Conditionally return a different configuration based on the schema type
+  if (schemaType === 'post') {
+    return S.view
+      .component(SEOPane)
+      .options({
+        // Retrieve the keywords and synonyms at the given dot-notated strings
+        keywords: `seo.keywords`,
+        synonyms: `seo.synonyms`,
+        url: (doc) => resolveProductionUrl(doc),
+
+        // Alternatively, specify functions (may be async) to extract values
+        // keywords: doc => doc.seo?.keywords,
+        // synonyms: async(doc) => client.fetch('some query to get synonyms', {id: doc._id}),
+        // url: async(doc) => client.fetch('some query to construct a url with refs', {id: doc._id})
+      })
+      .title('SEO')
+  }
 }
-
-export default () =>
-    S.list()
-        .title("Content")
-        .items([
-            ...S.documentTypeListItems().map(transformType)
-        ]);

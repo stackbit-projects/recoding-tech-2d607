@@ -1,105 +1,104 @@
 export default {
-  type: "document",
-  name: "topic",
-  title: "Topic",
+  type: 'document',
+  name: 'topic',
+  title: 'Topic',
   fields: [
     {
-      title: "Name",
-      type: "string",
-      name: "name",
-      description: "The name of the topic.",
+      title: 'Name',
+      type: 'string',
+      name: 'name',
+      description: 'The name of the topic.',
       validation: (Rule) => Rule.required(),
     },
     {
-      title: "Display name",
-      type: "string",
-      name: "displayName",
+      title: 'Display name',
+      type: 'string',
+      name: 'displayName',
+      description: 'How you want the name of the topic to appear on the front-end',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      title: 'Category or post_tag',
+      type: 'string',
+      name: 'domain',
+      description: 'How the topic was classified on Wordpress',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
       description:
-        "How you want the name of the topic to appear on the front-end",
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      title: "Category or post_tag",
-      type: "string",
-      name: "domain",
-      description: "How the topic was classified on Wordpress",
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      title: "Slug",
-      name: "slug",
-      type: "slug",
-      description:
-        "The slug for the topic. Can be the same as the title, but turned into a URL. For example, title-of-guide.",
+        'The slug for the topic. Can be the same as the title, but turned into a URL. For example, title-of-guide.',
       validation: (Rule) => Rule.required(),
       options: {
-        source: "displayName",
+        source: 'displayName',
         maxLength: 200, // will be ignored if slugify is set
         slugify: (input) =>
           input
             .toLowerCase()
-            .replace(/[^\w\s]/gi, "")
-            .replace(/\s+/g, "-")
+            .replace(/[^\w\s]/gi, '')
+            .replace(/\s+/g, '-')
             .slice(0, 200),
       },
     },
     {
-      title: "Related commentary and analysis",
-      name: "relatedCommentary",
-      type: "array",
+      title: 'Related commentary and analysis',
+      name: 'relatedCommentary',
+      type: 'array',
       of: [
         {
-          type: "reference",
+          type: 'reference',
           to: [
             {
-              type: "post",
+              type: 'post',
             },
           ],
         },
       ],
     },
     {
-      title: "Related topics",
-      name: "relatedTopics",
-      type: "array",
+      title: 'Related topics',
+      name: 'relatedTopics',
+      type: 'array',
       of: [
         {
-          type: "reference",
-          to: [{ type: "topic" }],
+          type: 'reference',
+          to: [{type: 'topic'}],
         },
       ],
     },
+    // {
+    //   title: "Topic description",
+    //   type: "markdown",
+    //   name: "topicDescription",
+    //   description: "Anything you want to say about the topic.",
+    // },
     {
-      title: "Topic description",
-      type: "markdown",
-      name: "topicDescription",
-      description: "Anything you want to say about the topic.",
-    },
-    {
-      type: "string",
-      name: "stackbit_model_type",
-      title: "Stackbit Model Type",
-      description: "Stackbit model type",
+      type: 'string',
+      name: 'stackbit_model_type',
+      title: 'Stackbit Model Type',
+      description: 'Stackbit model type',
       hidden: false,
       validation: (Rule) => Rule.required(),
       options: {
-        list: ["page", "data"],
+        list: ['page', 'data'],
       },
     },
   ],
   orderings: [
     {
-      title: "Category first",
-      name: "byCategory",
-      by: [{ field: "_id", direction: "asc" }],
+      title: 'Category first',
+      name: 'byCategory',
+      by: [{field: '_id', direction: 'asc'}],
     },
   ],
   preview: {
     select: {
-      title: "displayName",
+      title: 'displayName',
     },
   },
-};
+}
 
 /**  {
       title: "Display title",
