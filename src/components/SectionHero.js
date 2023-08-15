@@ -94,9 +94,11 @@ function SectionHero(props) {
       <Box
         style={{
           backgroundColor:
-            page.type && theme.palette[page.type]
-              ? theme.palette[page.type].main
-              : theme.palette.secondary.main,
+            page.type && page.stackbit_model_type == "page"
+              ? theme.palette["topic"].main
+              : page.layout == "policy_action"
+              ? "#427569"
+              : "#FFF",
         }}
       >
         <Container maxWidth="xl">
@@ -128,11 +130,23 @@ function SectionHero(props) {
             >
               <path
                 d="M705 2H445c-78.4 0-78.4 78.6-156.7 78.6H0V277h288.3c78.3 0 78.3-78.6 156.6-78.6H705V2Z"
-                fill="#3C6E63"
+                fill={
+                  page.type && page.stackbit_model_type == "page"
+                    ? "#215793"
+                    : page.layout == "policy_action"
+                    ? "#3C6E63"
+                    : "#ECF0F0"
+                }
               />
               <path
                 d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
-                stroke="#EFE9DA"
+                stroke={
+                  page.type && page.stackbit_model_type == "page"
+                    ? "#EFE9DA"
+                    : page.layout == "policy_action"
+                    ? "#EFE9DA"
+                    : "#000"
+                }
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -143,7 +157,7 @@ function SectionHero(props) {
             <Typography
               variant="h4"
               className={classes.superTitle}
-              color="#FFF"
+              color={"#FFF"}
             >
               Tracker Detail
             </Typography>
@@ -152,7 +166,15 @@ function SectionHero(props) {
               Quick-start Guide
             </Typography>
           ) : page.__metadata.modelName == "topic" ? (
-            <Typography variant="h4" className={classes.superTitle}>
+            <Typography
+              variant="h4"
+              className={classes.superTitle}
+              color={
+                page.type && page.stackbit_model_type == "page"
+                  ? "#FFF"
+                  : "#000"
+              }
+            >
               {page.type == "country" ? "Government" : page.type}
             </Typography>
           ) : page.__metadata.modelName == "article" ? (
@@ -161,7 +183,16 @@ function SectionHero(props) {
             </Typography>
           ) : null}
           {(page.displayTitle || page.heroContent || page.title) && (
-            <Typography variant="h1" className={classes.title} color="#FFF">
+            <Typography
+              variant="h1"
+              className={classes.title}
+              color={
+                (page.type && page.stackbit_model_type == "page") ||
+                page.layout == "policy_action"
+                  ? "#FFF"
+                  : "#000"
+              }
+            >
               {titleCase(
                 page.displayTitle
                   ? page.displayTitle

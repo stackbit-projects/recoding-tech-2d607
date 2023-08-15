@@ -144,6 +144,12 @@ const theme = createTheme({
         dark: "#666666",
       },
     }),
+    topic: defaultTheme.palette.augmentColor({
+      name: "topic",
+      color: {
+        main: "#215C9D",
+      },
+    }),
     footer: defaultTheme.palette.augmentColor({
       name: "footer",
       color: {

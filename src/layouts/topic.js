@@ -9,17 +9,13 @@ import client from "../utils/sanityClient";
 // material ui imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 // components
 import { Layout } from "../components/index";
-import RelatedCommentary from "../components/RelatedCommentary";
-import RelatedReadings from "../components/RelatedReadings";
-import RelatedTopics from "../components/RelatedTopics";
+import PageRecents from "../components/PageRecents";
 import RelatedActions from "../components/RelatedActions";
 import SectionHero from "../components/SectionHero";
 
@@ -102,64 +98,50 @@ const Topic = (props) => {
 
   useEffect(() => {}, [issues, headlines, policies, readings]);
 
+  console.log(page);
+
   return (
     <Layout {...props}>
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          <RelatedActions page={page} actions={actions} loading={loading} />
-          <Grid container spacing={8}>
-            <Grid container spacing={12} direction="column" item sm={12} md={8}>
-              {page.fastFacts && (
-                <Grid item>
-                  <Card
-                    variant="outlined"
-                    className={`${classes.box} ${classes.featured}`}
-                  >
-                    <CardContent>
-                      <Typography component="div" variant="h4">
-                        Fast Facts
-                      </Typography>
-                      <Typography
-                        component="div"
-                        variant="body1"
-                        className={classes.em}
-                      >
-                        {markdownify(page.fastFacts)}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              )}
-
-              <Grid item className={classes.maxWidth}>
+          {page.stackbit_model_type == "page" && (
+            <Grid container spacing={8}>
+              <Grid
+                spacing={12}
+                direction="column"
+                item
+                sm={12}
+                md={8}
+                className={classes.maxWidth}
+              >
                 <Typography
                   component="div"
-                  variant="body1"
+                  variant="body2"
                   className="html-to-react"
+                  sx={{ fontSize: 14, lineHeight: 2 }}
                 >
                   {markdownify(page.topicDescription)}
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid container spacing={4} direction="column" item sm={12} md={4}>
-              <Grid item sx={{ width: "100%" }}>
-                {page.relatedCommentary && page.relatedCommentary.length ? (
-                  <RelatedReadings
-                    page={page}
-                    readings={page.relatedCommentary}
-                  />
-                ) : null}
-              </Grid>
-              <Grid item>
-                <RelatedCommentary commentary={headlines} topic={page.slug} />
-              </Grid>
-              <Grid item>
-                <RelatedTopics title="Related Issues" topics={issues} />
-                <RelatedTopics title="Related Policies" topics={policies} />
+              <Grid
+                container
+                spacing={4}
+                direction="column"
+                item
+                sm={12}
+                md={4}
+              >
+                <Grid item sx={{ width: "100%" }}>
+                  Insert subscribe box here
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          )}
+          <Box marginTop={4}>
+            <PageRecents page={page} readings={page.relatedCommentary} />
+            <RelatedActions page={page} actions={actions} loading={loading} />
+          </Box>
         </Container>
       </Box>
     </Layout>

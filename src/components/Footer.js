@@ -22,7 +22,7 @@ import Logo from "./LogoFooter";
 function Footer(props) {
   return (
     <footer style={{ backgroundColor: "#3475BF", color: "#FFF" }}>
-      <Box py={8}>
+      <Box pt={8} pb={4}>
         <Container>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={2}>

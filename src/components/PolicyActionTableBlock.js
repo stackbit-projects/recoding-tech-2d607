@@ -18,9 +18,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
-// material ui icons
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-
 // images
 import TrackerBackground from "../assets/tracker-bg.jpg";
 
@@ -31,7 +28,7 @@ const useStyles = makeStyles(() => ({
     width: 180,
   },
   table: {
-    backgroundColor: "#F3F0E680",
+    backgroundColor: "#F3F0E6 !important",
     maxHeight: null,
   },
   tableCellTitle: {
@@ -277,11 +274,8 @@ function PolicyActionTable(props) {
         </Grid>
       ) : (
         <>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table
-              aria-label="Law and Regulation Tracker Table"
-              className={classes.table}
-            >
+          <TableContainer>
+            <Table aria-label="Law and Regulation Tracker Table">
               <TableHead>
                 <TableRow>
                   {headers.map((column) => (
@@ -319,7 +313,15 @@ function PolicyActionTable(props) {
                           return (
                             <TableCell
                               key={column.id}
-                              width={column.id == "title" && null}
+                              width={
+                                column.id == "title"
+                                  ? 340
+                                  : column.id == "status"
+                                  ? 200
+                                  : column.id == "dateInitiated"
+                                  ? 150
+                                  : 130
+                              }
                               className={
                                 column.id == "title"
                                   ? classes.tableCellTitle
@@ -360,11 +362,6 @@ function PolicyActionTable(props) {
                                   {value}
                                 </Typography>
                               )}
-                              {column.id == "title" ? (
-                                <KeyboardArrowRightIcon
-                                  className={classes.icon}
-                                />
-                              ) : null}
                             </TableCell>
                           );
                         })}

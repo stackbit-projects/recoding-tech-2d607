@@ -151,7 +151,14 @@ function PolicyActionTable(props) {
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            <TableContainer>
+            <TableContainer
+              sx={{
+                backgroundColor: isHomepage
+                  ? "rgba(243,240,230, 0.5) "
+                  : "#FFF",
+                paddingLeft: 2,
+              }}
+            >
               <Table aria-label="Law and Regulation Tracker Table">
                 <TableHead>
                   <TableRow>
@@ -165,84 +172,79 @@ function PolicyActionTable(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {actions
-                    .slice(
-                      current * rowsPerPage,
-                      current * rowsPerPage + rowsPerPage
-                    )
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row._key}
-                        >
-                          {headers.map((column) => {
-                            let value = row[column.id];
-                            if (!value) {
-                              if (row.country) {
-                                value = row.country.displayTitle; // #FIXME
-                              } else {
-                                value = row.type;
-                              }
+                  {actions.map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._key}
+                      >
+                        {headers.map((column) => {
+                          let value = row[column.id];
+                          if (!value) {
+                            if (row.country) {
+                              value = row.country.displayTitle; // #FIXME
+                            } else {
+                              value = row.type;
                             }
-                            return (
-                              <TableCell
-                                key={column.id}
-                                className={
-                                  column.id == "title"
-                                    ? classes.tableCellTitle
-                                    : null
-                                }
-                              >
-                                {column.id == "dateInitiated" ||
-                                column.id == "lastUpdate" ? (
-                                  <Typography
-                                    component="div"
-                                    variant={"trackerRowHome"}
+                          }
+                          return (
+                            <TableCell
+                              key={column.id}
+                              className={
+                                column.id == "title"
+                                  ? classes.tableCellTitle
+                                  : null
+                              }
+                            >
+                              {column.id == "dateInitiated" ||
+                              column.id == "lastUpdate" ? (
+                                <Typography
+                                  component="div"
+                                  variant={"trackerRowHome"}
+                                >
+                                  {DateTime.fromISO(value).toLocaleString(
+                                    DateTime.DATE_MED
+                                  )}
+                                </Typography>
+                              ) : column.id == "title" ? (
+                                <Typography
+                                  component="div"
+                                  variant={"trackerTitleHome"}
+                                >
+                                  <Link
+                                    className={classes.tableLink}
+                                    href={`/tracker/${
+                                      typeof row.slug === "object"
+                                        ? row.slug.current
+                                        : row.slug
+                                    }`}
                                   >
-                                    {DateTime.fromISO(value).toLocaleString(
-                                      DateTime.DATE_MED
-                                    )}
-                                  </Typography>
-                                ) : column.id == "title" ? (
-                                  <Typography
-                                    component="div"
-                                    variant={"trackerTitleHome"}
-                                  >
-                                    <Link
-                                      className={classes.tableLink}
-                                      href={`/tracker/${
-                                        typeof row.slug === "object"
-                                          ? row.slug.current
-                                          : row.slug
-                                      }`}
-                                    >
-                                      {titleCase(truncate(value))}
-                                    </Link>
-                                  </Typography>
-                                ) : column.id == "type" ? (
-                                  <Typography
-                                    component="div"
-                                    variant={"trackerRowHome"}
-                                  >
-                                    {row.type}
-                                  </Typography>
-                                ) : (
-                                  <Typography
-                                    component="div"
-                                    variant={"trackerRowHome"}
-                                  >
-                                    {value}
-                                  </Typography>
-                                )}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
+                                    {titleCase(truncate(value))}
+                                  </Link>
+                                </Typography>
+                              ) : column.id == "type" ? (
+                                <Typography
+                                  component="div"
+                                  variant={"trackerRowHome"}
+                                >
+                                  {row.type}
+                                </Typography>
+                              ) : (
+                                <Typography
+                                  component="div"
+                                  variant={"trackerRowHome"}
+                                >
+                                  {value}
+                                </Typography>
+                              )}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>
