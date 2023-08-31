@@ -54,7 +54,10 @@ export default function htmlToReact(html) {
                       }
                     )}`;
                     return (
-                      <ListItem key={slug} sx={{ marginLeft: 0, paddingLeft: 0 }}>
+                      <ListItem
+                        key={slug}
+                        sx={{ marginLeft: 0, paddingLeft: 0 }}
+                      >
                         <NextLink
                           href={`${router.asPath.split("#")[0]}${slug}`}
                           scroll={false}

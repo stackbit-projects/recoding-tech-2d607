@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import components, { Layout } from "../components/index";
 
 // components
-import Sidebar from "../components/Sidebar";
+// import Sidebar from "../components/Sidebar";
 
 // icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -31,9 +31,9 @@ function format(crumb) {
 const Page = (props) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState([]);
-  const {
-    page: { sidebar_content = {} },
-  } = props;
+  // const {
+  //   page: { sidebar_content = {} },
+  // } = props;
 
   useEffect(() => {
     if (router) {
@@ -59,7 +59,7 @@ const Page = (props) => {
               <Typography variant="body2" color="text.primary">
                 home
               </Typography>
-              {breadcrumbs.length
+              {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (
                     <Typography
                       key={crumb}
@@ -86,11 +86,11 @@ const Page = (props) => {
                 {markdownify(_.get(props, "page.content", null))}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            {/* <Grid item xs={12} sm={4}>
               {sidebar_content && sidebar_content.length ? (
                 <Sidebar content={sidebar_content} />
               ) : null}
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={8}>
               {_.map(
                 _.get(props, "page.sections", null),
