@@ -219,6 +219,12 @@ module.exports = {
                     page: object,
                   });
                   break;
+                case "author":
+                  accum.push({
+                    path: `/contributors/${object.slug}`,
+                    page: object,
+                  });
+                  break;
               }
               return accum;
             },
