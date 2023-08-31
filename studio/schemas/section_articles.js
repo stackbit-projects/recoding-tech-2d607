@@ -7,7 +7,7 @@ export default {
       name: "featuredArticle",
       title: "Featured Article",
       type: "reference",
-      to: { type: "article" },
+      to: { type: "post" },
     },
     {
       name: "alsoFeatured",
@@ -17,7 +17,7 @@ export default {
         {
           type: "reference",
           to: {
-            type: "article",
+            type: "post",
           },
         },
       ],
