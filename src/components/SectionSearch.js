@@ -1,6 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
+// import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 // utils
 import client from "../utils/sanityClient";
@@ -10,13 +11,12 @@ import { makeStyles } from "@mui/styles";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 // components
-import FancyCard from "./FancyCard";
 import SearchBar from "./SearchBar";
 
 const citationsQuery =
@@ -49,32 +49,28 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 8,
   },
   grid: {},
-  gridTitle: {
-    marginBottom: 32,
-    marginTop: 32,
-  },
   link: {
     color: theme.typography.link.color,
   },
 }));
 
-const ROWS_PER_PAGE = 4;
+const ROWS_PER_PAGE = 24;
 
 const SectionSearch = () => {
   const classes = useStyles();
   const { query } = useRouter();
   const [citations, setCitations] = useState([]);
   const [allCitations, setAllCitations] = useState([]);
-  const [topics, setTopics] = useState([]);
+  // const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
   const [search, setSearch] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // filters
-  const [issues, setIssues] = useState([]);
-  const [policies, setPolicies] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [countries, setCountries] = useState([]);
+  // const [issues, setIssues] = useState([]);
+  // const [policies, setPolicies] = useState([]);
+  // const [companies, setCompanies] = useState([]);
+  // const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     client.fetch(citationsQuery).then((cites) => {
@@ -89,57 +85,57 @@ const SectionSearch = () => {
       topics.forEach((topic) => {
         allTopics = [...allTopics, topic];
       });
-      setTopics(topics);
+      // setTopics(topics);
     });
   }, []);
 
-  useEffect(() => {
-    const newTopics = {
-      issue: new Map(),
-      policy: new Map(),
-      company: new Map(),
-      country: new Map(),
-    };
-    if (Array.isArray(topics) && topics.length) {
-      topics.map((topic) => {
-        if (topic.type && topic.slug) {
-          newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
-        }
-      });
-    }
+  // useEffect(() => {
+  //   const newTopics = {
+  //     issue: new Map(),
+  //     policy: new Map(),
+  //     company: new Map(),
+  //     country: new Map(),
+  //   };
+  //   if (Array.isArray(topics) && topics.length) {
+  //     topics.map((topic) => {
+  //       if (topic.type && topic.slug) {
+  //         newTopics[topic.type] && newTopics[topic.type].set(topic.slug, topic);
+  //       }
+  //     });
+  //   }
 
-    let newFilters = [];
-    // ["issue", "policy", "company", "country"].forEach((type) => {
-    //   if (query[type]) {
-    //     query[type].forEach((t) => {
-    //       const exists = newTopics[type].get(t);
-    //       if (exists) {
-    //         newFilters.push(exists);
-    //       }
-    //     });
-    //   } else {
-    //     const exists = newTopics[type].get(query[type]);
-    //     if (exists) {
-    //       newFilters.push(exists);
-    //     }
-    //   }
-    // });
+  //   let newFilters = [];
+  //   // ["issue", "policy", "company", "country"].forEach((type) => {
+  //   //   if (query[type]) {
+  //   //     query[type].forEach((t) => {
+  //   //       const exists = newTopics[type].get(t);
+  //   //       if (exists) {
+  //   //         newFilters.push(exists);
+  //   //       }
+  //   //     });
+  //   //   } else {
+  //   //     const exists = newTopics[type].get(query[type]);
+  //   //     if (exists) {
+  //   //       newFilters.push(exists);
+  //   //     }
+  //   //   }
+  //   // });
 
-    setIssues(Array.from(newTopics.issue.values()));
-    setPolicies(Array.from(newTopics.policy.values()));
-    setCompanies(Array.from(newTopics.company.values()));
-    setCountries(Array.from(newTopics.country.values()));
-    newFilters.sort();
-    setFilters(newFilters);
-  }, [topics]);
+  //   setIssues(Array.from(newTopics.issue.values()));
+  //   setPolicies(Array.from(newTopics.policy.values()));
+  //   setCompanies(Array.from(newTopics.company.values()));
+  //   setCountries(Array.from(newTopics.country.values()));
+  //   newFilters.sort();
+  //   setFilters(newFilters);
+  // }, [topics]);
 
-  useEffect(() => {
-    let filterTopic;
-    if (query.filter) {
-      filterTopic = topics.filter((topic) => topic._id === query.filter);
-      setFilters(filterTopic);
-    }
-  }, [query, topics]);
+  // useEffect(() => {
+  //   let filterTopic;
+  //   if (query.filter) {
+  //     filterTopic = topics.filter((topic) => topic._id === query.filter);
+  //     setFilters(filterTopic);
+  //   }
+  // }, [query, topics]);
 
   useEffect(() => {
     if (allCitations.length) {
@@ -181,11 +177,11 @@ const SectionSearch = () => {
     setPage(newPage);
   };
 
-  const handleClick = (topic) => () => {
-    if (topic && filters.findIndex((f) => f.slug === topic.slug) < 0) {
-      setFilters([...filters, topic]);
-    }
-  };
+  // const handleClick = (topic) => () => {
+  //   if (topic && filters.findIndex((f) => f.slug === topic.slug) < 0) {
+  //     setFilters([...filters, topic]);
+  //   }
+  // };
 
   const handleDelete = (topic) => () => {
     if (query.filter && history) {
@@ -196,11 +192,6 @@ const SectionSearch = () => {
     }
   };
 
-  const getHandler = (item) => {
-    const handler = () => Router.push({ pathname: item.url });
-    return handler;
-  };
-
   return (
     <Grid
       container
@@ -209,131 +200,15 @@ const SectionSearch = () => {
       alignItems="flex-start"
       direction="row-reverse"
       justifyContent="flex-end"
+      my={8}
     >
-      <Grid container item xs={12} md={4} direction="column">
-        <Grid item className={classes.gridTitle}>
-          <Typography component="h2" variant="h2" sx={{ marginTop: 4 }}>
-            Filter...
-          </Typography>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={12}>
-            <Typography component="h2" variant="h4">
-              Issues
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
-              {issues.map((topic, i) => (
-                <Chip
-                  className={classes.chip}
-                  key={i}
-                  label={topic.displayTitle || topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                  sx={{ marginBottom: "6px !important" }}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
-            <Typography component="h2" variant="h4">
-              Policies
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
-              {policies.map((topic, i) => (
-                <Chip
-                  className={classes.chip}
-                  key={i}
-                  label={topic.displayTitle || topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                  sx={{ marginBottom: "6px !important" }}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
-            <Typography component="h2" variant="h4">
-              Companies
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
-              {companies.map((topic, i) => (
-                <Chip
-                  key={i}
-                  className={classes.chip}
-                  label={topic.displayTitle || topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                  sx={{ marginBottom: "6px !important" }}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
-          className={classes.gridTitle}
-        >
-          <Grid item xs={8}>
-            <Typography component="h2" variant="h4">
-              Governments
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Stack spacing={1} direction="row" sx={{ flexWrap: "wrap" }}>
-              {countries.map((topic, i) => (
-                <Chip
-                  key={`chip-${i}`}
-                  className={classes.chip}
-                  label={topic.displayTitle || topic.name}
-                  color={topic.type}
-                  clickable
-                  onClick={handleClick(topic)}
-                  sx={{ marginBottom: "6px !important" }}
-                />
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
+      <Grid item>
+        <Typography component="h2" variant="h4">
+          Explore Our Library of Research, Policy Papers, Investigative
+          Journalism, & Op-Eds
+        </Typography>
       </Grid>
-      <Grid
-        container
-        item
-        justifyContent="space-between"
-        className={classes.gridTitle}
-        spacing={4}
-        xs={12}
-        md={8}
-      >
+      <Grid container item justifyContent="space-between" spacing={4} xs={12}>
         <Grid item xs={12}>
           <SearchBar handleSearch={(value) => setSearch(value)} />
         </Grid>
@@ -353,7 +228,7 @@ const SectionSearch = () => {
               : null}
           </Stack>
         </Grid>
-        <Grid container flexDirection="column" item xs={12}>
+        <Grid container item xs={12} spacing={2}>
           {citations && citations.length
             ? citations
                 .slice(
@@ -361,40 +236,23 @@ const SectionSearch = () => {
                   (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
                 )
                 .map((citation) => (
-                  <Grid
-                    key={citation._id}
-                    container
-                    item
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Grid
-                      item
-                      xs={10}
-                      key={citation._id}
-                      className={classes.citation}
+                  <Grid key={citation._id} item xs={12} sm={4}>
+                    <Link
+                      variant="body1"
+                      sx={{
+                        color: "#000",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                      }}
+                      href={citation.url}
                     >
-                      <FancyCard
-                        key={citation._id}
-                        title={citation.title}
-                        publication={
-                          citation.publicationTitle
-                            ? citation.publicationTitle
-                            : citation.websiteTitle
-                        }
-                        citation={citation}
-                        date={citation.date}
-                        onClick={getHandler(citation)}
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      key={citation._id}
-                      className={classes.citation}
-                      xs={2}
-                    >
-                      <KeyboardArrowRightIcon />
-                    </Grid>
+                      {citation.title}
+                    </Link>
+                    <Typography variant="h4" color="rgba(0,0,0,0.6)">
+                      {citation.publicationTitle
+                        ? citation.publicationTitle
+                        : citation.websiteTitle}
+                    </Typography>
                   </Grid>
                 ))
             : null}
