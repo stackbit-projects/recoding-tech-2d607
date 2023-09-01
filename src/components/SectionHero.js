@@ -109,7 +109,7 @@ function SectionHero(props) {
               sx={{ color: "#FFF" }}
             >
               <Typography variant="body2" color="#FFF">
-                home
+                Home
               </Typography>
               {breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (

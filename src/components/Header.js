@@ -139,7 +139,7 @@ const Header = () => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
+                        <Link href={`/newsletter`} className={classes.link}>
                           Newsletter
                         </Link>
                       </Typography>
@@ -239,7 +239,7 @@ const Header = () => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
+                        <Link href={`/newsletter`} className={classes.link}>
                           Newsletter
                         </Link>
                       </Typography>
@@ -272,7 +272,7 @@ const Header = () => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
+                        <Link href={`/contributors`} className={classes.link}>
                           Contributors
                         </Link>
                       </Typography>
@@ -283,7 +283,7 @@ const Header = () => {
                         variant="h4"
                         sx={{ textTransform: "none" }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
+                        <Link href={`/about-us`} className={classes.link}>
                           About
                         </Link>
                       </Typography>

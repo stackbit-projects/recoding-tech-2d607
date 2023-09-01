@@ -134,6 +134,7 @@ function PolicyActionTable(props) {
                     accountability for Big Tech.
                   </Typography>
                   <Button
+                    href="/tracker"
                     variant="contained"
                     color="fourth"
                     sx={{
