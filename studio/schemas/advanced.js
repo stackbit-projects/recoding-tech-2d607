@@ -64,7 +64,10 @@ export default {
         },
         {
           type: "section_tracker"
-        }
+        },
+        {
+          type: 'section_contributors',
+        },
       ]
     },
     {

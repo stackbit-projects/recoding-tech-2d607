@@ -21,6 +21,7 @@ import policy_action from './policy_action.js'
 import portable_text from './portable_text.js'
 import section_hero from './section_hero.js'
 import section_citations from './section_citations.js'
+import section_contributors from './section_contributors.js'
 import section_articles from './section_articles.js'
 import section_content from './section_content.js'
 import section_form from './section_form.js'
@@ -60,6 +61,7 @@ export const schemaTypes = [
   section_articles,
   section_citations,
   section_content,
+  section_contributors,
   section_form,
   // section_guides,
   section_search,

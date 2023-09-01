@@ -94,11 +94,11 @@ function SectionHero(props) {
       <Box
         style={{
           backgroundColor:
-            page.type && page.stackbit_model_type == "page"
-              ? theme.palette["topic"].main
+            page.type && page.stackbit_model_type == "data"
+              ? "#FFF"
               : page.layout == "policy_action"
               ? "#427569"
-              : "#FFF",
+              : theme.palette["topic"].main,
         }}
       >
         <Container maxWidth="xl">
@@ -131,21 +131,21 @@ function SectionHero(props) {
               <path
                 d="M705 2H445c-78.4 0-78.4 78.6-156.7 78.6H0V277h288.3c78.3 0 78.3-78.6 156.6-78.6H705V2Z"
                 fill={
-                  page.type && page.stackbit_model_type == "page"
-                    ? "#215793"
+                  page.type && page.stackbit_model_type == "data"
+                    ? "#ECF0F0"
                     : page.layout == "policy_action"
                     ? "#3C6E63"
-                    : "#ECF0F0"
+                    : "#215793"
                 }
               />
               <path
                 d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
                 stroke={
-                  page.type && page.stackbit_model_type == "page"
-                    ? "#EFE9DA"
+                  page.type && page.stackbit_model_type == "data"
+                    ? "#000"
                     : page.layout == "policy_action"
                     ? "#EFE9DA"
-                    : "#000"
+                    : "#EFE9DA"
                 }
                 strokeWidth="4"
                 strokeLinecap="round"
@@ -187,10 +187,9 @@ function SectionHero(props) {
               variant="h1"
               className={classes.title}
               color={
-                (page.type && page.stackbit_model_type == "page") ||
-                page.layout == "policy_action"
-                  ? "#FFF"
-                  : "#000"
+                page.type && page.stackbit_model_type == "data"
+                  ? "#000"
+                  : "#FFF"
               }
             >
               {titleCase(

@@ -10,6 +10,7 @@ import RelatedCommentary from "./RelatedCommentary";
 import RelatedTopics from "./RelatedTopics";
 import SectionCitations from "./SectionCitations";
 import SectionContent from "./SectionContent";
+import SectionContributors from "./SectionContributors";
 import SectionForm from "./SectionForm";
 import SectionHero from "./SectionHero";
 import SectionArticles from "./SectionArticles";
@@ -33,6 +34,7 @@ export {
   RelatedTopics,
   SectionCitations,
   SectionContent,
+  SectionContributors,
   SectionForm,
   SectionHero,
   SectionArticles,
@@ -57,6 +59,7 @@ export default {
   RelatedTopics,
   SectionCitations,
   SectionContent,
+  SectionContributors,
   SectionForm,
   SectionHero,
   SectionArticles,
