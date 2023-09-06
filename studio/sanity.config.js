@@ -9,7 +9,7 @@ export default defineConfig({
   title: 'Tech Policy Press',
 
   projectId: '3tzzh18d',
-  dataset: 'production',
+  dataset: 'tpp-development',
 
   plugins: [deskTool(structure), visionTool()],
 
