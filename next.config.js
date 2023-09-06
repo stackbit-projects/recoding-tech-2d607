@@ -16,6 +16,14 @@ const nextConfig = withSourcebit({
     sanityDataset: process.env.SANITY_DATASET
   },
   //errorOnExist: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
+  },
   trailingSlash: true,
   sassOptions: {
     // scss files might import plain css files from the "public" folder:
