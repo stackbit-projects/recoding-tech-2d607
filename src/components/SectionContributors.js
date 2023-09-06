@@ -69,7 +69,7 @@ const Contributors = () => {
                   <Grid item xs={3}>
                     {author.photo && (
                       <Image
-                        src={urlFor(author.photo).width(40).url()}
+                        src={urlFor(author.photo).width(80).url()}
                         height={80}
                         width={80}
                         alt=""

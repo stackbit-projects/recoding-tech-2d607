@@ -108,7 +108,7 @@ function SectionArticle(props) {
                 }}
               >
                 <CardActionArea
-                  onClick={() => articleClick(article.slug)}
+                  onClick={() => articleClick(article.slug.current)}
                   className={classes.featuredContent}
                 >
                   <CardContent>
@@ -151,7 +151,9 @@ function SectionArticle(props) {
                     variant="outlined"
                     className={`${classes.box} ${classes.alsoFeatured}`}
                   >
-                    <CardActionArea onClick={() => articleClick(article.slug)}>
+                    <CardActionArea
+                      onClick={() => articleClick(article.slug.current)}
+                    >
                       <CardContent>
                         <Typography
                           gutterBottom

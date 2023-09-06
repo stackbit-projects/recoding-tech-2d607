@@ -181,8 +181,19 @@ function SectionHero(props) {
             <Typography variant="h4" className={classes.superTitle}>
               Commentary & Analysis
             </Typography>
+          ) : page.__metadata.modelName == "author" ? (
+            <Typography
+              variant="h4"
+              className={classes.superTitle}
+              sx={{ color: "#FFF" }}
+            >
+              contributors
+            </Typography>
           ) : null}
-          {(page.displayTitle || page.heroContent || page.title) && (
+          {(page.displayTitle ||
+            page.heroContent ||
+            page.title ||
+            page.name) && (
             <Typography
               variant="h1"
               className={classes.title}
@@ -195,6 +206,8 @@ function SectionHero(props) {
               {titleCase(
                 page.displayTitle
                   ? page.displayTitle
+                  : page.name
+                  ? page.name
                   : page.heroContent
                   ? page.heroContent
                   : page.title
