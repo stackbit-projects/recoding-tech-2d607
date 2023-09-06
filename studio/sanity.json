@@ -5,17 +5,17 @@
   },
   "api": {
     "projectId": "3tzzh18d",
-    "dataset": "production"
+    "dataset": "tpp-development"
   },
   "env": {
     "development": {
       "api": {
-        "dataset": "production"
+        "dataset": "tpp-development"
       }
     },
     "production": {
       "api": {
-        "dataset": "production"
+        "dataset": "tpp-development"
       }
     }
   },

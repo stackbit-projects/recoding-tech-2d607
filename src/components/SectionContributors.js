@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email}|order(lastUpdate desc)`;
@@ -49,16 +50,37 @@ const Contributors = () => {
                 <Button>Search/Filter</Button>
               </Grid>
             </Grid>
-            <Grid container my={6}>
+            <Grid container my={6} spacing={6}>
               {authors.map((author) => (
-                <Grid item key={author.slug}>
-                  <Typography
-                    component="div"
-                    variant="h4"
-                    sx={{ fontWeight: 400 }}
-                  >
-                    {author.name}
-                  </Typography>
+                <Grid container item key={author.slug.current} spacing={2} xs={12} sm={6} md={4}>
+                  <Grid item>photo</Grid>
+                  <Grid item>
+                    <Link
+                      href={author.slug.current}
+                      sx={{
+                        textDecoration: "none",
+                        "&:active, &:focus, &:hover": {
+                          color: "#000",
+                          textDecoration: "underline",
+                        },
+                      }}
+                    >
+                      <Typography
+                        component="span"
+                        variant="h4"
+                        sx={{ color: "#000", fontWeight: 400 }}
+                      >
+                        {author.name}
+                      </Typography>
+                    </Link>
+                    <Typography
+                      color="rgba(0,0,0,0.48)"
+                      component="div"
+                      variant="body2"
+                    >
+                      lorem ipsum....
+                    </Typography>
+                  </Grid>
                 </Grid>
               ))}
             </Grid>
