@@ -52,7 +52,15 @@ const Contributors = () => {
             </Grid>
             <Grid container my={6} spacing={6}>
               {authors.map((author) => (
-                <Grid container item key={author.slug.current} spacing={2} xs={12} sm={6} md={4}>
+                <Grid
+                  container
+                  item
+                  key={author.slug.current}
+                  spacing={2}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                >
                   <Grid item>photo</Grid>
                   <Grid item>
                     <Link
