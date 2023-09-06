@@ -98,7 +98,7 @@ module.exports = {
                     page: object,
                   });
                   break;
-                case "article":
+                case "post":
                   if (Array.isArray(object.relatedTopics)) {
                     let topics = object.relatedTopics.map((topic) =>
                       _.pick(topic, [

@@ -1,16 +1,16 @@
 import advanced from "./advanced";
-import article from "./article";
+import post from "./post";
 import author from "./author";
 import page from "./page";
 import policy_action from "./policy_action";
 import guide from "./guide";
 import topic from "./topic";
 
-export { advanced, article, author, page, policy_action, guide };
+export { advanced, post, author, page, policy_action, guide };
 
 export default {
   advanced,
-  article,
+  post,
   author,
   page,
   policy_action,

@@ -19,7 +19,7 @@ import { htmlToReact, urlFor } from "../utils";
 
 const Author = (props) => {
   const { page } = props;
-  console.log(page);
+
   return (
     <Layout {...props}>
       <SectionHero {...props} />

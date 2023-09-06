@@ -34,11 +34,13 @@ function format(crumb) {
   return titleCase(crumb.split("-").join(" "));
 }
 
-const Article = (props) => {
+const Post = (props) => {
   const router = useRouter();
   const { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [topics, setTopics] = useState(null);
+
+  console.log(page);
 
   useEffect(() => {
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
@@ -140,9 +142,9 @@ const Article = (props) => {
                     </Box>
                   </Grid>
                 )}
-                {page.new_content && (
+                {page.body && (
                   <Typography component="div" className="html-to-react-article">
-                    {htmlToReact(page.new_content)}
+                    {htmlToReact(page.body)}
                   </Typography>
                 )}
               </Grid>
@@ -161,9 +163,9 @@ const Article = (props) => {
                   Author
                 </Typography>
                 <Stack direction="row">
-                  {page.author.image && (
+                  {page.author.photo && (
                     <Image
-                      src={urlFor(page.author.image).width(40).url()}
+                      src={urlFor(page.author.photo).width(40).url()}
                       height={40}
                       width={40}
                       alt=""
@@ -201,8 +203,8 @@ const Article = (props) => {
   );
 };
 
-Article.propTypes = {
+Post.propTypes = {
   page: PropTypes.object,
 };
 
-export default Article;
+export default Post;
