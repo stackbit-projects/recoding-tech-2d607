@@ -15,17 +15,9 @@ export default {
       name: "path_prefix",
       title: "Base URL",
       description:
-        "The base URL of this site. Useful for sites hosted under specific path, e.g.: https://www.example.com/my-site/",
-      hidden: true,
+        "The base URL of this site, including the protocol. Useful for sites hosted under specific path, e.g.: https://www.example.com/my-site/",
+      // hidden: true,
       validation: Rule => Rule.required()
-    },
-    {
-      type: "string",
-      name: "domain",
-      title: "Domain",
-      description:
-        "The domain of your site, including the protocol, e.g. https://mysite.com/",
-      validation: null
     },
     {
       type: "image",

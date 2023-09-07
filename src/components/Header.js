@@ -4,17 +4,24 @@ import PropTypes from "prop-types";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { visuallyHidden } from "@mui/utils";
 
 // material ui icons
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuIcon from "@mui/icons-material/Menu";
 
 // component imports
@@ -43,9 +50,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header = () => {
+const Header = (props) => {
   const classes = useStyles();
-
+  const { data } = props;
   const [mobileEl, setMobileEl] = useState(null);
   const openMobile = Boolean(mobileEl);
   const handleClickMobile = (event) => {
@@ -56,6 +63,24 @@ const Header = () => {
   };
 
   const isMobile = useMediaQuery("(max-width:1264px)");
+
+  const [anchorElTopics, setAnchorElTopics] = React.useState(null);
+  const openTopics = Boolean(anchorElTopics);
+  const handleClickTopics = (event) => {
+    setAnchorElTopics(event.currentTarget);
+  };
+  const handleCloseTopics = () => {
+    setAnchorElTopics(null);
+  };
+
+  const [anchorElProjects, setAnchorElProjects] = React.useState(null);
+  const openProjects = Boolean(anchorElProjects);
+  const handleClickProjects = (event) => {
+    setAnchorElProjects(event.currentTarget);
+  };
+  const handleCloseProjects = () => {
+    setAnchorElProjects(null);
+  };
 
   return (
     <header className={classes.header}>
@@ -116,19 +141,54 @@ const Header = () => {
                     }}
                   >
                     <nav>
+                      <Accordion elevation={0} sx={{ marginLeft: 0 }}>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="topics-mobile-content"
+                          id="topics-mobile-header"
+                          sx={{
+                            display: "flex",
+                            position: "relative",
+                            width: 140,
+                          }}
+                        >
+                          <Typography
+                            component="div"
+                            variant="h4"
+                            paddingTop={2}
+                            sx={{ textTransform: "none" }}
+                          >
+                            Topics
+                          </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {data.config.header.topicsLinks &&
+                            data.config.header.topicsLinks.map((link) => (
+                              <Typography
+                                key={link.url}
+                                component="div"
+                                variant="body2"
+                                marginBottom={2}
+                              >
+                                <Link
+                                  href={link.url}
+                                  sx={{
+                                    color: "#000",
+                                    fontSize: "1.1em",
+                                    fontWeight: 500,
+                                    textDecoration: "none",
+                                  }}
+                                >
+                                  {link.label}
+                                </Link>
+                              </Typography>
+                            ))}
+                        </AccordionDetails>
+                      </Accordion>
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
-                      >
-                        <Link href={`/topics`} className={classes.link}>
-                          Topics
-                        </Link>
-                      </Typography>
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{ marginLeft: 2, textTransform: "none" }}
                       >
                         <Link href={`/tracker`} className={classes.link}>
                           Policy Tracker
@@ -137,7 +197,7 @@ const Header = () => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{ marginLeft: 2, textTransform: "none" }}
                       >
                         <Link href={`/newsletter`} className={classes.link}>
                           Newsletter
@@ -146,25 +206,63 @@ const Header = () => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{ marginLeft: 2, textTransform: "none" }}
                       >
                         <Link href={`#FIXME`} className={classes.link}>
                           Podcast
                         </Link>
                       </Typography>
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{ textTransform: "none" }}
+                      <Accordion
+                        elevation={0}
+                        sx={{ "&:before": { height: 0 }, marginLeft: 0 }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
-                          Projects
-                        </Link>
-                      </Typography>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="projects-mobile-content"
+                          id="projects-mobile-header"
+                          sx={{
+                            display: "flex",
+                            position: "relative",
+                            width: 140,
+                          }}
+                        >
+                          <Typography
+                            component="div"
+                            variant="h4"
+                            paddingTop={2}
+                            sx={{ textTransform: "none" }}
+                          >
+                            Projects
+                          </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {data.config.header.projectsLinks &&
+                            data.config.header.projectsLinks.map((link) => (
+                              <Typography
+                                key={link.url}
+                                component="div"
+                                variant="body2"
+                                marginBottom={2}
+                              >
+                                <Link
+                                  href={link.url}
+                                  sx={{
+                                    color: "#000",
+                                    fontSize: "1.1em",
+                                    fontWeight: 500,
+                                    textDecoration: "none",
+                                  }}
+                                >
+                                  {link.label}
+                                </Link>
+                              </Typography>
+                            ))}
+                        </AccordionDetails>
+                      </Accordion>
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{ marginLeft: 2, textTransform: "none" }}
                       >
                         <Link href={`/contributors`} className={classes.link}>
                           Contributors
@@ -173,7 +271,7 @@ const Header = () => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{ marginLeft: 2, textTransform: "none" }}
                       >
                         <Link href={`/about-us`} className={classes.link}>
                           About
@@ -182,7 +280,7 @@ const Header = () => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{ marginLeft: 2, textTransform: "none" }}
                       >
                         <Link href={`/search`} className={classes.link}>
                           Search
@@ -212,15 +310,62 @@ const Header = () => {
                     justifyContent="space-between"
                   >
                     <Grid item>
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{ textTransform: "none" }}
+                      <Button
+                        id="topics-button"
+                        aria-controls={openTopics ? "topics-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openTopics ? "true" : undefined}
+                        onClick={handleClickTopics}
+                        sx={{
+                          fontSize: "1em",
+                          fontWeight: 700,
+                          marginTop: "-4px",
+                          paddingTop: 0,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            backgroundColor: "#FFF",
+                          },
+                        }}
+                        endIcon={<ArrowDropDownIcon />}
                       >
-                        <Link href={`/topics`} className={classes.link}>
-                          Topics
-                        </Link>
-                      </Typography>
+                        Topics
+                      </Button>
+                      <Menu
+                        id="topics-menu"
+                        anchorEl={anchorElTopics}
+                        open={openTopics}
+                        onClose={handleCloseTopics}
+                        MenuListProps={{
+                          "aria-labelledby": "topics-button",
+                        }}
+                        elevation={0}
+                        sx={{
+                          marginTop: 9,
+                          "& ul": {
+                            display: "grid",
+                            gridTemplateColumns: "repeat(4, 1fr)",
+                            maxWidth: "60vw !important",
+                            width: "60vw",
+                          },
+                        }}
+                      >
+                        {data.config.header.topicsLinks &&
+                          data.config.header.topicsLinks.map((link) => (
+                            <MenuItem key={link.url}>
+                              <Link
+                                href={link.url}
+                                sx={{
+                                  color: "#000",
+                                  fontSize: "1.3em",
+                                  fontWeight: 500,
+                                  textDecoration: "none",
+                                }}
+                              >
+                                {link.label}
+                              </Link>
+                            </MenuItem>
+                          ))}
+                      </Menu>
                     </Grid>
                     <Grid item>
                       <Typography
@@ -256,15 +401,64 @@ const Header = () => {
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{ textTransform: "none" }}
+                      <Button
+                        id="projects-button"
+                        aria-controls={
+                          openProjects ? "projects-menu" : undefined
+                        }
+                        aria-haspopup="true"
+                        aria-expanded={openProjects ? "true" : undefined}
+                        onClick={handleClickProjects}
+                        sx={{
+                          fontSize: "1em",
+                          fontWeight: 700,
+                          marginTop: "-4px",
+                          paddingTop: 0,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            backgroundColor: "#FFF",
+                          },
+                        }}
+                        endIcon={<ArrowDropDownIcon />}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
-                          Projects
-                        </Link>
-                      </Typography>
+                        Projects
+                      </Button>
+                      <Menu
+                        id="projects-menu"
+                        anchorEl={anchorElProjects}
+                        open={openProjects}
+                        onClose={handleCloseProjects}
+                        MenuListProps={{
+                          "aria-labelledby": "projects-button",
+                        }}
+                        elevation={0}
+                        sx={{
+                          marginTop: 9,
+                          "& ul": {
+                            display: "grid",
+                            gridTemplateColumns: "repeat(4, 1fr)",
+                            maxWidth: "60vw !important",
+                            width: "60vw",
+                          },
+                        }}
+                      >
+                        {data.config.header.projectsLinks &&
+                          data.config.header.projectsLinks.map((link) => (
+                            <MenuItem key={link.url}>
+                              <Link
+                                href={link.url}
+                                sx={{
+                                  color: "#000",
+                                  fontSize: "1.3em",
+                                  fontWeight: 500,
+                                  textDecoration: "none",
+                                }}
+                              >
+                                {link.label}
+                              </Link>
+                            </MenuItem>
+                          ))}
+                      </Menu>
                     </Grid>
                     <Grid item>
                       <Typography
@@ -304,6 +498,7 @@ const Header = () => {
 
 Header.propTypes = {
   data: PropTypes.shape({
+    config: PropTypes.arrayOf(PropTypes.object).isRequired,
     topics: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   page: PropTypes.object.isRequired,

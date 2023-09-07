@@ -4,19 +4,28 @@ export default {
   title: "Header Configuration",
   fields: [
     {
-      type: "string",
-      name: "title",
-      title: "Header Title",
-      description:
-        "The title displayed on the left side. If value is not set, the author name will be used.",
-      validation: null
+      type: "array",
+      name: "topicsLinks",
+      title: "Topics Links",
+      description: "List of links nested under Topics in the header.",
+      validation: null,
+      of: [
+        {
+          type: "action"
+        }
+      ]
     },
     {
-      type: "string",
-      name: "tagline",
-      title: "Header Tagline",
-      description: "The tagline displayed on the left side.",
-      validation: null
+      type: "array",
+      name: "projectsLinks",
+      title: "Projects  Links",
+      description: "List of links nested under Projects in the header.",
+      validation: null,
+      of: [
+        {
+          type: "action"
+        }
+      ]
     },
     {
       type: "string",

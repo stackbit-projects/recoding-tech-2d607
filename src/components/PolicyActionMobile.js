@@ -105,7 +105,7 @@ function PolicyActionMobile(props) {
                   sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
                 >
                   <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                    {row.country.displayTitle}
+                    {row.country && row.country.displayTitle}
                   </Typography>
                 </Grid>
                 <Grid
