@@ -29,7 +29,7 @@ const PolicyAction = (props) => {
           <Grid container spacing={8} sx={{ marginTop: 1 }}>
             <Grid container spacing={12} direction="column" item sm={12} md={8}>
               <Grid item sm={12} md={8}>
-                <Typography component="div" className="html-to-react">
+                <Typography component="div" variant="body2" className="html-to-react">
                   {htmlToReact(page.summary)}
                 </Typography>
               </Grid>

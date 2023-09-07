@@ -134,7 +134,7 @@ function SectionHero(props) {
           >
             {(page.displayTitle || page.heroContent || page.title) && (
               <Typography variant="h1" className={classes.title}>
-                {titleCase(page.heroContent)}
+                {titleCase(page.title)}
               </Typography>
             )}
           </Container>
@@ -148,7 +148,7 @@ function SectionHero(props) {
             }}
           >
             <Typography component="div" variant="body2" sx={{ lineHeight: 2 }}>
-              {page.sections[0].intro}
+              {page.heroContent}
             </Typography>
           </Container>
         </Box>
