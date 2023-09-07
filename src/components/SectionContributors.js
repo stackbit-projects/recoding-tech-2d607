@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import client from "../utils/sanityClient";
+import Image from "next/image";
+import { toPlainText } from "@portabletext/react";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -11,7 +13,10 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email}|order(lastUpdate desc)`;
+// utils
+import { urlFor } from "../utils";
+
+const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo}|order(lastUpdate desc)`;
 
 const Contributors = () => {
   const [loading, setLoading] = useState(true);
@@ -50,7 +55,7 @@ const Contributors = () => {
                 <Button>Search/Filter</Button>
               </Grid>
             </Grid>
-            <Grid container my={6} spacing={6}>
+            <Grid container my={6} spacing={4}>
               {authors.map((author) => (
                 <Grid
                   container
@@ -61,8 +66,18 @@ const Contributors = () => {
                   sm={6}
                   md={4}
                 >
-                  <Grid item>photo</Grid>
-                  <Grid item>
+                  <Grid item xs={3}>
+                    {author.photo && (
+                      <Image
+                        src={urlFor(author.photo).width(80).url()}
+                        height={80}
+                        width={80}
+                        alt=""
+                        style={{ borderRadius: 50 }}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item xs={9}>
                     <Link
                       href={author.slug.current}
                       sx={{
@@ -81,13 +96,15 @@ const Contributors = () => {
                         {author.name}
                       </Typography>
                     </Link>
-                    <Typography
-                      color="rgba(0,0,0,0.48)"
-                      component="div"
-                      variant="body2"
-                    >
-                      lorem ipsum....
-                    </Typography>
+                    {author.bio && (
+                      <Typography
+                        color="rgba(0,0,0,0.48)"
+                        component="div"
+                        variant="body2"
+                      >
+                        {toPlainText(author.bio).substring(0, 200)}...
+                      </Typography>
+                    )}
                   </Grid>
                 </Grid>
               ))}

@@ -13,17 +13,20 @@ import theme from "../theme.js";
 import { ThemeProvider } from "@mui/material/styles";
 
 const Body = (props) => {
+  const { page } = props;
+
   return (
     <>
       <Head>
         <title>
-          {_.get(
-            props,
-            "page.seo.title",
-            _.get(props, "page.title", _.get(props, "page.displayTitle", ""))
-          ) +
-            " | " +
-            _.get(props, "data.config.title", null)}
+          {page.seo
+            ? page.seo.title
+            : page.title
+            ? page.title
+            : page.displayTitle
+            ? page.displayTitle
+            : page.name}{" "}
+          | {_.get(props, "data.config.title", null)}
         </title>
         <base href="test.recoding.tech"></base>
         <meta charSet="utf-8" />
@@ -88,6 +91,7 @@ const Body = (props) => {
 
 Body.propTypes = {
   children: PropTypes.array,
+  page: PropTypes.object,
 };
 
 export default Body;

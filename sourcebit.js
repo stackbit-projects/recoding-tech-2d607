@@ -13,7 +13,7 @@ module.exports = {
         accessToken: process.env.SANITY_ACCESS_TOKEN,
         projectId: process.env.SANITY_PROJECT_ID,
         apiVersion: process.env.SANITY_API_VERSION,
-        dataset: process.env.SANITY_DATASET || "production",
+        dataset: process.env.SANITY_DATASET || "tpp-development",
         isPreview: isDev,
         watch: isDev,
         serializers: {
@@ -98,7 +98,7 @@ module.exports = {
                     page: object,
                   });
                   break;
-                case "article":
+                case "post":
                   if (Array.isArray(object.relatedTopics)) {
                     let topics = object.relatedTopics.map((topic) =>
                       _.pick(topic, [
@@ -124,7 +124,7 @@ module.exports = {
                     object.relatedCommentary = links;
                   }
                   accum.push({
-                    path: `/article/${object.slug}`,
+                    path: `/articles/${object.slug.current}`,
                     page: object,
                   });
                   break;
@@ -221,7 +221,7 @@ module.exports = {
                   break;
                 case "author":
                   accum.push({
-                    path: `/contributors/${object.slug}`,
+                    path: `/contributors/${object.slug.current}`,
                     page: object,
                   });
                   break;
