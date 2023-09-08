@@ -36,11 +36,6 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'origin',
-      type: 'string',
-      description: "The policy action's origin",
-    },
-    {
       name: 'country',
       type: 'string',
       title: 'Country',
@@ -61,7 +56,7 @@ export default {
     {
       name: 'dateInitiated',
       title: 'Date initiated',
-      type: 'date',
+      type: 'datetime',
     },
     {
       name: 'status',
