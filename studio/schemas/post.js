@@ -40,6 +40,11 @@ export default {
       ],
     },
     {
+      type: 'datetime',
+      name: 'date',
+      title: 'Published date',
+    },
+    {
       title: 'Content',
       name: 'body',
       type: 'array',
@@ -66,6 +71,11 @@ export default {
               type: 'array',
               of: [{type: 'block'}],
               title: 'Caption',
+            },
+            {
+              name: 'altText',
+              title: 'Alt text for the image',
+              type: 'text',
             },
             {
               name: 'wordpressCaption',
@@ -103,29 +113,7 @@ export default {
         },
       ],
     },
-    {
-      type: 'string',
-      name: 'metaDescription',
-      title: 'Meta description',
-      validation: null,
-    },
-    {
-      type: 'datetime',
-      name: 'date',
-      title: 'Published date',
-    },
-    {
-      type: 'string',
-      name: 'link',
-      title: 'Wordpress link',
-      validation: null,
-    },
-    {
-      type: 'string',
-      name: 'postId',
-      title: 'Wordpress post id',
-      validation: null,
-    },
+
     {
       title: 'Related topics',
       name: 'relatedTopics',
@@ -138,9 +126,22 @@ export default {
       ],
     },
     {
-      type: 'image',
-      name: 'postImage',
-      title: 'Image for the post',
+      type: 'stackbit_page_meta',
+      name: 'seo',
+      title: 'SEO',
+      validation: null,
+    },
+    {
+      type: 'string',
+      name: 'link',
+      title: 'Wordpress link',
+      validation: null,
+    },
+    {
+      type: 'string',
+      name: 'postId',
+      title: 'Wordpress post id',
+      validation: null,
     },
   ],
   orderings: [
