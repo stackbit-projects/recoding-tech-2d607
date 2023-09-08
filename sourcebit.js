@@ -99,6 +99,17 @@ module.exports = {
                   });
                   break;
                 case "post":
+                  let slug;
+                  if (!object.slug) {
+                    slug = object.title
+                      .toLowerCase()
+                      .replace(/[^\w\s]/gi, '')
+                      .replace(/\s+/g, '-')
+                      .slice(0, 200);
+                  } else {
+                    slug = object.slug.current;
+                  }
+
                   if (Array.isArray(object.relatedTopics)) {
                     let topics = object.relatedTopics.map((topic) =>
                       _.pick(topic, [
@@ -124,7 +135,7 @@ module.exports = {
                     object.relatedCommentary = links;
                   }
                   accum.push({
-                    path: `/articles/${object.slug.current}`,
+                    path: `/${slug}`,
                     page: object,
                   });
                   break;

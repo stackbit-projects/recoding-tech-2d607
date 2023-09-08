@@ -41,14 +41,13 @@ export default function htmlToReact(html) {
       }
 
       if (node.name === "ol") {
-        console.log(node);
         return (
           <List>
             {node.children && node.children.length
               ? node.children.map((child) => {
                   if (child.name === "li") {
                     let slug = `#${slugify(
-                      child.children[0].data.toLowerCase(),
+                      child.children[0].children[0].data.toLowerCase(),
                       {
                         remove: /[*+~.()'"!:@?/]/g,
                       }

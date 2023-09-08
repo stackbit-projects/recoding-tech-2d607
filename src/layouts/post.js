@@ -40,8 +40,6 @@ const Post = (props) => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [topics, setTopics] = useState(null);
 
-  console.log(page);
-
   useEffect(() => {
     if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
       setTopics(page.relatedTopics.filter((topic) => topic.type));

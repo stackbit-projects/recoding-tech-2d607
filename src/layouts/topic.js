@@ -98,8 +98,6 @@ const Topic = (props) => {
 
   useEffect(() => {}, [issues, headlines, policies, readings]);
 
-  console.log(page);
-
   return (
     <Layout {...props}>
       <SectionHero {...props} />
