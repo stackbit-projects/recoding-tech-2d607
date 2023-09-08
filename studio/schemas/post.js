@@ -1,120 +1,158 @@
 export default {
-  type: "document",
-  name: "post",
-  title: "Post",
+  type: 'document',
+  name: 'post',
+  title: 'Post',
   fields: [
     {
-      type: "string",
-      name: "title",
-      title: "Title",
-      description: "The title of the post.",
+      type: 'string',
+      name: 'title',
+      title: 'Title',
+      description: 'The title of the post.',
       validation: (Rule) => Rule.required(),
     },
     {
-      title: "Slug",
-      name: "slug",
-      type: "slug",
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
       description:
-        "The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.",
+        'The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.',
       validation: (Rule) => Rule.required(),
       options: {
-        source: "title",
+        source: 'title',
         maxLength: 200, // will be ignored if slugify is set
         slugify: (input) =>
           input
             .toLowerCase()
-            .replace(/[^\w\s]/gi, "")
-            .replace(/\s+/g, "-")
+            .replace(/[^\w\s]/gi, '')
+            .replace(/\s+/g, '-')
             .slice(0, 200),
       },
     },
     {
-      title: "Author",
-      name: "author",
-      type: "reference",
-      to: [{ type: "author" }],
-    },
-    {
-      title: "Content",
-      name: "body",
-      type: "array",
+      title: 'Author',
+      name: 'author',
+      type: 'array',
       of: [
         {
-          type: "block",
+          type: 'reference',
+          to: {type: 'author'},
+        },
+      ],
+    },
+    {
+      title: 'Content',
+      name: 'body',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
           styles: [
-            { title: "Normal", value: "normal" },
-            { title: "Heading 1", value: "h1" },
-            { title: "Heading 2", value: "h2" },
-            { title: "Heading 3", value: "h3" },
-            { title: "Heading 4", value: "h4" },
-            { title: "Heading 5", value: "h5" },
-            { title: "Quote", value: "blockquote" },
+            {title: 'Normal', value: 'normal'},
+            {title: 'Heading 1', value: 'h1'},
+            {title: 'Heading 2', value: 'h2'},
+            {title: 'Heading 3', value: 'h3'},
+            {title: 'Heading 4', value: 'h4'},
+            {title: 'Heading 5', value: 'h5'},
+            {title: 'Quote', value: 'blockquote'},
           ],
         },
         {
-          title: "Image",
-          name: "Image",
-          type: "image",
+          title: 'Image',
+          name: 'Image',
+          type: 'image',
           fields: [
             {
-              name: "caption",
-              type: "string",
-              title: "Caption",
+              name: 'caption',
+              type: 'array',
+              of: [{type: 'block'}],
+              title: 'Caption',
+            },
+            {
+              name: 'wordpressCaption',
+              type: 'string',
+              title: 'Caption from Wordpress',
+            },
+          ],
+        },
+        {
+          title: 'iFrame Embed',
+          name: 'iframeEmbed',
+          type: 'iframeEmbed',
+        },
+        {
+          title: 'PDF',
+          name: 'PDF',
+          type: 'file',
+          fields: [
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+            },
+            {
+              name: 'author',
+              type: 'string',
+              title: 'File author',
+            },
+            {
+              name: 'title',
+              type: 'string',
+              title: 'Title',
             },
           ],
         },
       ],
     },
     {
-      type: "string",
-      name: "metaDescription",
-      title: "Meta description",
+      type: 'string',
+      name: 'metaDescription',
+      title: 'Meta description',
       validation: null,
     },
     {
-      type: "datetime",
-      name: "date",
-      title: "Published date",
+      type: 'datetime',
+      name: 'date',
+      title: 'Published date',
     },
     {
-      type: "string",
-      name: "link",
-      title: "Wordpress link",
+      type: 'string',
+      name: 'link',
+      title: 'Wordpress link',
       validation: null,
     },
     {
-      type: "string",
-      name: "postId",
-      title: "Wordpress post id",
+      type: 'string',
+      name: 'postId',
+      title: 'Wordpress post id',
       validation: null,
     },
     {
-      title: "Related topics",
-      name: "relatedTopics",
-      type: "array",
+      title: 'Related topics',
+      name: 'relatedTopics',
+      type: 'array',
       of: [
         {
-          type: "reference",
-          to: [{ type: "topic" }],
+          type: 'reference',
+          to: [{type: 'topic'}],
         },
       ],
     },
     {
-      type: "image",
-      name: "postImage",
-      title: "Image for the post",
+      type: 'image',
+      name: 'postImage',
+      title: 'Image for the post',
     },
   ],
   orderings: [
     {
-      title: "Published Date, New",
-      name: "publishDateDesc",
-      by: [{ field: "date", direction: "desc" }],
+      title: 'Published Date, New',
+      name: 'publishDateDesc',
+      by: [{field: 'date', direction: 'desc'}],
     },
     {
-      title: "Published Date, Old",
-      name: "publishDateAsc",
-      by: [{ field: "date", direction: "asc" }],
+      title: 'Published Date, Old',
+      name: 'publishDateAsc',
+      by: [{field: 'date', direction: 'asc'}],
     },
   ],
-};
+}

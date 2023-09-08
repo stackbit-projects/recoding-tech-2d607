@@ -7,7 +7,7 @@ export default {
       type: 'string',
       name: 'name',
       title: 'Name',
-      description: "Author's display name",
+      description: "author's display name",
       validation: (Rule) => Rule.required(),
     },
     {
@@ -54,7 +54,7 @@ export default {
     {
       type: 'string',
       name: 'wp_authorId',
-      title: 'Wordpress author id',
+      title: "This author's ID on Wordpress",
     },
   ],
 }
