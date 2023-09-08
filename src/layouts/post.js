@@ -64,7 +64,7 @@ const Post = (props) => {
               <Typography variant="body2" color="text.primary">
                 home
               </Typography>
-              {breadcrumbs.length
+              {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (
                     <Typography
                       key={crumb}

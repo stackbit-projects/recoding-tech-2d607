@@ -83,7 +83,7 @@ const Page = (props) => {
                 component="div"
                 className="html-to-react html-to-react-page"
               >
-                {markdownify(_.get(props, "page.content", null))}
+                {markdownify(_.get(props, "page.body", null))}
               </Typography>
             </Grid>
             {/* <Grid item xs={12} sm={4}>
