@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -38,13 +39,6 @@ const Post = (props) => {
   const router = useRouter();
   const { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
-  const [topics, setTopics] = useState(null);
-
-  useEffect(() => {
-    if (Array.isArray(page.relatedTopics) && page.relatedTopics.length) {
-      setTopics(page.relatedTopics.filter((topic) => topic.type));
-    }
-  }, []);
 
   useEffect(() => {
     if (router) {
@@ -96,8 +90,25 @@ const Post = (props) => {
                 >
                   {page.title}
                 </Typography>
+                {page.author.length &&
+                  page.author.map((auth, index) => (
+                    <Typography
+                      key={auth.slug.current}
+                      component="span"
+                      variant="body2"
+                      sx={{
+                        color: "#616161",
+                        fontSize: 12,
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {index == page.author.length - 1
+                        ? `${auth.name} / `
+                        : `${auth.name}, `}
+                    </Typography>
+                  ))}
                 <Typography
-                  component="div"
+                  component="span"
                   variant="body2"
                   sx={{
                     color: "#616161",
@@ -105,7 +116,6 @@ const Post = (props) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {page.author.name} /{" "}
                   {DateTime.fromISO(page.__metadata.createdAt).toLocaleString(
                     DateTime.DATE_MED
                   )}
@@ -158,40 +168,61 @@ const Post = (props) => {
                     width: "100%",
                   }}
                 >
-                  Author
+                  Authors
                 </Typography>
-                <Stack direction="row">
-                  {page.author.photo && (
-                    <Image
-                      src={urlFor(page.author.photo).width(40).url()}
-                      height={40}
-                      width={40}
-                      alt=""
-                      style={{ borderRadius: 50 }}
-                    />
-                  )}
-                  <Typography
-                    component="div"
-                    variant="h3"
-                    sx={{ fontWeight: 500 }}
-                  >
-                    {page.author.name}
-                  </Typography>
+                <Stack direction="column" spacing={4}>
+                  {page.author.map((auth) => (
+                    <Grid container key={auth.slug.current} spacing={2} xs={12}>
+                      <Grid item xs={auth.photo ? 3 : 0}>
+                        {auth.photo && (
+                          <Image
+                            src={urlFor(auth.photo.url).width(80).url()}
+                            height={80}
+                            width={80}
+                            alt=""
+                            style={{ borderRadius: 50 }}
+                          />
+                        )}
+                      </Grid>
+                      <Grid item xs={auth.photo ? 9 : 12}>
+                        <Link
+                          href={auth.slug.current}
+                          sx={{
+                            textDecoration: "none",
+                            "&:active, &:focus, &:hover": {
+                              color: "#000",
+                              textDecoration: "underline",
+                            },
+                          }}
+                        >
+                          <Typography
+                            component="span"
+                            variant="h4"
+                            sx={{ color: "#000", fontWeight: 400 }}
+                          >
+                            {auth.name}
+                          </Typography>
+                        </Link>
+                        {auth.bio && (
+                          <Typography
+                            color="rgba(0,0,0,0.48)"
+                            component="div"
+                            variant="body2"
+                          >
+                            {htmlToReact(auth.bio)}
+                          </Typography>
+                        )}
+                      </Grid>
+                    </Grid>
+                  ))}
                 </Stack>
-                <Typography
-                  component="div"
-                  variant="body2"
-                  sx={{ color: "#616161" }}
-                >
-                  {page.author.name} is...
-                </Typography>
               </Box>
               <RelatedCommentary
                 title="Further Reading"
                 commentary={page.relatedCommentary}
                 noFilter={true}
               />
-              <RelatedTopics topics={topics} />
+              <RelatedTopics topics={page.relatedTopics} />
               <SectionSubscribe />
             </Grid>
           </Grid>

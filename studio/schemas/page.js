@@ -37,6 +37,70 @@ export default {
       description: 'The alt text of the image.',
       validation: null,
     },
+    {
+      title: 'Content',
+      name: 'body',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'Heading 1', value: 'h1' },
+            { title: 'Heading 2', value: 'h2' },
+            { title: 'Heading 3', value: 'h3' },
+            { title: 'Heading 4', value: 'h4' },
+            { title: 'Heading 5', value: 'h5' },
+            { title: 'Quote', value: 'blockquote' },
+          ],
+        },
+        {
+          title: 'Image',
+          name: 'Image',
+          type: 'image',
+          fields: [
+            {
+              name: 'caption',
+              type: 'array',
+              of: [{ type: 'block' }],
+              title: 'Caption',
+            },
+            {
+              name: 'wordpressCaption',
+              type: 'string',
+              title: 'Caption from Wordpress',
+            },
+          ],
+        },
+        {
+          title: 'iFrame Embed',
+          name: 'iframeEmbed',
+          type: 'iframeEmbed',
+        },
+        {
+          title: 'PDF',
+          name: 'PDF',
+          type: 'file',
+          fields: [
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+            },
+            {
+              name: 'author',
+              type: 'string',
+              title: 'File author',
+            },
+            {
+              name: 'title',
+              type: 'string',
+              title: 'Title',
+            },
+          ],
+        },
+      ],
+    },
     // {
     //     "type": "stackbit_page_meta",
     //     "name": "seo",

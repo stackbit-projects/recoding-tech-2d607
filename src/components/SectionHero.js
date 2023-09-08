@@ -202,7 +202,9 @@ function SectionHero(props) {
                   ? "#000"
                   : "#FFF"
               }
-              fontSize={page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"}
+              fontSize={
+                page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"
+              }
             >
               {titleCase(
                 page.displayTitle

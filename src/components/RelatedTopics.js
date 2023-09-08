@@ -23,9 +23,11 @@ const Topics = (props) => {
   const classes = useStyles();
   const { topics } = props;
 
+  console.log(topics);
+
   if (!Array.isArray(topics) || !topics.length) return null;
 
-  const title = _.get(props, "title", "Topics");
+  const title = _.get(props, "label", "Topics");
 
   return (
     <section>
