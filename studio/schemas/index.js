@@ -36,8 +36,10 @@ import form_field from './form_field.js'
 import stackbit_page_meta from './stackbit_page_meta.js'
 
 // new models
-import author from './author.js'
 import post from './post.js'
+import author from './author.js'
+import iframeEmbed from './iframeEmbed.js'
+import tag from './tag.js'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export const schemaTypes = [
@@ -52,6 +54,7 @@ export const schemaTypes = [
   citation,
   file,
   // guide,
+  iframeEmbed,
   page,
   person,
   post,
@@ -68,6 +71,7 @@ export const schemaTypes = [
   section_topics,
   section_tracker,
   section_policy_actions,
+  tag,
   topic,
   action,
   form_field,

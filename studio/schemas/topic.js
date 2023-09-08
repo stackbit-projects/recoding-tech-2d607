@@ -18,6 +18,13 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Topic description',
+      name: 'description',
+      description: 'Anything you want to say about the topic.',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+    {
       title: 'Category or post_tag',
       type: 'string',
       name: 'domain',
