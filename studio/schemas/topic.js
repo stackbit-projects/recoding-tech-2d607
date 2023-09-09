@@ -1,7 +1,7 @@
 export default {
   type: 'document',
   name: 'topic',
-  title: 'Topic',
+  title: 'Topics',
   fields: [
     {
       title: 'Name',
@@ -74,6 +74,12 @@ export default {
           to: [{type: 'topic'}],
         },
       ],
+    },
+    {
+      type: 'stackbit_page_meta',
+      name: 'seo',
+      title: 'SEO',
+      validation: null,
     },
     // {
     //   title: "Topic description",
