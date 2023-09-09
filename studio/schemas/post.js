@@ -1,7 +1,7 @@
 export default {
   type: 'document',
   name: 'post',
-  title: 'Post',
+  title: 'Posts',
   fields: [
     {
       type: 'string',
