@@ -1,7 +1,7 @@
 export default {
   type: 'document',
   name: 'policy_action',
-  title: 'Policy action',
+  title: 'Policy actions',
   fields: [
     {
       name: 'title',
@@ -127,6 +127,12 @@ export default {
           },
         },
       ],
+    },
+    {
+      type: 'stackbit_page_meta',
+      name: 'seo',
+      title: 'SEO',
+      validation: null,
     },
     {
       type: 'string',

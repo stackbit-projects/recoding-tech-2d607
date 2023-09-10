@@ -1,22 +1,22 @@
 export default {
-  type: "document",
-  name: "creator",
-  title: "Creator",
+  type: 'document',
+  name: 'creator',
+  title: 'Creators',
   fields: [
     {
-      type: "string",
-      name: "lastName",
-      title: "Last Name",
+      type: 'string',
+      name: 'lastName',
+      title: 'Last Name',
     },
     {
-      type: "string",
-      name: "firstName",
-      title: "First Name",
+      type: 'string',
+      name: 'firstName',
+      title: 'First Name',
     },
     {
-      type: "string",
-      name: "creatorType",
-      title: "Type",
+      type: 'string',
+      name: 'creatorType',
+      title: 'Type',
     },
     //{
     //  title: "Related citations",
@@ -34,7 +34,7 @@ export default {
   ],
   preview: {
     select: {
-      title: "lastName",
+      title: 'lastName',
     },
   },
-};
+}

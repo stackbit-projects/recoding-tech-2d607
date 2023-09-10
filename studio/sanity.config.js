@@ -7,12 +7,30 @@ import {structure} from './deskStructure'
 export default defineConfig({
   name: 'default',
   title: 'Tech Policy Press',
-
   projectId: '3tzzh18d',
   dataset: 'tpp-development',
+  document: {
+    productionUrl: async (prev, context) => {
+      const {getClient, dataset, document} = context
+      const client = getClient({apiVersion: '2019-01-29'})
+      if (document._type === 'post') {
+        const slug = await client.fetch(`*[_id == $postId].slug.current`, {
+          postId: document._id,
+        })
+        const params = new URLSearchParams()
+        params.set('preview', 'true')
+        // params.set('dataset', dataset)
 
-  plugins: [deskTool(structure), visionTool()],
-
+        return `localhost:3000/${slug}`
+      }
+      return prev
+    },
+  },
+  plugins: [
+    // deskTool({structure: structure, defaultDocumentNode: defaultDocumentNodeResolver}),
+    deskTool({structure}),
+    visionTool(),
+  ],
   schema: {
     types: schemaTypes,
   },
