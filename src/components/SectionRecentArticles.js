@@ -15,19 +15,19 @@ import client from "../utils/sanityClient";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 
-const query = `*[!(_id in path("drafts.**")) && _type == "article" && date != null]{_id, title, slug}|order(date desc)[0...5]`; // just get the four most recent citations
+const query = `*[!(_id in path("drafts.**")) && _type == "post" && date != null]{_id, title, slug}|order(date desc)[0...5]`; // just get the four most recent articles
 
 const useStyles = makeStyles(() => ({
-  citation: {
+  article: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
     marginBottom: 20,
     paddingBottom: 20,
   },
-  lastCitation: {
+  lastArticle: {
     marginBottom: 20,
   },
-  citationTitle: {
+  articleTitle: {
     color: "#000 !important",
     fontSize: "1em",
     fontWeight: "700",
@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
       textDecoration: "none",
     },
   },
-  citationPublication: {
+  articlePublication: {
     color: "rgba(0, 0, 0, 0.6)",
     marginTop: 25,
     marginBottom: 8,
@@ -71,15 +71,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SectionCitations = () => {
+const SectionRecentArticles = () => {
   const classes = useStyles();
-  const [citations, setCitations] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    client.fetch(query).then((cites) => {
-      setCitations(cites);
+    client.fetch(query).then((recents) => {
+      setArticles(recents);
     });
   }, []);
+
+  useEffect(() => {console.log(articles);}, [articles]);
 
   return (
     <Grid container className={classes.grid}>
@@ -89,33 +91,33 @@ const SectionCitations = () => {
         </Typography>
       </Grid>
       <Grid container item flexDirection="column">
-        {citations && citations.length
-          ? citations.map((citation, idx) => (
+        {articles && articles.length
+          ? articles.map((article, idx) => (
               <Grid
                 item
-                key={citation._id}
+                key={article._id}
                 className={
-                  idx === citations.length - 1
-                    ? classes.lastCitation
-                    : classes.citation
+                  idx === articles.length - 1
+                    ? classes.lastArticle
+                    : classes.article
                 }
               >
                 <Link
-                  href={`/article/${citation.slug.current}`}
+                  href={`/article/${article.slug.current}`}
                   className={classes.link}
                 >
                   <Typography
                     component="div"
                     variant="body1"
-                    className={classes.citationTitle}
+                    className={classes.articleTitle}
                   >
-                    {citation.title}
+                    {article.title}
                   </Typography>
                 </Link>
               </Grid>
             ))
           : null}
-        <Link href="#FIXME" className={classes.more}>
+        <Link href="/contributors" className={classes.more}>
           <Typography component="div" variant="h5" className={classes.moreText}>
             More Contributors
           </Typography>
@@ -185,4 +187,4 @@ const SectionCitations = () => {
   );
 };
 
-export default SectionCitations;
+export default SectionRecentArticles;

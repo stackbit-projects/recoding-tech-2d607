@@ -10,10 +10,10 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const recentArticlesQuery = `*[_type == "article" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
+const recentArticlesQuery = `*[_type == "post" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
-                            type}|order(lastUpdate desc)[0...12]`;
+                            type}|order(lastUpdate desc)[0...16]`;
 
 const HomepageRecents = () => {
   const [articles, setArticles] = useState([]);
@@ -44,7 +44,7 @@ const HomepageRecents = () => {
         </Grid>
         <Grid item>
           <Link
-            href="/articles"
+            href="/search"
             sx={{
               height: 24,
               textDecoration: "none",
@@ -73,7 +73,7 @@ const HomepageRecents = () => {
       <Grid
         container
         columnGap={6}
-        direction="row"
+        direction="column"
         flexWrap={"wrap"}
         height={isMobile ? 600 : 300}
         marginBottom={10}
@@ -85,6 +85,7 @@ const HomepageRecents = () => {
                 item
                 key={article._id}
                 sx={{
+                  marginTop: 2,
                   width: isMobile ? "100%" : "30%",
                 }}
               >

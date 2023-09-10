@@ -8,7 +8,7 @@ import Logo from "./Logo";
 import Icon from "./Icon";
 import RelatedCommentary from "./RelatedCommentary";
 import RelatedTopics from "./RelatedTopics";
-import SectionCitations from "./SectionCitations";
+import SectionRecentArticles from "./SectionRecentArticles";
 import SectionContent from "./SectionContent";
 import SectionContributors from "./SectionContributors";
 import SectionForm from "./SectionForm";
@@ -32,13 +32,13 @@ export {
   Icon,
   RelatedCommentary,
   RelatedTopics,
-  SectionCitations,
   SectionContent,
   SectionContributors,
   SectionForm,
   SectionHero,
   SectionArticles,
   SectionPolicyActions,
+  SectionRecentArticles,
   SectionGuides,
   SectionSearch,
   SectionTopics,
@@ -57,13 +57,13 @@ export default {
   Icon,
   RelatedCommentary,
   RelatedTopics,
-  SectionCitations,
   SectionContent,
   SectionContributors,
   SectionForm,
   SectionHero,
   SectionArticles,
   SectionPolicyActions,
+  SectionRecentArticles,
   SectionGuides,
   SectionSearch,
   SectionTopics,

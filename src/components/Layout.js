@@ -22,10 +22,10 @@ const Body = (props) => {
           {page.seo
             ? page.seo.title
             : page.title
-            ? page.title
-            : page.displayTitle
-            ? page.displayTitle
-            : page.name}{" "}
+              ? page.title
+              : page.displayTitle
+                ? page.displayTitle
+                : page.name}{" "}
           | {_.get(props, "data.config.title", null)}
         </title>
         <base href="test.recoding.tech"></base>
@@ -46,21 +46,21 @@ const Body = (props) => {
           let key_name = _.get(meta, "keyName", null) || "name";
           return _.get(meta, "relativeUrl", null) ? (
             _.get(props, "data.config.domain", null) &&
-              (() => {
-                let domain = _.trim(
-                  _.get(props, "data.config.domain", null),
-                  "/"
-                );
-                let rel_url = withPrefix(_.get(meta, "value", null));
-                let full_url = domain + rel_url;
-                return (
-                  <meta
-                    key={meta_idx}
-                    {...attribute(key_name, _.get(meta, "name", null))}
-                    content={full_url}
-                  />
-                );
-              })()
+            (() => {
+              let domain = _.trim(
+                _.get(props, "data.config.domain", null),
+                "/"
+              );
+              let rel_url = withPrefix(_.get(meta, "value", null));
+              let full_url = domain + rel_url;
+              return (
+                <meta
+                  key={meta_idx}
+                  {...attribute(key_name, _.get(meta, "name", null))}
+                  content={full_url}
+                />
+              );
+            })()
           ) : (
             <meta
               key={meta_idx + ".1"}

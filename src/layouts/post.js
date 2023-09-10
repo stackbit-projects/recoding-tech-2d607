@@ -186,7 +186,7 @@ const Post = (props) => {
                       </Grid>
                       <Grid item xs={auth.photo ? 9 : 12}>
                         <Link
-                          href={auth.slug.current}
+                          href={`/author/${auth.slug.current}`}
                           sx={{
                             textDecoration: "none",
                             "&:active, &:focus, &:hover": {

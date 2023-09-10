@@ -1,7 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Router from "next/router";
+import { useRouter } from 'next/router'
 import { titleCase } from "title-case";
 
 // material ui imports
@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SectionArticle(props) {
   const classes = useStyles();
+  const router = useRouter();
   const {
     section: { featuredArticle, alsoFeatured },
   } = props;
@@ -87,7 +88,7 @@ function SectionArticle(props) {
   }, []);
 
   const articleClick = (url) => {
-    Router.push({ pathname: "/" + url });
+    router.push({ pathname: "/" + url });
   };
 
   return (
@@ -108,7 +109,7 @@ function SectionArticle(props) {
                 }}
               >
                 <CardActionArea
-                  onClick={() => articleClick(article.slug.current)}
+                  onClick={(e) => { e.preventDefault(); articleClick(article.slug.current)}}
                   className={classes.featuredContent}
                 >
                   <CardContent>
@@ -146,7 +147,7 @@ function SectionArticle(props) {
               mb={10}
             >
               {alsoFeatured.map((article, idx) => (
-                <Grid item key={idx} xs={12} sm={6} mt={2}>
+                <Grid item key={idx} xs={12} sm={4} mt={2}>
                   <Card
                     variant="outlined"
                     className={`${classes.box} ${classes.alsoFeatured}`}

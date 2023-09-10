@@ -232,7 +232,7 @@ module.exports = {
                   break;
                 case "author":
                   accum.push({
-                    path: `/contributors/${object.slug.current}`,
+                    path: `/author/${object.slug.current}`,
                     page: object,
                   });
                   break;

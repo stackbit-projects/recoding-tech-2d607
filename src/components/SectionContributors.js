@@ -79,7 +79,7 @@ const Contributors = () => {
                   </Grid>
                   <Grid item xs={9}>
                     <Link
-                      href={author.slug.current}
+                      href={`/author/${author.slug.current}`}
                       sx={{
                         textDecoration: "none",
                         "&:active, &:focus, &:hover": {

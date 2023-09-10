@@ -2,6 +2,7 @@
 import React from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
+import MailerLite from "@galaco/react-mailerlite-form";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -17,7 +18,7 @@ import HomepageActions from "../components/HomepageActions";
 import HomepageRecents from "../components/HomepageRecents";
 import SectionHero from "../components/SectionHero";
 import SectionHeroTracker from "../components/SectionHeroTracker";
-import SectionCitations from "../components/SectionCitations";
+import SectionCitations from "../components/SectionRecentArticles";
 
 // material ui icons
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -46,6 +47,10 @@ const Advanced = (props) => {
       <Box>
         {path === "/" ? (
           <>
+            <MailerLite
+              code="y8t6j7"
+              trackerId="mlb2-2605844"
+            />
             <Box
               sx={{
                 p: 2,
@@ -106,9 +111,6 @@ const Advanced = (props) => {
                     <SectionCitations />
                   </Grid>
                 </Grid>
-                {/* <Grid item xs={12}>
-                <SectionGuides />
-                </Grid> */}
               </Grid>
               <Box mt={8} mb={8}>
                 <HomepageActions />
