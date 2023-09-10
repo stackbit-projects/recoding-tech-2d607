@@ -56,5 +56,10 @@ export default {
       name: 'wp_authorId',
       title: "This author's ID on Wordpress",
     },
+    {
+      type: 'string',
+      name: 'specialTitle',
+      title: "A secondary title, if this person has one, eg. Co-Founder and CEO",
+    },
   ],
 }

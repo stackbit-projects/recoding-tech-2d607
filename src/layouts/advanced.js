@@ -2,7 +2,6 @@
 import React from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
-import MailerLite from "@galaco/react-mailerlite-form";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -47,10 +46,6 @@ const Advanced = (props) => {
       <Box>
         {path === "/" ? (
           <>
-            <MailerLite
-              code="y8t6j7"
-              trackerId="mlb2-2605844"
-            />
             <Box
               sx={{
                 p: 2,

@@ -81,7 +81,9 @@ const SectionRecentArticles = () => {
     });
   }, []);
 
-  useEffect(() => {console.log(articles);}, [articles]);
+  useEffect(() => {
+    console.log(articles);
+  }, [articles]);
 
   return (
     <Grid container className={classes.grid}>

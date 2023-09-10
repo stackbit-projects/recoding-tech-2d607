@@ -30,6 +30,7 @@ import section_guides from './section_guides'
 import section_search from './section_search.js'
 import section_topics from './section_topics.js'
 import section_tracker from './section_tracker.js'
+import sidebar_about from './sidebar_about.js'
 import topic from './topic.js'
 import action from './action.js'
 import form_field from './form_field.js'
@@ -71,6 +72,7 @@ export const schemaTypes = [
   section_topics,
   section_tracker,
   section_policy_actions,
+  sidebar_about,
   tag,
   topic,
   action,

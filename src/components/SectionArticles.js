@@ -1,7 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import { titleCase } from "title-case";
 
 // material ui imports
@@ -109,7 +109,10 @@ function SectionArticle(props) {
                 }}
               >
                 <CardActionArea
-                  onClick={(e) => { e.preventDefault(); articleClick(article.slug.current)}}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    articleClick(article.slug.current);
+                  }}
                   className={classes.featuredContent}
                 >
                   <CardContent>

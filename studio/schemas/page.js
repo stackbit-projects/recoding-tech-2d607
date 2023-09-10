@@ -128,6 +128,9 @@ export default {
           weak: true,
           to: {type: 'page'},
         },
+        {
+          type: "sidebar_about"
+        }
       ],
     },
     {
