@@ -96,7 +96,8 @@ function SectionHero(props) {
           backgroundColor:
             page.stackbit_model_type == "data"
               ? "#FFF"
-              : page.layout == "policy_action"
+              : page.layout == "policy_action" ||
+                page.__metadata.modelName == "author"
               ? "#427569"
               : theme.palette["topic"].main,
         }}
@@ -133,20 +134,15 @@ function SectionHero(props) {
                 fill={
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
-                    : page.layout == "policy_action"
+                    : page.layout == "policy_action" ||
+                      page.__metadata.modelName == "author"
                     ? "#3C6E63"
                     : "#215793"
                 }
               />
               <path
                 d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
-                stroke={
-                  page.stackbit_model_type == "data"
-                    ? "#000"
-                    : page.layout == "policy_action"
-                    ? "#EFE9DA"
-                    : "#EFE9DA"
-                }
+                stroke={page.stackbit_model_type == "data" ? "#000" : "#EFE9DA"}
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
