@@ -23,8 +23,6 @@ const Topics = (props) => {
   const classes = useStyles();
   const { topics } = props;
 
-  console.log(topics);
-
   if (!Array.isArray(topics) || !topics.length) return null;
 
   const title = _.get(props, "label", "Topics");
@@ -44,28 +42,26 @@ const Topics = (props) => {
             sx={{ borderTop: "1px solid #8AA29D", width: "100%" }}
           >
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-              {topics
-                .filter((topic) => topic.stackbit_model_type == "page")
-                .map((topic, i) => (
-                  <Chip
-                    key={i}
-                    label={topic.displayTitle || topic.name}
-                    style={{
-                      backgroundColor: "#EFE9DA",
-                      fontWeight: 300,
-                      textTransform: "none",
-                    }}
-                    component="a"
-                    className={classes.chip}
-                    href={`/${topic.type}/${
-                      typeof topic.slug == "string"
-                        ? topic.slug
-                        : topic.slug.current
-                    }`}
-                    clickable
-                    sx={{ marginBottom: "6px !important" }}
-                  />
-                ))}
+              {topics.map((topic, i) => (
+                <Chip
+                  key={i}
+                  label={topic.displayTitle || topic.name}
+                  style={{
+                    backgroundColor: "#EFE9DA",
+                    fontWeight: 300,
+                    textTransform: "none",
+                  }}
+                  component="a"
+                  className={classes.chip}
+                  href={`/category/${
+                    typeof topic.slug == "string"
+                      ? topic.slug
+                      : topic.slug.current
+                  }`}
+                  clickable
+                  sx={{ marginBottom: "6px !important" }}
+                />
+              ))}
             </Stack>
           </Box>
         </Grid>

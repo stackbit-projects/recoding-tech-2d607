@@ -33,6 +33,10 @@ export default function htmlToReact(html) {
     transform: (node, index) => {
       /** the next two if statements ensure the Table of Contents section in the articles work */
 
+      if (!node.type) {
+        return null;
+      }
+
       if (node.name === "h4" && node.children[0].data) {
         let slug = `${slugify(node.children[0].data.toLowerCase(), {
           remove: /[*+~.()'"!:@?/]/g,
@@ -89,8 +93,15 @@ export default function htmlToReact(html) {
           </Box>
         );
       }
+
+      if (node.name === "img") {
+        console.log(node);
+        return <img />;
+      }
+
       if (node.attribs && node.attribs.class == "citation") {
-        return <FancyCard citationToFetch={node.children[0].data} />;
+        // console.log(node);
+        return <FancyCard citationToFetch={node.data} />;
       }
       if (node.data)
         if (node.type === "script") {

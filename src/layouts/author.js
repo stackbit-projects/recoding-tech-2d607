@@ -4,10 +4,8 @@ import Image from "next/image";
 
 // material ui imports
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 // components
@@ -50,11 +48,6 @@ const Author = (props) => {
             </Grid>
           </Grid>
         </Box>
-        <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
-          <Chip color="footer" label="tag" />
-          <Chip color="footer" label="tag" />
-          <Chip color="footer" label="tag" />
-        </Stack>
       </Container>
     </Layout>
   );

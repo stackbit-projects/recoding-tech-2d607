@@ -28,7 +28,9 @@ function Footer(props) {
             <Grid item xs={12} sm={2}>
               <Link href="/">
                 <Logo />
-                <Typography sx={{ display: "none" }}>Home</Typography>
+                <Typography component="span" sx={{ display: "none" }}>
+                  Home
+                </Typography>
               </Link>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -52,7 +54,9 @@ function Footer(props) {
                     marginRight: 1,
                   }}
                 />
-                <Typography sx={{ display: "none" }}>TPP on Twitter</Typography>
+                <Typography component="span" sx={{ display: "none" }}>
+                  TPP on Twitter
+                </Typography>
               </Link>
               <Link href="#FIXME">
                 <RssFeedIcon
@@ -63,7 +67,9 @@ function Footer(props) {
                     marginRight: 1,
                   }}
                 />
-                <Typography sx={{ display: "none" }}>TPP RSS feed</Typography>
+                <Typography component="span" sx={{ display: "none" }}>
+                  TPP RSS feed
+                </Typography>
               </Link>
               <Link href="#FIXME">
                 <EmailIcon
@@ -73,7 +79,9 @@ function Footer(props) {
                     fill: "#3475BF",
                   }}
                 />
-                <Typography sx={{ display: "none" }}>Email TPP</Typography>
+                <Typography component="span" sx={{ display: "none" }}>
+                  Email TPP
+                </Typography>
               </Link>
             </Grid>
             <Grid

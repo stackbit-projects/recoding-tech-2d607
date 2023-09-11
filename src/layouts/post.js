@@ -120,11 +120,6 @@ const Post = (props) => {
                     DateTime.DATE_MED
                   )}
                 </Typography>
-                {page.key_takeaways && (
-                  <Typography component="div" variant="body2">
-                    {page.key_taekaways}
-                  </Typography>
-                )}
                 {page.toc && (
                   <Grid item xs={12} sm={12} mt={2}>
                     <Box

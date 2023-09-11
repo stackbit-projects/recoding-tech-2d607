@@ -121,13 +121,13 @@ export default {
       type: 'array',
       name: 'sidebar_content',
       title: 'Sidebar content',
-      description: 'Pages to include in the sidebar',
+      description: 'Content to include in the sidebar, particularly for the about page.',
       of: [
-        {
-          type: 'reference',
-          weak: true,
-          to: {type: 'page'},
-        },
+        // {
+        //   type: 'reference',
+        //   weak: true,
+        //   to: {type: 'page'},
+        // },
         {
           type: "sidebar_about"
         }
