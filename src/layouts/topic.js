@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // utils
-import { markdownify } from "../utils";
+import { htmlToReact } from "../utils";
 import client from "../utils/sanityClient";
 
 // material ui imports
@@ -39,10 +39,9 @@ const Topic = (props) => {
   const { page } = props;
 
   const policyActionsQuery = `*[_type == "policy_action" && references("${page.__metadata.id}") && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
-  const relatedCitationsQuery = `*[!(_id in path("drafts.**")) && _type == "citation" && references("${page.__metadata.id}")]{_id, chicagoCitation, creators[]->{firstName, lastName}, date, publicationTitle, ref, title, url, websiteTitle, institution, place, publisher, blogTitle, network } | order(date desc)`;
+  const relatedPostsQuery = `*[_type == "post" && references("${page.__metadata.id}") && !(_id match "drafts")]{_id, slug, author[]->{name}, date, ref, title }|order(date desc)[0...21]`;
 
   const [loading, setLoading] = useState(true);
-  const [readings, setReadings] = useState([]);
   const [headlines, setHeadlines] = useState([]);
   const [actions, setActions] = useState([]);
 
@@ -52,34 +51,23 @@ const Topic = (props) => {
       setLoading(false);
     });
 
-    client.fetch(relatedCitationsQuery).then((citations) => {
-      setHeadlines(citations);
-      setLoading(false);
-    });
-
-    if (
-      Array.isArray(page.relatedCommentary) &&
-      page.relatedCommentary.length
-    ) {
-      const r = page.relatedCommentary.reduce((r, comment) => {
-        if (comment._type === "article") {
-          r.push(comment);
-        }
-        return r;
-      }, []);
-      setReadings(r);
-      //setHeadlines(h);
-    }
+    client
+      .fetch(relatedPostsQuery)
+      .then((posts) => {
+        setHeadlines(posts);
+        setLoading(false);
+      })
+      .catch("Error: " + console.error);
   }, []);
 
-  useEffect(() => {}, [headlines, readings]);
+  useEffect(() => {}, [actions, headlines]);
 
   return (
     <Layout {...props}>
       <SectionHero {...props} />
       <Box my={8}>
         <Container>
-          {page.stackbit_model_type == "data" && (
+          {page.stackbit_model_type == "page" && (
             <Grid container spacing={8}>
               <Grid
                 spacing={12}
@@ -95,7 +83,7 @@ const Topic = (props) => {
                   className="html-to-react"
                   sx={{ fontSize: 14, lineHeight: 2 }}
                 >
-                  {markdownify(page.topicDescription)}
+                  {htmlToReact(page.description)}
                 </Typography>
               </Grid>
               <Grid
@@ -113,7 +101,7 @@ const Topic = (props) => {
             </Grid>
           )}
           <Box marginTop={4}>
-            <PageRecents page={page} readings={page.relatedCommentary} />
+            <PageRecents page={page} readings={headlines} />
             <RelatedActions page={page} actions={actions} loading={loading} />
           </Box>
         </Container>

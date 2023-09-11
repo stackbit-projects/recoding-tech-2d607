@@ -81,8 +81,6 @@ function SectionHero(props) {
   let { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  console.log(page);
-
   useEffect(() => {
     if (router) {
       setBreadcrumbs(router.query.slug);
@@ -171,13 +169,9 @@ function SectionHero(props) {
             <Typography
               variant="h4"
               className={classes.superTitle}
-              color={
-                page.stackbit_model_type == "page"
-                  ? "#FFF"
-                  : "#000"
-              }
+              color={page.stackbit_model_type == "page" ? "#FFF" : "#000"}
             >
-              {page.type == "country" ? "Government" : page.type}
+              {page.type}
             </Typography>
           ) : page.__metadata.modelName == "article" ? (
             <Typography variant="h4" className={classes.superTitle}>
@@ -199,11 +193,7 @@ function SectionHero(props) {
             <Typography
               variant="h1"
               className={classes.title}
-              color={
-                page.stackbit_model_type == "data"
-                  ? "#000"
-                  : "#FFF"
-              }
+              color={page.stackbit_model_type == "data" ? "#000" : "#FFF"}
               fontSize={
                 page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"
               }

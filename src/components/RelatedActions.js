@@ -36,9 +36,31 @@ const RelatedActions = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={1}>
-          <Typography component="div" variant="h4">
-            <Link href="/tracker">View all</Link>
-          </Typography>
+          <Link
+            href="/tracker"
+            sx={{
+              height: 24,
+              textAlign: "center",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            <Typography
+              component="div"
+              variant="h5"
+              sx={{
+                backgroundColor: "#FFE5EA",
+                borderRadius: 2,
+                color: "#FF0033",
+                paddingX: "10px",
+                paddingY: "6px",
+              }}
+            >
+              See all
+            </Typography>
+          </Link>
         </Grid>
       </Grid>
       <Box my={4} sx={{ borderTop: "1px solid #000" }}>

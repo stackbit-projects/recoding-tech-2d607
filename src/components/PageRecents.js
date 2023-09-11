@@ -9,7 +9,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 const PageRecents = (props) => {
-  const { page } = props;
+  const { page, readings } = props;
   const isMobile = useMediaQuery("(max-width:1064px)");
 
   return (
@@ -58,18 +58,19 @@ const PageRecents = (props) => {
       <Grid
         container
         columnGap={6}
-        direction="row"
+        direction="column"
         flexWrap={"wrap"}
+        height={600}
         marginBottom={10}
         marginTop={2}
       >
-        {page.relatedCommentary && page.relatedCommentary.length
-          ? page.relatedCommentary.map((article) => (
+        {readings && readings.length
+          ? readings.map((article) => (
               <Grid
                 item
                 key={article._id}
                 sx={{
-                  width: isMobile ? "100%" : "30%",
+                  width: isMobile ? "100%" : "28%",
                 }}
               >
                 <Link
@@ -79,6 +80,7 @@ const PageRecents = (props) => {
                     borderBottomColor: "#EFE9DA",
                     display: "block",
                     paddingBottom: 2,
+                    paddingTop: 2,
                     textDecoration: "none !important",
                   }}
                 >
@@ -108,6 +110,7 @@ const PageRecents = (props) => {
 
 PageRecents.propTypes = {
   page: PropTypes.object,
+  readings: PropTypes.array,
 };
 
 export default PageRecents;

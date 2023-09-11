@@ -15,5 +15,5 @@ export default {
   page,
   policy_action,
   guide,
-  topic
+  topic,
 };

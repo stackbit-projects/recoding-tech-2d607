@@ -21,7 +21,7 @@ const Author = (props) => {
   return (
     <Layout {...props}>
       <SectionHero {...props} />
-      <Container marginBottom={4} maxWidth="md">
+      <Container maxWidth="md" sx={{ marginBottom: 4 }}>
         <Box
           marginBottom={4}
           paddingBottom={4}
