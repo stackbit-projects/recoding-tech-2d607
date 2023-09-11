@@ -37,7 +37,7 @@ module.exports = {
               } else if (props.node.embedType === "www.youtube.com" || props.node.embedType === "youtu.be") {
                 return h("iframe", { src: props.node.url, width: "560", height: "315", frameborder: "0", allow:"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", allowfullscreen: true }, props.node)
               } else {
-                console.log(props);
+                // console.log(props);
                 return h("iframe", { src: props.node.url }, props.node)
               }
             },
@@ -242,9 +242,9 @@ module.exports = {
                     );
                     object.relatedTopics = topics;
                   }
-                  if (object.type && object.slug) {
+                  if (object.slug) {
                     accum.push({
-                      path: `/${object.type}/${object.slug}`,
+                      path: `/category/${object.slug.current}`,
                       page: object,
                     });
                   }

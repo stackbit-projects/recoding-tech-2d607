@@ -24,12 +24,12 @@ const PageRecents = (props) => {
       >
         <Grid item>
           <Typography component={"div"} variant="h3">
-            Latest on {page.displayTitle}
+            Latest on {page.displayName}
           </Typography>
         </Grid>
         <Grid item>
           <Link
-            href="/articles"
+            href="/search"
             sx={{
               height: 24,
               textDecoration: "none",
@@ -73,7 +73,7 @@ const PageRecents = (props) => {
                 }}
               >
                 <Link
-                  href={`/article/${article.slug.current}`}
+                  href={`/${article.slug.current}`}
                   sx={{
                     borderBottom: "1px solid",
                     borderBottomColor: "#EFE9DA",

@@ -105,7 +105,7 @@ const SectionRecentArticles = () => {
                 }
               >
                 <Link
-                  href={`/article/${article.slug.current}`}
+                  href={`/${article.slug.current}`}
                   className={classes.link}
                 >
                   <Typography

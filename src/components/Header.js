@@ -498,7 +498,7 @@ const Header = (props) => {
 
 Header.propTypes = {
   data: PropTypes.shape({
-    config: PropTypes.arrayOf(PropTypes.object).isRequired,
+    config: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     topics: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   page: PropTypes.object.isRequired,

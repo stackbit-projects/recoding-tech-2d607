@@ -81,6 +81,8 @@ function SectionHero(props) {
   let { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
+  console.log(page);
+
   useEffect(() => {
     if (router) {
       setBreadcrumbs(router.query.slug);
@@ -94,7 +96,7 @@ function SectionHero(props) {
       <Box
         style={{
           backgroundColor:
-            page.type && page.stackbit_model_type == "data"
+            page.stackbit_model_type == "data"
               ? "#FFF"
               : page.layout == "policy_action"
               ? "#427569"
@@ -131,7 +133,7 @@ function SectionHero(props) {
               <path
                 d="M705 2H445c-78.4 0-78.4 78.6-156.7 78.6H0V277h288.3c78.3 0 78.3-78.6 156.6-78.6H705V2Z"
                 fill={
-                  page.type && page.stackbit_model_type == "data"
+                  page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action"
                     ? "#3C6E63"
@@ -141,7 +143,7 @@ function SectionHero(props) {
               <path
                 d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
                 stroke={
-                  page.type && page.stackbit_model_type == "data"
+                  page.stackbit_model_type == "data"
                     ? "#000"
                     : page.layout == "policy_action"
                     ? "#EFE9DA"
@@ -170,7 +172,7 @@ function SectionHero(props) {
               variant="h4"
               className={classes.superTitle}
               color={
-                page.type && page.stackbit_model_type == "page"
+                page.stackbit_model_type == "page"
                   ? "#FFF"
                   : "#000"
               }
@@ -198,7 +200,7 @@ function SectionHero(props) {
               variant="h1"
               className={classes.title}
               color={
-                page.type && page.stackbit_model_type == "data"
+                page.stackbit_model_type == "data"
                   ? "#000"
                   : "#FFF"
               }

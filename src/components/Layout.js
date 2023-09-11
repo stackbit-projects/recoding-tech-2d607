@@ -90,7 +90,7 @@ const Body = (props) => {
 };
 
 Body.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   page: PropTypes.object,
 };
 

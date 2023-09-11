@@ -90,7 +90,7 @@ const HomepageRecents = () => {
                 }}
               >
                 <Link
-                  href={`/article/${article.slug.current}`}
+                  href={`/${article.slug.current}`}
                   sx={{
                     borderBottom: "1px solid",
                     borderBottomColor: "#EFE9DA",

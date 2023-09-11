@@ -65,7 +65,7 @@ const RelatedReadings = (props) => {
     typeof article.slug === "object"
       ? (slug = article.slug.current)
       : (slug = article.slug);
-    const handler = () => Router.push({ pathname: `/article/${slug}` });
+    const handler = () => Router.push({ pathname: `/${slug}` });
     return handler;
   };
 

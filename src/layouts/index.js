@@ -6,7 +6,7 @@ import policy_action from "./policy_action";
 import guide from "./guide";
 import topic from "./topic";
 
-export { advanced, post, author, page, policy_action, guide };
+export { advanced, post, author, page, policy_action, topic, guide };
 
 export default {
   advanced,
@@ -15,8 +15,5 @@ export default {
   page,
   policy_action,
   guide,
-  issue: topic,
-  policy: topic,
-  country: topic,
-  company: topic,
+  topic
 };

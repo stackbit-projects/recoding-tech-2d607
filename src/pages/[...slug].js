@@ -8,14 +8,9 @@ import pageLayouts from "../layouts";
 const Page = (props) => {
   // every page can have different layout, pick the layout based
   // on the model of the page (_type in Sanity CMS)
-  let componentName;
   let PageLayout;
 
-  if (_.get(props, "page.__metadata.modelName") === "topic") {
-    componentName = _.get(props, "page.type");
-  } else {
-    componentName = _.get(props, "page.__metadata.modelName");
-  }
+  const componentName = _.get(props, "page.__metadata.modelName");
 
   if (!componentName) {
     PageLayout = pageLayouts["page"];
