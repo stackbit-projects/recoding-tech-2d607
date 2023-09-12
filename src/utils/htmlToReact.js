@@ -51,17 +51,25 @@ export default function htmlToReact(html) {
         return (
           <List>
             {node.children && node.children.length
-              ? node.children.map((child) => {
+              ? node.children.map((child, index) => {
                   if (child.name === "li") {
-                    let slug = `#${slugify(
-                      child.children[0].children[0].data.toLowerCase(),
-                      {
-                        remove: /[*+~.()'"!:@?/]/g,
-                      }
-                    )}`;
+                    let slug = "";
+                    let data;
+
+                    if (!child.children[0].children) {
+                      slug = "/";
+                    } else {
+                      data = child.children[0].children[0].data;
+                      slug = `#${slugify(
+                        data.toLowerCase(),
+                        {
+                          remove: /[*+~.()'"!:@?/]/g,
+                        }
+                      )}`;
+                    }
                     return (
                       <ListItem
-                        key={slug}
+                        key={index}
                         sx={{ marginLeft: 0, paddingLeft: 0 }}
                       >
                         <NextLink
@@ -75,7 +83,7 @@ export default function htmlToReact(html) {
                               fontFamily: "'Lexend', sans-serif",
                             }}
                           >
-                            {child.children[0].data}
+                            {child.data}
                           </Typography>
                         </NextLink>
                       </ListItem>
