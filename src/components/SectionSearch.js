@@ -8,19 +8,21 @@ import client from "../utils/sanityClient";
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
-import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Pagination from "@mui/material/Pagination";
-import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
+// material ui icons
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const articlesQuery =
   '*[!(_id in path("drafts.**")) && _type == "post"]{_id, title, date, topics[]->{_key, _id, name, slug}, author[]->{name}, title, slug } | order(date desc)';
@@ -142,31 +144,40 @@ const SectionSearch = () => {
   // table pagination
   const [page, setPage] = useState(1);
 
+  const handleClose = (topic) => {
+    if (topic && filters.findIndex((f) => f._id === topic._id) < 0) {
+      setFilters([...filters, topic]);
+    }
+  };
+
+  const [topicEl, setTopicEl] = useState(null);
+  const openTopics = Boolean(topicEl);
+  const handleClickTopics = (event) => {
+    setTopicEl(event.currentTarget);
+  };
+  const handleCloseTopics = (topic) => () => {
+    setTopicEl(null);
+    handleClose(topic);
+  };
+
   const handleChangePage = (event, newPage) => {
     event.preventDefault();
     setPage(newPage);
   };
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-
-    let newFilters = [value, ...filters];
-    newFilters = newFilters.flat();
-    console.log(newFilters);
-    setFilters(newFilters);
+  const handleDelete = (topic) => () => {
+    topic && setFilters(filters.filter((f) => f._id !== topic._id));
   };
 
-  const handleDelete = (topic) => {
-    console.log("here....");
-    if (query.filter && history) {
-      history.pushState(null, "", location.href.split("?")[0]);
-    }
-    if (topic) {
-      setFilters(filters.filter((f) => f.slug !== topic.slug));
-    }
-  };
+  // const handleDelete = (topic) => {
+  //   console.log("here....");
+  //   if (query.filter && history) {
+  //     history.pushState(null, "", location.href.split("?")[0]);
+  //   }
+  //   if (topic) {
+  //     setFilters(filters.filter((f) => f.slug !== topic.slug));
+  //   }
+  // };
 
   // const getHandler = (item) => {
   //   const handler = () => Router.push({ pathname: item.url });
@@ -195,7 +206,12 @@ const SectionSearch = () => {
           label="Enter search term"
           variant="standard"
         />
-        <Grid container alignItems={"flex-end"} spacing={4}>
+        <Grid
+          container
+          alignItems={"flex-end"}
+          spacing={4}
+          sx={{ marginTop: 1 }}
+        >
           <Grid item>
             <Typography
               component="h2"
@@ -206,27 +222,46 @@ const SectionSearch = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <FormControl sx={{ marginTop: 4 }}>
-              <InputLabel id="topics-select-label">Topic</InputLabel>
-              <Select
-                sx={{ width: 400 }}
-                labelId="topics-select-label"
-                id="topics-select"
-                value={filters}
-                multiple
-                label="Topic"
-                onChange={handleChange}
-                input={<OutlinedInput label="Topic" />}
+            <Box>
+              <Button
+                sx={{
+                  border: "1px solid rgba(0,0,0,0.56)",
+                  color: "rgba(0,0,0,0.6)",
+                }}
+                id="topics-button"
+                aria-controls="topics-menu"
+                aria-haspopup="true"
+                aria-expanded={openTopics ? "true" : undefined}
+                disableElevation
+                onClick={handleClickTopics}
+                endIcon={
+                  openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                }
               >
-                {topics &&
-                  topics.length &&
-                  topics.map((topic) => (
-                    <MenuItem key={topic._id} value={topic.name}>
-                      {topic.name}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+                Topic
+              </Button>
+              <Menu
+                id="topics-menu"
+                MenuListProps={{
+                  "aria-labelledby": "topics-button",
+                }}
+                anchorEl={topicEl}
+                open={openTopics}
+                onClose={handleCloseTopics()}
+              >
+                {topics && topics.length
+                  ? topics.map((topic) => (
+                      <MenuItem
+                        key={topic._id}
+                        onClick={handleCloseTopics(topic)}
+                        disableRipple
+                      >
+                        {topic.displayTitle || topic.name}
+                      </MenuItem>
+                    ))
+                  : null}
+              </Menu>
+            </Box>
           </Grid>
         </Grid>
       </Box>
@@ -238,7 +273,14 @@ const SectionSearch = () => {
         direction="row-reverse"
         justifyContent="flex-end"
       >
-        <Grid container item xs={12} md={4} direction="column">
+        <Grid
+          container
+          item
+          xs={12}
+          md={4}
+          direction="column"
+          sx={{ marginTop: 4 }}
+        >
           <Grid item xs={12}>
             <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
               {filters.length
@@ -247,7 +289,7 @@ const SectionSearch = () => {
                       className={classes.chip}
                       key={`${filter}-${index}`}
                       item
-                      label={filter}
+                      label={filter.name}
                       color={filter.type}
                       onDelete={handleDelete(filter)}
                     />
