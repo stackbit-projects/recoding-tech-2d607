@@ -8,7 +8,7 @@ import NextLink from "next/link";
 import Link from "./link";
 import slugify from "slugify";
 import _ from "lodash";
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from "isomorphic-dompurify";
 
 import Image from "next/image";
 
@@ -121,7 +121,6 @@ export default function htmlToReact(html) {
               cursor: "pointer",
               fontFamily: "'Lexend', sans-serif",
             }}
-            
           />
         );
       }
