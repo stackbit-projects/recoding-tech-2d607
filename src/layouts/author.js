@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
 // material ui imports
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 // components
@@ -14,10 +19,39 @@ import SectionHero from "../components/SectionHero";
 
 // utils
 import { htmlToReact, urlFor } from "../utils";
+import client from "../utils/sanityClient";
 
 const Author = (props) => {
   const { page } = props;
+  const isMobile = useMediaQuery("(max-width:1064px)");
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [topics, setTopics] = useState([]);
 
+  const postsQuery = `*[_type == "post" && references("${page.__metadata.id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
+
+  useEffect(() => {
+    client.fetch(postsQuery).then((actions) => {
+      let newTopics = [];
+      actions.map((action) => {
+        newTopics = [action.relatedTopics, ...newTopics];
+      });
+      newTopics = newTopics.flat();
+      newTopics = newTopics.filter(
+        (topic) => topic.stackbit_model_type == "page"
+      );
+      newTopics = newTopics.filter(
+        (value, index, self) =>
+          index === self.findIndex((t) => t._id === value._id)
+      );
+
+      setPosts(actions);
+      setTopics(newTopics);
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {}, [posts, topics]);
   return (
     <Layout {...props}>
       <SectionHero {...props} />
@@ -48,6 +82,82 @@ const Author = (props) => {
             </Grid>
           </Grid>
         </Box>
+        {loading ? (
+          <Grid container item justifyContent="center">
+            <CircularProgress />
+          </Grid>
+        ) : (
+          <Box>
+            <Stack
+              direction="row"
+              justifyContent={"center"}
+              spacing={1}
+              useFlexGap
+              flexWrap="wrap"
+            >
+              {topics.length &&
+                topics.map((topic) => (
+                  <Chip
+                    color="footer"
+                    key={topic._id}
+                    label={topic.displayName}
+                    sx={{
+                      fontWeight: 400,
+                      textTransform: "none",
+                    }}
+                  />
+                ))}
+            </Stack>
+            <Grid
+              container
+              columnGap={6}
+              direction="column"
+              flexWrap={"wrap"}
+              height={isMobile ? 600 : 300}
+              marginBottom={10}
+              marginTop={8}
+            >
+              {posts.length &&
+                posts.map((post) => (
+                  <Grid
+                    item
+                    key={post._id}
+                    sx={{
+                      marginTop: 2,
+                      width: isMobile ? "100%" : "50%",
+                    }}
+                  >
+                    <Link
+                      href={`/${post.slug.current}`}
+                      sx={{
+                        borderBottom: "1px solid",
+                        borderBottomColor: "#EFE9DA",
+                        display: "block",
+                        paddingBottom: 2,
+                        textDecoration: "none !important",
+                      }}
+                    >
+                      <Typography
+                        component="div"
+                        variant="body1"
+                        sx={{
+                          color: "#000 !important",
+                          fontSize: "1em",
+                          fontWeight: "700",
+                          "&:hover": {
+                            color: "#225C9D !important",
+                            textDecoration: "none",
+                          },
+                        }}
+                      >
+                        {post.title}
+                      </Typography>
+                    </Link>
+                  </Grid>
+                ))}
+            </Grid>
+          </Box>
+        )}
       </Container>
     </Layout>
   );
