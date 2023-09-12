@@ -60,12 +60,9 @@ export default function htmlToReact(html) {
                       slug = "/";
                     } else {
                       data = child.children[0].children[0].data;
-                      slug = `#${slugify(
-                        data.toLowerCase(),
-                        {
-                          remove: /[*+~.()'"!:@?/]/g,
-                        }
-                      )}`;
+                      slug = `#${slugify(data.toLowerCase(), {
+                        remove: /[*+~.()'"!:@?/]/g,
+                      })}`;
                     }
                     return (
                       <ListItem
