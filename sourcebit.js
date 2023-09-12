@@ -18,33 +18,95 @@ module.exports = {
         watch: isDev,
         serializers: {
           types: {
-            reference: (props) =>
-              h("div", { className: "citation" }, props.node._ref),
+            reference: (props) => {
+              return h("div", { className: "citation" }, props.node._ref);
+            },
             Image: (props) => {
-              return h("img", {width: "100%", src: props.node }, props.node)
+              return h(
+                "figure",
+                h("img", {
+                  width: "100%",
+                  src: props.node.asset ? props.node.asset._ref : "",
+                  // actually a reference to a Sanity Image asset, to be converted into a URL in the htmlToReact render function
+                }),
+                h(
+                  "figcaption",
+                  props.node.caption
+                    ? props.node.caption
+                    : props.node.wordpressCaption
+                )
+              );
             },
             iframeEmbed: (props) => {
-              if (props.node.embedType === 'airtable.com') {
-                return h("iframe", { src: props.node.url, style: 'background:transparent;border:1px solid #ccc', }, props.node)
+              if (props.node.embedType === "airtable.com") {
+                return h(
+                  "iframe",
+                  {
+                    src: props.node.url,
+                    style: "background:transparent;border:1px solid #ccc",
+                  },
+                  props.node
+                );
               } else if (props.node.embedType === "player.captivate.fm") {
-                return h("iframe", { src: props.node.url, style: "width:100%;height:200px" }, props.node)
+                return h(
+                  "iframe",
+                  { src: props.node.url, style: "width:100%;height:200px" },
+                  props.node
+                );
               } else if (props.node.embedType === "player.vimeo.com") {
-                return h("iframe", { src: props.node.url, width: "640", height: "360", frameborder: "0", allow: "autoplay; fullscreen; picture-in-picture", allowfullscreen: true }, props.node)
+                return h(
+                  "iframe",
+                  {
+                    src: props.node.url,
+                    width: "640",
+                    height: "360",
+                    frameborder: "0",
+                    allow: "autoplay; fullscreen; picture-in-picture",
+                    allowfullscreen: true,
+                  },
+                  props.node
+                );
               } else if (props.node.embedType === "twitter.com") {
-                return h("a", { href: props.node.url }, props.node.url)
+                return h("a", { href: props.node.url }, props.node.url);
               } else if (props.node.embedType === "vimeo.com") {
-                return h("iframe", { src: `https://player.vimeo.com/video/${props.node.url.slice(-9)}?h=69206d40f4`, width:"640", height:"360", frameborder:"0", allow:"autoplay; fullscreen; picture-in-picture", allowfullscreen:true }, props.node)
-              } else if (props.node.embedType === "www.youtube.com" || props.node.embedType === "youtu.be") {
-                return h("iframe", { src: props.node.url, width: "560", height: "315", frameborder: "0", allow:"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share", allowfullscreen: true }, props.node)
+                return h(
+                  "iframe",
+                  {
+                    src: `https://player.vimeo.com/video/${props.node.url.slice(
+                      -9
+                    )}?h=69206d40f4`,
+                    width: "640",
+                    height: "360",
+                    frameborder: "0",
+                    allow: "autoplay; fullscreen; picture-in-picture",
+                    allowfullscreen: true,
+                  },
+                  props.node
+                );
+              } else if (
+                props.node.embedType === "www.youtube.com" ||
+                props.node.embedType === "youtu.be"
+              ) {
+                return h(
+                  "iframe",
+                  {
+                    src: props.node.url,
+                    width: "560",
+                    height: "315",
+                    frameborder: "0",
+                    allow:
+                      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+                    allowfullscreen: true,
+                  },
+                  props.node
+                );
               } else {
                 // console.log(props);
-                return h("iframe", { src: props.node.url }, props.node)
+                return h("iframe", { src: props.node.url }, props.node);
               }
             },
-            PDF: (props) =>
-              h("document", { className: "pdf" }, props.node),
-            File: (props) =>
-              h("document", { className: "pdf" }, props.node),
+            PDF: (props) => h("document", { className: "pdf" }, props.node),
+            File: (props) => h("document", { className: "pdf" }, props.node),
           },
         },
       },
@@ -128,8 +190,8 @@ module.exports = {
                   if (!object.slug) {
                     slug = object.title
                       .toLowerCase()
-                      .replace(/[^\w\s]/gi, '')
-                      .replace(/\s+/g, '-')
+                      .replace(/[^\w\s]/gi, "")
+                      .replace(/\s+/g, "-")
                       .slice(0, 200);
                   } else {
                     slug = object.slug.current;
