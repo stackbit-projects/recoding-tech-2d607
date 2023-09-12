@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 const recentArticlesQuery = `*[_type == "post" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
-                            type}|order(lastUpdate desc)[0...16]`;
+                            type}|order(lastUpdate desc)[0...20]`;
 
 const HomepageRecents = () => {
   const [articles, setArticles] = useState([]);

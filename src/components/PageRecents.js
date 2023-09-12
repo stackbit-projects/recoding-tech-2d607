@@ -61,9 +61,7 @@ const PageRecents = (props) => {
       </Grid>
       <Grid
         container
-        columnGap={6}
-        direction="column"
-        height={600}
+        columnGap={4}
         marginBottom={10}
         marginTop={2}
       >
@@ -72,23 +70,25 @@ const PageRecents = (props) => {
               <Grid
                 item
                 key={article._id}
+                xs={12}
+                sm={6}
+                md={4}
                 sx={{
-                  width: isMobile ? "100%" : "28%",
+                  borderBottom: "1px solid",
+                  borderBottomColor: "#EFE9DA",
+                  maxWidth: isMobile ? "100%" : "30% !important",
+                  paddingBottom: 2,
+                  paddingTop: 2,
                 }}
               >
                 <Link
                   href={`/${article.slug.current}`}
                   sx={{
-                    borderBottom: "1px solid",
-                    borderBottomColor: "#EFE9DA",
-                    display: "block",
-                    paddingBottom: 2,
-                    paddingTop: 2,
                     textDecoration: "none !important",
                   }}
                 >
                   <Typography
-                    component="div"
+                    component="span"
                     variant="body1"
                     sx={{
                       color: "#000 !important",
