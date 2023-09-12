@@ -87,11 +87,11 @@ export default function htmlToReact(html) {
         );
       }
 
-      if (node.name === "blockquote" && node.children[1] && node.children[0]) {
+      if (node.name === "blockquote" && node.children[0]) {
         return (
           <Box p={4} sx={{ border: "1px solid #000" }}>
             <Typography component="div" variant="quote">
-              {node.children[1].children[0].data}
+              {node.children[0].data}
             </Typography>
           </Box>
         );
