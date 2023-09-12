@@ -74,12 +74,12 @@ function PolicyActionTable(props) {
     ? (headers = [
         { id: "title", label: "Name" },
         { id: "type", label: "Type" },
-        { id: "country.displayTitle", label: "Gov't" },
+        { id: "country", label: "Gov't" },
       ])
     : (headers = [
         { id: "title", label: "Name" },
         { id: "type", label: "Type" },
-        { id: "country.displayTitle", label: `Government` },
+        { id: "country", label: `Government` },
         { id: "dateInitiated", label: "Date Initiated" },
         { id: "status", label: "Status" },
         { id: "lastUpdate", label: "Last Updated" },
@@ -226,9 +226,11 @@ function PolicyActionTable(props) {
                                     component="div"
                                     variant={"trackerRowHome"}
                                   >
-                                    {DateTime.fromISO(value).toLocaleString(
-                                      DateTime.DATE_MED
-                                    )}
+                                    {value
+                                      ? DateTime.fromISO(value).toLocaleString(
+                                          DateTime.DATE_MED
+                                        )
+                                      : ""}
                                   </Typography>
                                 ) : column.id == "title" ? (
                                   <Typography
@@ -334,9 +336,11 @@ function PolicyActionTable(props) {
                                   component="div"
                                   variant={"trackerRow"}
                                 >
-                                  {DateTime.fromISO(value).toLocaleString(
-                                    DateTime.DATE_MED
-                                  )}
+                                  {value
+                                    ? DateTime.fromISO(value).toLocaleString(
+                                        DateTime.DATE_MED
+                                      )
+                                    : ""}
                                 </Typography>
                               ) : column.id == "title" ? (
                                 <Typography

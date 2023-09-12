@@ -105,7 +105,7 @@ function PolicyActionMobile(props) {
                   sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
                 >
                   <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                    {row.country && row.country.displayTitle}
+                    {row.country}
                   </Typography>
                 </Grid>
                 <Grid
@@ -137,9 +137,11 @@ function PolicyActionMobile(props) {
                   sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
                 >
                   <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                    {DateTime.fromISO(row.lastUpdate).toLocaleString(
-                      DateTime.DATE_MED
-                    )}
+                    {row.lastUpdate
+                      ? DateTime.fromISO(row.lastUpdate).toLocaleString(
+                          DateTime.DATE_MED
+                        )
+                      : ""}
                   </Typography>
                 </Grid>
               </Grid>

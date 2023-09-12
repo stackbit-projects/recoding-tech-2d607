@@ -12,7 +12,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import PolicyActionTable from "./PolicyActionTable";
 import PolicyActionMobile from "./PolicyActionMobile";
 
-const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
+const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)[0...5]`;

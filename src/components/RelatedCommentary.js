@@ -123,9 +123,11 @@ const RelatedCommentary = (props) => {
                     {process(comment)}
                   </Typography>
                   <Typography className={classes.em}>
-                    {DateTime.fromISO(comment.date).toLocaleString(
-                      DateTime.DATE_FULL
-                    )}
+                    {comment.date
+                      ? DateTime.fromISO(comment.date).toLocaleString(
+                          DateTime.DATE_FULL
+                        )
+                      : ""}
                   </Typography>
                 </Grid>
               ))
