@@ -63,7 +63,6 @@ const PageRecents = (props) => {
         container
         columnGap={6}
         direction="column"
-        flexWrap={"wrap"}
         height={600}
         marginBottom={10}
         marginTop={2}

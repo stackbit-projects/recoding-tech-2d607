@@ -27,7 +27,7 @@ import PolicyActionTable from "./PolicyActionTable";
 import PolicyActionMobile from "./PolicyActionMobile";
 
 // SANITY QUERIES
-const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country->{_key, displayTitle, name, slug}, dateInitiated,
+const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
@@ -46,9 +46,7 @@ function SectionTracker() {
   const isMobile = useMediaQuery("(max-width:1064px)");
 
   // filters
-  const [issues, setIssues] = useState([]);
-  const [policies, setPolicies] = useState([]);
-  const [companies, setCompanies] = useState([]);
+  const [types, setTypes] = useState([]);
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -69,6 +67,22 @@ function SectionTracker() {
   }, []);
 
   useEffect(() => {
+    let newGovts = [];
+    let newTypes = [];
+    if (Array.isArray(actions) && actions.length) {
+      actions.map((action) => {
+        if (action.country) {
+          newGovts.push(action.country);
+        }
+        if (action.type) {
+          newTypes.push(action.type);
+        }
+      });
+    }
+
+    newGovts = [...new Set(newGovts)];
+    newTypes = [...new Set(newTypes)];
+
     const newTopics = {
       issue: new Map(),
       policy: new Map(),
@@ -100,13 +114,13 @@ function SectionTracker() {
         }
       }
     });
-    setIssues(Array.from(newTopics.issue.values()));
-    setPolicies(Array.from(newTopics.policy.values()));
-    setCompanies(Array.from(newTopics.company.values()));
-    setCountries(Array.from(newTopics.country.values()));
+    setTypes(newTypes);
+    setCountries(newGovts);
     newFilters.sort();
     setFilters(newFilters);
   }, [topics, query]);
+
+  useEffect(() => {}, [countries, types]);
 
   useEffect(() => {
     if (allActions.length) {
@@ -140,27 +154,17 @@ function SectionTracker() {
     topic && setFilters(filters.filter((f) => f._id !== topic._id));
   };
 
-  const [issueEl, setIssueEl] = React.useState(null);
-  const openIssues = Boolean(issueEl);
-  const handleClickIssues = (event) => {
-    setIssueEl(event.currentTarget);
+  const [topicEl, setTopicEl] = useState(null);
+  const openTopics = Boolean(topicEl);
+  const handleClickTopics = (event) => {
+    setTopicEl(event.currentTarget);
   };
-  const handleCloseIssues = (topic) => () => {
-    setIssueEl(null);
+  const handleCloseTopics = (topic) => () => {
+    setTopicEl(null);
     handleClose(topic);
   };
 
-  const [policiesEl, setPoliciesEl] = React.useState(null);
-  const openPolicies = Boolean(policiesEl);
-  const handleClickPolicies = (event) => {
-    setPoliciesEl(event.currentTarget);
-  };
-  const handleClosePolicies = (topic) => () => {
-    setPoliciesEl(null);
-    handleClose(topic);
-  };
-
-  const [countriesEl, setCountriesEl] = React.useState(null);
+  const [countriesEl, setCountriesEl] = useState(null);
   const openCountries = Boolean(countriesEl);
   const handleClickCountries = (event) => {
     setCountriesEl(event.currentTarget);
@@ -170,13 +174,13 @@ function SectionTracker() {
     handleClose(topic);
   };
 
-  const [companiesEl, setCompaniesEl] = React.useState(null);
-  const openCompanies = Boolean(companiesEl);
-  const handleClickCompanies = (event) => {
-    setCompaniesEl(event.currentTarget);
+  const [typesEl, setTypesEl] = useState(null);
+  const openTypes = Boolean(typesEl);
+  const handleClickTypes = (event) => {
+    setTypesEl(event.currentTarget);
   };
-  const handleCloseCompanies = (topic) => () => {
-    setCompaniesEl(null);
+  const handleCloseTypes = (topic) => () => {
+    setTypesEl(null);
     handleClose(topic);
   };
 
@@ -208,72 +212,35 @@ function SectionTracker() {
               <Box>
                 <Button
                   sx={{ border: "1px solid #DEDEDE" }}
-                  id="issues-button"
-                  aria-controls="issues-menu"
+                  id="topics-button"
+                  aria-controls="topics-menu"
                   aria-haspopup="true"
-                  aria-expanded={openIssues ? "true" : undefined}
+                  aria-expanded={openTopics ? "true" : undefined}
                   disableElevation
-                  onClick={handleClickIssues}
+                  onClick={handleClickTopics}
                   endIcon={
-                    openIssues ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                    openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
                   }
                 >
-                  Issue
+                  Topic
                 </Button>
                 <Menu
-                  id="issues-menu"
+                  id="topics-menu"
                   MenuListProps={{
-                    "aria-labelledby": "issues-button",
+                    "aria-labelledby": "topics-button",
                   }}
-                  anchorEl={issueEl}
-                  open={openIssues}
-                  onClose={handleCloseIssues()}
+                  anchorEl={topicEl}
+                  open={openTopics}
+                  onClose={handleCloseTopics()}
                 >
-                  {issues && issues.length
-                    ? issues.map((issue) => (
+                  {topics && topics.length
+                    ? topics.map((topic) => (
                         <MenuItem
-                          key={issue._id}
-                          onClick={handleCloseIssues(issue)}
+                          key={topic._id}
+                          onClick={handleCloseTopics(topic)}
                           disableRipple
                         >
-                          {issue.displayTitle || issue.name}
-                        </MenuItem>
-                      ))
-                    : null}
-                </Menu>
-              </Box>
-              <Box>
-                <Button
-                  sx={{ border: "1px solid #DEDEDE" }}
-                  id="policies-button"
-                  aria-controls="policies-menu"
-                  aria-haspopup="true"
-                  aria-expanded={openPolicies ? "true" : undefined}
-                  disableElevation
-                  onClick={handleClickPolicies}
-                  endIcon={
-                    openPolicies ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-                  }
-                >
-                  Policy
-                </Button>
-                <Menu
-                  id="policies-menu"
-                  MenuListProps={{
-                    "aria-labelledby": "policies-button",
-                  }}
-                  anchorEl={policiesEl}
-                  open={openPolicies}
-                  onClose={handleClosePolicies()}
-                >
-                  {policies && policies.length
-                    ? policies.map((policy) => (
-                        <MenuItem
-                          key={policy._id}
-                          onClick={handleClosePolicies(policy)}
-                          disableRipple
-                        >
-                          {policy.displayTitle || policy.name}
+                          {topic.displayTitle || topic.name}
                         </MenuItem>
                       ))
                     : null}
@@ -308,11 +275,11 @@ function SectionTracker() {
                         if (country) {
                           return (
                             <MenuItem
-                              key={country._id}
+                              key={country}
                               onClick={handleCloseCountries(country)}
                               disableRipple
                             >
-                              {country.displayTitle || country.name}
+                              {country}
                             </MenuItem>
                           );
                         }
@@ -323,35 +290,35 @@ function SectionTracker() {
               <Box>
                 <Button
                   sx={{ border: "1px solid #DEDEDE" }}
-                  id="companies-button"
-                  aria-controls="companies-menu"
+                  id="types-button"
+                  aria-controls="types-menu"
                   aria-haspopup="true"
-                  aria-expanded={openCompanies ? "true" : undefined}
+                  aria-expanded={openTypes ? "true" : undefined}
                   disableElevation
-                  onClick={handleClickCompanies}
+                  onClick={handleClickTypes}
                   endIcon={
-                    openCompanies ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                    openTypes ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
                   }
                 >
-                  Company
+                  Type
                 </Button>
                 <Menu
-                  id="companies-menu"
+                  id="types-menu"
                   MenuListProps={{
-                    "aria-labelledby": "companies-button",
+                    "aria-labelledby": "types-button",
                   }}
-                  anchorEl={companiesEl}
-                  open={openCompanies}
-                  onClose={handleCloseCompanies()}
+                  anchorEl={typesEl}
+                  open={openTypes}
+                  onClose={handleCloseTypes()}
                 >
-                  {companies && companies.length
-                    ? companies.map((company) => (
+                  {types && types.length
+                    ? types.map((type) => (
                         <MenuItem
-                          key={company._key}
-                          onClick={handleCloseCompanies(company)}
+                          key={type}
+                          onClick={handleCloseTypes(type)}
                           disableRipple
                         >
-                          {company.displayTitle || company.name}
+                          {type}
                         </MenuItem>
                       ))
                     : null}

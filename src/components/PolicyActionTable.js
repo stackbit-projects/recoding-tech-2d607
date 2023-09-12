@@ -59,7 +59,6 @@ function PolicyActionTable(props) {
         { id: "title", label: "Name" },
         { id: "type", label: "Type" },
         { id: "country", label: `Government` },
-        { id: "country.state", label: `State (US)` },
         { id: "dateInitiated", label: "Date Initiated" },
         { id: "status", label: "Status" },
         { id: "lastUpdate", label: "Last Updated" },

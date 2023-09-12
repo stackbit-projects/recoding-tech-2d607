@@ -78,8 +78,7 @@ const HomepageRecents = () => {
         container
         columnGap={6}
         direction="column"
-        flexWrap={"wrap"}
-        height={isMobile ? 600 : 300}
+        height={600}
         marginBottom={10}
         marginTop={2}
       >
