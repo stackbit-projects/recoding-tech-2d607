@@ -25,6 +25,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontFamily: sansSerifFont,
+        },
+      },
+    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -98,7 +105,7 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#FF0033",
+      main: "#000",
     },
     secondary: {
       main: "#427569",
@@ -221,8 +228,8 @@ const theme = createTheme({
       color: "rgba(0, 0, 0, 0.6)",
       fontFamily: sansSerifFont,
       fontSize: 12,
-      marginTop: 10,
-      marginBottom: 20,
+      marginTop: 0,
+      marginBottom: 0,
       textTransform: "uppercase",
     },
     li: {

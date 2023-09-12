@@ -149,6 +149,7 @@ module.exports = {
                           [
                             "title",
                             "author",
+                            "featuredImage",
                             "category",
                             "date",
                             "type",

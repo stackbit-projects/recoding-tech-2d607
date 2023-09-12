@@ -45,6 +45,11 @@ export default {
       title: 'Published date',
     },
     {
+      type: 'image',
+      name: 'featuredImage',
+      title: 'Featured image',
+    },
+    {
       title: 'Content',
       name: 'body',
       type: 'array',

@@ -67,7 +67,8 @@ const useStyles = makeStyles(() => ({
   more: {
     textDecoration: "none",
     width: 162,
-    "&:hover": {
+    "&:active, & :focus, &:hover": {
+      color: "#FF0033",
       textDecoration: "underline",
     },
   },
@@ -89,9 +90,7 @@ const SectionRecentArticles = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(articles);
-  }, [articles]);
+  useEffect(() => {}, [articles]);
 
   return (
     <Grid container className={classes.grid}>

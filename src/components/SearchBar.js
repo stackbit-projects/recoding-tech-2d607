@@ -42,7 +42,7 @@ const SearchBar = ({ handleSearch }) => {
           marginLeft: 1,
           width: "92%",
         }}
-        placeholder="SEARCH..."
+        placeholder="Enter search term"
       />
     </Paper>
   );

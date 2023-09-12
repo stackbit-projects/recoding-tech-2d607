@@ -99,6 +99,8 @@ function SectionHero(props) {
               : page.layout == "policy_action" ||
                 page.__metadata.modelName == "author"
               ? "#427569"
+              : page.stackbit_url_path == "/library"
+              ? "#EDE4C1"
               : theme.palette["topic"].main,
         }}
       >
@@ -137,6 +139,8 @@ function SectionHero(props) {
                     : page.layout == "policy_action" ||
                       page.__metadata.modelName == "author"
                     ? "#3C6E63"
+                    : page.stackbit_url_path == "/library"
+                    ? "#DBD7B4"
                     : "#215793"
                 }
               />
@@ -189,7 +193,12 @@ function SectionHero(props) {
             <Typography
               variant="h1"
               className={classes.title}
-              color={page.stackbit_model_type == "data" ? "#000" : "#FFF"}
+              color={
+                page.stackbit_model_type == "data" ||
+                page.stackbit_url_path == "/library"
+                  ? "#000"
+                  : "#FFF"
+              }
               fontSize={
                 page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"
               }
