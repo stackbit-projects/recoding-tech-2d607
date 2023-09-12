@@ -13,9 +13,10 @@ import client from "../utils/sanityClient";
 
 // MUI icons
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 
-const query = `*[!(_id in path("drafts.**")) && _type == "post" && date != null]{_id, title, slug}|order(date desc)[0...5]`; // just get the four most recent articles
+const query = `*[!(_id in path("drafts.**")) && _type == "post" && date != null]{_id, author[]->{name, slug}, title, slug}|order(date desc)[0...5]`; // just get the four most recent articles
 
 const useStyles = makeStyles(() => ({
   article: {
@@ -45,6 +46,13 @@ const useStyles = makeStyles(() => ({
   em: {
     fontSize: "0.81em",
     fontStyle: "italic",
+  },
+  authors: {
+    color: "rgba(0, 0, 0, 0.6)",
+    fontFamily: "Lexend",
+    fontSize: "10px",
+    fontWeight: "700",
+    textTransform: "uppercase",
   },
   grid: {},
   gridTitle: {
@@ -114,6 +122,13 @@ const SectionRecentArticles = () => {
                     className={classes.articleTitle}
                   >
                     {article.title}
+                  </Typography>
+
+                  <Typography className={classes.authors}>
+                    {article.author.map((author) => {
+                      return author.name;
+                    })}{" "}
+                    <ArrowForwardIcon />
                   </Typography>
                 </Link>
               </Grid>

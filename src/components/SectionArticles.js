@@ -50,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  authors: {
+    color: "rgba(0, 0, 0, 0.6)",
+    fontFamily: "Lexend",
+    fontSize: "10px",
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
   em: {
     fontSize: "0.95em",
     fontStyle: "italic",
@@ -85,6 +92,8 @@ function SectionArticle(props) {
 
   useEffect(() => {
     setArticle(featuredArticle);
+    console.log("article ->", article);
+    console.log("alsoFeatured ->", alsoFeatured);
   }, []);
 
   const articleClick = (url) => {
@@ -165,6 +174,11 @@ function SectionArticle(props) {
                           sx={{ fontWeight: "bold" }}
                         >
                           {titleCase(article.title)}
+                        </Typography>
+                        <Typography className={classes.authors}>
+                          {article.author.map((author) => {
+                            return author.name;
+                          })}
                         </Typography>
                       </CardContent>
                     </CardActionArea>
