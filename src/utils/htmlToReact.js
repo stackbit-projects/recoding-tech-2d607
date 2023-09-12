@@ -8,6 +8,7 @@ import NextLink from "next/link";
 import Link from "./link";
 import slugify from "slugify";
 import _ from "lodash";
+import DOMPurify from 'isomorphic-dompurify';
 
 import Image from "next/image";
 
@@ -108,7 +109,21 @@ export default function htmlToReact(html) {
       }
 
       if (node.name === "figcaption") {
-        console.log("node figcaption =>", node.children[0].data);
+        const data = node.children[0].data;
+        const clean = DOMPurify.sanitize(data);
+
+        return (
+          <Typography
+            component="span"
+            dangerouslySetInnerHTML={{ __html: clean }}
+            style={{
+              color: "#7C7B7B",
+              cursor: "pointer",
+              fontFamily: "'Lexend', sans-serif",
+            }}
+            
+          />
+        );
       }
 
       if (node.attribs && node.attribs.class == "citation") {
