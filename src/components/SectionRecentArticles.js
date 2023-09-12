@@ -13,7 +13,6 @@ import client from "../utils/sanityClient";
 
 // MUI icons
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 
 const query = `*[!(_id in path("drafts.**")) && _type == "post" && date != null]{_id, author[]->{name, slug}, title, slug}|order(date desc)[0...5]`; // just get the four most recent articles
@@ -122,13 +121,6 @@ const SectionRecentArticles = () => {
                     className={classes.articleTitle}
                   >
                     {article.title}
-                  </Typography>
-
-                  <Typography className={classes.authors}>
-                    {article.author.map((author) => {
-                      return author.name;
-                    })}{" "}
-                    <ArrowForwardIcon />
                   </Typography>
                 </Link>
               </Grid>

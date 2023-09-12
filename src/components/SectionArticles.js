@@ -175,11 +175,6 @@ function SectionArticle(props) {
                         >
                           {titleCase(article.title)}
                         </Typography>
-                        <Typography className={classes.authors}>
-                          {article.author.map((author) => {
-                            return author.name;
-                          })}
-                        </Typography>
                       </CardContent>
                     </CardActionArea>
                   </Card>
