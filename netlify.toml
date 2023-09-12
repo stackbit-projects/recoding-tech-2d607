@@ -5,6 +5,7 @@ functions = "functions/"
 
 [build.environment]
 NETLIFY_NEXT_PLUGIN_SKIP = "true"
+NODE_OPTIONS="–max-old-space-size=8192"
 
 [dev]
 framework = "#static"
