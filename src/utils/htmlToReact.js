@@ -9,6 +9,8 @@ import Link from "./link";
 import slugify from "slugify";
 import _ from "lodash";
 
+import Image from "next/image";
+
 // MUI components
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -17,6 +19,7 @@ import Typography from "@mui/material/Typography";
 
 // custom components
 import FancyCard from "../components/FancyCard";
+import urlFor from "./imageBuilder";
 
 const convertChildren = (children, index) =>
   _.map(children, (childNode) =>
@@ -32,7 +35,6 @@ export default function htmlToReact(html) {
   return ReactHtmlParser(html, {
     transform: (node, index) => {
       /** the next two if statements ensure the Table of Contents section in the articles work */
-
       if (!node.type) {
         return null;
       }
@@ -95,8 +97,18 @@ export default function htmlToReact(html) {
       }
 
       if (node.name === "img") {
-        console.log(node);
-        return <img />;
+        return (
+          <Image
+            src={urlFor(node.attribs.src).url()}
+            height={576}
+            width={1024}
+            alt=""
+          ></Image>
+        );
+      }
+
+      if (node.name === "figcaption") {
+        console.log("node figcaption =>", node.children[0].data);
       }
 
       if (node.attribs && node.attribs.class == "citation") {
