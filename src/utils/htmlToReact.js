@@ -40,7 +40,7 @@ export default function htmlToReact(html) {
         return null;
       }
 
-      if (node.name === "h4" && node.children[0].data) {
+      if (node.name === "h4" && node.children[0] && node.children[0].data) {
         let slug = `${slugify(node.children[0].data.toLowerCase(), {
           remove: /[*+~.()'"!:@?/]/g,
         })}`;
