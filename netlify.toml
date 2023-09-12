@@ -1,6 +1,6 @@
 [build]
 publish = "out"
-command = "./stackbit-build.sh"
+command = "npm run build"
 functions = "functions/"
 
 [build.environment]
@@ -9,7 +9,7 @@ NETLIFY_NEXT_PLUGIN_SKIP = "true"
 [dev]
 framework = "#static"
 
-[[redirects]]
-from = "recoding-tech-v2.netlify.app"
-to = "recoding.tech"
+#[[redirects]]
+#from = "recoding-tech-v2.netlify.app"
+#to = "recoding.tech"
 
