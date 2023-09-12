@@ -167,7 +167,13 @@ const Post = (props) => {
                 </Typography>
                 <Stack direction="column" spacing={4}>
                   {page.author.map((auth) => (
-                    <Grid container key={auth.slug.current} spacing={2} xs={12}>
+                    <Grid
+                      container
+                      key={auth.slug.current}
+                      spacing={2}
+                      item
+                      xs={12}
+                    >
                       <Grid item xs={auth.photo ? 3 : 0}>
                         {auth.photo && (
                           <Image

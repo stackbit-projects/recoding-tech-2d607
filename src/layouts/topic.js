@@ -70,6 +70,7 @@ const Topic = (props) => {
           {page.stackbit_model_type == "page" && (
             <Grid container spacing={8}>
               <Grid
+                container
                 spacing={12}
                 direction="column"
                 item
