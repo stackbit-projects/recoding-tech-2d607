@@ -60,6 +60,9 @@ export default {
           type: "section_policy_actions"
         },
         {
+          type: "section_library"
+        },
+        {
           type: "section_search"
         },
         {

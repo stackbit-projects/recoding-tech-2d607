@@ -100,6 +100,8 @@ function SectionArticle(props) {
     router.push({ pathname: "/" + url });
   };
 
+  console.log(article);
+
   return (
     <Container>
       <Box my={4} mb={10}>
@@ -111,7 +113,7 @@ function SectionArticle(props) {
                 className={`${classes.box} ${classes.featured}`}
                 sx={{
                   backgroundImage: article.featuredImage
-                    ? `url(${article.featuredImage})`
+                    ? `url(${article.featuredImage.url})`
                     : "",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
@@ -136,12 +138,25 @@ function SectionArticle(props) {
                       gutterBottom
                       component="div"
                       variant="h2_article"
+                      color={article.featuredImage ? "#FFF" : "#000"}
+                      sx={{ textShadow: "1px 1px 3px #000" }}
                     >
                       {titleCase(article.title)}
                     </Typography>
-                    <Typography gutterBottom component="div" variant="h5_card">
-                      {article.author.name}
-                    </Typography>
+                    {article.author &&
+                      article.author.length &&
+                      article.author.map((auth) => (
+                        <Typography
+                          key={auth._id}
+                          gutterBottom
+                          component="div"
+                          variant="h5_card"
+                          color={article.featuredImage ? "#FFF" : "#000"}
+                          sx={{ textShadow: "1px 1px 3px #000" }}
+                        >
+                          {auth.name}
+                        </Typography>
+                      ))}
                   </CardContent>
                 </CardActionArea>
               </Card>

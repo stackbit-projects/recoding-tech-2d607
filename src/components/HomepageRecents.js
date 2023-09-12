@@ -63,6 +63,10 @@ const HomepageRecents = () => {
                 color: "#FF0033",
                 paddingX: "10px",
                 paddingY: "6px",
+                "&:active, & :focus, &:hover": {
+                  color: "#FF0033",
+                  textDecoration: "underline",
+                },
               }}
             >
               View more
