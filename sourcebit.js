@@ -22,20 +22,31 @@ module.exports = {
               return h("div", { className: "citation" }, props.node._ref);
             },
             Image: (props) => {
-              return h(
-                "figure",
-                h("img", {
-                  width: "100%",
-                  src: props.node.asset ? props.node.asset._ref : "",
-                  // actually a reference to a Sanity Image asset, to be converted into a URL in the htmlToReact render function
-                }),
-                h(
-                  "figcaption",
-                  props.node.caption
-                    ? props.node.caption
-                    : props.node.wordpressCaption
-                )
-              );
+              if (props.node.caption || props.node.wordpressCaption) {
+                return h(
+                  "figure",
+                  h("img", {
+                    width: "100%",
+                    src: props.node.asset ? props.node.asset._ref : "",
+                    // actually a reference to a Sanity Image asset, to be converted into a URL in the htmlToReact render function
+                  }),
+                  h(
+                    "figcaption",
+                    props.node.caption
+                      ? props.node.caption
+                      : props.node.wordpressCaption
+                  )
+                );
+              } else {
+                return h(
+                  "figure",
+                  h("img", {
+                    width: "100%",
+                    src: props.node.asset ? props.node.asset._ref : "",
+                    // actually a reference to a Sanity Image asset, to be converted into a URL in the htmlToReact render function
+                  })
+                );
+              }
             },
             iframeEmbed: (props) => {
               if (props.node.embedType === "airtable.com") {
