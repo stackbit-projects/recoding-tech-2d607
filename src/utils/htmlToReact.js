@@ -60,7 +60,9 @@ export default function htmlToReact(html) {
                       slug = "/";
                     } else if (child.children[0].children[0].children) {
                       if (child.children[0].children[0].children[0].children) {
-                        data = child.children[0].children[0].children[0].children[0].data;
+                        data =
+                          child.children[0].children[0].children[0].children[0]
+                            .data;
                         slug = `#${slugify(data.toLowerCase(), {
                           remove: /[*+~.()'"!:@?/]/g,
                         })}`;
@@ -69,7 +71,7 @@ export default function htmlToReact(html) {
                         slug = `#${slugify(data.toLowerCase(), {
                           remove: /[*+~.()'"!:@?/]/g,
                         })}`;
-                      }                      
+                      }
                     } else {
                       data = child.children[0].children[0].data;
                       slug = `#${slugify(data.toLowerCase(), {
