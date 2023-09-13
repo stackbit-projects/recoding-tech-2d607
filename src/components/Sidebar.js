@@ -14,7 +14,7 @@ import { urlFor } from "../utils";
 const Sidebar = (props) => {
   const { content } = props;
   const defineSrc = (photoSrc) => {
-    return urlFor(photoSrc).url() || "";
+    return urlFor(photoSrc.url).url() || "";
   };
 
   return (
