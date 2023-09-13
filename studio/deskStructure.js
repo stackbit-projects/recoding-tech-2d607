@@ -1,4 +1,22 @@
 // import {SEOPane} from 'sanity-plugin-seo-pane'
+import DocumentsPane from 'sanity-plugin-documents-pane'
+
+const paneTitle = (schemaType) => {
+  let title
+  switch (schemaType) {
+    case 'author':
+      title = 'Articles by this author'
+      break
+    case 'topic':
+      title = 'Documents referencing this topic'
+      break
+    case 'post':
+      title = 'Documents referencing this article'
+    default:
+      title = 'Documents referencing this item'
+  }
+  return title
+}
 
 export const structure = async (S, context) => {
   return S.list()
@@ -11,24 +29,27 @@ export const structure = async (S, context) => {
           S.documentList()
             .title(`Featured topics`)
             .schemaType('topic')
-            .filter(`_type == "topic" && stackbit_model_type == 'page'`)
+            .filter(`_type == "topic" && stackbit_model_type == 'page'`),
         ),
     ])
 }
 
-// export const defaultDocumentNodeResolver = (S, {schemaType}) => {
-//   // Conditionally return a different configuration based on the schema type
-//   if (schemaType === 'post') {
-//     return S.document().views([
-//       S.view
-//         .component(SEOPane)
-//         .options({
-//           url: (doc) => resolveProductionUrl(doc),
-//         })
-//         .title('SEO'),
-//     ])
-//   }
-// }
+export const defaultDocumentNode = (S, {schemaType}) => {
+  // Conditionally return a different configuration based on the schema type
+
+  return S.document().views([
+    S.view.form(),
+    S.view
+      .component(DocumentsPane)
+      .options({
+        query: `*[!(_id in path("drafts.**")) && references($id)]`,
+        params: {id: `_id`},
+      })
+      .title(paneTitle(schemaType)),
+  ])
+}
+
+// return S.document().views([S.view.form(), S.view.component(JsonView).title('JSON')])
 
 // export const structure = (S) =>
 //   S.document()
