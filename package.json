@@ -13,6 +13,7 @@
     "develop": "next dev",
     "fetch": "sourcebit fetch",
     "build": "next build && next export",
+    "export": "next export",
     "build:netlify": "next build --debug",
     "start": "next start",
     "import:citations": "node importData.mjs",

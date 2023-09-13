@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Image from "next/image";
 
 // material ui imports
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -23,7 +22,6 @@ import client from "../utils/sanityClient";
 
 const Author = (props) => {
   const { page } = props;
-  const isMobile = useMediaQuery("(max-width:1064px)");
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [topics, setTopics] = useState([]);
@@ -111,9 +109,8 @@ const Author = (props) => {
             <Grid
               container
               columnGap={6}
-              direction="column"
-              flexWrap={"wrap"}
-              height={isMobile ? 600 : 300}
+              direction="row"
+              alignItems={"center"}
               marginBottom={10}
               marginTop={8}
             >
@@ -124,8 +121,9 @@ const Author = (props) => {
                     key={post._id}
                     sx={{
                       marginTop: 2,
-                      width: isMobile ? "100%" : "50%",
                     }}
+                    xs={12}
+                    sm={5.5}
                   >
                     <Link
                       href={`/${post.slug.current}`}

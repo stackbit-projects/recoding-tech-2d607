@@ -59,7 +59,13 @@ const PageRecents = (props) => {
           </Link>
         </Grid>
       </Grid>
-      <Grid container columnGap={4} marginBottom={10} marginTop={2}>
+      <Grid
+        container
+        columnGap={4}
+        alignItems={"center"}
+        marginBottom={10}
+        marginTop={2}
+      >
         {readings && readings.length
           ? readings.map((article) => (
               <Grid

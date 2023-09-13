@@ -70,7 +70,6 @@ const Topic = (props) => {
           {page.stackbit_model_type == "page" && (
             <Grid container spacing={8}>
               <Grid
-                container
                 spacing={12}
                 direction="column"
                 item
@@ -87,14 +86,7 @@ const Topic = (props) => {
                   {htmlToReact(page.description)}
                 </Typography>
               </Grid>
-              <Grid
-                container
-                spacing={4}
-                direction="column"
-                item
-                sm={12}
-                md={4}
-              >
+              <Grid spacing={4} direction="column" item sm={12} md={4}>
                 <Grid item sx={{ width: "100%" }}>
                   Insert subscribe box here
                 </Grid>

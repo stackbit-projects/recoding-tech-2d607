@@ -17,6 +17,7 @@ const nextConfig = withSourcebit({
   },
   //errorOnExist: false,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
