@@ -58,6 +58,20 @@ export default function htmlToReact(html) {
 
                     if (!child.children[0].children) {
                       slug = "/";
+                    } else if (child.children[0].children[0].children) {
+                      if (child.children[0].children[0].children[0].children) {
+                        data =
+                          child.children[0].children[0].children[0].children[0]
+                            .data;
+                        slug = `#${slugify(data.toLowerCase(), {
+                          remove: /[*+~.()'"!:@?/]/g,
+                        })}`;
+                      }
+
+                      data = child.children[0].children[0].children[0].data;
+                      slug = `#${slugify(data.toLowerCase(), {
+                        remove: /[*+~.()'"!:@?/]/g,
+                      })}`;
                     } else {
                       data = child.children[0].children[0].data;
                       slug = `#${slugify(data.toLowerCase(), {
@@ -106,14 +120,7 @@ export default function htmlToReact(html) {
         const src = () => {
           return urlFor(node.attribs.src).url() || "";
         };
-        return (
-          <Image
-            src={src}
-            height={576}
-            width={1024}
-            alt=""
-          />
-        );
+        return <Image src={src} height={576} width={1024} alt="" />;
       }
 
       if (node.name === "figcaption") {
