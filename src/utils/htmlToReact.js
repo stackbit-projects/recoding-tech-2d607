@@ -110,7 +110,7 @@ export default function htmlToReact(html) {
           <Image
             src={urlFor(node.attribs.src).url()}
             height={576}
-            width={1024}
+            width={"1024"}
             alt=""
           ></Image>
         );
@@ -136,20 +136,19 @@ export default function htmlToReact(html) {
       if (node.name === "object") {
         let file;
         let url;
-        if (node.attribs.data) {
-          file = getFile(node.attribs.data, client.config());
+        if (node.attribs && node.attribs.data) {
+          file = getFile(node.attribs.data, client.config()); // gets a file asset object from Sanity
           if (file.asset && file.asset.url) url = file.asset.url;
         }
         return (
           <object
             data={url ? url : ""}
-            style="width:100%;height:500px"
+            style={{ width: "100%", height: "800px" }}
           ></object>
         );
       }
 
       if (node.attribs && node.attribs.class == "citation") {
-        // console.log(node);
         return <FancyCard citationToFetch={node.data} />;
       }
       if (node.data)
