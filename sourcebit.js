@@ -22,7 +22,7 @@ module.exports = {
               return h("div", { className: "citation" }, props.node._ref);
             },
             Image: (props) => {
-              if (props.node.caption || props.node.wordpressCaption) {
+              if (props.node.wordpressCaption) {
                 return h(
                   "figure",
                   h("img", {
@@ -30,12 +30,7 @@ module.exports = {
                     src: props.node.asset ? props.node.asset._ref : "",
                     // actually a reference to a Sanity Image asset, to be converted into a URL in the htmlToReact render function
                   }),
-                  h(
-                    "figcaption",
-                    props.node.caption
-                      ? props.node.caption
-                      : props.node.wordpressCaption
-                  )
+                  h("figcaption", props.node.wordpressCaption)
                 );
               } else {
                 return h(
