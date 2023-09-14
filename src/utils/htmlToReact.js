@@ -12,6 +12,9 @@ import DOMPurify from "isomorphic-dompurify";
 
 import Image from "next/image";
 
+import { getFile } from "@sanity/asset-utils";
+import client from "./sanityClient";
+
 // MUI components
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -127,6 +130,21 @@ export default function htmlToReact(html) {
               fontFamily: "'Lexend', sans-serif",
             }}
           />
+        );
+      }
+
+      if (node.name === "object") {
+        let file;
+        let url;
+        if (node.attribs.data) {
+          file = getFile(node.attribs.data, client.config());
+          if (file.asset && file.asset.url) url = file.asset.url;
+        }
+        return (
+          <object
+            data={url ? url : ""}
+            style="width:100%;height:500px"
+          ></object>
         );
       }
 

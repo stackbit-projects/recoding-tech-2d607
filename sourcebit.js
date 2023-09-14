@@ -116,8 +116,28 @@ module.exports = {
                 return h("iframe", { src: props.node.url }, props.node);
               }
             },
-            PDF: (props) => h("document", { className: "pdf" }, props.node),
-            File: (props) => h("document", { className: "pdf" }, props.node),
+            PDF: (props) => {
+              console.log("props.node if PDF", props.node);
+              return h(
+                "object",
+                {
+                  data: props.node.asset ? props.node.asset._ref : "",
+                  className: "pdf",
+                },
+                props.node
+              );
+            },
+            File: (props) => {
+              console.log("props.node.if FILE", props.node);
+              return h(
+                "object",
+                {
+                  data: props.node.asset ? props.node.asset._ref : "",
+                  className: "pdf",
+                },
+                props.node
+              );
+            },
           },
         },
       },

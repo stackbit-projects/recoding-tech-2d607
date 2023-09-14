@@ -57,7 +57,7 @@ const Page = (props) => {
               aria-label="breadcrumb"
             >
               <Typography variant="body2" color="text.primary">
-                home
+                Home
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (
