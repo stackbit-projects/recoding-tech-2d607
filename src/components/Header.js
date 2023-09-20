@@ -378,8 +378,8 @@ const Header = (props) => {
                           padding: 1,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            background: "#f2f2f2"
-                          }
+                            background: "#f2f2f2",
+                          },
                         }}
                       >
                         <Link href={`/tracker`} className={classes.link}>
@@ -397,8 +397,8 @@ const Header = (props) => {
                           padding: 1,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            background: "#f2f2f2"
-                          }
+                            background: "#f2f2f2",
+                          },
                         }}
                       >
                         <Link href={`/newsletter`} className={classes.link}>
@@ -416,8 +416,8 @@ const Header = (props) => {
                           padding: 1,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            background: "#f2f2f2"
-                          }
+                            background: "#f2f2f2",
+                          },
                         }}
                       >
                         <Link href={`#FIXME`} className={classes.link}>
@@ -490,15 +490,15 @@ const Header = (props) => {
                       <Typography
                         component="div"
                         variant="h4"
-                      sx={{
-                        fontWeight: 500,
-                        marginBottom: 0,
-                        padding: 1,
-                        textTransform: "none",
-                        "&:active, &:focus, &:hover": {
-                          background: "#f2f2f2"
-                        }
-                      }}
+                        sx={{
+                          fontWeight: 500,
+                          marginBottom: 0,
+                          padding: 1,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            background: "#f2f2f2",
+                          },
+                        }}
                       >
                         <Link href={`/contributors`} className={classes.link}>
                           Contributors
@@ -515,8 +515,8 @@ const Header = (props) => {
                           padding: 1,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            background: "#f2f2f2"
-                          }
+                            background: "#f2f2f2",
+                          },
                         }}
                       >
                         <Link href={`/about-us`} className={classes.link}>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { titleCase } from "title-case";
-import { convert } from 'html-to-text';
+import { convert } from "html-to-text";
 
 // utils
 import { markdownify, htmlToReact, urlFor } from "../utils";
