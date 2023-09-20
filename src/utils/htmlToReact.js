@@ -120,16 +120,13 @@ export default function htmlToReact(html) {
       }
 
       if (node.name === "img") {
-        const src = () => {
-          return urlFor(node.attribs.src).url() || "";
-        };
+        const src = urlFor(node.attribs.src).url() || "";
         return <Image src={src} height={576} width={1024} alt="" />;
       }
 
       if (node.name === "figcaption") {
         const data = node.children[0].data;
         const clean = DOMPurify.sanitize(data);
-
         return (
           <Typography
             component="span"

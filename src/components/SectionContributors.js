@@ -102,7 +102,7 @@ const Contributors = () => {
                         component="div"
                         variant="body2"
                       >
-                        {toPlainText(author.bio).substring(0, 200)}...
+                        {toPlainText(author.bio).substring(0, 300)}...
                       </Typography>
                     )}
                   </Grid>

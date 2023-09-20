@@ -297,14 +297,14 @@ const Header = (props) => {
                   item
                   xs={12}
                   alignItems="flex-end"
-                  justifyContent="flex-end"
-                  spacing={2}
+                  justifyContent="space-between"
+                  spacing={6}
                 >
                   <Grid
                     container
                     item
-                    xs={8}
-                    spacing={2}
+                    xs={9}
+                    spacing={1}
                     mt={1}
                     flexWrap={"nowrap"}
                     justifyContent="space-between"
@@ -318,12 +318,13 @@ const Header = (props) => {
                         onClick={handleClickTopics}
                         sx={{
                           fontSize: "1em",
-                          fontWeight: 700,
-                          marginTop: "-4px",
+                          fontWeight: 500,
+                          marginTop: "3px",
                           paddingTop: 0,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            backgroundColor: "#FFF",
+                            backgroundColor: "#f2f2f2",
+                            borderRadius: 0,
                           },
                         }}
                         endIcon={<ArrowDropDownIcon />}
@@ -371,7 +372,15 @@ const Header = (props) => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{
+                          fontWeight: 500,
+                          marginBottom: 0,
+                          padding: 1,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            background: "#f2f2f2"
+                          }
+                        }}
                       >
                         <Link href={`/tracker`} className={classes.link}>
                           Policy Tracker
@@ -382,7 +391,15 @@ const Header = (props) => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{
+                          fontWeight: 500,
+                          marginBottom: 0,
+                          padding: 1,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            background: "#f2f2f2"
+                          }
+                        }}
                       >
                         <Link href={`/newsletter`} className={classes.link}>
                           Newsletter
@@ -393,7 +410,15 @@ const Header = (props) => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{
+                          fontWeight: 500,
+                          marginBottom: 0,
+                          padding: 1,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            background: "#f2f2f2"
+                          }
+                        }}
                       >
                         <Link href={`#FIXME`} className={classes.link}>
                           Podcast
@@ -411,12 +436,13 @@ const Header = (props) => {
                         onClick={handleClickProjects}
                         sx={{
                           fontSize: "1em",
-                          fontWeight: 700,
-                          marginTop: "-4px",
+                          fontWeight: 500,
+                          marginTop: "3px",
                           paddingTop: 0,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            backgroundColor: "#FFF",
+                            backgroundColor: "#f2f2f2",
+                            borderRadius: 0,
                           },
                         }}
                         endIcon={<ArrowDropDownIcon />}
@@ -464,7 +490,15 @@ const Header = (props) => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                      sx={{
+                        fontWeight: 500,
+                        marginBottom: 0,
+                        padding: 1,
+                        textTransform: "none",
+                        "&:active, &:focus, &:hover": {
+                          background: "#f2f2f2"
+                        }
+                      }}
                       >
                         <Link href={`/contributors`} className={classes.link}>
                           Contributors
@@ -475,7 +509,15 @@ const Header = (props) => {
                       <Typography
                         component="div"
                         variant="h4"
-                        sx={{ textTransform: "none" }}
+                        sx={{
+                          fontWeight: 500,
+                          marginBottom: 0,
+                          padding: 1,
+                          textTransform: "none",
+                          "&:active, &:focus, &:hover": {
+                            background: "#f2f2f2"
+                          }
+                        }}
                       >
                         <Link href={`/about-us`} className={classes.link}>
                           About
@@ -483,7 +525,7 @@ const Header = (props) => {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item xs={4} flexGrow={2}>
+                  <Grid item xs={3} flexGrow={2}>
                     <SearchBarHeader />
                   </Grid>
                 </Grid>

@@ -94,7 +94,7 @@ const SectionRecentArticles = () => {
   return (
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
-        <Typography component="h2" variant="h4">
+        <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
           New by our contributors
         </Typography>
       </Grid>

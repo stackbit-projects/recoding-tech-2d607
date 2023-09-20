@@ -5,6 +5,7 @@ import Image from "next/image";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { titleCase } from "title-case";
+import { convert } from 'html-to-text';
 
 // utils
 import { markdownify, htmlToReact, urlFor } from "../utils";
@@ -216,7 +217,7 @@ const Post = (props) => {
                             component="div"
                             variant="body2"
                           >
-                            {htmlToReact(auth.bio)}
+                            {convert(auth.bio).substring(0, 300)}...
                           </Typography>
                         )}
                       </Grid>

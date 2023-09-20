@@ -17,7 +17,7 @@ import HomepageActions from "../components/HomepageActions";
 import HomepageRecents from "../components/HomepageRecents";
 import SectionHero from "../components/SectionHero";
 import SectionHeroTracker from "../components/SectionHeroTracker";
-import SectionCitations from "../components/SectionRecentArticles";
+import SectionRecentArticles from "../components/SectionRecentArticles";
 
 // material ui icons
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -103,7 +103,7 @@ const Advanced = (props) => {
                 </Grid>
                 <Grid container item xs={12} sm={4}>
                   <Grid item>
-                    <SectionCitations />
+                    <SectionRecentArticles />
                   </Grid>
                 </Grid>
               </Grid>
