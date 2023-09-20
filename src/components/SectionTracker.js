@@ -30,10 +30,7 @@ import PolicyActionMobile from "./PolicyActionMobile";
 const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
-                            relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
-
-const topicsQuery =
-  '*[_type == "topic" && stackbit_model_type == "page" && !(_id match "drafts.*")]{_id, _key, name, slug, type}';
+                            relatedTopics[]->{_id, name, slug}, type}|order(lastUpdate desc)`;
 
 function SectionTracker() {
   const { query } = useRouter();
@@ -50,19 +47,28 @@ function SectionTracker() {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
+    let topicsList = [];
+
     client.fetch(policyActionsQuery).then((allPolicies) => {
       if (Array.isArray(allPolicies) && allPolicies.length) {
+        allPolicies.map((policy) => {
+          if (policy.relatedTopics && policy.relatedTopics.length) {
+            policy.relatedTopics.map((topic) => {
+              topicsList.push(topic);
+            });
+            topicsList = topicsList.filter(
+              (value, index, self) =>
+                index ===
+                self.findIndex(
+                  (t) => t._id === value._id && t.name === value.name
+                )
+            );
+          }
+        });
+        setTopics(topicsList);
         setActions(allPolicies);
         setAllActions(allPolicies);
       }
-    });
-
-    client.fetch(topicsQuery).then((topics) => {
-      let allTopics = [];
-      topics.forEach((topic) => {
-        allTopics = [...allTopics, topic];
-      });
-      setTopics(allTopics);
     });
   }, []);
 
@@ -83,44 +89,11 @@ function SectionTracker() {
     newGovts = [...new Set(newGovts)];
     newTypes = [...new Set(newTypes)];
 
-    const newTopics = {
-      issue: new Map(),
-      policy: new Map(),
-      company: new Map(),
-      country: new Map(),
-    };
-    if (Array.isArray(topics) && topics.length) {
-      topics.map((topic) => {
-        if (topic.type && topic.slug && topic.slug.current) {
-          newTopics[topic.type] &&
-            newTopics[topic.type].set(topic.slug.current, topic);
-        }
-      });
-    }
-
-    let newFilters = [];
-    ["issue", "policy", "company", "country"].forEach((type) => {
-      if (Array.isArray(query[type]) && query[type].length) {
-        query[type].forEach((t) => {
-          const exists = newTopics[type].get(t);
-          if (exists) {
-            newFilters.push(exists);
-          }
-        });
-      } else {
-        const exists = newTopics[type].get(query[type]);
-        if (exists) {
-          newFilters.push(exists);
-        }
-      }
-    });
     setTypes(newTypes);
     setCountries(newGovts);
-    newFilters.sort();
-    setFilters(newFilters);
-  }, [topics, query]);
+  }, [query]);
 
-  useEffect(() => {}, [countries, types]);
+  useEffect(() => {}, [countries, types, topics]);
 
   useEffect(() => {
     if (allActions.length) {
@@ -128,15 +101,26 @@ function SectionTracker() {
       if (filters.length) {
         newActions = newActions.filter((action) => {
           let matches = 0;
-          if (
-            Array.isArray(action.relatedTopics) &&
-            action.relatedTopics.length
-          ) {
-            action.relatedTopics.forEach((topic) => {
-              if (filters.findIndex((f) => f._id === topic._id) >= 0)
+          console.log(filters);
+          filters.map((filter) => {
+            if (!filter.id) {
+              if (action.type == filter) {
                 matches += 1;
-            });
-          }
+              }
+              if (action.country == filter) {
+                matches += 1;
+              }
+            }
+            if (
+              Array.isArray(action.relatedTopics) &&
+              action.relatedTopics.length
+            ) {
+              action.relatedTopics.forEach((topic) => {
+                if (filters.findIndex((f) => f._id === topic._id) >= 0)
+                  matches += 1;
+              });
+            }
+          });
           return matches >= filters.length;
         });
       }
@@ -334,7 +318,7 @@ function SectionTracker() {
             ? filters.map((filter, idx) => (
                 <Grid key={`${filter._key + idx}`} item>
                   <Chip
-                    label={filter.displayTitle || filter.name}
+                    label={filter.displayTitle || filter.name || filter}
                     color={filter.type}
                     onDelete={handleDelete(filter)}
                   />

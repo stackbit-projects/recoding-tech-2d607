@@ -100,8 +100,6 @@ function SectionArticle(props) {
     router.push({ pathname: "/" + url });
   };
 
-  console.log(article);
-
   return (
     <Container>
       <Box my={4} mb={10}>

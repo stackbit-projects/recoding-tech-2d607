@@ -300,7 +300,7 @@ module.exports = {
                     ]);
                   }
                   accum.push({
-                    path: `/tracker/${object.slug}`,
+                    path: `/tracker/${object.slug.current ? object.slug.current : object.slug}`,
                     page: object,
                   });
                   break;

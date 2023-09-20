@@ -13,8 +13,9 @@ import { urlFor } from "../utils";
 
 const Sidebar = (props) => {
   const { content } = props;
-
-  console.log(content[0]);
+  const defineSrc = (photoSrc) => {
+    return urlFor(photoSrc.url).url() || "";
+  };
 
   return (
     <section>
@@ -43,7 +44,7 @@ const Sidebar = (props) => {
                   {author.photo && (
                     <Grid item xs={3}>
                       <Image
-                        src={urlFor(author.photo).width(80).url()}
+                        src={defineSrc(author.photo)}
                         height={80}
                         width={80}
                         alt=""

@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
@@ -22,8 +22,18 @@ const useStyles = makeStyles((theme) => ({
 const Topics = (props) => {
   const classes = useStyles();
   const { topics } = props;
+  const [specialTopics, setSpecialTopics] = useState([]);
 
   if (!Array.isArray(topics) || !topics.length) return null;
+
+  useEffect(() => {
+    const newTopics = topics.filter(
+      (topic) => topic.stackbit_model_type == "page"
+    );
+    setSpecialTopics(newTopics);
+  }, []);
+
+  useEffect(() => {}, [specialTopics]);
 
   const title = _.get(props, "label", "Topics");
 
@@ -42,13 +52,14 @@ const Topics = (props) => {
             sx={{ borderTop: "1px solid #8AA29D", width: "100%" }}
           >
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-              {topics.map((topic, i) => (
+              {specialTopics.map((topic, i) => (
                 <Chip
                   key={i}
                   label={topic.displayTitle || topic.name}
                   style={{
                     backgroundColor: "#EFE9DA",
                     fontWeight: 300,
+                    marginLeft: 0,
                     textTransform: "none",
                   }}
                   component="a"

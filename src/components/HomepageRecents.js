@@ -77,8 +77,8 @@ const HomepageRecents = () => {
       <Grid
         container
         columnGap={6}
-        direction="column"
-        height={600}
+        direction="row"
+        alignItems={"center"}
         marginBottom={10}
         marginTop={2}
       >
