@@ -46,7 +46,7 @@ const Post = (props) => {
     }
   }, [router]);
 
-  useEffect(() => { }, [breadcrumbs]);
+  useEffect(() => {}, [breadcrumbs]);
 
   return (
     <Layout {...props}>
@@ -66,20 +66,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                  if (index == breadcrumbs.length - 1) {
-                    return (
-                      <Typography key={crumb} variant="body2" color="#FF0033">
-                        {format(crumb)}
-                      </Typography>
-                    )
-                  } else {
-                    return (
-                      <Typography key={crumb} variant="body2" color="#FFF">
-                        {format(crumb)}
-                      </Typography>
-                    )
-                  }
-                })
+                    if (index == breadcrumbs.length - 1) {
+                      return (
+                        <Typography key={crumb} variant="body2" color="#FF0033">
+                          {format(crumb)}
+                        </Typography>
+                      );
+                    } else {
+                      return (
+                        <Typography key={crumb} variant="body2" color="#FFF">
+                          {format(crumb)}
+                        </Typography>
+                      );
+                    }
+                  })
                 : null}
             </Breadcrumbs>
           </Box>

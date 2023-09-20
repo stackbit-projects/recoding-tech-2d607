@@ -87,7 +87,7 @@ function SectionHero(props) {
     }
   }, [router]);
 
-  useEffect(() => { }, [breadcrumbs]);
+  useEffect(() => {}, [breadcrumbs]);
 
   return (
     <section id={page.__metadata.id} className="block block-hero">
@@ -98,10 +98,10 @@ function SectionHero(props) {
               ? "#FFF"
               : page.layout == "policy_action" ||
                 page.__metadata.modelName == "author"
-                ? "#427569"
-                : page.stackbit_url_path == "/library"
-                  ? "#EDE4C1"
-                  : theme.palette["topic"].main,
+              ? "#427569"
+              : page.stackbit_url_path == "/library"
+              ? "#EDE4C1"
+              : theme.palette["topic"].main,
         }}
       >
         <Container maxWidth="xl">
@@ -116,20 +116,20 @@ function SectionHero(props) {
               </Typography>
               {breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                  if (index == breadcrumbs.length - 1) {
-                    return (
-                      <Typography key={crumb} variant="body2" color="#FF0033">
-                        {format(crumb)}
-                      </Typography>
-                    )
-                  } else {
-                    return (
-                      <Typography key={crumb} variant="body2" color="#FFF">
-                        {format(crumb)}
-                      </Typography>
-                    )
-                  }
-                })
+                    if (index == breadcrumbs.length - 1) {
+                      return (
+                        <Typography key={crumb} variant="body2" color="#FF0033">
+                          {format(crumb)}
+                        </Typography>
+                      );
+                    } else {
+                      return (
+                        <Typography key={crumb} variant="body2" color="#FFF">
+                          {format(crumb)}
+                        </Typography>
+                      );
+                    }
+                  })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -148,10 +148,10 @@ function SectionHero(props) {
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
                       page.__metadata.modelName == "author"
-                      ? "#3C6E63"
-                      : page.stackbit_url_path == "/library"
-                        ? "#DBD7B4"
-                        : "#215793"
+                    ? "#3C6E63"
+                    : page.stackbit_url_path == "/library"
+                    ? "#DBD7B4"
+                    : "#215793"
                 }
               />
               <path
@@ -200,30 +200,30 @@ function SectionHero(props) {
             page.heroContent ||
             page.title ||
             page.name) && (
-              <Typography
-                variant="h1"
-                className={classes.title}
-                color={
-                  page.stackbit_model_type == "data" ||
-                    page.stackbit_url_path == "/library"
-                    ? "#000"
-                    : "#FFF"
-                }
-                fontSize={
-                  page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"
-                }
-              >
-                {titleCase(
-                  page.displayTitle
-                    ? page.displayTitle
-                    : page.name
-                      ? page.name
-                      : page.heroContent
-                        ? page.heroContent
-                        : page.title
-                )}
-              </Typography>
-            )}
+            <Typography
+              variant="h1"
+              className={classes.title}
+              color={
+                page.stackbit_model_type == "data" ||
+                page.stackbit_url_path == "/library"
+                  ? "#000"
+                  : "#FFF"
+              }
+              fontSize={
+                page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"
+              }
+            >
+              {titleCase(
+                page.displayTitle
+                  ? page.displayTitle
+                  : page.name
+                  ? page.name
+                  : page.heroContent
+                  ? page.heroContent
+                  : page.title
+              )}
+            </Typography>
+          )}
           {page.heroLinkUrl && (
             <div className={classes.links}>
               <Link
@@ -237,21 +237,21 @@ function SectionHero(props) {
           )}
           {(page.__metadata.modelName == "guide" ||
             page.__metadata.modelName == "article") && (
-              <Typography
-                component="div"
-                variant="body1"
-                className={classes.author}
-              >
-                {page.author ? `${page.author.name} – ` : ""}
-                {page.__metadata.modelName == "guide"
-                  ? `Last updated: ${DateTime.fromISO(
+            <Typography
+              component="div"
+              variant="body1"
+              className={classes.author}
+            >
+              {page.author ? `${page.author.name} – ` : ""}
+              {page.__metadata.modelName == "guide"
+                ? `Last updated: ${DateTime.fromISO(
                     page.__metadata.updatedAt
                   ).toLocaleString(DateTime.DATE_FULL)}`
-                  : DateTime.fromISO(page.date).toLocaleString(
+                : DateTime.fromISO(page.date).toLocaleString(
                     DateTime.DATE_FULL
                   )}
-              </Typography>
-            )}
+            </Typography>
+          )}
         </Container>
       </Box>
     </section>

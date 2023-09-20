@@ -22,16 +22,18 @@ const useStyles = makeStyles((theme) => ({
 const Topics = (props) => {
   const classes = useStyles();
   const { topics } = props;
-  const [ specialTopics, setSpecialTopics ] = useState([]);
+  const [specialTopics, setSpecialTopics] = useState([]);
 
   if (!Array.isArray(topics) || !topics.length) return null;
 
   useEffect(() => {
-    const newTopics = topics.filter(topic => topic.stackbit_model_type == "page")
+    const newTopics = topics.filter(
+      (topic) => topic.stackbit_model_type == "page"
+    );
     setSpecialTopics(newTopics);
-  }, [])
+  }, []);
 
-  useEffect(() => {}, [specialTopics])
+  useEffect(() => {}, [specialTopics]);
 
   const title = _.get(props, "label", "Topics");
 
