@@ -1,16 +1,16 @@
 {
   "root": true,
   "project": {
-    "name": "recoding-tech-2d607"
+    "name": "recoding-archive"
   },
   "api": {
-    "projectId": "3tzzh18d",
+    "projectId": "ops1idwn",
     "dataset": "production"
   },
   "env": {
     "development": {
       "api": {
-        "dataset": "development2"
+        "dataset": "development"
       }
     },
     "production": {
