@@ -120,7 +120,7 @@ export default function htmlToReact(html) {
       }
 
       if (node.name === "img") {
-        const src = urlFor(node.attribs.src).url() || "";
+        const src = node.attribs.src ? urlFor(node.attribs.src).url() : "";
         return <Image src={src} height={576} width={1024} alt="" />;
       }
 
