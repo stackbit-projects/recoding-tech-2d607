@@ -339,27 +339,31 @@ const Header = (props) => {
                         MenuListProps={{
                           "aria-labelledby": "topics-button",
                         }}
-                        elevation={0}
+                        elevation={1}
                         sx={{
-                          marginTop: 9,
+                          marginTop: 4,
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
                             maxWidth: "60vw !important",
+                            padding: 3,
                             width: "60vw",
                           },
                         }}
                       >
                         {data.config.header.topicsLinks &&
                           data.config.header.topicsLinks.map((link) => (
-                            <MenuItem key={link.url}>
+                            <MenuItem key={link.url} sx={{ padding: 1 }}>
                               <Link
                                 href={link.url}
                                 sx={{
                                   color: "#000",
                                   fontSize: "1.3em",
-                                  fontWeight: 500,
+                                  fontWeight: 400,
                                   textDecoration: "none",
+                                  "&:active, &:focus, &:hover": {
+                                    fontWeight: 600,
+                                  }
                                 }}
                               >
                                 {link.label}
@@ -457,9 +461,10 @@ const Header = (props) => {
                         MenuListProps={{
                           "aria-labelledby": "projects-button",
                         }}
-                        elevation={0}
+                        elevation={1}
                         sx={{
-                          marginTop: 9,
+                          marginTop: 4,
+                          padding: 3,
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
@@ -470,14 +475,17 @@ const Header = (props) => {
                       >
                         {data.config.header.projectsLinks &&
                           data.config.header.projectsLinks.map((link) => (
-                            <MenuItem key={link.url}>
+                            <MenuItem key={link.url} sx={{ padding: 1 }}>
                               <Link
                                 href={link.url}
                                 sx={{
                                   color: "#000",
                                   fontSize: "1.3em",
-                                  fontWeight: 500,
+                                  fontWeight: 400,
                                   textDecoration: "none",
+                                  "&:active, &:focus, &:hover": {
+                                    fontWeight: 600,
+                                  }
                                 }}
                               >
                                 {link.label}

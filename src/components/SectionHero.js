@@ -89,6 +89,8 @@ function SectionHero(props) {
 
   useEffect(() => {}, [breadcrumbs]);
 
+  console.log(page);
+
   return (
     <section id={page.__metadata.id} className="block block-hero">
       <Box
@@ -97,8 +99,8 @@ function SectionHero(props) {
             page.stackbit_model_type == "data"
               ? "#FFF"
               : page.layout == "policy_action" ||
-                page.__metadata.modelName == "author"
-              ? "#427569"
+                page.__metadata.modelName == "author" || page.stackbit_url_path == "/contributors"
+              ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/library"
               ? "#EDE4C1"
               : theme.palette["topic"].main,
@@ -137,7 +139,7 @@ function SectionHero(props) {
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
-                      page.__metadata.modelName == "author"
+                      page.__metadata.modelName == "author" || page.stackbit_url_path == "/contributors"
                     ? "#3C6E63"
                     : page.stackbit_url_path == "/library"
                     ? "#DBD7B4"

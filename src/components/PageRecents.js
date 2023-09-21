@@ -44,8 +44,9 @@ const PageRecents = (props) => {
               variant="h5"
               sx={{
                 backgroundColor: "#FFE5EA",
-                borderRadius: 2,
+                borderRadius: "2px",
                 color: "#FF0033",
+                fontWeight: 500,
                 paddingX: "10px",
                 paddingY: "6px",
                 "&:active, & :focus, &:hover": {

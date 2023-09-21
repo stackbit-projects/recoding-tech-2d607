@@ -204,10 +204,7 @@ const TrackerActions = (props) => {
         </Accordion>
       ) : (
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table
-            aria-label="Law and Regulation Tracker Table"
-            className={classes.table}
-          >
+          <Table aria-label="Law and Regulation Tracker Table">
             <TableHead>
               <TableRow>
                 {headers.map((column) => (

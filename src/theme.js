@@ -52,6 +52,17 @@ const theme = createTheme({
         },
       },
     },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          "& tr": {
+            "&:active, &:focus, &:hover": {
+              backgroundColor: "#FFF !important",
+            }
+          }
+        }
+      }
+    },
     MuiTableRow: {
       styleOverrides: {
         root: {
@@ -167,18 +178,22 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: serifFont,
+    // fontSize: 16,
     blurb: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: "500",
+      lineHeight: 1.4,
       marginBottom: 20,
     },
     body1: {
       fontSize: 14,
+      lineHeight: 1.4,
     },
     body2: {
       fontFamily: sansSerifFont,
       fontWeight: 300,
+      lineHeight: 1.4,
     },
     h1: {
       fontFamily: sansSerifFont,
@@ -251,40 +266,47 @@ const theme = createTheme({
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: 600,
+      lineHeight: 1.4,
       textTransform: "uppercase",
     },
     tableHeader: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: 600,
+      lineHeight: 1.4,
       textTransform: "uppercase",
     },
     trackerTitle: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: 500,
+      lineHeight: 1.4,
     },
     trackerTitleHome: {
       fontFamily: sansSerifFont,
       fontSize: "1.075em",
       fontWeight: 500,
+      lineHeight: 1.4,
     },
     trackerRowHome: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: 400,
+      lineHeight: 1.4,
       textTransform: "uppercase",
     },
     trackerRow: {
       fontFamily: sansSerifFont,
       fontSize: "1em",
       fontWeight: 400,
+      lineHeight: 1.4,
       textTransform: "uppercase",
     },
     subtitle1: {
       fontFamily: sansSerifFont,
       fontSize: "0.81em",
       fontWeight: 500,
+      lineHeight: 1.4,
       textTransform: "uppercase",
     },
     supertitle: {
@@ -297,11 +319,13 @@ const theme = createTheme({
     link: {
       color: "#FF0033",
       fontFamily: sansSerifFont,
+      lineHeight: 1.4,
     },
     overline: {
       fontFamily: sansSerifFont,
       fontSize: "1.2em",
       fontWeight: 700,
+      lineHeight: 1.4,
       textTransform: "none",
     },
   },

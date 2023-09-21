@@ -69,9 +69,11 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     paddingRight: 20,
     position: "absolute",
+    zIndex: 2,
   },
   featuredTag: {
     backgroundColor: theme.palette.error.main,
+    borderRadius: "2px",
     color: theme.palette.error.light,
     paddingLeft: 10,
     paddingRight: 10,
@@ -115,6 +117,19 @@ function SectionArticle(props) {
                     : "",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
+                  position: "relative",
+                  "&:after": {
+                    background: "rgba(0,0,0,0.5)",
+                    bottom: 0,
+                    content: "''",
+                    height: "100%",
+                    left: 0,
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    width: "100%",
+                    zIndex: 1,
+                  }
                 }}
               >
                 <CardActionArea
@@ -137,7 +152,6 @@ function SectionArticle(props) {
                       component="div"
                       variant="h2_article"
                       color={article.featuredImage ? "#FFF" : "#000"}
-                      sx={{ textShadow: "1px 1px 3px #000" }}
                     >
                       {titleCase(article.title)}
                     </Typography>
@@ -172,7 +186,7 @@ function SectionArticle(props) {
               mb={10}
             >
               {alsoFeatured.map((article, idx) => (
-                <Grid item key={idx} xs={12} sm={4} mt={2}>
+                <Grid item key={idx} xs={12} md={4} mt={2}>
                   <Card
                     variant="outlined"
                     className={`${classes.box} ${classes.alsoFeatured}`}

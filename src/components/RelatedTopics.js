@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.link.fontFamily,
     fontWeight: 500,
     textTransform: "uppercase",
+    "&:active, &:focus, &:hover": {
+      textDecoration: "underline",
+    }
   },
 }));
 
@@ -60,6 +63,7 @@ const Topics = (props) => {
                     backgroundColor: "#EFE9DA",
                     fontWeight: 300,
                     marginLeft: 0,
+                    marginRight: 4,
                     textTransform: "none",
                   }}
                   component="a"

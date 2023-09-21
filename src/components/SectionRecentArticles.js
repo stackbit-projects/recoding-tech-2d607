@@ -65,7 +65,7 @@ const useStyles = makeStyles(() => ({
   },
   more: {
     textDecoration: "none",
-    width: 162,
+    width: 200,
     "&:active, & :focus, &:hover": {
       color: "#FF0033",
       textDecoration: "underline",
@@ -75,6 +75,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#FFE5EA",
     borderRadius: 2,
     color: "#FF0033",
+    fontWeight: 500,
     padding: 6,
   },
 }));

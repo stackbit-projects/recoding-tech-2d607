@@ -208,7 +208,7 @@ const SectionSearch = () => {
         />
         <Grid
           container
-          alignItems={"flex-end"}
+          alignItems={"center"}
           spacing={4}
           sx={{ marginTop: 1 }}
         >
@@ -216,7 +216,7 @@ const SectionSearch = () => {
             <Typography
               component="h2"
               variant="h4"
-              sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400 }}
+              sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400, marginBottom: 0 }}
             >
               Filter by:
             </Typography>

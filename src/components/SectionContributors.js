@@ -29,7 +29,7 @@ const Contributors = () => {
     });
   }, []);
 
-  useEffect(() => {}, [authors]);
+  useEffect(() => { }, [authors]);
 
   return (
     <Box my={8}>
@@ -52,7 +52,35 @@ const Contributors = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                <Button>Search/Filter</Button>
+                <Button
+                  sx={{
+                    height: 24,
+                    textDecoration: "none",
+                    "&:hover": {
+                      backgroundColor: "unset",
+                    },
+                  }}
+                >
+                  <Typography
+                    component="div"
+                    variant="h5"
+                    sx={{
+                      backgroundColor: "#FFE5EA",
+                      borderRadius: "2px",
+                      color: "#FF0033",
+                      fontWeight: 500,
+                      paddingX: "10px",
+                      paddingY: "6px",
+                      marginBottom: 0,
+                      "&:active, & :focus, &:hover": {
+                        color: "#FF0033",
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
+                    View more
+                  </Typography>
+                </Button>
               </Grid>
             </Grid>
             <Grid container my={6} spacing={4}>
@@ -100,7 +128,9 @@ const Contributors = () => {
                       <Typography
                         color="rgba(0,0,0,0.48)"
                         component="div"
+                        marginTop={1}
                         variant="body2"
+                        sx={{ lineHeight: 1.8 }}
                       >
                         {toPlainText(author.bio).substring(0, 300)}...
                       </Typography>

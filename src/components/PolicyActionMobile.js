@@ -43,10 +43,11 @@ function PolicyActionMobile(props) {
         .map((row) => (
           <Accordion key={row._key} sx={{ marginBottom: 4 }}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon sx={{ paddingTop: 1 }} />}
               aria-controls={`content-${row._key}`}
               id={`header-${row._key}`}
               sx={{
+                alignItems: "flex-start",
                 backgroundColor: "#EFE9DA",
                 padding: 2,
                 marginBottom: 2,

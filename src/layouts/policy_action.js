@@ -26,8 +26,8 @@ const PolicyAction = (props) => {
       <Box my={8}>
         <Container>
           <TrackerActions {...props} />
-          <Grid container spacing={8} sx={{ marginTop: 1 }}>
-            <Grid container spacing={12} direction="column" item sm={12} md={8}>
+          <Grid container spacing={8} sx={{ paddingTop: { xs: 0, sm: 4 } }}>
+            <Grid container spacing={2} direction="column" item sm={12} md={8}>
               <Grid item sm={12} md={8}>
                 <Typography
                   component="div"
@@ -38,7 +38,7 @@ const PolicyAction = (props) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={4} direction="column" item sm={12} md={4}>
+            <Grid container spacing={2} direction="column" item sm={12} md={4} sx={{ paddingTop: {xs: 0, sm: 4} }}>
               <Grid item sx={{ width: "100%" }}>
                 <RelatedCommentary
                   title={"Further reading"}
