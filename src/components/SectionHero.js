@@ -99,7 +99,8 @@ function SectionHero(props) {
             page.stackbit_model_type == "data"
               ? "#FFF"
               : page.layout == "policy_action" ||
-                page.__metadata.modelName == "author" || page.stackbit_url_path == "/contributors"
+                page.__metadata.modelName == "author" ||
+                page.stackbit_url_path == "/contributors"
               ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/library"
               ? "#EDE4C1"
@@ -139,7 +140,8 @@ function SectionHero(props) {
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
-                      page.__metadata.modelName == "author" || page.stackbit_url_path == "/contributors"
+                      page.__metadata.modelName == "author" ||
+                      page.stackbit_url_path == "/contributors"
                     ? "#3C6E63"
                     : page.stackbit_url_path == "/library"
                     ? "#DBD7B4"

@@ -206,17 +206,16 @@ const SectionSearch = () => {
           label="Enter search term"
           variant="standard"
         />
-        <Grid
-          container
-          alignItems={"center"}
-          spacing={4}
-          sx={{ marginTop: 1 }}
-        >
+        <Grid container alignItems={"center"} spacing={4} sx={{ marginTop: 1 }}>
           <Grid item>
             <Typography
               component="h2"
               variant="h4"
-              sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400, marginBottom: 0 }}
+              sx={{
+                color: "rgba(0,0,0,0.6)",
+                fontWeight: 400,
+                marginBottom: 0,
+              }}
             >
               Filter by:
             </Typography>

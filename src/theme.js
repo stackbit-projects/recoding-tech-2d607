@@ -58,10 +58,10 @@ const theme = createTheme({
           "& tr": {
             "&:active, &:focus, &:hover": {
               backgroundColor: "#FFF !important",
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     },
     MuiTableRow: {
       styleOverrides: {

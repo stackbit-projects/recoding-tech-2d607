@@ -126,7 +126,11 @@ function PolicyActionTable(props) {
                   >
                     Law & Regulation Tracker
                   </Typography>
-                  <Typography component="div" variant="body2" sx={{ fontWeight: 400 }}>
+                  <Typography
+                    component="div"
+                    variant="body2"
+                    sx={{ fontWeight: 400 }}
+                  >
                     We track existing and proposed laws and regulations, along
                     with government investigations and litigation from across
                     the U.S. and Europe, that will shape the rules and

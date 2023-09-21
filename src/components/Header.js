@@ -363,7 +363,7 @@ const Header = (props) => {
                                   textDecoration: "none",
                                   "&:active, &:focus, &:hover": {
                                     fontWeight: 600,
-                                  }
+                                  },
                                 }}
                               >
                                 {link.label}
@@ -485,7 +485,7 @@ const Header = (props) => {
                                   textDecoration: "none",
                                   "&:active, &:focus, &:hover": {
                                     fontWeight: 600,
-                                  }
+                                  },
                                 }}
                               >
                                 {link.label}

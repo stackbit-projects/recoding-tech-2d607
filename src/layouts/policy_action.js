@@ -38,7 +38,15 @@ const PolicyAction = (props) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={2} direction="column" item sm={12} md={4} sx={{ paddingTop: {xs: 0, sm: 4} }}>
+            <Grid
+              container
+              spacing={2}
+              direction="column"
+              item
+              sm={12}
+              md={4}
+              sx={{ paddingTop: { xs: 0, sm: 4 } }}
+            >
               <Grid item sx={{ width: "100%" }}>
                 <RelatedCommentary
                   title={"Further reading"}

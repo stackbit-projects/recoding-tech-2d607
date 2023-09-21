@@ -29,7 +29,7 @@ const Contributors = () => {
     });
   }, []);
 
-  useEffect(() => { }, [authors]);
+  useEffect(() => {}, [authors]);
 
   return (
     <Box my={8}>
