@@ -63,7 +63,7 @@ const Post = (props) => {
               aria-label="breadcrumb"
             >
               <Typography variant="body2" color="text.primary">
-                home
+                Home
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
@@ -97,8 +97,8 @@ const Post = (props) => {
                 >
                   {page.title}
                 </Typography>
-                {page.author.length &&
-                  page.author.map((auth, index) => (
+                {page.authors.length &&
+                  page.authors.map((auth, index) => (
                     <Typography
                       key={auth.slug.current}
                       component="span"
@@ -109,7 +109,7 @@ const Post = (props) => {
                         textTransform: "uppercase",
                       }}
                     >
-                      {index == page.author.length - 1
+                      {index == page.authors.length - 1
                         ? `${auth.name} / `
                         : `${auth.name}, `}
                     </Typography>
@@ -123,7 +123,7 @@ const Post = (props) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {DateTime.fromISO(page.__metadata.createdAt).toLocaleString(
+                  {DateTime.fromISO(page.date).toLocaleString(
                     DateTime.DATE_MED
                   )}
                 </Typography>
@@ -173,7 +173,7 @@ const Post = (props) => {
                   Authors
                 </Typography>
                 <Stack direction="column" spacing={4}>
-                  {page.author.map((auth) => (
+                  {page.authors.map((auth) => (
                     <Grid
                       container
                       key={auth.slug.current}
