@@ -3,8 +3,8 @@ import ReactHtmlParser, {
   convertNodeToReactElement,
 } from "@hedgedoc/html-to-react";
 import ScriptTag from "next/script";
-import { useRouter } from "next/router";
-import NextLink from "next/link";
+// import { useRouter } from "next/router";
+// import NextLink from "next/link";
 import Link from "./link";
 import slugify from "slugify";
 import _ from "lodash";
@@ -17,7 +17,7 @@ import client from "./sanityClient";
 
 // MUI components
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
+// import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 
@@ -34,7 +34,7 @@ export default function htmlToReact(html) {
   if (!html) {
     return null;
   }
-  const router = useRouter();
+  // const router = useRouter();
 
   return ReactHtmlParser(html, {
     transform: (node, index) => {
@@ -50,71 +50,82 @@ export default function htmlToReact(html) {
         return <h4 id={slug}>{node.children[0].data}</h4>;
       }
 
-      if (node.name === "ol") {
-        return (
-          <List>
-            {node.children && node.children.length
-              ? node.children.map((child, index) => {
-                  if (child.name === "li") {
-                    let slug = "";
-                    let data;
-
-                    if (!child.children[0].children) {
-                      slug = "/";
-                    } else if (child.children[0].children[0].children) {
-                      if (child.children[0].children[0].children[0].children) {
-                        data =
-                          child.children[0].children[0].children[0].children[0]
-                            .data;
-                        slug = `#${slugify(data.toLowerCase(), {
-                          remove: /[*+~.()'"!:@?/]/g,
-                        })}`;
-                      } else {
-                        data = child.children[0].children[0].children[0].data;
-                        slug = `#${slugify(data.toLowerCase(), {
-                          remove: /[*+~.()'"!:@?/]/g,
-                        })}`;
-                      }
-                    } else {
-                      data = child.children[0].children[0].data;
-                      slug = `#${slugify(data.toLowerCase(), {
-                        remove: /[*+~.()'"!:@?/]/g,
-                      })}`;
-                    }
-                    return (
-                      <ListItem
-                        key={index}
-                        sx={{ marginLeft: 0, paddingLeft: 0 }}
-                      >
-                        <NextLink
-                          href={`${router.asPath.split("#")[0]}${slug}`}
-                          scroll={false}
-                        >
-                          <Typography
-                            component="span"
-                            style={{
-                              cursor: "pointer",
-                              fontFamily: "'Lexend', sans-serif",
-                            }}
-                          >
-                            {child.data}
-                          </Typography>
-                        </NextLink>
-                      </ListItem>
-                    );
-                  }
-                })
-              : null}
-          </List>
-        );
+      if (node.name === "ol" && node.children && node.children.length) {
+        node.children.map((child, idx) => {
+          return <ListItem key={idx} />;
+        });
       }
 
-      if (node.name === "blockquote" && node.children[0]) {
+      // if (node.name === "ol") {
+      //   console.log("ol ol ->", node.children);
+      //   return (
+      //     <List>
+      //       {node.children && node.children.length
+      //         ? node.children.map((child, index) => {
+      //             if (child.name === "li") {
+      //               let slug = "";
+      //               let data;
+
+      //               if (!child.children[0].children) {
+      //                 slug = "/";
+      //               } else if (child.children[0].children[0].children) {
+      //                 if (child.children[0].children[0].children[0].children) {
+      //                   data =
+      //                     child.children[0].children[0].children[0].children[0]
+      //                       .data;
+      //                   slug = `#${slugify(data.toLowerCase(), {
+      //                     remove: /[*+~.()'"!:@?/]/g,
+      //                   })}`;
+      //                 } else {
+      //                   data = child.children[0].children[0].children[0].data;
+      //                   slug = `#${slugify(data.toLowerCase(), {
+      //                     remove: /[*+~.()'"!:@?/]/g,
+      //                   })}`;
+      //                 }
+      //               } else {
+      //                 data = child.children[0].children[0].data;
+      //                 slug = `#${slugify(data.toLowerCase(), {
+      //                   remove: /[*+~.()'"!:@?/]/g,
+      //                 })}`;
+      //               }
+      //               return (
+      //                 <ListItem
+      //                   key={index}
+      //                   sx={{ marginLeft: 0, paddingLeft: 0 }}
+      //                 >
+      //                   <NextLink
+      //                     href={`${router.asPath.split("#")[0]}${slug}`}
+      //                     scroll={false}
+      //                   >
+      //                     <Typography
+      //                       component="span"
+      //                       style={{
+      //                         cursor: "pointer",
+      //                         fontFamily: "'Lexend', sans-serif",
+      //                       }}
+      //                     >
+      //                       {child.data}
+      //                     </Typography>
+      //                   </NextLink>
+      //                 </ListItem>
+      //               );
+      //             }
+      //           })
+      //         : null}
+      //     </List>
+      //   );
+      // }
+
+      if (node.name === "blockquote" && node.children && node.children.length) {
         return (
           <Box p={4} sx={{ border: "1px solid #000" }}>
-            <Typography component="div" variant="quote">
-              {node.children[0].data}
-            </Typography>
+            {node.children.map((child, idx) => {
+              return (
+                <Typography key={idx} component="div" variant="quote">
+                  {child.data ? child.data : ""}
+                </Typography>
+              );
+            })}
           </Box>
         );
       }
