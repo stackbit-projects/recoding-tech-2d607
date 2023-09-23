@@ -58,7 +58,7 @@ export const schemaTypes = [
   // guide,
   iframeEmbed,
   page,
-  person,
+  // person,
   post,
   policy_action,
   portable_text,

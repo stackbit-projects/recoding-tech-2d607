@@ -30,7 +30,7 @@ export default {
     },
     {
       title: 'Author',
-      name: 'author',
+      name: 'authors',
       type: 'array',
       of: [
         {

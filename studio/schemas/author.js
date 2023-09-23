@@ -7,15 +7,14 @@ export default {
       type: 'string',
       name: 'name',
       title: 'Name',
-      description: "author's display name",
+      description: "Author's display name",
       validation: (Rule) => Rule.required(),
     },
     {
       title: 'Slug',
       name: 'slug',
       type: 'slug',
-      description:
-        'The slug for the article. Can be the same as the title, but turned into a URL. For example, title-of-article.',
+      description: 'The slug for the author.',
       validation: (Rule) => Rule.required(),
       options: {
         source: 'title',
@@ -32,13 +31,12 @@ export default {
       type: 'string',
       name: 'email',
       title: 'Email',
-      description: "Author's email",
       validation: (Rule) => Rule.required(),
     },
     {
       type: 'string',
-      name: 'socialMedia',
-      title: 'Social media',
+      name: 'socials',
+      title: 'Social links, comma separated',
     },
     {
       title: 'Bio',
@@ -53,13 +51,15 @@ export default {
     },
     {
       type: 'string',
-      name: 'wp_authorId',
-      title: "This author's ID on Wordpress",
-    },
-    {
-      type: 'string',
       name: 'specialTitle',
-      title: "A secondary title, if this person has one, eg. Co-Founder and CEO",
+      title: 'A secondary title, if this person has one, eg. Co-Founder and CEO',
+    },
+  ],
+  orderings: [
+    {
+      title: 'Recently created',
+      name: 'byId',
+      by: [{field: '_id', direction: 'desc'}],
     },
   ],
 }
