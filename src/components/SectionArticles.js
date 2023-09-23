@@ -17,6 +17,8 @@ import Typography from "@mui/material/Typography";
 // components
 import FancyTitle from "./FancyTitle";
 
+import client from "../utils/sanityClient";
+
 const useStyles = makeStyles((theme) => ({
   alsoFeatured: {},
   alsoFeaturedTag: {
@@ -84,18 +86,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const query = `*[_type=="post" && references(*[_type=="author" && staff]._id)]{ title, slug, date } | order(date desc)[0...3]
+`;
+
 function SectionArticle(props) {
   const classes = useStyles();
   const router = useRouter();
   const {
-    section: { featuredArticle, alsoFeatured },
+    section: { featuredArticle },
   } = props;
   const [article, setArticle] = useState(null);
+  const [articles, setArticles] = useState(null);
 
   useEffect(() => {
     setArticle(featuredArticle);
-    console.log("article ->", article);
-    console.log("alsoFeatured ->", alsoFeatured);
+    client.fetch(query).then((articles) => {
+      if (Array.isArray(articles) && articles.length) {
+        setArticles(articles);
+      }
+    });
   }, []);
 
   const articleClick = (url) => {
@@ -155,9 +164,9 @@ function SectionArticle(props) {
                     >
                       {titleCase(article.title)}
                     </Typography>
-                    {article.author &&
-                      article.author.length &&
-                      article.author.map((auth) => (
+                    {article.authors &&
+                      article.authors.length &&
+                      article.authors.map((auth) => (
                         <Typography
                           key={auth._id}
                           gutterBottom
@@ -175,7 +184,7 @@ function SectionArticle(props) {
             </Box>
           </>
         ) : null}
-        {alsoFeatured && alsoFeatured.length ? (
+        {articles && articles.length ? (
           <>
             <FancyTitle title={"Most recent from Tech Policy Press"} />
             <Grid
@@ -185,7 +194,7 @@ function SectionArticle(props) {
               spacing={{ xs: 2, md: 3 }}
               mb={10}
             >
-              {alsoFeatured.map((article, idx) => (
+              {articles.map((article, idx) => (
                 <Grid item key={idx} xs={12} md={4} mt={2}>
                   <Card
                     variant="outlined"
