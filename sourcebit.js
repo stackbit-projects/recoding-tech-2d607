@@ -49,7 +49,9 @@ module.exports = {
                   "iframe",
                   {
                     src: props.node.url,
-                    style: "background:transparent;border:1px solid #ccc",
+                    width: "100%",
+                    height: "533",
+                    style: "background:transparent;border:1px; solid #ccc",
                   },
                   props.node
                 );
@@ -97,7 +99,7 @@ module.exports = {
                   "iframe",
                   {
                     src: props.node.url,
-                    width: "560",
+                    width: "100%",
                     height: "315",
                     frameborder: "0",
                     allow:
@@ -300,7 +302,9 @@ module.exports = {
                     ]);
                   }
                   accum.push({
-                    path: `/tracker/${object.slug.current ? object.slug.current : object.slug}`,
+                    path: `/tracker/${
+                      object.slug.current ? object.slug.current : object.slug
+                    }`,
                     page: object,
                   });
                   break;
