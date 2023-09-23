@@ -50,6 +50,11 @@ export default {
       type: 'image',
     },
     {
+      title: 'Tech Policy Press staff?',
+      name: 'staff',
+      type: 'boolean',
+    },
+    {
       type: 'string',
       name: 'specialTitle',
       title: 'A secondary title, if this person has one, eg. Co-Founder and CEO',
