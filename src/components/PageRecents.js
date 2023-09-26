@@ -6,11 +6,14 @@ import PropTypes from "prop-types";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
+import ComposedLink from "./NextLinkComposed";
 import Typography from "@mui/material/Typography";
 
 const PageRecents = (props) => {
   const { page, readings } = props;
   const isMobile = useMediaQuery("(max-width:1064px)");
+
+  console.log("page id =>", page.__metadata.id);
 
   return (
     <section>
@@ -28,8 +31,11 @@ const PageRecents = (props) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Link
-            href="/search"
+          <ComposedLink
+            href={{
+              pathname: "/search",
+              query: { filter: page.__metadata.id },
+            }}
             sx={{
               height: 24,
               textDecoration: "none",
@@ -57,7 +63,7 @@ const PageRecents = (props) => {
             >
               View more
             </Typography>
-          </Link>
+          </ComposedLink>
         </Grid>
       </Grid>
       <Grid

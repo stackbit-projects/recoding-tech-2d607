@@ -30,6 +30,14 @@ const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title,
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic" && stackbit_model_type == "page"]{ slug, name, displayName, _id }';
 
+const DATE_RANGE = [
+  "Yesterday",
+  "Past Week",
+  "Past Month",
+  "Past Year",
+  "Specific Dates",
+];
+
 const useStyles = makeStyles((theme) => ({
   chip: {
     fontFamily: theme.typography.link.fontFamily,
@@ -155,13 +163,23 @@ const SectionSearch = () => {
   };
 
   const [topicEl, setTopicEl] = useState(null);
+  const [dateEl, setDateEl] = useState(null);
   const openTopics = Boolean(topicEl);
+  const openDate = Boolean(dateEl);
   const handleClickTopics = (event) => {
     setTopicEl(event.currentTarget);
+  };
+  const handleClickDate = (event) => {
+    setDateEl(event.currentTarget);
   };
   const handleCloseTopics = (topic) => () => {
     setTopicEl(null);
     handleClose(topic);
+  };
+
+  const handleCloseDate = () => () => {
+    console.log("closing date");
+    setDateEl(null);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -170,18 +188,11 @@ const SectionSearch = () => {
   };
 
   const handleDelete = (topic) => () => {
+    if (query.filter && history) {
+      history.pushState(null, "", location.href.split("?")[0]);
+    }
     topic && setFilters(filters.filter((f) => f._id !== topic._id));
   };
-
-  // const handleDelete = (topic) => {
-  //   console.log("here....");
-  //   if (query.filter && history) {
-  //     history.pushState(null, "", location.href.split("?")[0]);
-  //   }
-  //   if (topic) {
-  //     setFilters(filters.filter((f) => f.slug !== topic.slug));
-  //   }
-  // };
 
   // const getHandler = (item) => {
   //   const handler = () => Router.push({ pathname: item.url });
@@ -223,6 +234,44 @@ const SectionSearch = () => {
             >
               Filter by:
             </Typography>
+          </Grid>
+          <Grid item>
+            <Box>
+              <Button
+                sx={{
+                  border: "1px solid rgba(0,0,0,0.56)",
+                  color: "rgba(0,0,0,0.6)",
+                }}
+                id="topics-button"
+                aria-controls="topics-menu"
+                aria-haspopup="true"
+                aria-expanded={openDate ? "true" : undefined}
+                disableElevation
+                onClick={handleClickDate}
+                endIcon={openDate ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+              >
+                Date range
+              </Button>
+              <Menu
+                id="topics-menu"
+                MenuListProps={{
+                  "aria-labelledby": "topics-button",
+                }}
+                anchorEl={dateEl}
+                open={openDate}
+                onClose={handleCloseDate()}
+              >
+                {DATE_RANGE.map((range) => (
+                  <MenuItem
+                    key={"random"}
+                    onClick={handleCloseDate()}
+                    disableRipple
+                  >
+                    {range}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           </Grid>
           <Grid item>
             <Box>
