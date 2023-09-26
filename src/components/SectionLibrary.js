@@ -119,21 +119,7 @@ const SectionSearch = () => {
         });
       }
 
-      // if (search) {
-      //   console.log("search =>", search);
-      //   newCitations = newCitations.filter((citation) => {
-      //     const regex = new RegExp(`${search}`, "i");
-      //     for (const prop in citation) {
-      //       const value = citation[prop];
-      //       if (typeof value === "string" || value instanceof String) {
-      //         if (value.search(regex) >= 0) return true;
-      //       }
-      //     }
-      //     return false;
-      //   });
-      // }
       if (search) {
-        console.log("search? ->", search);
         newCitations = newCitations.filter((citation) => {
           let matches = 0;
           if (Array.isArray(citation.topics) && citation.topics.length) {
