@@ -89,7 +89,7 @@ function SectionHero(props) {
 
   useEffect(() => {}, [breadcrumbs]);
 
-  console.log(page);
+  console.log("page in sectionhero ->", page);
 
   return (
     <section id={page.__metadata.id} className="block block-hero">
@@ -190,7 +190,7 @@ function SectionHero(props) {
               contributors
             </Typography>
           ) : null}
-          {(page.displayTitle ||
+          {(page.displayName ||
             page.heroContent ||
             page.title ||
             page.name) && (
@@ -208,8 +208,8 @@ function SectionHero(props) {
               }
             >
               {titleCase(
-                page.displayTitle
-                  ? page.displayTitle
+                page.displayName
+                  ? page.displayName
                   : page.name
                   ? page.name
                   : page.heroContent

@@ -224,7 +224,7 @@ function SectionTracker() {
                           onClick={handleCloseTopics(topic)}
                           disableRipple
                         >
-                          {topic.displayTitle || topic.name}
+                          {topic.displayName || topic.name}
                         </MenuItem>
                       ))
                     : null}
@@ -318,7 +318,7 @@ function SectionTracker() {
             ? filters.map((filter, idx) => (
                 <Grid key={`${filter._key + idx}`} item>
                   <Chip
-                    label={filter.displayTitle || filter.name || filter}
+                    label={filter.displayName || filter.name || filter}
                     color={filter.type}
                     onDelete={handleDelete(filter)}
                   />

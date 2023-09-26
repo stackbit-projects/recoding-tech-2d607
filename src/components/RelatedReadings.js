@@ -102,7 +102,7 @@ const RelatedReadings = (props) => {
           sx={{ fontStyle: "italic", marginBottom: 3 }}
         >
           Our latest thinking about{" "}
-          {page.displayTitle ? page.displayTitle : page.title}
+          {page.displayName ? page.displayName : page.title}
         </Typography>
       </Grid>
       <Container>

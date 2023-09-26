@@ -55,8 +55,8 @@ const RelatedGuide = (props) => {
               Quick-start Guide
             </Typography>
             <Typography component="div" variant="body1" className={classes.em}>
-              Overview of {page.displayTitle ? page.displayTitle : page.name}{" "}
-              and recommended reading
+              Overview of {page.displayName ? page.displayName : page.name} and
+              recommended reading
             </Typography>
           </Grid>
           <Box

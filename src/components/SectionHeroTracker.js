@@ -132,7 +132,7 @@ function SectionHero(props) {
             maxWidth="sm"
             sx={{ marginTop: 4, position: "relative", zIndex: 1 }}
           >
-            {(page.displayTitle || page.heroContent || page.title) && (
+            {(page.displayName || page.heroContent || page.title) && (
               <Typography variant="h1" className={classes.title}>
                 {titleCase(page.title)}
               </Typography>
