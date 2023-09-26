@@ -1,6 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { DateTime } from "luxon";
 
 // utils
 import client from "../utils/sanityClient";
@@ -24,11 +25,10 @@ import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
-const articlesQuery =
-  '*[!(_id in path("drafts.**")) && _type == "post"]{_id, title, date, topics[]->{_key, _id, name, slug}, author[]->{name}, title, slug } | order(date desc)';
-
+const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, slug } | order(date desc)`;
+//  '*[!(_id in path("drafts.**")) && _type == "post"]{_id, title, date, topics[]->{_key, _id, name, slug}, author[]->{name}, title, slug } | order(date desc)';
 const topicsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "topic" && stackbit_model_type == "page"]{_id, name, displayTitle, slug, type}';
+  '*[!(_id in path("drafts.**")) && _type == "topic" && stackbit_model_type == "page"]{ slug, name, displayName, _id }';
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -91,7 +91,9 @@ const SectionSearch = () => {
       allTopics = topics.filter(
         (value, index, self) =>
           index ===
-          self.findIndex((t) => t._id === value._id || t.name === value.name)
+          self.findIndex(
+            (t) => t._id === value._id || t.displayName === value.displayName
+          )
       );
       setTopics(allTopics);
     });
@@ -114,8 +116,11 @@ const SectionSearch = () => {
       if (filters.length) {
         newArticles = newArticles.filter((article) => {
           let matches = 0;
-          if (Array.isArray(article.topics) && article.topics.length) {
-            article.topics.forEach((topic) => {
+          if (
+            Array.isArray(article.relatedTopics) &&
+            article.relatedTopics.length
+          ) {
+            article.relatedTopics.forEach((topic) => {
               if (filters.findIndex((f) => f._id === topic._id) >= 0)
                 matches += 1;
             });
@@ -138,7 +143,6 @@ const SectionSearch = () => {
       }
       setArticles(newArticles);
     }
-    console.log(filters);
   }, [filters, search, allArticles]);
 
   // table pagination
@@ -255,7 +259,7 @@ const SectionSearch = () => {
                         onClick={handleCloseTopics(topic)}
                         disableRipple
                       >
-                        {topic.displayTitle || topic.name}
+                        {topic.displayName}
                       </MenuItem>
                     ))
                   : null}
@@ -288,7 +292,7 @@ const SectionSearch = () => {
                       className={classes.chip}
                       key={`${filter}-${index}`}
                       item
-                      label={filter.name}
+                      label={filter.displayName}
                       color={filter.type}
                       onDelete={handleDelete(filter)}
                     />
@@ -327,9 +331,9 @@ const SectionSearch = () => {
                         {article.title}
                       </Link>
                       <Typography variant="h4" color="rgba(0,0,0,0.6)">
-                        {article.publicationTitle
-                          ? article.publicationTitle
-                          : article.websiteTitle}
+                        {DateTime.fromISO(article.date).toLocaleString(
+                          DateTime.DATE_MED
+                        )}{" "}
                       </Typography>
                     </Grid>
                   ))
