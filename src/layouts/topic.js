@@ -39,7 +39,7 @@ const Topic = (props) => {
   const { page } = props;
 
   const policyActionsQuery = `*[_type == "policy_action" && references("${page.__metadata.id}") && !(_id match "drafts")]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
-  const relatedPostsQuery = `*[_type == "post" && references("${page.__metadata.id}") && !(_id match "drafts")]{_id, slug, author[]->{name}, date, ref, title }|order(date desc)[0...21]`;
+  const relatedPostsQuery = `*[_type == "post" && references("${page.__metadata.id}") && !(_id match "drafts")]{_id, slug, authors[]->{name}, date, ref, title }|order(date desc)[0...21]`;
 
   const [loading, setLoading] = useState(true);
   const [headlines, setHeadlines] = useState([]);
