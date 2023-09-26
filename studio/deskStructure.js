@@ -42,7 +42,7 @@ export const defaultDocumentNode = (S, {schemaType}) => {
     S.view
       .component(DocumentsPane)
       .options({
-        query: `*[!(_id in path("drafts.**")) && references($id)]`,
+        query: `*[!(_id in path("drafts.**")) && references($id)]|order(date desc)`,
         params: {id: `_id`},
       })
       .title(paneTitle(schemaType)),
