@@ -170,7 +170,7 @@ function PolicyActionTable(props) {
                       backgroundColor: isHomepage
                         ? "#f9f7f2 !important"
                         : "#FFF !important",
-                    }
+                    },
                   }}
                 >
                   <TableRow
@@ -179,7 +179,7 @@ function PolicyActionTable(props) {
                         backgroundColor: isHomepage
                           ? "#f9f7f2 !important"
                           : "#FFF !important",
-                      }
+                      },
                     }}
                   >
                     {headers.map((column) => (
@@ -280,22 +280,22 @@ function PolicyActionTable(props) {
               className={classes.table}
             >
               <TableHead
+                sx={{
+                  "&:active, &:focus, &:hover": {
+                    backgroundColor: isHomepage
+                      ? "#f9f7f2 !important"
+                      : "#FFF !important",
+                  },
+                }}
+              >
+                <TableRow
                   sx={{
                     "&:active, &:focus, &:hover": {
                       backgroundColor: isHomepage
                         ? "#f9f7f2 !important"
                         : "#FFF !important",
-                    }
+                    },
                   }}
-              >
-                <TableRow
-                    sx={{
-                      "&:active, &:focus, &:hover": {
-                        backgroundColor: isHomepage
-                          ? "#f9f7f2 !important"
-                          : "#FFF !important",
-                      }
-                    }}
                 >
                   {headers.map((column) => (
                     <TableCell key={column.id}>

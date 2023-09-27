@@ -179,7 +179,7 @@ function PolicyActionTable(props) {
                       backgroundColor: isHomepage
                         ? "#f9f7f2 !important"
                         : "#FFF !important",
-                    }
+                    },
                   }}
                 >
                   <TableRow
@@ -188,7 +188,7 @@ function PolicyActionTable(props) {
                         backgroundColor: isHomepage
                           ? "#f9f7f2 !important"
                           : "#FFF !important",
-                      }
+                      },
                     }}
                   >
                     {headers.map((column) => (

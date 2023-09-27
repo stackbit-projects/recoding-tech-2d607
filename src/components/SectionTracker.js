@@ -304,7 +304,7 @@ function SectionTracker() {
                           onClick={handleCloseTypes(type)}
                           disableRipple
                           sx={{ fontWeight: 400 }}
-                      >
+                        >
                           {type}
                         </MenuItem>
                       ))
