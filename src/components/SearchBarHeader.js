@@ -38,7 +38,7 @@ const SearchBar = () => {
         sx={{ width: 40 }}
         onClick={handleSearchRequest(value)}
       >
-        <SearchIcon />
+        <SearchIcon sx={{ color: "#000" }} />
       </IconButton>
       <Input
         value={value}

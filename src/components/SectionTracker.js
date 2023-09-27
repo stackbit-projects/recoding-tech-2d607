@@ -223,6 +223,7 @@ function SectionTracker() {
                           key={topic._id}
                           onClick={handleCloseTopics(topic)}
                           disableRipple
+                          sx={{ fontWeight: 400 }}
                         >
                           {topic.displayName || topic.name}
                         </MenuItem>
@@ -262,6 +263,7 @@ function SectionTracker() {
                               key={country}
                               onClick={handleCloseCountries(country)}
                               disableRipple
+                              sx={{ fontWeight: 400 }}
                             >
                               {country}
                             </MenuItem>
@@ -301,7 +303,8 @@ function SectionTracker() {
                           key={type}
                           onClick={handleCloseTypes(type)}
                           disableRipple
-                        >
+                          sx={{ fontWeight: 400 }}
+                      >
                           {type}
                         </MenuItem>
                       ))

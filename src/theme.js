@@ -57,7 +57,7 @@ const theme = createTheme({
         root: {
           "& tr": {
             "&:active, &:focus, &:hover": {
-              backgroundColor: "#FFF !important",
+              backgroundColor: "#FFF",
             },
           },
         },

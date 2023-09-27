@@ -97,7 +97,8 @@ const Post = (props) => {
                 >
                   {page.title}
                 </Typography>
-                {page.authors.length &&
+                {page.authors &&
+                  page.authors.length &&
                   page.authors.map((auth, index) => (
                     <Typography
                       key={auth.slug.current}
@@ -173,56 +174,57 @@ const Post = (props) => {
                   Authors
                 </Typography>
                 <Stack direction="column" spacing={4}>
-                  {page.authors.map((auth) => (
-                    <Grid
-                      container
-                      key={auth.slug.current}
-                      spacing={2}
-                      item
-                      xs={12}
-                    >
-                      <Grid item xs={auth.photo ? 3 : 0}>
-                        {auth.photo && (
-                          <Image
-                            src={urlFor(auth.photo.url).width(80).url()}
-                            height={80}
-                            width={80}
-                            alt=""
-                            style={{ borderRadius: 50 }}
-                          />
-                        )}
-                      </Grid>
-                      <Grid item xs={auth.photo ? 9 : 12}>
-                        <Link
-                          href={`/author/${auth.slug.current}`}
-                          sx={{
-                            textDecoration: "none",
-                            "&:active, &:focus, &:hover": {
-                              color: "#000",
-                              textDecoration: "underline",
-                            },
-                          }}
-                        >
-                          <Typography
-                            component="span"
-                            variant="h4"
-                            sx={{ color: "#000", fontWeight: 400 }}
+                  {page.authors &&
+                    page.authors.map((auth) => (
+                      <Grid
+                        container
+                        key={auth.slug.current}
+                        spacing={2}
+                        item
+                        xs={12}
+                      >
+                        <Grid item xs={auth.photo ? 3 : 0}>
+                          {auth.photo && (
+                            <Image
+                              src={urlFor(auth.photo.url).width(80).url()}
+                              height={80}
+                              width={80}
+                              alt=""
+                              style={{ borderRadius: 50 }}
+                            />
+                          )}
+                        </Grid>
+                        <Grid item xs={auth.photo ? 9 : 12}>
+                          <Link
+                            href={`/author/${auth.slug.current}`}
+                            sx={{
+                              textDecoration: "none",
+                              "&:active, &:focus, &:hover": {
+                                color: "#000",
+                                textDecoration: "underline",
+                              },
+                            }}
                           >
-                            {auth.name}
-                          </Typography>
-                        </Link>
-                        {auth.bio && (
-                          <Typography
-                            color="rgba(0,0,0,0.48)"
-                            component="div"
-                            variant="body2"
-                          >
-                            {convert(auth.bio).substring(0, 300)}...
-                          </Typography>
-                        )}
+                            <Typography
+                              component="span"
+                              variant="h4"
+                              sx={{ color: "#000", fontWeight: 400 }}
+                            >
+                              {auth.name}
+                            </Typography>
+                          </Link>
+                          {auth.bio && (
+                            <Typography
+                              color="rgba(0,0,0,0.48)"
+                              component="div"
+                              variant="body2"
+                            >
+                              {convert(auth.bio).substring(0, 300)}...
+                            </Typography>
+                          )}
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  ))}
+                    ))}
                 </Stack>
               </Box>
               <RelatedCommentary

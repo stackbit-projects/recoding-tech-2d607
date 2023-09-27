@@ -164,8 +164,24 @@ function PolicyActionTable(props) {
               }}
             >
               <Table aria-label="Law and Regulation Tracker Table">
-                <TableHead>
-                  <TableRow>
+                <TableHead
+                  sx={{
+                    "&:active, &:focus, &:hover": {
+                      backgroundColor: isHomepage
+                        ? "#f9f7f2 !important"
+                        : "#FFF !important",
+                    }
+                  }}
+                >
+                  <TableRow
+                    sx={{
+                      "&:active, &:focus, &:hover": {
+                        backgroundColor: isHomepage
+                          ? "#f9f7f2 !important"
+                          : "#FFF !important",
+                      }
+                    }}
+                  >
                     {headers.map((column) => (
                       <TableCell key={column.id}>
                         <Typography component="div" variant={"tableHeaderHome"}>
@@ -263,8 +279,24 @@ function PolicyActionTable(props) {
               aria-label="Law and Regulation Tracker Table"
               className={classes.table}
             >
-              <TableHead>
-                <TableRow>
+              <TableHead
+                  sx={{
+                    "&:active, &:focus, &:hover": {
+                      backgroundColor: isHomepage
+                        ? "#f9f7f2 !important"
+                        : "#FFF !important",
+                    }
+                  }}
+              >
+                <TableRow
+                    sx={{
+                      "&:active, &:focus, &:hover": {
+                        backgroundColor: isHomepage
+                          ? "#f9f7f2 !important"
+                          : "#FFF !important",
+                      }
+                    }}
+                >
                   {headers.map((column) => (
                     <TableCell key={column.id}>
                       <Typography component="div" variant={`tableHeader`}>
