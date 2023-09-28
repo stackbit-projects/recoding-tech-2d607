@@ -12,7 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState();
 
   const handleSearchRequest = (value) => {
@@ -23,14 +23,14 @@ const SearchBar = () => {
       router.push(url);
     }
   };
-  
-  useEffect(() => { 
-    setLoading(false); 
-    setValue('')
+
+  useEffect(() => {
+    setLoading(false);
+    setValue("");
   }, [router]);
 
   if (loading) {
-    return <CircularProgress />
+    return <CircularProgress />;
   } else {
     return (
       <Paper
@@ -44,7 +44,7 @@ const SearchBar = () => {
           type="search"
           aria-label="search"
           sx={{ width: 40 }}
-        // onClick={handleSearchRequest(value)}
+          // onClick={handleSearchRequest(value)}
         >
           <SearchIcon sx={{ color: "#000" }} />
         </IconButton>
@@ -52,9 +52,9 @@ const SearchBar = () => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSearchRequest(value)
-              setLoading(true)
+            if (e.key === "Enter") {
+              handleSearchRequest(value);
+              setLoading(true);
             }
           }}
           sx={{
