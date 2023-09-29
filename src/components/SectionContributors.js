@@ -9,9 +9,19 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
+import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
+
+// MUI icons
+import CancelIcon from "@mui/icons-material/Cancel";
+import SearchIcon from "@mui/icons-material/Search";
 
 // utils
 import { urlFor } from "../utils";
@@ -21,6 +31,28 @@ const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, 
 const Contributors = () => {
   const [loading, setLoading] = useState(true);
   const [authors, setAuthors] = useState([]);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "search-popover" : undefined;
+
+  const handleClickClearTextSearch = (event) => {
+    event.preventDefault();
+    event.target.reset();
+  };
+
+  const handleMouseDownClearTextSearch = (event) => {
+    event.preventDefault();
+    event.target.reset();
+  };
 
   useEffect(() => {
     client.fetch(authorsQuery).then((allAuthors) => {
@@ -53,6 +85,8 @@ const Contributors = () => {
               </Grid>
               <Grid item>
                 <Button
+                  aria-describedby={id}
+                  onClick={handleClick}
                   sx={{
                     height: 24,
                     textDecoration: "none",
@@ -78,9 +112,54 @@ const Contributors = () => {
                       },
                     }}
                   >
-                    View more
+                    Search / filter
                   </Typography>
                 </Button>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  sx={{ marginLeft: 2 }}
+                >
+                  <Box padding={4}>
+                    <FormControl variant="outlined">
+                      <InputLabel
+                        htmlFor="search-input"
+                        sx={{ fontFamily: "'Lexend', sans-serif" }}
+                      >
+                        Search by name
+                      </InputLabel>
+                      <Input
+                        id="search-input"
+                        startAdornment={
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        }
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="clear search term"
+                              onClick={handleClickClearTextSearch}
+                              onMouseDown={handleMouseDownClearTextSearch}
+                            >
+                              <CancelIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  </Box>
+                </Popover>
               </Grid>
             </Grid>
             <Grid container my={6} spacing={4}>
