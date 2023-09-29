@@ -100,7 +100,7 @@ function SectionHero(props) {
               ? "#FFF"
               : page.layout == "policy_action" ||
                 page.__metadata.modelName == "author" ||
-                page.stackbit_url_path == "/contributors"
+                page.stackbit_url_path == "/contributors" || page.stackbit_url_path == "/newsletter"
               ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/library"
               ? "#EDE4C1"
@@ -141,7 +141,8 @@ function SectionHero(props) {
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
                       page.__metadata.modelName == "author" ||
-                      page.stackbit_url_path == "/contributors"
+                      page.stackbit_url_path == "/contributors" ||
+                      page.stackbit_url_path == "/newsletter"
                     ? "#3C6E63"
                     : page.stackbit_url_path == "/library"
                     ? "#DBD7B4"
