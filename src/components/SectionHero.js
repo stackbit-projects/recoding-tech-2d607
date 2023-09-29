@@ -100,7 +100,8 @@ function SectionHero(props) {
               ? "#FFF"
               : page.layout == "policy_action" ||
                 page.__metadata.modelName == "author" ||
-                page.stackbit_url_path == "/contributors" || page.stackbit_url_path == "/newsletter"
+                page.stackbit_url_path == "/contributors" ||
+                page.stackbit_url_path == "/newsletter"
               ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/library"
               ? "#EDE4C1"
