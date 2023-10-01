@@ -89,8 +89,6 @@ function SectionHero(props) {
 
   useEffect(() => {}, [breadcrumbs]);
 
-  console.log("page in sectionhero ->", page);
-
   return (
     <section id={page.__metadata.id} className="block block-hero">
       <Box
