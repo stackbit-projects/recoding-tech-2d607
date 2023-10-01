@@ -46,88 +46,6 @@ function SectionTracker() {
   const [types, setTypes] = useState([]);
   const [countries, setCountries] = useState([]);
 
-  useEffect(() => {
-    let topicsList = [];
-
-    client.fetch(policyActionsQuery).then((allPolicies) => {
-      if (Array.isArray(allPolicies) && allPolicies.length) {
-        allPolicies.map((policy) => {
-          if (policy.relatedTopics && policy.relatedTopics.length) {
-            policy.relatedTopics.map((topic) => {
-              topicsList.push(topic);
-            });
-            topicsList = topicsList.filter(
-              (value, index, self) =>
-                index ===
-                self.findIndex(
-                  (t) => t._id === value._id && t.name === value.name
-                )
-            );
-          }
-        });
-        setTopics(topicsList);
-        setActions(allPolicies);
-        setAllActions(allPolicies);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    let newGovts = [];
-    let newTypes = [];
-    if (Array.isArray(actions) && actions.length) {
-      actions.map((action) => {
-        if (action.country) {
-          newGovts.push(action.country);
-        }
-        if (action.type) {
-          newTypes.push(action.type);
-        }
-      });
-    }
-
-    newGovts = [...new Set(newGovts)];
-    newTypes = [...new Set(newTypes)];
-
-    setTypes(newTypes);
-    setCountries(newGovts);
-  }, [query]);
-
-  useEffect(() => {}, [countries, types, topics]);
-
-  useEffect(() => {
-    if (allActions.length) {
-      let newActions = allActions;
-      if (filters.length) {
-        newActions = newActions.filter((action) => {
-          let matches = 0;
-          console.log(filters);
-          filters.map((filter) => {
-            if (!filter.id) {
-              if (action.type == filter) {
-                matches += 1;
-              }
-              if (action.country == filter) {
-                matches += 1;
-              }
-            }
-            if (
-              Array.isArray(action.relatedTopics) &&
-              action.relatedTopics.length
-            ) {
-              action.relatedTopics.forEach((topic) => {
-                if (filters.findIndex((f) => f._id === topic._id) >= 0)
-                  matches += 1;
-              });
-            }
-          });
-          return matches >= filters.length;
-        });
-      }
-      setActions(newActions);
-    }
-  }, [filters, allActions]);
-
   const handleClose = (topic) => {
     if (topic && filters.findIndex((f) => f._id === topic._id) < 0) {
       setFilters([...filters, topic]);
@@ -167,6 +85,84 @@ function SectionTracker() {
     setTypesEl(null);
     handleClose(topic);
   };
+
+  useEffect(() => {
+    let topicsList = [];
+    let newGovts = [];
+    let newTypes = [];
+
+    client.fetch(policyActionsQuery).then((allPolicies) => {
+      if (Array.isArray(allPolicies) && allPolicies.length) {
+        allPolicies.map((policy) => {
+          if (policy.country) {
+            newGovts.push(policy.country);
+          }
+          if (policy.type) {
+            newTypes.push(policy.type);
+          }
+          if (policy.relatedTopics && policy.relatedTopics.length) {
+            policy.relatedTopics.map((topic) => {
+              topicsList.push(topic);
+            });
+            topicsList = topicsList.filter(
+              (value, index, self) =>
+                index ===
+                self.findIndex(
+                  (t) => t._id === value._id && t.name === value.name
+                )
+            );
+          }
+        });
+
+
+        newGovts = [...new Set(newGovts)];
+        newTypes = [...new Set(newTypes)];
+
+        setTypes(newTypes);
+        setCountries(newGovts);
+        setTopics(topicsList);
+        setActions(allPolicies);
+        setAllActions(allPolicies);
+      }
+    });
+  }, []);
+
+  useEffect(() => {}, [query]);
+
+  useEffect(() => {
+    if (allActions.length) {
+      let newActions = allActions;
+      if (filters.length) {
+        newActions = newActions.filter((action) => {
+          let matches = 0;
+          console.log(filters);
+          filters.map((filter) => {
+            if (!filter.id) {
+              if (action.type == filter) {
+                matches += 1;
+              }
+              if (action.country == filter) {
+                matches += 1;
+              }
+            }
+            if (
+              Array.isArray(action.relatedTopics) &&
+              action.relatedTopics.length
+            ) {
+              action.relatedTopics.forEach((topic) => {
+                if (filters.findIndex((f) => f._id === topic._id) >= 0)
+                  matches += 1;
+              });
+            }
+          });
+          return matches >= filters.length;
+        });
+      }
+      setActions(newActions);
+    }
+  }, [filters, allActions]);
+
+  useEffect(() => { }, [actions, countries, types, topics]);
 
   return (
     <section>
