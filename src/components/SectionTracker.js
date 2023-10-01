@@ -114,7 +114,6 @@ function SectionTracker() {
           }
         });
 
-
         newGovts = [...new Set(newGovts)];
         newTypes = [...new Set(newTypes)];
 
@@ -162,7 +161,7 @@ function SectionTracker() {
     }
   }, [filters, allActions]);
 
-  useEffect(() => { }, [actions, countries, types, topics]);
+  useEffect(() => {}, [actions, countries, types, topics]);
 
   return (
     <section>
