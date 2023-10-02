@@ -82,7 +82,7 @@ function SectionHero(props) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    if (router) {
+    if (router.query && router.query.slug) {
       setBreadcrumbs(router.query.slug);
     }
   }, [router]);
@@ -92,14 +92,14 @@ function SectionHero(props) {
   console.log(page);
 
   return (
-    <section id={page.__metadata.id} className="block block-hero">
+    <section id={page._id} className="block block-hero">
       <Box
         style={{
           backgroundColor:
             page.stackbit_model_type == "data"
               ? "#FFF"
               : page.layout == "policy_action" ||
-                page.__metadata.modelName == "author" ||
+                page._type == "author" ||
                 page.stackbit_url_path == "/contributors"
               ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/library"
@@ -140,7 +140,7 @@ function SectionHero(props) {
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
-                      page.__metadata.modelName == "author" ||
+                      page._type == "author" ||
                       page.stackbit_url_path == "/contributors"
                     ? "#3C6E63"
                     : page.stackbit_url_path == "/library"
@@ -157,7 +157,7 @@ function SectionHero(props) {
               />
             </svg>
           </Box>
-          {page.__metadata.modelName == "policy_action" ? (
+          {page._type == "policy_action" ? (
             <Typography
               variant="h4"
               className={classes.superTitle}
@@ -165,11 +165,11 @@ function SectionHero(props) {
             >
               Tracker Detail
             </Typography>
-          ) : page.__metadata.modelName == "guide" ? (
+          ) : page._type == "guide" ? (
             <Typography variant="h4" className={classes.superTitle}>
               Quick-start Guide
             </Typography>
-          ) : page.__metadata.modelName == "topic" ? (
+          ) : page._type == "topic" ? (
             <Typography
               variant="h4"
               className={classes.superTitle}
@@ -177,11 +177,11 @@ function SectionHero(props) {
             >
               {page.type}
             </Typography>
-          ) : page.__metadata.modelName == "article" ? (
+          ) : page._type == "article" ? (
             <Typography variant="h4" className={classes.superTitle}>
               Commentary & Analysis
             </Typography>
-          ) : page.__metadata.modelName == "author" ? (
+          ) : page._type == "author" ? (
             <Typography
               variant="h4"
               className={classes.superTitle}
@@ -203,9 +203,7 @@ function SectionHero(props) {
                   ? "#000"
                   : "#FFF"
               }
-              fontSize={
-                page.__metadata.modelName == "policy_action" ? "1.6em" : "2em"
-              }
+              fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
             >
               {titleCase(
                 page.displayTitle
@@ -229,17 +227,16 @@ function SectionHero(props) {
               </Link>
             </div>
           )}
-          {(page.__metadata.modelName == "guide" ||
-            page.__metadata.modelName == "article") && (
+          {(page._type == "guide" || page._type == "article") && (
             <Typography
               component="div"
               variant="body1"
               className={classes.author}
             >
               {page.author ? `${page.author.name} – ` : ""}
-              {page.__metadata.modelName == "guide"
+              {page._type == "guide"
                 ? `Last updated: ${DateTime.fromISO(
-                    page.__metadata.updatedAt
+                    page._updatedAt
                   ).toLocaleString(DateTime.DATE_FULL)}`
                 : DateTime.fromISO(page.date).toLocaleString(
                     DateTime.DATE_FULL

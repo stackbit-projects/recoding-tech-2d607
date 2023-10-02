@@ -1,12 +1,12 @@
-import sanityClient from "@sanity/client";
+import { createClient } from "next-sanity";
 
 /* eslint-disable no-undef */
-const client = sanityClient({
+const client = createClient({
   projectId: process.env.sanityProjectId,
   dataset: process.env.sanityDataset || "production",
-  apiVersion: process.env.sanityApiVersion || "2021-03-25",
+  apiVersion: process.env.sanityApiVersion || "2023-05-03",
   token: process.env.sanityAccessToken,
-  useCdn: true,
+  useCdn: false,
 });
 /* eslint-enable no-undef */
 

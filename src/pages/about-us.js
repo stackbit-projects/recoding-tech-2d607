@@ -7,18 +7,18 @@ import client from "../utils/sanityClient";
  * Instead, we import and export the [...slug].js while overriding its getStaticProps.
  */
 
-import { advanced } from "../layouts";
+import { page } from "../layouts";
 
 export async function getStaticProps() {
-  console.log("Page [...slug].js getStaticProps, /");
+  console.log("Page about-us.js getStaticProps");
   const [config] = await client.fetch(`*[_type == "config"]`);
   const [topics] = await client.fetch(
     `*[_type == "topic"]{ displayTitle, link, slug, type }`,
   );
   const [page] = await client.fetch(
-    `*[_type == "advanced" && stackbit_url_path == "/"]{_id, _createdAt, title, sections[]{type, alsoFeatured[]->{title, author, category, date, type, slug, stackbit_model_type}, featuredArticle->{title, author, featuredImage, category, date, type, slug, stackbit_model_type}}}`,
+    `*[_type == "page" && stackbit_url_path == "/about-us"]{_id, _createdAt, title, supertitle, img_path, img_alt, body, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, stackbit_url_path}`,
   );
-  return { props: { path: "/", page, data: { config, topics } } };
+  return { props: { path: "/about-us", page, data: { config, topics } } };
 }
 
-export default advanced;
+export default page;

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { markdownify } from "../utils";
 import { useRouter } from "next/router";
 
 // Material UI imports
@@ -16,6 +15,7 @@ import components, { Layout } from "../components/index";
 
 // components
 import Sidebar from "../components/Sidebar";
+import { CustomPortableText } from "../components/PortableText";
 
 // icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -89,7 +89,7 @@ const Page = (props) => {
                 component="div"
                 className="html-to-react html-to-react-page"
               >
-                {markdownify(_.get(props, "page.body", null))}
+                <CustomPortableText value={_.get(props, "page.body", null)} />
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>

@@ -10,15 +10,15 @@ import client from "../utils/sanityClient";
 import { advanced } from "../layouts";
 
 export async function getStaticProps() {
-  console.log("Page [...slug].js getStaticProps, /");
+  console.log("Page library.js getStaticProps");
   const [config] = await client.fetch(`*[_type == "config"]`);
   const [topics] = await client.fetch(
     `*[_type == "topic"]{ displayTitle, link, slug, type }`,
   );
   const [page] = await client.fetch(
-    `*[_type == "advanced" && stackbit_url_path == "/"]{_id, _createdAt, title, sections[]{type, alsoFeatured[]->{title, author, category, date, type, slug, stackbit_model_type}, featuredArticle->{title, author, featuredImage, category, date, type, slug, stackbit_model_type}}}`,
+    `*[_type == "advanced" && stackbit_url_path == "/library"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_library"]{type}}`,
   );
-  return { props: { path: "/", page, data: { config, topics } } };
+  return { props: { path: "/library", page, data: { config, topics } } };
 }
 
 export default advanced;

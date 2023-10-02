@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // utils
-import { htmlToReact } from "../utils";
+import { CustomPortableText } from "../components/PortableText";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -34,7 +34,7 @@ const PolicyAction = (props) => {
                   variant="body2"
                   className="html-to-react"
                 >
-                  {htmlToReact(page.summary)}
+                  <CustomPortableText value={page.summary} />
                 </Typography>
               </Grid>
             </Grid>

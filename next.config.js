@@ -3,25 +3,24 @@
  */
 
 const path = require("path");
-const withSourcebit = require("sourcebit").sourcebitNext();
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-const nextConfig = withSourcebit({
+const nextConfig = {
   env: {
     sanityAccessToken: process.env.SANITY_ACCESS_TOKEN,
     sanityProjectId: process.env.SANITY_PROJECT_ID,
     sanityApiVersion: process.env.SANITY_API_VERSION,
-    sanityDataset: process.env.SANITY_DATASET
+    sanityDataset: process.env.SANITY_DATASET,
   },
   //errorOnExist: false,
   images: {
     unoptimized: true,
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
+        protocol: "https",
+        hostname: "cdn.sanity.io",
       },
     ],
   },
@@ -36,7 +35,10 @@ const nextConfig = withSourcebit({
         return { file: path.join("../../public/css", url) };
       }
       return null;
-    }
+    },
+  },
+  experimental: {
+    largePageDataBytes: 128 * 100000,
   },
   webpack: (config, { webpack }) => {
     // Tell webpack to ignore watching content files in the content folder.
@@ -46,11 +48,11 @@ const nextConfig = withSourcebit({
     // whole page
     config.plugins.push(
       new webpack.WatchIgnorePlugin({
-        paths: [/\/content\//]
-      })
+        paths: [/\/content\//],
+      }),
     );
     return config;
-  }
-});
+  },
+};
 
 module.exports = nextConfig;

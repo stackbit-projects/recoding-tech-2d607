@@ -75,13 +75,14 @@ const useStyles = makeStyles(() => ({
 const TrackerActions = (props) => {
   const classes = useStyles();
   const { page } = props;
+  console.log("***TRACKERACTION:", page);
 
   const isMobile = useMediaQuery("(max-width:1064px)");
 
   const headers = [
     { id: "title", label: "Name" },
     { id: "type", label: "Type" },
-    { id: "country.displayTitle", label: "Government" },
+    { id: "country", label: "Government" },
     { id: "dateInitiated", label: "Date Initiated" },
     { id: "status", label: "Status" },
     { id: "lastUpdate", label: "Last Updated" },
@@ -142,7 +143,7 @@ const TrackerActions = (props) => {
                 sx={{ borderBottom: "1px solid #ccc", paddingTop: 2 }}
               >
                 <Typography variant="h4" sx={{ fontWeight: "normal" }}>
-                  {page.country.displayTitle}
+                  {page.country}
                 </Typography>
               </Grid>
               <Grid
@@ -230,7 +231,7 @@ const TrackerActions = (props) => {
                 </TableCell>
                 <TableCell>
                   <Typography component="div" variant="trackerRow">
-                    {page.country ? page.country.displayTitle : ""}
+                    {page.country ? page.country : ""}
                   </Typography>
                 </TableCell>
                 <TableCell>

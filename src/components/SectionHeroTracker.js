@@ -68,7 +68,7 @@ function SectionHero(props) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    if (router) {
+    if (router.query && router.query.slug) {
       setBreadcrumbs(router.query.slug);
     }
   }, [router]);
@@ -76,7 +76,7 @@ function SectionHero(props) {
   useEffect(() => {}, [breadcrumbs]);
 
   return (
-    <section id={page.__metadata.id} className="block block-hero">
+    <section id={page._id} className="block block-hero">
       <Box
         sx={{
           backgroundImage: `url(${TrackerBackground.src})`,
