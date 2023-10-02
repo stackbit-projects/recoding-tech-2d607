@@ -2,11 +2,6 @@
 import React from "react";
 import client from "../utils/sanityClient";
 
-/**
- * In next.js we can't use `src/pages/[...slug].js` for root site page `/`.
- * Instead, we import and export the [...slug].js while overriding its getStaticProps.
- */
-
 import { advanced } from "../layouts";
 
 export async function getStaticProps() {
@@ -18,7 +13,10 @@ export async function getStaticProps() {
   const [page] = await client.fetch(
     `*[_type == "advanced" && stackbit_url_path == "/"]{_id, _createdAt, title, sections[]{type, alsoFeatured[]->{title, author, category, date, type, slug, stackbit_model_type}, featuredArticle->{title, author, featuredImage, category, date, type, slug, stackbit_model_type}}}`,
   );
-  return { props: { path: "/", page, data: { config, topics } } };
+  return {
+    props: { path: "/", page, data: { config, topics } },
+    revalidate: 60,
+  };
 }
 
 export default advanced;

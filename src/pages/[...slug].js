@@ -6,6 +6,13 @@ import { post } from "../layouts";
 
 export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
+
   const slugs = await client.fetch(`*[_type == "post"]{ slug }`);
   const paths = slugs.map((path) => ({
     params: { slug: [path.slug.current] },
@@ -18,8 +25,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
+  console.log("Page [post ...slug].js getStaticProps, slug: ", params);
   const slug = params.slug.join();
-  console.log("Page [post ...slug].js getStaticProps, slug: ", slug);
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
     `*[_type == "topic"]{ displayTitle, link, slug, type }`,
@@ -30,9 +37,10 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       page,
-      path: `/tracker/${page.slug.current ? page.slug.current : page.slug}`,
+      path: `/${page.slug.current ? page.slug.current : page.slug}`,
       data: { config, topics },
     },
+    revalidate: 60,
   };
 }
 
