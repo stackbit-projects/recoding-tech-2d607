@@ -13,8 +13,6 @@ const PageRecents = (props) => {
   const { page, readings } = props;
   const isMobile = useMediaQuery("(max-width:1064px)");
 
-  console.log("page id =>", page.__metadata.id);
-
   return (
     <section>
       <Grid

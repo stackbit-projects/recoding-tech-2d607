@@ -26,9 +26,16 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, slug } | order(date desc)`;
-//  '*[!(_id in path("drafts.**")) && _type == "post"]{_id, title, date, topics[]->{_key, _id, name, slug}, author[]->{name}, title, slug } | order(date desc)';
+
 const topicsQuery =
   '*[!(_id in path("drafts.**")) && _type == "topic" && stackbit_model_type == "page"]{ slug, name, displayName, _id }';
+
+const buildSearch = (query) =>
+  `*[(_type == "post" && !(_id in path("drafts.**")) && (pt::text(body) match "${query}" || title match "${query}"))] | score(pt::text(body) match "${query}", boost(title match "${query}", 3))
+	{
+		title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type},
+		_score
+  } | order(date desc)`;
 
 const DATE_RANGE = [
   "Yesterday",
@@ -75,22 +82,17 @@ const ROWS_PER_PAGE = 21;
 
 const SectionSearch = () => {
   const classes = useStyles();
-  const { query } = useRouter();
+  const router = useRouter();
+  const query = router.query;
   const [articles, setArticles] = useState([]);
   const [allArticles, setAllArticles] = useState([]);
   const [topics, setTopics] = useState([]);
   const [filters, setFilters] = useState([]);
   const [search, setSearch] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    client.fetch(articlesQuery).then((cites) => {
-      if (Array.isArray(cites) && cites.length) {
-        setAllArticles(cites);
-      }
-      setLoading(false);
-    });
-
     client.fetch(topicsQuery).then((topics) => {
       let allTopics = [];
       topics.forEach((topic) => {
@@ -115,43 +117,59 @@ const SectionSearch = () => {
       filterTopic = topics.filter((topic) => topic._id === query.filter);
       setFilters(filterTopic);
     }
+    if (query.query) {
+      let searchQuery = buildSearch(query.query);
+      client.fetch(searchQuery).then((results) => {
+        if (Array.isArray(results) && results.length) {
+          setAllArticles(results);
+          setArticles(results);
+          setSearchValue(query.query);
+        }
+        setLoading(false);
+      });
+    }
   }, [query, topics]);
 
   useEffect(() => {
-    if (allArticles.length) {
-      let newArticles = allArticles;
-
-      if (filters.length) {
-        newArticles = newArticles.filter((article) => {
-          let matches = 0;
-          if (
-            Array.isArray(article.relatedTopics) &&
-            article.relatedTopics.length
-          ) {
-            article.relatedTopics.forEach((topic) => {
-              if (filters.findIndex((f) => f._id === topic._id) >= 0)
-                matches += 1;
-            });
-          }
-          return matches >= filters.length;
-        });
+    if (search && search.length) {
+      if (router && router.push) {
+        router.push(`/search/?query=${search}`);
       }
-
-      if (search) {
-        newArticles = newArticles.filter((article) => {
-          const regex = new RegExp(`${search}`, "i");
-          for (const prop in article) {
-            const value = article[prop];
-            if (typeof value === "string" || value instanceof String) {
-              if (value.search(regex) >= 0) return true;
-            }
-          }
-          return false;
-        });
-      }
-      setArticles(newArticles);
     }
-  }, [filters, search, allArticles]);
+
+    // if the search is blank and user presses enter, show all articles
+    if (!search.length) {
+      client.fetch(articlesQuery).then((cites) => {
+        if (Array.isArray(cites) && cites.length) {
+          setArticles(cites);
+        }
+        router.replace("/search", undefined, { shallow: true });
+        setLoading(false);
+      });
+    }
+  }, [search]);
+
+  useEffect(() => {
+    let filtered = allArticles;
+
+    if (filters.length) {
+      filtered = allArticles.filter((article) => {
+        let matches = 0;
+        if (
+          Array.isArray(article.relatedTopics) &&
+          article.relatedTopics.length
+        ) {
+          article.relatedTopics.forEach((topic) => {
+            if (filters.findIndex((f) => f._id === topic._id) >= 0)
+              matches += 1;
+          });
+        }
+        return matches >= filters.length;
+      });
+    }
+
+    setArticles(filtered);
+  }, [filters]);
 
   // table pagination
   const [page, setPage] = useState(1);
@@ -178,7 +196,6 @@ const SectionSearch = () => {
   };
 
   const handleCloseDate = () => () => {
-    console.log("closing date");
     setDateEl(null);
   };
 
@@ -212,10 +229,19 @@ const SectionSearch = () => {
           variant="h4"
           sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400 }}
         >
-          Showing {articles.length} results for:
+          {articles && articles.length
+            ? `Showing ${articles.length} results for: `
+            : ""}
         </Typography>
         <TextField
-          onChange={(event) => setSearch(event.target.value)}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key == "Enter") {
+              setLoading(true);
+              setSearch(e.target.value);
+            }
+          }}
           fullWidth
           id="search-field"
           label="Enter search term"
@@ -388,6 +414,7 @@ const SectionSearch = () => {
                   ))
               : null}
           </Grid>
+
           {loading ? (
             <Grid item>
               <CircularProgress color="secondary" />
@@ -414,3 +441,18 @@ const SectionSearch = () => {
 };
 
 export default SectionSearch;
+
+/***
+ * 
+ *    // newArticles = newArticles.filter((article) => {
+        //   const regex = new RegExp(`${search}`, "i");
+        //   for (const prop in article) {
+        //     const value = article[prop];
+        //     if (typeof value === "string" || value instanceof String) {
+        //       if (value.search(regex) >= 0) return true;
+        //     }
+        //   }
+        //   return false;
+        // });
+ * 
+ */

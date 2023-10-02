@@ -16,10 +16,8 @@ const SearchBar = () => {
   const [value, setValue] = useState();
 
   const handleSearchRequest = (value) => {
-    console.log(router);
-    const url = "/search?" + encodeURI(value);
+    const url = "/search/?query=" + encodeURI(value);
     if (router && router.push) {
-      console.log(router);
       router.push(url);
     }
   };
