@@ -13,7 +13,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const SearchBar = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
 
   const handleSearchRequest = (value) => {
     const url = "/search/?query=" + encodeURI(value);

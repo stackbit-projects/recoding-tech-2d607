@@ -5,10 +5,12 @@ import Image from "next/image";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { titleCase } from "title-case";
-import { convert } from "html-to-text";
+import { toPlainText } from "@portabletext/react";
+import imageBuilder from "../utils/imageBuilder";
+import { CustomPortableText } from "../components/PortableText";
 
 // utils
-import { markdownify, htmlToReact, urlFor } from "../utils";
+import { markdownify } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -39,7 +41,6 @@ const Post = (props) => {
   const router = useRouter();
   const { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
-
   useEffect(() => {
     if (router) {
       setBreadcrumbs(router.query.slug);
@@ -154,7 +155,7 @@ const Post = (props) => {
                 )}
                 {page.body && (
                   <Typography component="div" className="html-to-react-article">
-                    {htmlToReact(page.body)}
+                    <CustomPortableText value={page.body} />
                   </Typography>
                 )}
               </Grid>
@@ -185,7 +186,12 @@ const Post = (props) => {
                         <Grid item xs={auth.photo ? 3 : 0}>
                           {auth.photo && (
                             <Image
-                              src={urlFor(auth.photo.url).width(80).url()}
+                              src={imageBuilder(auth.photo)
+                                .height(80)
+                                .width(80)
+                                .fit("max")
+                                .auto("format")
+                                .url()}
                               height={80}
                               width={80}
                               alt=""
@@ -218,7 +224,7 @@ const Post = (props) => {
                               component="div"
                               variant="body2"
                             >
-                              {convert(auth.bio).substring(0, 300)}...
+                              {toPlainText(auth.bio).substring(0, 300)}...
                             </Typography>
                           )}
                         </Grid>

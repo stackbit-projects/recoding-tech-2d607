@@ -32,7 +32,7 @@ const PageRecents = (props) => {
           <ComposedLink
             href={{
               pathname: "/search",
-              query: { filter: page.__metadata.id },
+              query: { filter: page._id },
             }}
             sx={{
               height: 24,

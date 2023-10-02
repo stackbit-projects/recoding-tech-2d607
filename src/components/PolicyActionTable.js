@@ -117,7 +117,11 @@ function PolicyActionTable(props) {
                 }}
               >
                 <Box
-                  sx={{ color: "#F3F0E6", position: "relative", marginTop: 2 }}
+                  sx={{
+                    color: "#F3F0E6",
+                    position: "relative",
+                    marginTop: 2,
+                  }}
                 >
                   <Typography
                     component="h2"
@@ -198,7 +202,7 @@ function PolicyActionTable(props) {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row._key}
+                        key={row._id}
                       >
                         {headers.map((column) => {
                           let value = row[column.id];

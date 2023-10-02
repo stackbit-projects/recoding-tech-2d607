@@ -11,5 +11,16 @@ export default {
         'A unique identifier that can be used when linking to this section, if any. Must not contain whitespace.',
       validation: null,
     },
+    {
+      type: "string",
+      name: "type",
+      title: "Object Type",
+      description: "The type of the object",
+      hidden: false,
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: ["section_sign_up"],
+      },
+    },
   ]
 }

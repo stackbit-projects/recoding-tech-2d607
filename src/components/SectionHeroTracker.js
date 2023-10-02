@@ -69,14 +69,12 @@ function SectionHero(props) {
 
   useEffect(() => {
     if (router) {
-      setBreadcrumbs(router.query.slug);
+      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
     }
   }, [router]);
 
-  useEffect(() => {}, [breadcrumbs]);
-
   return (
-    <section id={page.__metadata.id} className="block block-hero">
+    <section id={page._id} className="block block-hero">
       <Box
         sx={{
           backgroundImage: `url(${TrackerBackground.src})`,

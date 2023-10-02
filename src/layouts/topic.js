@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
-
-// utils
-import { htmlToReact } from "../utils";
-import client from "../utils/sanityClient";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -18,6 +14,7 @@ import { Layout } from "../components/index";
 import PageRecents from "../components/PageRecents";
 import RelatedActions from "../components/RelatedActions";
 import SectionHero from "../components/SectionHero";
+import { CustomPortableText } from "../components/PortableText";
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -36,29 +33,7 @@ const useStyles = makeStyles(() => ({
 
 const Topic = (props) => {
   const classes = useStyles();
-  const { page } = props;
-
-  const policyActionsQuery = `*[_type == "policy_action" && references("${page.__metadata.id}") && !(_id match "drafts")]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
-  const relatedPostsQuery = `*[_type == "post" && references("${page.__metadata.id}") && !(_id match "drafts")]{_id, slug, authors[]->{name}, date, ref, title }|order(date desc)[0...21]`;
-
-  const [loading, setLoading] = useState(true);
-  const [headlines, setHeadlines] = useState([]);
-  const [actions, setActions] = useState([]);
-
-  useEffect(() => {
-    client.fetch(policyActionsQuery).then((actions) => {
-      setActions(actions);
-      setLoading(false);
-    });
-
-    client
-      .fetch(relatedPostsQuery)
-      .then((posts) => {
-        setHeadlines(posts);
-        setLoading(false);
-      })
-      .catch("Error: " + console.error);
-  }, []);
+  const { page, actions, headlines } = props;
 
   useEffect(() => {}, [actions, headlines]);
 
@@ -83,7 +58,7 @@ const Topic = (props) => {
                   className="html-to-react"
                   sx={{ fontSize: 14, lineHeight: 2 }}
                 >
-                  {htmlToReact(page.description)}
+                  <CustomPortableText value={page.description} />
                 </Typography>
               </Grid>
               <Grid spacing={4} direction="column" item sm={12} md={4}>
@@ -95,7 +70,7 @@ const Topic = (props) => {
           )}
           <Box marginTop={4}>
             <PageRecents page={page} readings={headlines} />
-            <RelatedActions page={page} actions={actions} loading={loading} />
+            <RelatedActions page={page} actions={actions} loading={false} />
           </Box>
         </Container>
       </Box>
@@ -105,6 +80,8 @@ const Topic = (props) => {
 
 Topic.propTypes = {
   page: PropTypes.object,
+  actions: PropTypes.array,
+  headlines: PropTypes.array,
 };
 
 export default Topic;

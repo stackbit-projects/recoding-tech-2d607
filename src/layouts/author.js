@@ -15,9 +15,10 @@ import Typography from "@mui/material/Typography";
 // components
 import { Layout } from "../components/index";
 import SectionHero from "../components/SectionHero";
+import { CustomPortableText } from "../components/PortableText";
 
 // utils
-import { htmlToReact, urlFor } from "../utils";
+import imageBuilder from "../utils/imageBuilder";
 import client from "../utils/sanityClient";
 
 const Author = (props) => {
@@ -26,7 +27,7 @@ const Author = (props) => {
   const [posts, setPosts] = useState([]);
   const [topics, setTopics] = useState([]);
 
-  const postsQuery = `*[_type == "post" && references("${page.__metadata.id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
+  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
 
   useEffect(() => {
     client.fetch(postsQuery).then((actions) => {
@@ -63,7 +64,7 @@ const Author = (props) => {
             <Grid item xs={3}>
               {page.photo && (
                 <Image
-                  src={urlFor(page.photo.url).width(144).url()}
+                  src={imageBuilder(page.photo).width(144).url()}
                   height={144}
                   width={144}
                   alt=""
@@ -74,7 +75,7 @@ const Author = (props) => {
             <Grid item xs={9}>
               {page.bio && (
                 <Typography component="div" variant="body2">
-                  {htmlToReact(page.bio)}
+                  <CustomPortableText value={page.bio} />
                 </Typography>
               )}
             </Grid>

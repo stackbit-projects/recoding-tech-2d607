@@ -5,6 +5,8 @@ import Router from "next/router";
 import Script from "next/script";
 import "../sass/main.scss";
 import "../sass/mailerlite-article.scss";
+import "../sass/mailerlite-homepage.scss";
+import "../sass/mailerlite-newsletter.scss";
 import "../app.css";
 
 function MyApp({ Component, pageProps }) {
