@@ -20,6 +20,9 @@ import FancyTitle from "./FancyTitle";
 // util
 import imageBuilder from "../utils/imageBuilder";
 
+// client
+import client from "../utils/sanityClient.js";
+
 const useStyles = makeStyles((theme) => ({
   alsoFeatured: {},
   alsoFeaturedTag: {
@@ -87,19 +90,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// gets the three most recent articles by Tech Policy Press staff
+const staffArticlesQuery = `*[_type=="post" && references(*[_type=="author" && staff]._id)]{ title, slug, date } | order(date desc)[0...3]`;
+
 function SectionArticle(props) {
   const classes = useStyles();
   const router = useRouter();
   const {
-    section: { featuredArticle, alsoFeatured },
+    section: { featuredArticle },
   } = props;
   const [article, setArticle] = useState(null);
+  const [staffArticles, setStaffArticles] = useState(null);
 
   useEffect(() => {
     setArticle(featuredArticle);
-    console.log("article ->", article);
-    console.log("alsoFeatured ->", alsoFeatured);
   }, [featuredArticle]);
+
+  useEffect(() => {
+    client.fetch(staffArticlesQuery).then((articles) => {
+      if (Array.isArray(articles) && articles.length) {
+        setStaffArticles(articles);
+      }
+    });
+  }, []);
 
   const articleClick = (url) => {
     router.push({ pathname: "/" + url });
@@ -178,7 +191,7 @@ function SectionArticle(props) {
             </Box>
           </>
         ) : null}
-        {alsoFeatured && alsoFeatured.length ? (
+        {staffArticles && staffArticles.length ? (
           <>
             <FancyTitle title={"Most recent from Tech Policy Press"} />
             <Grid
@@ -188,7 +201,7 @@ function SectionArticle(props) {
               spacing={{ xs: 2, md: 3 }}
               mb={10}
             >
-              {alsoFeatured.map((article, idx) => (
+              {staffArticles.map((article, idx) => (
                 <Grid item key={idx} xs={12} md={4} mt={2}>
                   <Card
                     variant="outlined"
