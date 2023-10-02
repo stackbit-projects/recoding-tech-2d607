@@ -21,7 +21,7 @@ export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   console.log("Page [post ...slug].js getStaticProps, slug: ", slug);
   const [config] = await client.fetch(`*[_type == "config"]`);
-  const [topics] = await client.fetch(
+  const topics = await client.fetch(
     `*[_type == "topic"]{ displayTitle, link, slug, type }`,
   );
   const [page] = await client.fetch(

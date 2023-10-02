@@ -173,8 +173,24 @@ function PolicyActionTable(props) {
           <Grid item xs={12} md={6}>
             <TableContainer className={classes.table}>
               <Table aria-label="Law and Regulation Tracker Table">
-                <TableHead>
-                  <TableRow>
+                <TableHead
+                  sx={{
+                    "&:active, &:focus, &:hover": {
+                      backgroundColor: isHomepage
+                        ? "#f9f7f2 !important"
+                        : "#FFF !important",
+                    },
+                  }}
+                >
+                  <TableRow
+                    sx={{
+                      "&:active, &:focus, &:hover": {
+                        backgroundColor: isHomepage
+                          ? "#f9f7f2 !important"
+                          : "#FFF !important",
+                      },
+                    }}
+                  >
                     {headers.map((column) => (
                       <TableCell
                         key={column.id}

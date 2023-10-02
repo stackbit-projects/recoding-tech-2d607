@@ -1,7 +1,7 @@
 export default {
   type: 'document',
   name: 'creator',
-  title: 'Creators',
+  title: 'Citation creators',
   fields: [
     {
       type: 'string',

@@ -140,6 +140,9 @@ export default {
       description: 'Additional sections you might want to include',
       of: [
         {
+          type: 'section_block',
+        },
+        {
           type: 'section_form',
         },
       ],

@@ -22,7 +22,7 @@ const citationsQuery =
   '*[!(_id in path("drafts.**")) && _type == "citation"]{_id, title, date, topics[]->{_key, _id, name, slug}, creators[]->{firstName, lastName}, title, url, websiteTitle, publicationTitle, publisher, institution, place, network, blogTitle } | order(date desc)';
 
 const topicsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "topic"]{_id, name, displayTitle, slug, type}';
+  '*[!(_id in path("drafts.**")) && _type == "tag"]{_id, name, displayName, slug, _type}';
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -98,6 +98,7 @@ const SectionSearch = () => {
     if (query.filter) {
       filterTopic = topics.filter((topic) => topic._id === query.filter);
       setFilters(filterTopic);
+      console.log("filters =>", filters);
     }
   }, [query, topics]);
 
@@ -120,14 +121,14 @@ const SectionSearch = () => {
 
       if (search) {
         newCitations = newCitations.filter((citation) => {
-          const regex = new RegExp(`${search}`, "i");
-          for (const prop in citation) {
-            const value = citation[prop];
-            if (typeof value === "string" || value instanceof String) {
-              if (value.search(regex) >= 0) return true;
-            }
+          let matches = 0;
+          if (Array.isArray(citation.topics) && citation.topics.length) {
+            citation.topics.forEach((topic) => {
+              if (search.findIndex((f) => f._id === topic._id) >= 0)
+                matches += 1;
+            });
           }
-          return false;
+          return matches >= search.length;
         });
       }
       setCitations(newCitations);
@@ -193,7 +194,7 @@ const SectionSearch = () => {
                   className={classes.chip}
                   key={filter._id}
                   item
-                  label={filter.displayTitle || filter.name}
+                  label={filter.displayName || filter.name}
                   color={filter.type}
                   onDelete={handleDelete(filter)}
                 />
@@ -217,6 +218,8 @@ const SectionSearch = () => {
                       fontWeight: 700,
                       textDecoration: "none",
                     }}
+                    target="_blank"
+                    rel="noreferrer"
                     href={citation.url}
                   >
                     {citation.title}
@@ -224,7 +227,17 @@ const SectionSearch = () => {
                   <Typography variant="h4" color="rgba(0,0,0,0.6)">
                     {citation.publicationTitle
                       ? citation.publicationTitle
-                      : citation.websiteTitle}
+                      : citation.websiteTitle
+                      ? citation.websiteTitle
+                      : citation.institution
+                      ? citation.institution
+                      : citation.blogTitle
+                      ? citation.blogTitle
+                      : citation.publisher
+                      ? citation.publisher
+                      : citation.place
+                      ? citation.place
+                      : citation.network}
                   </Typography>
                 </Grid>
               ))

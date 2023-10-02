@@ -49,9 +49,9 @@ const RelatedReadings = (props) => {
   useEffect(() => {
     readings.map((article) => {
       //workaround for when the author is inexplicably a reference object
-      if (article.author._type == "reference") {
-        client.fetch(`*[_id == "${article.author._ref}"]`).then((person) => {
-          article.author = person[0];
+      if (article.authors._type == "reference") {
+        client.fetch(`*[_id == "${article.authors._ref}"]`).then((person) => {
+          article.authors = person[0];
         });
       }
     });
@@ -102,7 +102,7 @@ const RelatedReadings = (props) => {
           sx={{ fontStyle: "italic", marginBottom: 3 }}
         >
           Our latest thinking about{" "}
-          {page.displayTitle ? page.displayTitle : page.title}
+          {page.displayName ? page.displayName : page.title}
         </Typography>
       </Grid>
       <Container>

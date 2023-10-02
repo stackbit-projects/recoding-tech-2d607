@@ -4,7 +4,7 @@ import {nodePolyfills} from 'vite-plugin-node-polyfills'
 export default defineCliConfig({
   api: {
     projectId: '3tzzh18d',
-    dataset: 'tpp-development',
+    dataset: 'production',
   },
   // per https://github.com/sanity-io/sanity-plugin-seo-pane
   // "Compatibility with Sanity Studio v3 running on Vite"

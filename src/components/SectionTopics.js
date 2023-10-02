@@ -40,7 +40,7 @@ const SectionTopics = (props) => {
       Array.isArray(section.featuredTopics) &&
       section.featuredTopics.length
     ) {
-      setTopics(section.featuredTopics.filter((topic) => topic.name));
+      setTopics(section.featuredTopics.filter((topic) => topic.displayName));
     }
   }, []);
 
@@ -59,7 +59,7 @@ const SectionTopics = (props) => {
               ? topics.map((topic, i) => (
                   <Chip
                     key={i}
-                    label={topic.displayTitle || topic.name}
+                    label={topic.displayName || topic.name}
                     sx={{ marginBottom: "6px !important" }}
                     component="a"
                     href={`/${topic.type}/${

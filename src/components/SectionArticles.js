@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 // components
 import FancyTitle from "./FancyTitle";
 
-// utils
+// util
 import imageBuilder from "../utils/imageBuilder";
 
 const useStyles = makeStyles((theme) => ({
@@ -158,9 +158,9 @@ function SectionArticle(props) {
                     >
                       {titleCase(article.title)}
                     </Typography>
-                    {article.author &&
-                      article.author.length &&
-                      article.author.map((auth) => (
+                    {article.authors &&
+                      article.authors.length &&
+                      article.authors.map((auth) => (
                         <Typography
                           key={auth._id}
                           gutterBottom

@@ -68,12 +68,10 @@ function SectionHero(props) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    if (router.query && router.query.slug) {
-      setBreadcrumbs(router.query.slug);
+    if (router) {
+      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
     }
   }, [router]);
-
-  useEffect(() => {}, [breadcrumbs]);
 
   return (
     <section id={page._id} className="block block-hero">
@@ -132,7 +130,7 @@ function SectionHero(props) {
             maxWidth="sm"
             sx={{ marginTop: 4, position: "relative", zIndex: 1 }}
           >
-            {(page.displayTitle || page.heroContent || page.title) && (
+            {(page.displayName || page.heroContent || page.title) && (
               <Typography variant="h1" className={classes.title}>
                 {titleCase(page.title)}
               </Typography>

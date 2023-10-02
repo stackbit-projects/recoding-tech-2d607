@@ -18,6 +18,19 @@ export default {
       // validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Type of topic',
+      type: 'string',
+      name: 'type',
+      options: {
+        list: [
+          {title: 'Country', value: 'country'},
+          {title: 'Issue', value: 'issue'},
+          {title: 'Company', value: 'company'},
+          {title: 'Policy', value: 'policy'},
+        ],
+      },
+    },
+    {
       title: 'Topic description',
       name: 'topicDescription',
       description: 'Anything you want to say about the topic.',
@@ -30,7 +43,7 @@ export default {
       type: 'slug',
       description:
         'The slug for the topic. Can be the same as the title, but turned into a URL. For example, title-of-guide.',
-      validation: (Rule) => Rule.required(),
+      // validation: (Rule) => Rule.required(),
       options: {
         source: 'name',
         maxLength: 200, // will be ignored if slugify is set

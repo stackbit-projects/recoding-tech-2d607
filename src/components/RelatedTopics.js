@@ -58,7 +58,7 @@ const Topics = (props) => {
               {specialTopics.map((topic, i) => (
                 <Chip
                   key={i}
-                  label={topic.displayTitle || topic.name}
+                  label={topic.displayName || topic.name}
                   style={{
                     backgroundColor: "#EFE9DA",
                     fontWeight: 300,

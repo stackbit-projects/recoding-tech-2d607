@@ -71,6 +71,12 @@ export default {
         {
           type: 'section_contributors',
         },
+        {
+          type: 'section_sign_up',
+        },
+        {
+          type: 'section_block',
+        },
       ]
     },
     {

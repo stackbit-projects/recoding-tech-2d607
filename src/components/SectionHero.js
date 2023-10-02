@@ -82,14 +82,10 @@ function SectionHero(props) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    if (router.query && router.query.slug) {
-      setBreadcrumbs(router.query.slug);
+    if (router) {
+      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
     }
-  }, [router]);
-
-  useEffect(() => {}, [breadcrumbs]);
-
-  console.log(page);
+  }, []);
 
   return (
     <section id={page._id} className="block block-hero">
@@ -100,7 +96,8 @@ function SectionHero(props) {
               ? "#FFF"
               : page.layout == "policy_action" ||
                 page._type == "author" ||
-                page.stackbit_url_path == "/contributors"
+                page.stackbit_url_path == "/contributors" ||
+                page.stackbit_url_path == "/newsletter"
               ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/library"
               ? "#EDE4C1"
@@ -141,7 +138,8 @@ function SectionHero(props) {
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
                       page._type == "author" ||
-                      page.stackbit_url_path == "/contributors"
+                      page.stackbit_url_path == "/contributors" ||
+                      page.stackbit_url_path == "/newsletter"
                     ? "#3C6E63"
                     : page.stackbit_url_path == "/library"
                     ? "#DBD7B4"
@@ -190,7 +188,7 @@ function SectionHero(props) {
               contributors
             </Typography>
           ) : null}
-          {(page.displayTitle ||
+          {(page.displayName ||
             page.heroContent ||
             page.title ||
             page.name) && (
@@ -206,8 +204,8 @@ function SectionHero(props) {
               fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
             >
               {titleCase(
-                page.displayTitle
-                  ? page.displayTitle
+                page.displayName
+                  ? page.displayName
                   : page.name
                   ? page.name
                   : page.heroContent

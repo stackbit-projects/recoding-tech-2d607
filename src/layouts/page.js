@@ -37,11 +37,9 @@ const Page = (props) => {
 
   useEffect(() => {
     if (router) {
-      setBreadcrumbs(router.query.slug);
+      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
     }
   }, [router]);
-
-  useEffect(() => {}, [breadcrumbs]);
 
   return (
     <Layout {...props}>

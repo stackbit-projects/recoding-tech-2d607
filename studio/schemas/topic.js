@@ -113,14 +113,7 @@ export default {
   },
 }
 
-/**  {
-      title: "Display title",
-      type: "string",
-      name: "displayTitle",
-      description:
-        "How you want the name of the topic to appear on the front-end",
-      validation: (Rule) => Rule.required(),
-    },
+/**  
 {
       title: "Type of topic",
       type: "string",

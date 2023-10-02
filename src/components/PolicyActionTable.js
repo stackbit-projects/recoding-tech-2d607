@@ -117,7 +117,11 @@ function PolicyActionTable(props) {
                 }}
               >
                 <Box
-                  sx={{ color: "#F3F0E6", position: "relative", marginTop: 2 }}
+                  sx={{
+                    color: "#F3F0E6",
+                    position: "relative",
+                    marginTop: 2,
+                  }}
                 >
                   <Typography
                     component="h2"
@@ -164,8 +168,24 @@ function PolicyActionTable(props) {
               }}
             >
               <Table aria-label="Law and Regulation Tracker Table">
-                <TableHead>
-                  <TableRow>
+                <TableHead
+                  sx={{
+                    "&:active, &:focus, &:hover": {
+                      backgroundColor: isHomepage
+                        ? "#f9f7f2 !important"
+                        : "#FFF !important",
+                    },
+                  }}
+                >
+                  <TableRow
+                    sx={{
+                      "&:active, &:focus, &:hover": {
+                        backgroundColor: isHomepage
+                          ? "#f9f7f2 !important"
+                          : "#FFF !important",
+                      },
+                    }}
+                  >
                     {headers.map((column) => (
                       <TableCell key={column.id}>
                         <Typography component="div" variant={"tableHeaderHome"}>
@@ -182,7 +202,7 @@ function PolicyActionTable(props) {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row._key}
+                        key={row._id}
                       >
                         {headers.map((column) => {
                           let value = row[column.id];
@@ -263,8 +283,24 @@ function PolicyActionTable(props) {
               aria-label="Law and Regulation Tracker Table"
               className={classes.table}
             >
-              <TableHead>
-                <TableRow>
+              <TableHead
+                sx={{
+                  "&:active, &:focus, &:hover": {
+                    backgroundColor: isHomepage
+                      ? "#f9f7f2 !important"
+                      : "#FFF !important",
+                  },
+                }}
+              >
+                <TableRow
+                  sx={{
+                    "&:active, &:focus, &:hover": {
+                      backgroundColor: isHomepage
+                        ? "#f9f7f2 !important"
+                        : "#FFF !important",
+                    },
+                  }}
+                >
                   {headers.map((column) => (
                     <TableCell key={column.id}>
                       <Typography component="div" variant={`tableHeader`}>

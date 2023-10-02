@@ -23,8 +23,8 @@ const Body = (props) => {
             ? page.seo.title
             : page.title
             ? page.title
-            : page.displayTitle
-            ? page.displayTitle
+            : page.displayName
+            ? page.displayName
             : page.name}{" "}
           | {_.get(props, "data.config.title", null)}
         </title>
