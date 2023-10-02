@@ -29,10 +29,10 @@ export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayTitle, link, slug, type }`,
+    `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, slug, title, body, toc, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayTitle, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
+    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, slug, title, body, toc, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
   );
   return {
     props: {

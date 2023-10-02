@@ -8,10 +8,10 @@ export async function getStaticProps() {
   console.log("Page contributors.js getStaticProps");
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayTitle, link, slug, type }`,
+    `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "advanced" && stackbit_url_path == "/contributors"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_contributors"]{type, stackbit_model_type, section_id}}`,
+    `*[_type == "advanced" && stackbit_url_path == "/contributors"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_contributors"]{type, stackbit_model_type, section_id}}`
   );
   return {
     props: { path: "/contributors", page, data: { config, topics } },

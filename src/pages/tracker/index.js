@@ -8,10 +8,10 @@ export async function getStaticProps() {
   console.log("Page tracker/index.js getStaticProps, /");
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayTitle, link, slug, type }`,
+    `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "advanced" && stackbit_url_path == "/tracker"]{_id, _createdAt, title, heroContent, sections[type == "section_tracker"]{type}}`,
+    `*[_type == "advanced" && stackbit_url_path == "/tracker"]{_id, _createdAt, title, heroContent, sections[type == "section_tracker"]{type}}`
   );
   return {
     props: { path: "/tracker", page, data: { config, topics } },

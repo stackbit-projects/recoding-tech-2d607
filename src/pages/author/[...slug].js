@@ -29,13 +29,12 @@ export async function getStaticProps({ params }) {
   console.log("Page author/[...slug].js getStaticProps, slug: ", slug);
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayTitle, link, slug, type }`,
+    `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "author" && slug.current == "${slug}"]{_id, _createdAt, _updatedAt, _type, slug, name, email, bio, socials, staff, photo}`,
+    `*[_type == "author" && slug.current == "${slug}"]{_id, _createdAt, _updatedAt, _type, slug, name, email, bio, socials, staff, photo}`
   );
-  const postsQuery =
-    `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
+  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
   const posts = await client.fetch(postsQuery);
 
   return {
