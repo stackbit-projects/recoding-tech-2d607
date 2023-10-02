@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // gets the three most recent articles by Tech Policy Press staff
-const staffArticlesQuery = `*[_type=="post" && references(*[_type=="author" && staff]._id)]{ title, slug, date } | order(date desc)[0...3]`;
+const staffArticlesQuery = `*[_type=="post" && !(_id in path("drafts.**")) && references(*[_type=="author" && staff]._id)]{ title, slug, date } | order(date desc)[0...3]`;
 
 function SectionArticle(props) {
   const classes = useStyles();
