@@ -384,7 +384,7 @@ const Contributors = () => {
                               sx={{
                                 fontFamily: "'Open sans', sans-serif",
                                 fontWeight: 500,
-                                textTransform: "none"
+                                textTransform: "none",
                               }}
                             />
                           );
