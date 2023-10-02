@@ -6,13 +6,20 @@ import { author } from "../../layouts";
 
 export async function getStaticPaths() {
   console.log("Page author/[...slug].js getStaticPaths");
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
+
   const slugs = await client.fetch(`*[_type == "author"]{ slug }`);
   const paths = slugs.map((path) => ({
     params: { slug: [path.slug.current] },
   }));
 
   return {
-    paths,
+    paths: [],
     fallback: false,
   };
 }
@@ -38,6 +45,7 @@ export async function getStaticProps({ params }) {
       path: `/author/${page.slug.current ? page.slug.current : page.slug}`,
       data: { config, topics },
     },
+    revalidate: 60,
   };
 }
 

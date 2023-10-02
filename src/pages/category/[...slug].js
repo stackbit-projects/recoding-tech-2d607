@@ -6,6 +6,13 @@ import { topic } from "../../layouts";
 
 export async function getStaticPaths() {
   console.log("Page category/[...slug].js getStaticPaths");
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
+
   const slugs = await client.fetch(`*[_type == "topic"]{ slug }`);
   const paths = slugs.map((path) => ({
     params: { slug: [path.slug.current] },
@@ -43,6 +50,7 @@ export async function getStaticProps({ params }) {
       path: `/tracker/${page.slug.current ? page.slug.current : page.slug}`,
       data: { config, topics },
     },
+    revalidate: 60,
   };
 }
 

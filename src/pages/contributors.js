@@ -13,7 +13,10 @@ export async function getStaticProps() {
   const [page] = await client.fetch(
     `*[_type == "advanced" && stackbit_url_path == "/contributors"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_contributors"]{type, stackbit_model_type, section_id}}`,
   );
-  return { props: { path: "/contributors", page, data: { config, topics } } };
+  return {
+    props: { path: "/contributors", page, data: { config, topics } },
+    revalidate: 60,
+  };
 }
 
 export default advanced;

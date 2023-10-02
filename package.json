@@ -12,7 +12,7 @@
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
-    "build": "next build && next export",
+    "build": "next build",
     "export": "next export",
     "build:netlify": "next build --debug",
     "start": "next start",

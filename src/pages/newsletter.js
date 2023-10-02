@@ -13,7 +13,10 @@ export async function getStaticProps() {
   const [page] = await client.fetch(
     `*[_type == "advanced" && stackbit_url_path == "/newsletter"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_sign_up"]{type, section_id}}`,
   );
-  return { props: { path: "/newsletter", page, data: { config, topics } } };
+  return {
+    props: { path: "/newsletter", page, data: { config, topics } },
+    revalidate: 60,
+  };
 }
 
 export default advanced;
