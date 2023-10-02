@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import FancyTitle from "./FancyTitle";
 
 // util
-import imageBuilder from "../utils/imageBuilder";
+import urlFor from "../utils/imageBuilder";
 
 // client
 import client from "../utils/sanityClient.js";
@@ -129,11 +129,10 @@ function SectionArticle(props) {
                 className={`${classes.box} ${classes.featured}`}
                 sx={{
                   backgroundImage: article.featuredImage
-                    ? imageBuilder(article.featuredImage).url()
+                    ? `url(${urlFor(article.featuredImage).url()})`
                     : "",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
-                  position: "relative",
                   "&:after": {
                     background: "rgba(0,0,0,0.5)",
                     bottom: 0,

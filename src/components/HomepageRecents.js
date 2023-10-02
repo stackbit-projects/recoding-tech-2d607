@@ -81,10 +81,10 @@ const HomepageRecents = () => {
         marginTop={2}
       >
         {articles && articles.length
-          ? articles.map((article) => (
+          ? articles.map((article, index) => (
               <Grid
                 item
-                key={article._id}
+                key={`${article._id}-${index}`}
                 sx={{
                   marginTop: 2,
                   width: isMobile ? "100%" : "30%",
