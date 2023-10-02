@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import FancyTitle from "./FancyTitle";
 
 // util
-import imageBuilder from "../utils/imageBuilder";
+import urlFor from "../utils/imageBuilder";
 
 const useStyles = makeStyles((theme) => ({
   alsoFeatured: {},
@@ -97,9 +97,11 @@ function SectionArticle(props) {
 
   useEffect(() => {
     setArticle(featuredArticle);
-    console.log("article ->", article);
-    console.log("alsoFeatured ->", alsoFeatured);
   }, [featuredArticle]);
+
+  useEffect(() => {
+    console.log("article ->", article);
+  }, [article]);
 
   const articleClick = (url) => {
     router.push({ pathname: "/" + url });
@@ -116,11 +118,10 @@ function SectionArticle(props) {
                 className={`${classes.box} ${classes.featured}`}
                 sx={{
                   backgroundImage: article.featuredImage
-                    ? imageBuilder(article.featuredImage).url()
+                    ? `url(${urlFor(article.featuredImage).url()})`
                     : "",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
-                  position: "relative",
                   "&:after": {
                     background: "rgba(0,0,0,0.5)",
                     bottom: 0,

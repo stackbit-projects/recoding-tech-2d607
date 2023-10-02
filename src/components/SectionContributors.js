@@ -7,9 +7,12 @@ import { toPlainText } from "@portabletext/react";
 // material ui imports
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
@@ -27,7 +30,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // utils
 import { urlFor } from "../utils";
 
-const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo}|order(lastUpdate desc)`;
+const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
 
 const Contributors = () => {
   const [loading, setLoading] = useState(true);
@@ -35,7 +38,10 @@ const Contributors = () => {
   const [filteredAuthors, setFilteredAuthors] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
+  const [checked, setChecked] = useState(null);
+  const [topics, setTopics] = useState([]);
 
+  // open/close search/filter menu
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
@@ -47,19 +53,48 @@ const Contributors = () => {
   const open = Boolean(anchorEl);
   const id = open ? "search-popover" : undefined;
 
+  // clear the text search input
   const handleClearTextSearch = () => {
     setSearch("");
   };
 
+  // handle whether a filter is checked
+  const handleFilterChange = (event) => {
+    const areChecked = checked;
+    areChecked[`${event.target.value}`] = true;
+    setChecked(areChecked);
+  };
+
   useEffect(() => {
+    let authorsList = [];
+    let topicsList = [];
     client.fetch(authorsQuery).then((allAuthors) => {
-      let authorsList = allAuthors.filter(
+      authorsList = allAuthors.filter(
         (value, index, self) =>
           index ===
           self.findIndex((t) => t._id === value._id && t.name === value.name)
       );
+
+      authorsList.map((author) => {
+        let authorTopics = author.relatedPostTopics.reduce(
+          (prev, next) => prev.concat(next.relatedTopics),
+          []
+        );
+        author.relatedTopics = authorTopics;
+        topicsList.push(authorTopics);
+      });
+
+      topicsList = topicsList
+        .flat()
+        .filter(
+          (value, index, self) =>
+            value &&
+            value.stackbit_model_type == "page" &&
+            index === self.findIndex((t) => t && t._id === value._id)
+        );
       setAuthors(authorsList);
       setFilteredAuthors(authorsList);
+      setTopics(topicsList);
       setLoading(false);
     });
   }, []);
@@ -81,7 +116,7 @@ const Contributors = () => {
     setFilteredAuthors(searchFilter);
   }, [search]);
 
-  useEffect(() => {}, [authors, filteredAuthors]);
+  useEffect(() => {}, [authors, filteredAuthors, topics]);
 
   return (
     <Box my={8}>
@@ -176,6 +211,31 @@ const Contributors = () => {
                         }
                       />
                     </FormControl>
+                    <FormGroup>
+                      {topics
+                        ? topics.map((topic) => (
+                            <FormControlLabel
+                              key={topic._id}
+                              sx={{
+                                span: {
+                                  fontFamily: "'Lexend', sans-serif",
+                                },
+                              }}
+                              control={
+                                <Checkbox
+                                  checked={false}
+                                  onChange={handleFilterChange}
+                                />
+                              }
+                              label={
+                                topic.displayName
+                                  ? topic.displayName
+                                  : topic.name
+                              }
+                            />
+                          ))
+                        : null}
+                    </FormGroup>
                   </Paper>
                 </Popper>
               </Grid>

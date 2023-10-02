@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { titleCase } from "title-case";
 import { toPlainText } from "@portabletext/react";
-import imageBuilder from "../utils/imageBuilder";
+import urlFor from "../utils/imageBuilder";
 import { CustomPortableText } from "../components/PortableText";
 
 // utils
@@ -186,7 +186,7 @@ const Post = (props) => {
                         <Grid item xs={auth.photo ? 3 : 0}>
                           {auth.photo && (
                             <Image
-                              src={imageBuilder(auth.photo)
+                              src={urlFor(auth.photo)
                                 .height(80)
                                 .width(80)
                                 .fit("max")
