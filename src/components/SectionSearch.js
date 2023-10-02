@@ -141,6 +141,7 @@ const SectionSearch = () => {
     if (!search.length) {
       client.fetch(articlesQuery).then((cites) => {
         if (Array.isArray(cites) && cites.length) {
+          setAllArticles(cites);
           setArticles(cites);
         }
         router.replace("/search", undefined, { shallow: true });
