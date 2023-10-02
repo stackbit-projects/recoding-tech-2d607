@@ -169,7 +169,9 @@ const Contributors = () => {
   useEffect(() => {
     let filterTopic;
     if (query.filter) {
-      filterTopic = topics.filter((topic) => topic.displayName === query.filter);
+      filterTopic = topics.filter(
+        (topic) => topic.displayName === query.filter
+      );
       setFilters(filterTopic);
     }
   }, [query, topics]);
@@ -330,7 +332,9 @@ const Contributors = () => {
                               control={
                                 <Checkbox
                                   checked={filters[topic.displayName]}
-                                  onChange={() => handleFilterChange(topic.displayName)}
+                                  onChange={() =>
+                                    handleFilterChange(topic.displayName)
+                                  }
                                 />
                               }
                               label={
