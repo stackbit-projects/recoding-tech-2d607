@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import client from "../utils/sanityClient";
 import Image from "next/image";
@@ -8,6 +9,7 @@ import { toPlainText } from "@portabletext/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
@@ -21,6 +23,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 // MUI icons
@@ -33,13 +36,14 @@ import { urlFor } from "../utils";
 const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
 
 const Contributors = () => {
+  const { query } = useRouter();
   const [loading, setLoading] = useState(true);
   const [authors, setAuthors] = useState([]);
   const [filteredAuthors, setFilteredAuthors] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
-  const [checked, setChecked] = useState(null);
   const [topics, setTopics] = useState([]);
+  const [filters, setFilters] = useState({});
 
   // open/close search/filter menu
   const handleClick = (event) => {
@@ -59,15 +63,39 @@ const Contributors = () => {
   };
 
   // handle whether a filter is checked
-  const handleFilterChange = (event) => {
-    const areChecked = checked;
-    areChecked[`${event.target.value}`] = true;
-    setChecked(areChecked);
+  const handleFilterChange = (id) => {
+    setFilters({ ...filters, [id]: filters[id] == true ? false : true });
+  };
+
+  /* eslint-disable no-unused-vars */
+
+  // clear all checkbox filters
+  const handleClearFilters = () => {
+    let clearedFilters = Object.values(filters).map((value) => (value = false));
+    setFilters(clearedFilters);
+  };
+  /* eslint-enable no-unused-vars */
+
+  // const handleCloseTopic = (topic) => {
+  //   if (topic && filters.findIndex((f) => f._id === topic._id) < 0) {
+  //     setFilters([...filters, topic]);
+  //   }
+  // };
+
+  const handleDelete = (topic) => () => {
+    if (query.filter && history) {
+      history.pushState(null, "", location.href.split("?")[0]);
+    }
+    let filtersList = filters;
+    filtersList[topic._id] = false;
+    topic && setFilters(filtersList);
   };
 
   useEffect(() => {
     let authorsList = [];
     let topicsList = [];
+    let filtersList = {};
+
     client.fetch(authorsQuery).then((allAuthors) => {
       authorsList = allAuthors.filter(
         (value, index, self) =>
@@ -92,9 +120,13 @@ const Contributors = () => {
             value.stackbit_model_type == "page" &&
             index === self.findIndex((t) => t && t._id === value._id)
         );
+
+      topicsList.map((topic) => (filtersList[topic._id] = false));
+
       setAuthors(authorsList);
       setFilteredAuthors(authorsList);
       setTopics(topicsList);
+      setFilters(filtersList);
       setLoading(false);
     });
   }, []);
@@ -113,8 +145,36 @@ const Contributors = () => {
         return false;
       });
     }
+
+    if (Object.keys(filters).length) {
+      let filtersList = Object.values(filters);
+      filtersList = filtersList.filter((f) => f === true);
+      if (filtersList.length) {
+        searchFilter = searchFilter.filter((author) => {
+          let matches = 0;
+          if (
+            Array.isArray(author.relatedTopics) &&
+            author.relatedTopics.length
+          ) {
+            author.relatedTopics.forEach((topic) => {
+              if (topic && filters[topic._id] == true) matches += 1;
+            });
+          }
+          return matches >= filtersList.length;
+        });
+      }
+    }
+
     setFilteredAuthors(searchFilter);
-  }, [search]);
+  }, [filters, search]);
+
+  useEffect(() => {
+    let filterTopic;
+    if (query.filter) {
+      filterTopic = topics.filter((topic) => topic._id === query.filter);
+      setFilters(filterTopic);
+    }
+  }, [query, topics]);
 
   useEffect(() => {}, [authors, filteredAuthors, topics]);
 
@@ -182,7 +242,7 @@ const Contributors = () => {
                     elevation={1}
                     sx={{ marginLeft: 1, marginTop: 1, padding: 4 }}
                   >
-                    <FormControl variant="outlined">
+                    <FormControl variant="outlined" sx={{ marginBottom: 4 }}>
                       <InputLabel
                         htmlFor="search-input"
                         sx={{ fontFamily: "'Lexend', sans-serif" }}
@@ -211,7 +271,55 @@ const Contributors = () => {
                         }
                       />
                     </FormControl>
-                    <FormGroup>
+                    <Grid
+                      container
+                      alignItems="center"
+                      justifyContent="space-between"
+                      sx={{ borderBottom: "1px solid #8AA29D" }}
+                    >
+                      <Grid item>
+                        <Typography
+                          component="h2"
+                          variant="h4"
+                          sx={{
+                            fontSize: 14,
+                            fontWeight: 500,
+                            marginBottom: 0,
+                          }}
+                        >
+                          Filter by
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Button onClick={handleClearFilters}>
+                          <Typography
+                            component="div"
+                            variant="h5"
+                            sx={{
+                              borderRadius: "2px",
+                              color: "#FF0033",
+                              fontWeight: 500,
+                              paddingX: "10px",
+                              paddingY: "6px",
+                              marginBottom: 0,
+                              "&:active, & :focus, &:hover": {
+                                color: "#FF0033",
+                                textDecoration: "underline",
+                              },
+                            }}
+                          >
+                            Clear
+                          </Typography>
+                        </Button>
+                      </Grid>
+                    </Grid>
+                    <FormGroup
+                      sx={{
+                        flexWrap: "nowrap",
+                        maxHeight: "615px",
+                        overflow: "scroll",
+                      }}
+                    >
                       {topics
                         ? topics.map((topic) => (
                             <FormControlLabel
@@ -223,8 +331,8 @@ const Contributors = () => {
                               }}
                               control={
                                 <Checkbox
-                                  checked={false}
-                                  onChange={handleFilterChange}
+                                  checked={filters[topic._id]}
+                                  onChange={() => handleFilterChange(topic._id)}
                                 />
                               }
                               label={
@@ -238,6 +346,50 @@ const Contributors = () => {
                     </FormGroup>
                   </Paper>
                 </Popper>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              alignItems={"space-between"}
+              justifyContent={"flex-start"}
+              spacing={2}
+              sx={{ marginTop: 1 }}
+            >
+              <Grid item xs={12} sm={2}>
+                <Typography
+                  component="h2"
+                  variant="h4"
+                  sx={{
+                    color: "rgba(0,0,0,0.6)",
+                    fontWeight: 400,
+                    marginBottom: 0,
+                  }}
+                >
+                  Filter by:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
+                  {Object.keys(filters).length
+                    ? Object.keys(filters).map((filter, index) => {
+                        if (filters[filter] == true) {
+                          return (
+                            <Chip
+                              key={`${filters[filter]}-${index}`}
+                              item
+                              label={filters[filter]}
+                              onDelete={handleDelete(filter)}
+                              sx={{
+                                fontFamily: "'Open sans', sans-serif",
+                                fontWeight: 500,
+                                textTransform: "uppercase",
+                              }}
+                            />
+                          );
+                        }
+                      })
+                    : null}
+                </Stack>
               </Grid>
             </Grid>
             <Grid container my={6} spacing={4}>
