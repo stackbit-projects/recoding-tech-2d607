@@ -86,9 +86,7 @@ const Contributors = () => {
     if (query.filter && history) {
       history.pushState(null, "", location.href.split("?")[0]);
     }
-    let filtersList = filters;
-    filtersList[topic._id] = false;
-    topic && setFilters(filtersList);
+    setFilters({ ...filters, [topic]: filters[topic] == true ? false : true });
   };
 
   useEffect(() => {
@@ -121,7 +119,7 @@ const Contributors = () => {
             index === self.findIndex((t) => t && t._id === value._id)
         );
 
-      topicsList.map((topic) => (filtersList[topic._id] = false));
+      topicsList.map((topic) => (filtersList[topic.displayName] = false));
 
       setAuthors(authorsList);
       setFilteredAuthors(authorsList);
@@ -157,7 +155,7 @@ const Contributors = () => {
             author.relatedTopics.length
           ) {
             author.relatedTopics.forEach((topic) => {
-              if (topic && filters[topic._id] == true) matches += 1;
+              if (topic && filters[topic.displayName] == true) matches += 1;
             });
           }
           return matches >= filtersList.length;
@@ -171,7 +169,7 @@ const Contributors = () => {
   useEffect(() => {
     let filterTopic;
     if (query.filter) {
-      filterTopic = topics.filter((topic) => topic._id === query.filter);
+      filterTopic = topics.filter((topic) => topic.displayName === query.filter);
       setFilters(filterTopic);
     }
   }, [query, topics]);
@@ -331,8 +329,8 @@ const Contributors = () => {
                               }}
                               control={
                                 <Checkbox
-                                  checked={filters[topic._id]}
-                                  onChange={() => handleFilterChange(topic._id)}
+                                  checked={filters[topic.displayName]}
+                                  onChange={() => handleFilterChange(topic.displayName)}
                                 />
                               }
                               label={
@@ -375,14 +373,13 @@ const Contributors = () => {
                         if (filters[filter] == true) {
                           return (
                             <Chip
-                              key={`${filters[filter]}-${index}`}
+                              key={`${filter}-${index}`}
                               item
-                              label={filters[filter]}
+                              label={`Topic - ${filter}`}
                               onDelete={handleDelete(filter)}
                               sx={{
                                 fontFamily: "'Open sans', sans-serif",
                                 fontWeight: 500,
-                                textTransform: "uppercase",
                               }}
                             />
                           );
