@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import client from "../utils/sanityClient";
 import Image from "next/image";
 import { toPlainText } from "@portabletext/react";
 
@@ -33,9 +32,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // utils
 import { urlFor } from "../utils";
 
-const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
-
-const Contributors = () => {
+const Contributors = ({ authors: allAuthors }) => {
   const { query } = useRouter();
   const [loading, setLoading] = useState(true);
   const [authors, setAuthors] = useState([]);
@@ -94,39 +91,37 @@ const Contributors = () => {
     let topicsList = [];
     let filtersList = {};
 
-    client.fetch(authorsQuery).then((allAuthors) => {
-      authorsList = allAuthors.filter(
+    authorsList = allAuthors.filter(
+      (value, index, self) =>
+        index ===
+          self.findIndex((t) => t._id === value._id && t.name === value.name),
+    );
+
+    authorsList.map((author) => {
+      let authorTopics = author.relatedPostTopics.reduce(
+        (prev, next) => prev.concat(next.relatedTopics),
+        [],
+      );
+      author.relatedTopics = authorTopics;
+      topicsList.push(authorTopics);
+    });
+
+    topicsList = topicsList
+      .flat()
+      .filter(
         (value, index, self) =>
-          index ===
-          self.findIndex((t) => t._id === value._id && t.name === value.name)
+          value &&
+          value.stackbit_model_type == "page" &&
+          index === self.findIndex((t) => t && t._id === value._id),
       );
 
-      authorsList.map((author) => {
-        let authorTopics = author.relatedPostTopics.reduce(
-          (prev, next) => prev.concat(next.relatedTopics),
-          []
-        );
-        author.relatedTopics = authorTopics;
-        topicsList.push(authorTopics);
-      });
+    topicsList.map((topic) => (filtersList[topic.displayName] = false));
 
-      topicsList = topicsList
-        .flat()
-        .filter(
-          (value, index, self) =>
-            value &&
-            value.stackbit_model_type == "page" &&
-            index === self.findIndex((t) => t && t._id === value._id)
-        );
-
-      topicsList.map((topic) => (filtersList[topic.displayName] = false));
-
-      setAuthors(authorsList);
-      setFilteredAuthors(authorsList);
-      setTopics(topicsList);
-      setFilters(filtersList);
-      setLoading(false);
-    });
+    setAuthors(authorsList);
+    setFilteredAuthors(authorsList);
+    setTopics(topicsList);
+    setFilters(filtersList);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -170,7 +165,7 @@ const Contributors = () => {
     let filterTopic;
     if (query.filter) {
       filterTopic = topics.filter(
-        (topic) => topic.displayName === query.filter
+        (topic) => topic.displayName === query.filter,
       );
       setFilters(filterTopic);
     }
@@ -181,147 +176,149 @@ const Contributors = () => {
   return (
     <Box my={8}>
       <Container>
-        {loading ? (
-          <Grid container justifyContent="center">
-            <CircularProgress color="tertiary" />
-          </Grid>
-        ) : (
-          <>
-            <Grid
-              container
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ borderBottom: loading ? "" : "1px solid #8AA29D" }}
-            >
-              <Grid item>
-                <Typography component="h2" variant="h4">
-                  Meet our contributors
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Button
-                  aria-describedby={id}
-                  onClick={handleClick}
-                  sx={{
-                    height: 24,
-                    textDecoration: "none",
-                    "&:hover": {
-                      backgroundColor: "unset",
-                    },
-                  }}
-                >
-                  <Typography
-                    component="div"
-                    variant="h5"
+        {loading
+          ? (
+            <Grid container justifyContent="center">
+              <CircularProgress color="tertiary" />
+            </Grid>
+          )
+          : (
+            <>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ borderBottom: loading ? "" : "1px solid #8AA29D" }}
+              >
+                <Grid item>
+                  <Typography component="h2" variant="h4">
+                    Meet our contributors
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Button
+                    aria-describedby={id}
+                    onClick={handleClick}
                     sx={{
-                      backgroundColor: "#FFE5EA",
-                      borderRadius: "2px",
-                      color: "#FF0033",
-                      fontWeight: 500,
-                      paddingX: "10px",
-                      paddingY: "6px",
-                      marginBottom: 0,
-                      "&:active, & :focus, &:hover": {
-                        color: "#FF0033",
-                        textDecoration: "underline",
+                      height: 24,
+                      textDecoration: "none",
+                      "&:hover": {
+                        backgroundColor: "unset",
                       },
                     }}
                   >
-                    Search / filter
-                  </Typography>
-                </Button>
-                <Popper
-                  id={id}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  placement={"bottom-end"}
-                  sx={{ background: "#FFF" }}
-                >
-                  <Paper
-                    elevation={1}
-                    sx={{ marginLeft: 1, marginTop: 1, padding: 4 }}
-                  >
-                    <FormControl variant="outlined" sx={{ marginBottom: 4 }}>
-                      <InputLabel
-                        htmlFor="search-input"
-                        sx={{ fontFamily: "'Lexend', sans-serif" }}
-                      >
-                        Search by name
-                      </InputLabel>
-                      <Input
-                        id="search-input"
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)}
-                        startAdornment={
-                          <InputAdornment position="start">
-                            <SearchIcon />
-                          </InputAdornment>
-                        }
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="clear search term"
-                              onClick={handleClearTextSearch}
-                              onMouseDown={handleClearTextSearch}
-                            >
-                              <CancelIcon />
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                      />
-                    </FormControl>
-                    <Grid
-                      container
-                      alignItems="center"
-                      justifyContent="space-between"
-                      sx={{ borderBottom: "1px solid #8AA29D" }}
-                    >
-                      <Grid item>
-                        <Typography
-                          component="h2"
-                          variant="h4"
-                          sx={{
-                            fontSize: 14,
-                            fontWeight: 500,
-                            marginBottom: 0,
-                          }}
-                        >
-                          Filter by
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Button onClick={handleClearFilters}>
-                          <Typography
-                            component="div"
-                            variant="h5"
-                            sx={{
-                              borderRadius: "2px",
-                              color: "#FF0033",
-                              fontWeight: 500,
-                              paddingX: "10px",
-                              paddingY: "6px",
-                              marginBottom: 0,
-                              "&:active, & :focus, &:hover": {
-                                color: "#FF0033",
-                                textDecoration: "underline",
-                              },
-                            }}
-                          >
-                            Clear
-                          </Typography>
-                        </Button>
-                      </Grid>
-                    </Grid>
-                    <FormGroup
+                    <Typography
+                      component="div"
+                      variant="h5"
                       sx={{
-                        flexWrap: "nowrap",
-                        maxHeight: "615px",
-                        overflow: "scroll",
+                        backgroundColor: "#FFE5EA",
+                        borderRadius: "2px",
+                        color: "#FF0033",
+                        fontWeight: 500,
+                        paddingX: "10px",
+                        paddingY: "6px",
+                        marginBottom: 0,
+                        "&:active, & :focus, &:hover": {
+                          color: "#FF0033",
+                          textDecoration: "underline",
+                        },
                       }}
                     >
-                      {topics
-                        ? topics.map((topic) => (
+                      Search / filter
+                    </Typography>
+                  </Button>
+                  <Popper
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    placement={"bottom-end"}
+                    sx={{ background: "#FFF" }}
+                  >
+                    <Paper
+                      elevation={1}
+                      sx={{ marginLeft: 1, marginTop: 1, padding: 4 }}
+                    >
+                      <FormControl variant="outlined" sx={{ marginBottom: 4 }}>
+                        <InputLabel
+                          htmlFor="search-input"
+                          sx={{ fontFamily: "'Lexend', sans-serif" }}
+                        >
+                          Search by name
+                        </InputLabel>
+                        <Input
+                          id="search-input"
+                          value={search}
+                          onChange={(event) => setSearch(event.target.value)}
+                          startAdornment={
+                            <InputAdornment position="start">
+                              <SearchIcon />
+                            </InputAdornment>
+                          }
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="clear search term"
+                                onClick={handleClearTextSearch}
+                                onMouseDown={handleClearTextSearch}
+                              >
+                                <CancelIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                      <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ borderBottom: "1px solid #8AA29D" }}
+                      >
+                        <Grid item>
+                          <Typography
+                            component="h2"
+                            variant="h4"
+                            sx={{
+                              fontSize: 14,
+                              fontWeight: 500,
+                              marginBottom: 0,
+                            }}
+                          >
+                            Filter by
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Button onClick={handleClearFilters}>
+                            <Typography
+                              component="div"
+                              variant="h5"
+                              sx={{
+                                borderRadius: "2px",
+                                color: "#FF0033",
+                                fontWeight: 500,
+                                paddingX: "10px",
+                                paddingY: "6px",
+                                marginBottom: 0,
+                                "&:active, & :focus, &:hover": {
+                                  color: "#FF0033",
+                                  textDecoration: "underline",
+                                },
+                              }}
+                            >
+                              Clear
+                            </Typography>
+                          </Button>
+                        </Grid>
+                      </Grid>
+                      <FormGroup
+                        sx={{
+                          flexWrap: "nowrap",
+                          maxHeight: "615px",
+                          overflow: "scroll",
+                        }}
+                      >
+                        {topics
+                          ? topics.map((topic) => (
                             <FormControlLabel
                               key={topic._id}
                               sx={{
@@ -333,47 +330,49 @@ const Contributors = () => {
                                 <Checkbox
                                   checked={filters[topic.displayName]}
                                   onChange={() =>
-                                    handleFilterChange(topic.displayName)
-                                  }
+                                    handleFilterChange(topic.displayName)}
                                 />
                               }
-                              label={
-                                topic.displayName
-                                  ? topic.displayName
-                                  : topic.name
-                              }
+                              label={topic.displayName
+                                ? topic.displayName
+                                : topic.name}
                             />
                           ))
-                        : null}
-                    </FormGroup>
-                  </Paper>
-                </Popper>
+                          : null}
+                      </FormGroup>
+                    </Paper>
+                  </Popper>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid
-              container
-              alignItems={"space-between"}
-              justifyContent={"flex-start"}
-              spacing={2}
-              sx={{ marginTop: 1 }}
-            >
-              <Grid item xs={12} sm={2}>
-                <Typography
-                  component="h2"
-                  variant="h4"
-                  sx={{
-                    color: "rgba(0,0,0,0.6)",
-                    fontWeight: 400,
-                    marginBottom: 0,
-                  }}
-                >
-                  Filter by:
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
-                  {Object.keys(filters).length
-                    ? Object.keys(filters).map((filter, index) => {
+              <Grid
+                container
+                alignItems={"space-between"}
+                justifyContent={"flex-start"}
+                spacing={2}
+                sx={{ marginTop: 1 }}
+              >
+                <Grid item xs={12} sm={2}>
+                  <Typography
+                    component="h2"
+                    variant="h4"
+                    sx={{
+                      color: "rgba(0,0,0,0.6)",
+                      fontWeight: 400,
+                      marginBottom: 0,
+                    }}
+                  >
+                    Filter by:
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flexWrap={"wrap"}
+                    useFlexGap
+                  >
+                    {Object.keys(filters).length
+                      ? Object.keys(filters).map((filter, index) => {
                         if (filters[filter] == true) {
                           return (
                             <Chip
@@ -390,69 +389,69 @@ const Contributors = () => {
                           );
                         }
                       })
-                    : null}
-                </Stack>
+                      : null}
+                  </Stack>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container my={6} spacing={4}>
-              {filteredAuthors &&
-                filteredAuthors.map((author) => (
-                  <Grid
-                    container
-                    item
-                    key={author.slug.current}
-                    spacing={2}
-                    xs={12}
-                    sm={6}
-                    md={4}
-                  >
-                    <Grid item xs={3}>
-                      {author.photo && (
-                        <Image
-                          src={urlFor(author.photo).width(80).url()}
-                          height={80}
-                          width={80}
-                          alt=""
-                          style={{ borderRadius: 50 }}
-                        />
-                      )}
-                    </Grid>
-                    <Grid item xs={9}>
-                      <Link
-                        href={`/author/${author.slug.current}`}
-                        sx={{
-                          textDecoration: "none",
-                          "&:active, &:focus, &:hover": {
-                            color: "#000",
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ color: "#000", fontWeight: 400 }}
+              <Grid container my={6} spacing={4}>
+                {filteredAuthors &&
+                  filteredAuthors.map((author) => (
+                    <Grid
+                      container
+                      item
+                      key={author.slug.current}
+                      spacing={2}
+                      xs={12}
+                      sm={6}
+                      md={4}
+                    >
+                      <Grid item xs={3}>
+                        {author.photo && (
+                          <Image
+                            src={urlFor(author.photo).width(80).url()}
+                            height={80}
+                            width={80}
+                            alt=""
+                            style={{ borderRadius: 50 }}
+                          />
+                        )}
+                      </Grid>
+                      <Grid item xs={9}>
+                        <Link
+                          href={`/author/${author.slug.current}`}
+                          sx={{
+                            textDecoration: "none",
+                            "&:active, &:focus, &:hover": {
+                              color: "#000",
+                              textDecoration: "underline",
+                            },
+                          }}
                         >
-                          {author.name}
-                        </Typography>
-                      </Link>
-                      {author.bio && (
-                        <Typography
-                          color="rgba(0,0,0,0.48)"
-                          component="div"
-                          marginTop={1}
-                          variant="body2"
-                          sx={{ lineHeight: 1.8 }}
-                        >
-                          {toPlainText(author.bio).substring(0, 300)}...
-                        </Typography>
-                      )}
+                          <Typography
+                            component="span"
+                            variant="h4"
+                            sx={{ color: "#000", fontWeight: 400 }}
+                          >
+                            {author.name}
+                          </Typography>
+                        </Link>
+                        {author.bio && (
+                          <Typography
+                            color="rgba(0,0,0,0.48)"
+                            component="div"
+                            marginTop={1}
+                            variant="body2"
+                            sx={{ lineHeight: 1.8 }}
+                          >
+                            {toPlainText(author.bio).substring(0, 300)}...
+                          </Typography>
+                        )}
+                      </Grid>
                     </Grid>
-                  </Grid>
-                ))}
-            </Grid>
-          </>
-        )}
+                  ))}
+              </Grid>
+            </>
+          )}
       </Container>
     </Box>
   );
@@ -460,6 +459,7 @@ const Contributors = () => {
 
 Contributors.propTypes = {
   page: PropTypes.object,
+  authors: PropTypes.array,
 };
 
 export default Contributors;
