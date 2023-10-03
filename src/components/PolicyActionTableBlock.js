@@ -219,13 +219,13 @@ function PolicyActionTable(props) {
                         >
                           {headers.map((column) => {
                             let value = row[column.id];
-                            if (!value) {
-                              if (row.country) {
-                                value = row.country.displayTitle; // #FIXME
-                              } else {
-                                value = row.type;
-                              }
-                            }
+                            // if (!value) {
+                            //   if (row.country) {
+                            //     value = row.country.displayTitle; // #FIXME
+                            //   } else {
+                            //     value = row.type;
+                            //   }
+                            // }
                             return (
                               <TableCell
                                 key={column.id}
@@ -326,13 +326,13 @@ function PolicyActionTable(props) {
                       >
                         {headers.map((column) => {
                           let value = row[column.id];
-                          if (!value) {
-                            if (row.country) {
-                              value = row.country.displayTitle; // #FIXME
-                            } else {
-                              value = "";
-                            }
-                          }
+                          // if (!value) {
+                          //   if (row.country) {
+                          //     value = row.country.displayTitle; // #FIXME
+                          //   } else {
+                          //     value = "";
+                          //   }
+                          // }
                           return (
                             <TableCell
                               key={column.id}
