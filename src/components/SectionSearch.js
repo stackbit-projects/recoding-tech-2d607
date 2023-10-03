@@ -1,5 +1,6 @@
 // base imports
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import { DateTime } from "luxon";
 
@@ -24,11 +25,6 @@ import Typography from "@mui/material/Typography";
 // material ui icons
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-
-const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, slug } | order(date desc)`;
-
-const topicsQuery =
-  '*[!(_id in path("drafts.**")) && _type == "topic" && stackbit_model_type == "page"]{ slug, name, displayName, _id }';
 
 // const buildSearch = (query) =>
 //   `*[(_type == "post" && !(_id in path("drafts.**")) && (pt::text(body) match "${query}" || title match "${query}"))] | score(pt::text(body) match "${query}", boost(title match "${query}", 3))
@@ -80,42 +76,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ROWS_PER_PAGE = 21;
 
-const SectionSearch = () => {
+const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   const classes = useStyles();
   const { query } = useRouter();
-  const [articles, setArticles] = useState([]);
-  const [allArticles, setAllArticles] = useState([]);
-  const [topics, setTopics] = useState([]);
+  const [articles, setArticles] = useState(allArticles);
   const [filters, setFilters] = useState([]);
-  const [search, setSearch] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    client.fetch(articlesQuery).then((cites) => {
-      if (Array.isArray(cites) && cites.length) {
-        setAllArticles(cites);
-      }
-      setLoading(false);
-    });
-
-    client.fetch(topicsQuery).then((topics) => {
-      let allTopics = [];
-      topics.forEach((topic) => {
-        allTopics = [...allTopics, topic];
-      });
-      allTopics = topics.filter(
-        (value, index, self) =>
-          index ===
-          self.findIndex(
-            (t) => t._id === value._id || t.displayName === value.displayName
-          )
-      );
-      setTopics(allTopics);
-    });
-  }, []);
-
-  useEffect(() => {}, [topics]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let filterTopic;
@@ -123,44 +90,36 @@ const SectionSearch = () => {
       filterTopic = topics.filter((topic) => topic._id === query.filter);
       setFilters(filterTopic);
     }
-  }, [query, topics]);
+  }, [query]);
+
+  const fetchArticles = async () => {
+    let searchFragment = "";
+    if (searchValue) {
+      searchFragment = ` && [title, body] match '${searchValue}'`;
+    }
+
+    let filterFragment = [];
+    if (filters.length) {
+      console.log("***filters", filters);
+      for (let filter in filters) {
+        filterFragment.push(` && references(${filter._id})`);
+      }
+    }
+    console.log("***searchFragment***:", searchFragment);
+    console.log("***filterFragment***:", filterFragment);
+    const query =
+      `*[!(_id in path("drafts.**")) && _type == "post"${searchFragment}${
+        filterFragment.join(" ")
+      }]{ title, date,  slug, 'key': slug } | order(date desc)`;
+    console.log("***GROQ query***:", query);
+    const newArticles = await client.fetch(query);
+    setArticles(newArticles);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    if (allArticles.length) {
-      let newArticles = allArticles;
-
-      if (filters.length) {
-        newArticles = newArticles.filter((article) => {
-          let matches = 0;
-          if (
-            Array.isArray(article.relatedTopics) &&
-            article.relatedTopics.length
-          ) {
-            article.relatedTopics.forEach((topic) => {
-              if (filters.findIndex((f) => f._id === topic._id) >= 0)
-                matches += 1;
-            });
-          }
-          return matches >= filters.length;
-        });
-      }
-
-      if (search) {
-        newArticles = newArticles.filter((article) => {
-          const regex = new RegExp(`${search}`, "i");
-          for (const prop in article) {
-            const value = article[prop];
-            if (typeof value === "string" || value instanceof String) {
-              if (value.search(regex) >= 0) return true;
-            }
-          }
-          return false;
-        });
-      }
-      setLoading(false);
-      setArticles(newArticles);
-    }
-  }, [filters, search, allArticles]);
+    fetchArticles().catch(console.error);
+  }, [filters]);
 
   // table pagination
   const [page, setPage] = useState(1);
@@ -230,7 +189,8 @@ const SectionSearch = () => {
           onKeyDown={(e) => {
             if (e.key == "Enter") {
               setLoading(true);
-              setSearch(e.target.value);
+              setSearchValue(e.target.value);
+              fetchArticles();
             }
           }}
           fullWidth
@@ -252,7 +212,8 @@ const SectionSearch = () => {
               Filter by:
             </Typography>
           </Grid>
-          {/* <Grid item>
+          {
+            /* <Grid item>
             <Box>
               <Button
                 sx={{
@@ -289,7 +250,8 @@ const SectionSearch = () => {
                 ))}
               </Menu>
             </Box>
-          </Grid> */}
+          </Grid> */
+          }
           <Grid item>
             <Box>
               <Button
@@ -303,9 +265,9 @@ const SectionSearch = () => {
                 aria-expanded={openTopics ? "true" : undefined}
                 disableElevation
                 onClick={handleClickTopics}
-                endIcon={
-                  openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-                }
+                endIcon={openTopics
+                  ? <ArrowDropUpIcon />
+                  : <ArrowDropDownIcon />}
               >
                 Topic
               </Button>
@@ -320,14 +282,14 @@ const SectionSearch = () => {
               >
                 {topics && topics.length
                   ? topics.map((topic) => (
-                      <MenuItem
-                        key={topic._id}
-                        onClick={handleCloseTopics(topic)}
-                        disableRipple
-                      >
-                        {topic.displayName}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={topic._id}
+                      onClick={handleCloseTopics(topic)}
+                      disableRipple
+                    >
+                      {topic.displayName}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Box>
@@ -354,15 +316,15 @@ const SectionSearch = () => {
             <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
               {filters.length
                 ? filters.map((filter, index) => (
-                    <Chip
-                      className={classes.chip}
-                      key={`${filter}-${index}`}
-                      item
-                      label={filter.displayName}
-                      color={filter.type}
-                      onDelete={handleDelete(filter)}
-                    />
-                  ))
+                  <Chip
+                    className={classes.chip}
+                    key={`${filter}-${index}`}
+                    item
+                    label={filter.displayName}
+                    color={filter.type}
+                    onDelete={handleDelete(filter)}
+                  />
+                ))
                 : null}
             </Stack>
           </Grid>
@@ -379,62 +341,73 @@ const SectionSearch = () => {
           <Grid container item xs={12} spacing={2}>
             {articles && articles.length
               ? articles
-                  .slice(
-                    (page - 1) * ROWS_PER_PAGE,
-                    (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
-                  )
-                  .map((article) => (
-                    <Grid key={article._id} item xs={12}>
-                      <Link
-                        variant="body1"
-                        sx={{
-                          color: "#000",
-                          fontWeight: 700,
-                          textDecoration: "none",
-                        }}
-                        href={`/${article.slug.current}`}
-                      >
-                        {article.title}
-                      </Link>
-                      <Typography variant="h4" color="rgba(0,0,0,0.6)">
-                        {DateTime.fromISO(article.date).toLocaleString(
-                          DateTime.DATE_MED
-                        )}{" "}
-                      </Typography>
-                    </Grid>
-                  ))
+                .slice(
+                  (page - 1) * ROWS_PER_PAGE,
+                  (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE,
+                )
+                .map((article) => (
+                  <Grid key={article._id} item xs={12}>
+                    <Link
+                      variant="body1"
+                      sx={{
+                        color: "#000",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                      }}
+                      href={`/${article.slug.current}`}
+                    >
+                      {article.title}
+                    </Link>
+                    <Typography variant="h4" color="rgba(0,0,0,0.6)">
+                      {DateTime.fromISO(article.date).toLocaleString(
+                        DateTime.DATE_MED,
+                      )}
+                      {" "}
+                    </Typography>
+                  </Grid>
+                ))
               : null}
           </Grid>
 
-          {loading ? (
-            <Grid item>
-              <CircularProgress color="secondary" />
-            </Grid>
-          ) : articles && articles.length ? (
-            <Grid item>
-              <Pagination
-                count={Math.ceil(articles.length / ROWS_PER_PAGE)}
-                onChange={handleChangePage}
-                sx={{ marginLeft: "-16px" }}
-              />
-            </Grid>
-          ) : (
-            <Grid item>
-              <Typography component="div" variant="body1">
-                No articles found.
-              </Typography>
-            </Grid>
-          )}
+          {loading
+            ? (
+              <Grid item>
+                <CircularProgress color="secondary" />
+              </Grid>
+            )
+            : articles && articles.length
+            ? (
+              <Grid item>
+                <Pagination
+                  count={Math.ceil(articles.length / ROWS_PER_PAGE)}
+                  onChange={handleChangePage}
+                  sx={{ marginLeft: "-16px" }}
+                />
+              </Grid>
+            )
+            : (
+              <Grid item>
+                <Typography component="div" variant="body1">
+                  No articles found.
+                </Typography>
+              </Grid>
+            )}
         </Grid>
       </Grid>
     </Box>
   );
 };
 
+SectionSearch.propTypes = {
+  page: PropTypes.object,
+  articles: PropTypes.array,
+  data: PropTypes.object,
+};
+
 export default SectionSearch;
 
 /***
- * 
+ *
  *    // newArticles = newArticles.filter((article) => {
         //   const regex = new RegExp(`${search}`, "i");
         //   for (const prop in article) {
@@ -445,5 +418,5 @@ export default SectionSearch;
         //   }
         //   return false;
         // });
- * 
+ *
  */
