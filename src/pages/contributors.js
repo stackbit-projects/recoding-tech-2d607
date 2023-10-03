@@ -13,8 +13,14 @@ export async function getStaticProps() {
   const [page] = await client.fetch(
     `*[_type == "advanced" && stackbit_url_path == "/contributors"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_contributors"]{type, stackbit_model_type, section_id}}`
   );
+
+  const authorsQuery =
+    `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
+
+  const authors = await client.fetch(authorsQuery);
+
   return {
-    props: { path: "/contributors", page, data: { config, topics } },
+    props: { path: "/contributors", page, authors, data: { config, topics } },
     revalidate: 60,
   };
 }

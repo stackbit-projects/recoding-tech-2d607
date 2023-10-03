@@ -716,38 +716,41 @@
 }
 
 @media only screen and (min-width:401px) {
-  .ml-form-embedBody.ml-form-embedBodyDefault.row-form {
-    display: flex;
-    margin-left: -10px;
-
-    .ml-form-embedContent {
-      flex-grow: 2;
-      margin-bottom: 0 !important;
-      margin-left: 10px !important;
-      margin-top: 14px !important;
-    }
-
-    .ml-block-form {
+  .ml-subscribe-form-5983540 {
+    .ml-form-embedBody.ml-form-embedBodyDefault.row-form {
       display: flex;
-      flex-grow: 1;
-      margin-left: 10px !important;
-      max-width: 600px;
+      margin-left: -10px;
 
-      .ml-form-formContent {
-        max-width: 250px;
+      .ml-form-embedContent {
+        flex-grow: 2;
+        margin-bottom: 0 !important;
+        margin-left: 10px !important;
+        margin-top: 14px !important;
       }
 
-      .ml-form-embedSubmit {
+      .ml-block-form {
+        display: flex;
+        flex-grow: 1;
         margin-left: 10px !important;
-        max-width: 100px;
-        
-        button {
-          padding-bottom: 14px !important;
-          padding-top: 14px !important;
+        max-width: 600px;
+
+        .ml-form-formContent {
+          max-width: 250px;
+        }
+
+        .ml-form-embedSubmit {
+          margin-left: 10px !important;
+          max-width: 100px;
+
+          button {
+            padding-bottom: 14px !important;
+            padding-top: 14px !important;
+          }
         }
       }
     }
   }
+
 }
 
 @media only screen and (max-width:400px) {

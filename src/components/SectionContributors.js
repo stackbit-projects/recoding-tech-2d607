@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import client from "../utils/sanityClient";
 import Image from "next/image";
 import { toPlainText } from "@portabletext/react";
 
@@ -33,9 +32,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // utils
 import { urlFor } from "../utils";
 
-const authorsQuery = `*[_type == "author" && !(_id match "drafts")]{name, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
-
-const Contributors = () => {
+const Contributors = ({ authors: allAuthors }) => {
   const { query } = useRouter();
   const [loading, setLoading] = useState(true);
   const [authors, setAuthors] = useState([]);
@@ -94,39 +91,37 @@ const Contributors = () => {
     let topicsList = [];
     let filtersList = {};
 
-    client.fetch(authorsQuery).then((allAuthors) => {
-      authorsList = allAuthors.filter(
+    authorsList = allAuthors.filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex((t) => t._id === value._id && t.name === value.name)
+    );
+
+    authorsList.map((author) => {
+      let authorTopics = author.relatedPostTopics.reduce(
+        (prev, next) => prev.concat(next.relatedTopics),
+        []
+      );
+      author.relatedTopics = authorTopics;
+      topicsList.push(authorTopics);
+    });
+
+    topicsList = topicsList
+      .flat()
+      .filter(
         (value, index, self) =>
-          index ===
-          self.findIndex((t) => t._id === value._id && t.name === value.name)
+          value &&
+          value.stackbit_model_type == "page" &&
+          index === self.findIndex((t) => t && t._id === value._id)
       );
 
-      authorsList.map((author) => {
-        let authorTopics = author.relatedPostTopics.reduce(
-          (prev, next) => prev.concat(next.relatedTopics),
-          []
-        );
-        author.relatedTopics = authorTopics;
-        topicsList.push(authorTopics);
-      });
+    topicsList.map((topic) => (filtersList[topic.displayName] = false));
 
-      topicsList = topicsList
-        .flat()
-        .filter(
-          (value, index, self) =>
-            value &&
-            value.stackbit_model_type == "page" &&
-            index === self.findIndex((t) => t && t._id === value._id)
-        );
-
-      topicsList.map((topic) => (filtersList[topic.displayName] = false));
-
-      setAuthors(authorsList);
-      setFilteredAuthors(authorsList);
-      setTopics(topicsList);
-      setFilters(filtersList);
-      setLoading(false);
-    });
+    setAuthors(authorsList);
+    setFilteredAuthors(authorsList);
+    setTopics(topicsList);
+    setFilters(filtersList);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -460,6 +455,7 @@ const Contributors = () => {
 
 Contributors.propTypes = {
   page: PropTypes.object,
+  authors: PropTypes.array,
 };
 
 export default Contributors;
