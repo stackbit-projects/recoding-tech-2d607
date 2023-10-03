@@ -17,6 +17,7 @@ import SectionArticles from "./SectionArticles";
 import SectionPolicyActions from "./SectionPolicyActions";
 import SectionGuides from "./SectionGuides";
 import SectionLibrary from "./SectionLibrary";
+import SectionPodcast from "./SectionPodcast";
 import SectionSearch from "./SectionSearch";
 import SectionSignUp from "./SectionSignUp";
 import SectionTopics from "./SectionTopics";
@@ -43,6 +44,7 @@ export {
   SectionRecentArticles,
   SectionGuides,
   SectionLibrary,
+  SectionPodcast,
   SectionSearch,
   SectionSignUp,
   SectionTopics,
@@ -70,6 +72,7 @@ export default {
   SectionRecentArticles,
   SectionGuides,
   SectionLibrary,
+  SectionPodcast,
   SectionSearch,
   SectionSignUp,
   SectionTopics,

@@ -219,13 +219,13 @@ function PolicyActionTable(props) {
                         >
                           {headers.map((column) => {
                             let value = row[column.id];
-                            if (!value) {
-                              if (row.country) {
-                                value = row.country.displayTitle; // #FIXME
-                              } else {
-                                value = row.type;
-                              }
-                            }
+                            // if (!value) {
+                            //   if (row.country) {
+                            //     value = row.country.displayTitle; // #FIXME
+                            //   } else {
+                            //     value = row.type;
+                            //   }
+                            // }
                             return (
                               <TableCell
                                 key={column.id}
@@ -246,7 +246,12 @@ function PolicyActionTable(props) {
                                       ? DateTime.fromISO(value).toLocaleString(
                                           DateTime.DATE_MED
                                         )
-                                      : ""}
+                                      : !row.lastUpdate && row.dateInitiated
+                                      ? DateTime.fromISO(
+                                          row.dateInitiated
+                                        ).toLocaleString(DateTime.DATE_MED)
+                                      : ""}{" "}
+                                    {/* if lastUpdate is blank, automatically just put in the dateInitiated */}
                                   </Typography>
                                 ) : column.id == "title" ? (
                                   <Typography
@@ -321,13 +326,13 @@ function PolicyActionTable(props) {
                       >
                         {headers.map((column) => {
                           let value = row[column.id];
-                          if (!value) {
-                            if (row.country) {
-                              value = row.country.displayTitle; // #FIXME
-                            } else {
-                              value = "";
-                            }
-                          }
+                          // if (!value) {
+                          //   if (row.country) {
+                          //     value = row.country.displayTitle; // #FIXME
+                          //   } else {
+                          //     value = "";
+                          //   }
+                          // }
                           return (
                             <TableCell
                               key={column.id}
@@ -356,7 +361,12 @@ function PolicyActionTable(props) {
                                     ? DateTime.fromISO(value).toLocaleString(
                                         DateTime.DATE_MED
                                       )
-                                    : ""}
+                                    : !row.lastUpdate && row.dateInitiated
+                                    ? DateTime.fromISO(
+                                        row.dateInitiated
+                                      ).toLocaleString(DateTime.DATE_MED)
+                                    : ""}{" "}
+                                  {/* if lastUpdate is blank, automatically just put in the dateInitiated */}
                                 </Typography>
                               ) : column.id == "title" ? (
                                 <Typography

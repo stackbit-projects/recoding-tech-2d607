@@ -208,7 +208,7 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ marginLeft: 2, textTransform: "none" }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
+                        <Link href={`/podcast`} className={classes.link}>
                           Podcast
                         </Link>
                       </Typography>
@@ -424,7 +424,7 @@ const Header = (props) => {
                           },
                         }}
                       >
-                        <Link href={`#FIXME`} className={classes.link}>
+                        <Link href={`/podcast`} className={classes.link}>
                           Podcast
                         </Link>
                       </Typography>
