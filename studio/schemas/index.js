@@ -29,6 +29,7 @@ import section_form from './section_form.js'
 import section_policy_actions from './section_policy_actions'
 import section_guides from './section_guides'
 import section_library from './section_library.js'
+import section_podcast from './section_podcast.js'
 import section_search from './section_search.js'
 import section_sign_up from './section_sign_up.js'
 import section_topics from './section_topics.js'
@@ -73,6 +74,7 @@ export const schemaTypes = [
   section_form,
   // section_guides,
   section_library,
+  section_podcast,
   section_search,
   section_sign_up,
   section_topics,
