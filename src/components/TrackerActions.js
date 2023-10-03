@@ -252,7 +252,10 @@ const TrackerActions = (props) => {
                       ? DateTime.fromISO(page.lastUpdate).toLocaleString(
                           DateTime.DATE_MED
                         )
-                      : ""}
+                      : DateTime.fromISO(page.dateInitiated).toLocaleString(
+                          DateTime.DATE_MED
+                        )}{" "}
+                    {/* if lastUpdate is null, put in dateInitiated */}
                   </Typography>
                 </TableCell>
               </TableRow>

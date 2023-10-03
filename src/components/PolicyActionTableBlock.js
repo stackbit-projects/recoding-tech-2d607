@@ -246,7 +246,12 @@ function PolicyActionTable(props) {
                                       ? DateTime.fromISO(value).toLocaleString(
                                           DateTime.DATE_MED
                                         )
-                                      : ""}
+                                      : !row.lastUpdate && row.dateInitiated
+                                      ? DateTime.fromISO(
+                                          row.dateInitiated
+                                        ).toLocaleString(DateTime.DATE_MED)
+                                      : ""}{" "}
+                                    {/* if lastUpdate is blank, automatically just put in the dateInitiated */}
                                   </Typography>
                                 ) : column.id == "title" ? (
                                   <Typography
@@ -356,7 +361,12 @@ function PolicyActionTable(props) {
                                     ? DateTime.fromISO(value).toLocaleString(
                                         DateTime.DATE_MED
                                       )
-                                    : ""}
+                                    : !row.lastUpdate && row.dateInitiated
+                                    ? DateTime.fromISO(
+                                        row.dateInitiated
+                                      ).toLocaleString(DateTime.DATE_MED)
+                                    : ""}{" "}
+                                  {/* if lastUpdate is blank, automatically just put in the dateInitiated */}
                                 </Typography>
                               ) : column.id == "title" ? (
                                 <Typography
