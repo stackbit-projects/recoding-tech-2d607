@@ -103,7 +103,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
       setFilters(filterTopic);
     }
 
-    if (query.query && query.query.length) {
+    if (query.query) {
       setSearch(query.query);
       setSearchValue(query.query);
     }
@@ -112,13 +112,16 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   const fetchArticles = async () => {
     let searchFragment = "";
     if (searchValue) {
-      searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
+      searchFragment =
+        ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
     }
 
     // if there's a searchvalue text, boost the results where the title matches the search value
-    let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
+    let scoreFragment =
+      ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
 
-    let detailFragment = ` { title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
+    let detailFragment =
+      ` { title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
 
     let filterFragment = [];
     if (filters.length) {
@@ -129,9 +132,12 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     }
     console.log("***searchFragment***:", searchFragment);
     console.log("***filterFragment***:", filterFragment);
-    const query = `*[!(_id in path("drafts.**")) && _type == "post"${searchFragment}${filterFragment.join(
-      " "
-    )}]${searchValue ? scoreFragment : detailFragment}`;
+    const query =
+      `*[!(_id in path("drafts.**")) && _type == "post"${searchFragment}${
+        filterFragment.join(
+          " ",
+        )
+      }]${searchValue ? scoreFragment : detailFragment}`;
     console.log("***GROQ query***:", query);
     const newArticles = await client.fetch(query);
     setArticles(newArticles);
@@ -139,7 +145,9 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   };
 
   useEffect(() => {
-    fetchArticles().catch(console.error);
+    if (filters.length || search) {
+      fetchArticles().catch(console.error);
+    }
   }, [filters, search]);
 
   // table pagination
@@ -233,7 +241,8 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
               Filter by:
             </Typography>
           </Grid>
-          {/* <Grid item>
+          {
+            /* <Grid item>
             <Box>
               <Button
                 sx={{
@@ -270,7 +279,8 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                 ))}
               </Menu>
             </Box>
-          </Grid> */}
+          </Grid> */
+          }
           <Grid item>
             <Box>
               <Button
@@ -284,9 +294,9 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                 aria-expanded={openTopics ? "true" : undefined}
                 disableElevation
                 onClick={handleClickTopics}
-                endIcon={
-                  openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-                }
+                endIcon={openTopics
+                  ? <ArrowDropUpIcon />
+                  : <ArrowDropDownIcon />}
               >
                 Topic
               </Button>
@@ -301,14 +311,14 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
               >
                 {topics && topics.length
                   ? topics.map((topic) => (
-                      <MenuItem
-                        key={topic._id}
-                        onClick={handleCloseTopics(topic)}
-                        disableRipple
-                      >
-                        {topic.displayName}
-                      </MenuItem>
-                    ))
+                    <MenuItem
+                      key={topic._id}
+                      onClick={handleCloseTopics(topic)}
+                      disableRipple
+                    >
+                      {topic.displayName}
+                    </MenuItem>
+                  ))
                   : null}
               </Menu>
             </Box>
@@ -335,15 +345,15 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
             <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
               {filters.length
                 ? filters.map((filter, index) => (
-                    <Chip
-                      className={classes.chip}
-                      key={`${filter}-${index}`}
-                      item
-                      label={filter.displayName}
-                      color={filter.type}
-                      onDelete={handleDelete(filter)}
-                    />
-                  ))
+                  <Chip
+                    className={classes.chip}
+                    key={`${filter}-${index}`}
+                    item
+                    label={filter.displayName}
+                    color={filter.type}
+                    onDelete={handleDelete(filter)}
+                  />
+                ))
                 : null}
             </Stack>
           </Grid>
@@ -357,17 +367,19 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
           md={8}
           sx={{ marginTop: 4 }}
         >
-          {loading ? (
-            <Grid item>
-              <CircularProgress color="secondary" />
-            </Grid>
-          ) : (
-            <Grid container item xs={12} spacing={2}>
-              {articles && articles.length
-                ? articles
+          {loading
+            ? (
+              <Grid item>
+                <CircularProgress color="secondary" />
+              </Grid>
+            )
+            : (
+              <Grid container item xs={12} spacing={2}>
+                {articles && articles.length
+                  ? articles
                     .slice(
                       (page - 1) * ROWS_PER_PAGE,
-                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
+                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE,
                     )
                     .map((article) => (
                       <Grid key={article._id} item xs={12}>
@@ -384,30 +396,33 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                         </Link>
                         <Typography variant="h4" color="rgba(0,0,0,0.6)">
                           {DateTime.fromISO(article.date).toLocaleString(
-                            DateTime.DATE_MED
-                          )}{" "}
+                            DateTime.DATE_MED,
+                          )}
+                          {" "}
                         </Typography>
                       </Grid>
                     ))
-                : null}
-            </Grid>
-          )}
+                  : null}
+              </Grid>
+            )}
 
-          {articles && articles.length ? (
-            <Grid item>
-              <Pagination
-                count={Math.ceil(articles.length / ROWS_PER_PAGE)}
-                onChange={handleChangePage}
-                sx={{ marginLeft: "-16px" }}
-              />
-            </Grid>
-          ) : (
-            <Grid item>
-              <Typography component="div" variant="body1">
-                No results found.
-              </Typography>
-            </Grid>
-          )}
+          {articles && articles.length
+            ? (
+              <Grid item>
+                <Pagination
+                  count={Math.ceil(articles.length / ROWS_PER_PAGE)}
+                  onChange={handleChangePage}
+                  sx={{ marginLeft: "-16px" }}
+                />
+              </Grid>
+            )
+            : (
+              <Grid item>
+                <Typography component="div" variant="body1">
+                  No results found.
+                </Typography>
+              </Grid>
+            )}
         </Grid>
       </Grid>
     </Box>
