@@ -78,23 +78,36 @@ const ROWS_PER_PAGE = 21;
 
 const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   const classes = useStyles();
-  const { query } = useRouter();
+  const router = useRouter();
+  let query = router.query;
   const [articles, setArticles] = useState(allArticles);
   const [filters, setFilters] = useState([]);
+  const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log("page load");
+  }, []);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    console.log("*** router is ready ***");
+    console.log("query.query ->", query.query);
+
     let filterTopic;
-    console.log("useEffect watching query ***");
+
     if (query.filter) {
       filterTopic = topics.filter((topic) => topic._id === query.filter);
       setFilters(filterTopic);
     }
-    if (query.query) {
+
+    if (query.query && query.query.length) {
+      setSearch(query.query);
       setSearchValue(query.query);
     }
-  }, [query]);
+  }, [router.isReady]);
 
   const fetchArticles = async () => {
     let searchFragment = "";
@@ -127,7 +140,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
 
   useEffect(() => {
     fetchArticles().catch(console.error);
-  }, [filters]);
+  }, [filters, search]);
 
   // table pagination
   const [page, setPage] = useState(1);
@@ -197,8 +210,8 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
           onKeyDown={(e) => {
             if (e.key == "Enter") {
               setLoading(true);
+              setSearch(e.target.value);
               setSearchValue(e.target.value);
-              fetchArticles();
             }
           }}
           fullWidth
