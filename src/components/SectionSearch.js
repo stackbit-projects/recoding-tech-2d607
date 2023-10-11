@@ -181,7 +181,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   if (loading) {
     return (
       <section>
-        <Grid container item justifyContent="center">
+        <Grid container item justifyContent="center" mb={8}>
           <CircularProgress />
         </Grid>
       </section>
