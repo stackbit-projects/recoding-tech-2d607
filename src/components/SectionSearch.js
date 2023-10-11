@@ -22,24 +22,13 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
+
 // material ui icons
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-
-// const buildSearch = (query) =>
-//   `*[(_type == "post" && !(_id in path("drafts.**")) && (pt::text(body) match "${query}" || title match "${query}"))] | score(pt::text(body) match "${query}", boost(title match "${query}", 3))
-// 	{
-// 		title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type},
-// 		_score
-//   }`;
-
-// const DATE_RANGE = [
-//   "Yesterday",
-//   "Past Week",
-//   "Past Month",
-//   "Past Year",
-//   "Specific Dates",
-// ];
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -86,15 +75,14 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log("page load");
-  }, []);
+  // dates
+  const [startValue, setStartValue] = useState(
+    DateTime.fromISO("2020-10-13T14:00:00.000Z") // using the date of the earliest published TPP article
+  );
+  const [endValue, setEndValue] = useState(DateTime.now());
 
   useEffect(() => {
     if (!router.isReady) return;
-
-    console.log("*** router is ready ***");
-    console.log("query.query ->", query.query);
 
     let filterTopic;
 
@@ -110,45 +98,47 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   }, [router.isReady]);
 
   const fetchArticles = async () => {
+    let dateFragment = ` && date > '${startValue}' && date < '${endValue}'`;
     let searchFragment = "";
     if (searchValue) {
-      searchFragment =
-        ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
+      searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
     }
 
     // if there's a searchvalue text, boost the results where the title matches the search value
-    let scoreFragment =
-      ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
+    let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
 
-    let detailFragment =
-      ` { title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
+    let detailFragment = ` { title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
 
     let filterFragment = [];
     if (filters.length) {
-      console.log("***filters", filters);
+      // console.log("***filters", filters);
       filters.forEach((filter) =>
         filterFragment.push(` && references("${filter._id}")`)
       );
     }
-    console.log("***searchFragment***:", searchFragment);
-    console.log("***filterFragment***:", filterFragment);
-    const query =
-      `*[!(_id in path("drafts.**")) && _type == "post"${searchFragment}${
-        filterFragment.join(
-          " ",
-        )
-      }]${searchValue ? scoreFragment : detailFragment}`;
-    console.log("***GROQ query***:", query);
+    // console.log("***searchFragment***:", searchFragment);
+    // console.log("***filterFragment***:", filterFragment);
+    const query = `*[!(_id in path("drafts.**")) && _type == "post"${dateFragment}${searchFragment}${filterFragment.join(
+      " "
+    )}]${searchValue ? scoreFragment : detailFragment}`;
+    // console.log("***GROQ query***:", query);
     const newArticles = await client.fetch(query);
     setArticles(newArticles);
     setLoading(false);
   };
 
   useEffect(() => {
+    setLoading(true);
+
     if (filters.length || search) {
       fetchArticles().catch(console.error);
     }
-  }, [filters, search]);
+
+    if (!filters.length && !search) {
+      setArticles(allArticles);
+      setLoading(false);
+    }
+  }, [filters, search, startValue, endValue]);
 
   // table pagination
   const [page, setPage] = useState(1);
@@ -160,23 +150,16 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   };
 
   const [topicEl, setTopicEl] = useState(null);
-  // const [dateEl, setDateEl] = useState(null);
   const openTopics = Boolean(topicEl);
-  // const openDate = Boolean(dateEl);
+
   const handleClickTopics = (event) => {
     setTopicEl(event.currentTarget);
   };
-  // const handleClickDate = (event) => {
-  //   setDateEl(event.currentTarget);
-  // };
+
   const handleCloseTopics = (topic) => () => {
     setTopicEl(null);
     handleClose(topic);
   };
-
-  // const handleCloseDate = () => () => {
-  //   setDateEl(null);
-  // };
 
   const handleChangePage = (event, newPage) => {
     event.preventDefault();
@@ -195,191 +178,190 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   //   return handler;
   // };
 
-  return (
-    <Box>
-      <Box
-        sx={{
-          backgroundColor: "#E0EEFF",
-          padding: 4,
-        }}
-      >
-        <Typography
-          component="h2"
-          variant="h4"
-          sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400 }}
-        >
-          {articles && articles.length
-            ? `Showing ${articles.length} results for: `
-            : ""}
-        </Typography>
-        <TextField
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key == "Enter") {
-              setLoading(true);
-              setSearch(e.target.value);
-              setSearchValue(e.target.value);
-            }
+  if (loading) {
+    return (
+      <section>
+        <Grid container item justifyContent="center">
+          <CircularProgress />
+        </Grid>
+      </section>
+    );
+  } else {
+    return (
+      <Box>
+        <Box
+          sx={{
+            backgroundColor: "#E0EEFF",
+            padding: 4,
           }}
-          fullWidth
-          id="search-field"
-          label="Enter search term"
-          variant="standard"
-        />
-        <Grid container alignItems={"center"} spacing={4} sx={{ marginTop: 1 }}>
-          <Grid item>
-            <Typography
-              component="h2"
-              variant="h4"
-              sx={{
-                color: "rgba(0,0,0,0.6)",
-                fontWeight: 400,
-                marginBottom: 0,
-              }}
-            >
-              Filter by:
-            </Typography>
-          </Grid>
-          {
-            /* <Grid item>
-            <Box>
-              <Button
+        >
+          <Typography
+            component="h2"
+            variant="h4"
+            sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400 }}
+          >
+            {articles && articles.length
+              ? `Showing ${articles.length} results for: `
+              : ""}
+          </Typography>
+          <TextField
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                setLoading(true);
+                setSearch(e.target.value);
+                setSearchValue(e.target.value);
+              }
+            }}
+            fullWidth
+            id="search-field"
+            label="Enter search term"
+            variant="standard"
+          />
+          <Grid
+            container
+            alignItems={"center"}
+            spacing={4}
+            sx={{ marginTop: 1 }}
+          >
+            <Grid item>
+              <Typography
+                component="h2"
+                variant="h4"
                 sx={{
-                  border: "1px solid rgba(0,0,0,0.56)",
                   color: "rgba(0,0,0,0.6)",
+                  fontWeight: 400,
+                  marginBottom: 0,
                 }}
-                id="topics-button"
-                aria-controls="topics-menu"
-                aria-haspopup="true"
-                aria-expanded={openDate ? "true" : undefined}
-                disableElevation
-                onClick={handleClickDate}
-                endIcon={openDate ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
               >
-                Date range
-              </Button>
-              <Menu
-                id="topics-menu"
-                MenuListProps={{
-                  "aria-labelledby": "topics-button",
-                }}
-                anchorEl={dateEl}
-                open={openDate}
-                onClose={handleCloseDate()}
-              >
-                {DATE_RANGE.map((range) => (
-                  <MenuItem
-                    key={"random"}
-                    onClick={handleCloseDate()}
-                    disableRipple
+                Filter by:
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Box>
+                <Typography>
+                  <LocalizationProvider
+                    dateAdapter={AdapterLuxon}
+                    adapterLocale="en-us"
                   >
-                    {range}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Grid> */
-          }
-          <Grid item>
-            <Box>
-              <Button
-                sx={{
-                  border: "1px solid rgba(0,0,0,0.56)",
-                  color: "rgba(0,0,0,0.6)",
-                }}
-                id="topics-button"
-                aria-controls="topics-menu"
-                aria-haspopup="true"
-                aria-expanded={openTopics ? "true" : undefined}
-                disableElevation
-                onClick={handleClickTopics}
-                endIcon={openTopics
-                  ? <ArrowDropUpIcon />
-                  : <ArrowDropDownIcon />}
-              >
-                Topic
-              </Button>
-              <Menu
-                id="topics-menu"
-                MenuListProps={{
-                  "aria-labelledby": "topics-button",
-                }}
-                anchorEl={topicEl}
-                open={openTopics}
-                onClose={handleCloseTopics()}
-              >
-                {topics && topics.length
-                  ? topics.map((topic) => (
-                    <MenuItem
-                      key={topic._id}
-                      onClick={handleCloseTopics(topic)}
-                      disableRipple
-                    >
-                      {topic.displayName}
-                    </MenuItem>
-                  ))
-                  : null}
-              </Menu>
-            </Box>
+                    <DatePicker
+                      label="Date range - start"
+                      value={startValue}
+                      onChange={(newStartValue) => setStartValue(newStartValue)}
+                    />
+                  </LocalizationProvider>
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box>
+                <Typography>
+                  <LocalizationProvider
+                    dateAdapter={AdapterLuxon}
+                    adapterLocale="en-us"
+                  >
+                    <DatePicker
+                      label="Date range - end"
+                      value={endValue}
+                      onChange={(newEndValue) => setEndValue(newEndValue)}
+                    />
+                  </LocalizationProvider>
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box>
+                <Button
+                  sx={{
+                    border: "1px solid rgba(0,0,0,0.56)",
+                    color: "rgba(0,0,0,0.6)",
+                  }}
+                  id="topics-button"
+                  aria-controls="topics-menu"
+                  aria-haspopup="true"
+                  aria-expanded={openTopics ? "true" : undefined}
+                  disableElevation
+                  onClick={handleClickTopics}
+                  endIcon={
+                    openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                >
+                  Topic
+                </Button>
+                <Menu
+                  id="topics-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "topics-button",
+                  }}
+                  anchorEl={topicEl}
+                  open={openTopics}
+                  onClose={handleCloseTopics()}
+                >
+                  {topics && topics.length
+                    ? topics.map((topic) => (
+                        <MenuItem
+                          key={topic._id}
+                          onClick={handleCloseTopics(topic)}
+                          disableRipple
+                        >
+                          {topic.displayName}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Menu>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      <Grid
-        container
-        className={classes.grid}
-        spacing={4}
-        alignItems="flex-start"
-        direction="row-reverse"
-        justifyContent="flex-end"
-      >
+        </Box>
         <Grid
           container
-          item
-          xs={12}
-          md={4}
-          direction="column"
-          sx={{ marginTop: 4 }}
-        >
-          <Grid item xs={12}>
-            <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
-              {filters.length
-                ? filters.map((filter, index) => (
-                  <Chip
-                    className={classes.chip}
-                    key={`${filter}-${index}`}
-                    item
-                    label={filter.displayName}
-                    color={filter.type}
-                    onDelete={handleDelete(filter)}
-                  />
-                ))
-                : null}
-            </Stack>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="space-between"
+          className={classes.grid}
           spacing={4}
-          xs={12}
-          md={8}
-          sx={{ marginTop: 4 }}
+          alignItems="flex-start"
+          direction="row-reverse"
+          justifyContent="flex-end"
         >
-          {loading
-            ? (
-              <Grid item>
-                <CircularProgress color="secondary" />
-              </Grid>
-            )
-            : (
-              <Grid container item xs={12} spacing={2}>
-                {articles && articles.length
-                  ? articles
+          <Grid
+            container
+            item
+            xs={12}
+            md={4}
+            direction="column"
+            sx={{ marginTop: 4 }}
+          >
+            <Grid item xs={12}>
+              <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
+                {filters.length
+                  ? filters.map((filter, index) => (
+                      <Chip
+                        className={classes.chip}
+                        key={`${filter}-${index}`}
+                        item
+                        label={filter.displayName}
+                        color={filter.type}
+                        onDelete={handleDelete(filter)}
+                      />
+                    ))
+                  : null}
+              </Stack>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            justifyContent="space-between"
+            spacing={4}
+            xs={12}
+            md={8}
+            sx={{ marginTop: 4 }}
+          >
+            <Grid container item xs={12} spacing={2}>
+              {articles && articles.length
+                ? articles
                     .slice(
                       (page - 1) * ROWS_PER_PAGE,
-                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE,
+                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
                     )
                     .map((article) => (
                       <Grid key={article._id} item xs={12}>
@@ -396,18 +378,15 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                         </Link>
                         <Typography variant="h4" color="rgba(0,0,0,0.6)">
                           {DateTime.fromISO(article.date).toLocaleString(
-                            DateTime.DATE_MED,
-                          )}
-                          {" "}
+                            DateTime.DATE_MED
+                          )}{" "}
                         </Typography>
                       </Grid>
                     ))
-                  : null}
-              </Grid>
-            )}
+                : null}
+            </Grid>
 
-          {articles && articles.length
-            ? (
+            {articles && articles.length ? (
               <Grid item>
                 <Pagination
                   count={Math.ceil(articles.length / ROWS_PER_PAGE)}
@@ -415,18 +394,18 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                   sx={{ marginLeft: "-16px" }}
                 />
               </Grid>
-            )
-            : (
+            ) : (
               <Grid item>
                 <Typography component="div" variant="body1">
                   No results found.
                 </Typography>
               </Grid>
             )}
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
-  );
+      </Box>
+    );
+  }
 };
 
 SectionSearch.propTypes = {
