@@ -18,7 +18,10 @@ export const IframeEmbedBlock = ({ value, children }) => {
     );
   } else if (embedType === "player.captivate.fm") {
     return (
-      <iframe src={url} style={{ width: "100%", height: "200px" }}>
+      <iframe
+        src={url}
+        style={{ width: "100%", height: "200px", border: "none" }}
+      >
         {children}
       </iframe>
     );
@@ -61,6 +64,13 @@ export const IframeEmbedBlock = ({ value, children }) => {
       </iframe>
     );
   } else {
-    return <iframe src={url}>{children}</iframe>;
+    return (
+      <iframe
+        src={url}
+        style={{ width: "100%", height: "533", border: "none" }}
+      >
+        {children}
+      </iframe>
+    );
   }
 };
