@@ -4,6 +4,13 @@
 
 const path = require("path");
 const dotenv = require("dotenv");
+/**
+ * the below module is needed to get around Next's
+ * "CSS Modules cannot be imported from within node_modules next.js react-tweet"
+ * this solution is from
+ * https://stackoverflow.com/questions/60257044/transpile-npm-module-in-next-js
+ */
+const withTM = require("next-transpile-modules")(["react-tweet"]);
 
 dotenv.config();
 
@@ -49,10 +56,10 @@ const nextConfig = {
     config.plugins.push(
       new webpack.WatchIgnorePlugin({
         paths: [/\/content\//],
-      }),
+      })
     );
     return config;
   },
 };
 
-module.exports = nextConfig;
+module.exports = withTM(nextConfig);

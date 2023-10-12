@@ -1,5 +1,7 @@
 /* eslint-disable */
 import React from "react";
+import { Tweet } from "react-tweet";
+
 export const IframeEmbedBlock = ({ value, children }) => {
   const { url, embedType } = value;
 
@@ -38,7 +40,13 @@ export const IframeEmbedBlock = ({ value, children }) => {
       </iframe>
     );
   } else if (embedType === "twitter.com") {
-    return <a href={url} />;
+    console.log("url =>", url.split("/").pop());
+    const tweetId = url.split("/").pop();
+    return (
+      <div className="light">
+        <Tweet id={tweetId} />
+      </div>
+    );
   } else if (embedType === "vimeo.com") {
     return (
       <iframe
