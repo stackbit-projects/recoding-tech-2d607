@@ -7,7 +7,11 @@ export const IframeEmbedBlock = ({ value, children }) => {
     return (
       <iframe
         src={url}
-        style={{ background: "transparent;border:1px solid #ccc" }}
+        style={{
+          background: "transparent;border:1px solid #ccc",
+          width: "100%",
+          height: "500px",
+        }}
       >
         {children}
       </iframe>
@@ -24,7 +28,6 @@ export const IframeEmbedBlock = ({ value, children }) => {
         src={url}
         width="640"
         height="360"
-        frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen={true}
       >
@@ -39,23 +42,18 @@ export const IframeEmbedBlock = ({ value, children }) => {
         src={`https://player.vimeo.com/video/${url.slice(-9)}?h=69206d40f4`}
         width="640"
         height="360"
-        frameBorder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen={true}
       >
         {children}
       </iframe>
     );
-  } else if (
-    embedType === "www.youtube.com" ||
-    embedType === "youtu.be"
-  ) {
+  } else if (embedType === "www.youtube.com" || embedType === "youtu.be") {
     return (
       <iframe
         src={url}
         width="560"
         height="315"
-        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen={true}
       >
