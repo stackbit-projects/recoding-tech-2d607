@@ -6,8 +6,9 @@ import client from "../../utils/sanityClient";
 export const FileBlock = ({ value }) => {
   const [url, setUrl] = useState([]);
   useEffect(() => {
-    if (value.attribs && value.attribs.data) {
-      const file = getFile(value.attribs.data, client.config()); // gets a file asset object from Sanity
+    if (value.asset) {
+      // gets a file asset object from Sanity
+      const file = getFile(value.asset._ref, client.config());
       if (file.asset && file.asset.url) setUrl(file.asset.url);
     }
   }, [value]);
