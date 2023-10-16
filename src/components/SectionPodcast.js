@@ -26,8 +26,7 @@ export default function SectionPodcast(props) {
           }}
         >
           <iframe
-            style={{ width: "100%", height: "600px" }}
-            frameBorder="no"
+            style={{ width: "100%", height: "600px", border: "none" }}
             seamless=""
             src={section.embed_url}
           ></iframe>
