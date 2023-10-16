@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from "react";
-import { Tweet } from "react-tweet";
+import { Tweet, TweetNotFound } from "react-tweet";
 
 export const IframeEmbedBlock = ({ value, children }) => {
   const { url, embedType } = value;
@@ -33,6 +33,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
         src={url}
         width="640"
         height="360"
+        style={{ border: "none" }}
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen={true}
       >
@@ -40,18 +41,25 @@ export const IframeEmbedBlock = ({ value, children }) => {
       </iframe>
     );
   } else if (embedType === "twitter.com") {
-    console.log("url =>", url.split("/").pop());
     const tweetId = url.split("/").pop();
     return (
       <div className="light">
-        <Tweet id={tweetId} />
+        <Tweet
+          id={tweetId}
+          onError={(error) => <TweetNotFound error={error} />}
+          // onError={(error) => (
+          //   <div className="light">
+          //     <TweetNotFound error={error} />
+          //   </div>
+          // )}
+        />
       </div>
     );
   } else if (embedType === "vimeo.com") {
     return (
       <iframe
         src={`https://player.vimeo.com/video/${url.slice(-9)}?h=69206d40f4`}
-        width="640"
+        width="100%"
         height="360"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen={true}
@@ -60,11 +68,13 @@ export const IframeEmbedBlock = ({ value, children }) => {
       </iframe>
     );
   } else if (embedType === "www.youtube.com" || embedType === "youtu.be") {
+    const embedId = url.split("/").pop();
+    console.log("embedId=>", embedId);
     return (
       <iframe
-        src={url}
-        width="560"
-        height="315"
+        src={`https://www.youtube.com/embed/${embedId}`}
+        width="100%"
+        height="480"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen={true}
       >
