@@ -212,10 +212,7 @@ const Header = (props) => {
                           Podcast
                         </Link>
                       </Typography>
-                      <Accordion
-                        elevation={0}
-                        sx={{ "&:before": { height: 0 }, marginLeft: 0 }}
-                      >
+                      <Accordion elevation={0} sx={{ marginLeft: 0 }}>
                         <AccordionSummary
                           expandIcon={<ExpandMoreIcon />}
                           aria-controls="projects-mobile-content"
@@ -468,8 +465,8 @@ const Header = (props) => {
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
-                            maxWidth: "60vw !important",
-                            width: "60vw",
+                            maxWidth: "15vw !important",
+                            width: "15vw",
                           },
                         }}
                       >
