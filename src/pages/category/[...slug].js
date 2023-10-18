@@ -34,8 +34,8 @@ export async function getStaticProps({ params }) {
   const [page] = await client.fetch(
     `*[_type == "topic" && slug.current == "${slug}"]{_id, _createdAt, _updatedAt, _type, slug, name, displayName, description, domain, stackbit_model_type}`
   );
-  const policyActionsQuery = `*[_type == "policy_action" && references("${page._id}") && !(_id match "drafts")]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
-  const relatedPostsQuery = `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, authors[]->{name}, date, ref, title }|order(date desc)[0...21]`;
+  const policyActionsQuery = `*[_type == "policy_action" && references("${page._id}") && !(_id in path("drafts.**")) ]{category, country, dateInitiated, img_alt, img_path, lastUpdate, slug, status, title, relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)`;
+  const relatedPostsQuery = `*[_type == "post" && references("${page._id}") && !(_id in path("drafts.**")) ]{_id, slug, authors[]->{name}, date, ref, title }|order(date desc)[0...21]`;
 
   const actions = await client.fetch(policyActionsQuery);
   const headlines = await client.fetch(relatedPostsQuery);

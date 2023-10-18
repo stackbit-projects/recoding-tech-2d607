@@ -27,7 +27,7 @@ const Author = (props) => {
   const [posts, setPosts] = useState([]);
   const [topics, setTopics] = useState([]);
 
-  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
+  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id in path("drafts.**")) ]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
 
   useEffect(() => {
     client.fetch(postsQuery).then((actions) => {
@@ -36,8 +36,8 @@ const Author = (props) => {
         newTopics = [action.relatedTopics, ...newTopics];
       });
       newTopics = newTopics.flat();
-      newTopics = newTopics.filter(
-        (topic) => topic.stackbit_model_type == "page"
+      newTopics = newTopics.filter((topic) =>
+        topic ? topic.stackbit_model_type == "page" : null
       );
       newTopics = newTopics.filter(
         (value, index, self) =>

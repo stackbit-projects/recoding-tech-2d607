@@ -18,7 +18,7 @@ import FancyGuide from "./FancyGuide";
 import client from "../utils/sanityClient";
 
 const query =
-  '*[_type == "guide" && !(_id match "drafts*")]{_id, title, slug, subtitle, _created_at, _updatedAt } | order(date desc)';
+  '*[_type == "guide" && !(_id in path("drafts.**")) ]{_id, title, slug, subtitle, _created_at, _updatedAt } | order(date desc)';
 
 const useStyles = makeStyles(() => ({
   em: {

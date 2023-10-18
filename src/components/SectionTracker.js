@@ -27,7 +27,7 @@ import PolicyActionTable from "./PolicyActionTable";
 import PolicyActionMobile from "./PolicyActionMobile";
 
 // SANITY QUERIES
-const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country, dateInitiated,
+const policyActionsQuery = `*[_type == "policy_action" && !(_id in path("drafts.**")) ]{category, country, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
                             relatedTopics[]->{_id, name, slug}, type}|order(lastUpdate desc)`;
