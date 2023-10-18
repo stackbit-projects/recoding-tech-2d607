@@ -13,4 +13,4 @@ sudo apt-get install -y nodejs
 git submodule update --init --recursive
 
 # Install dependencies for sourcebit to fetch content from sanity.
-npm install
+npm install --legacy-peer-deps
