@@ -15,7 +15,7 @@ import client from "../utils/sanityClient";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 
-const query = `*[!(_id in path("drafts.**")) && _type=="post" && references(*[_type=="author" && !(staff == true) ]._id)]{ _id, title, slug, date } | order(date desc)[0...5]`; // just get the four most recent articles
+const query = `*[!(_id in path("drafts.**")) && _type=="post" && references(*[_type=="author" && !(staff == true) ]._id)]{ _id, title, slug, date } | order(date desc)[0...5]`; // just get the four most recent articles NOT written by staff
 
 const useStyles = makeStyles(() => ({
   article: {
