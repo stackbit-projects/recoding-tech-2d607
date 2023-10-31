@@ -31,6 +31,10 @@ const nextConfig = {
       },
     ],
   },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
   trailingSlash: true,
   sassOptions: {
     // scss files might import plain css files from the "public" folder:
