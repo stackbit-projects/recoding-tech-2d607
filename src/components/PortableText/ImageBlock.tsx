@@ -1,51 +1,54 @@
 /* eslint-disable */
 import React from "react";
-//import { getImageDimensions } from "@sanity/asset-utils";
+import { getImageDimensions } from "@sanity/asset-utils";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import DOMPurify from "isomorphic-dompurify";
 import imageBuilder from "../../utils/imageBuilder";
 
 export const ImageBlock = ({ value }) => {
-  //const { width, height } = getImageDimensions(value);
+  const { width, height } = getImageDimensions(value);
   let caption;
   if (value.wordpressCaption) {
     caption = DOMPurify.sanitize(value.wordpressCaption, {
       USE_PROFILES: { html: true },
     });
   }
+  console.log("width, height =>", width, height);
+  console.log("imageBuilder value =>", imageBuilder(value));
   if (!value.asset) console.log("***No asset for ImageBlock value***:", value);
   return (
-    <figure>
-      {value.asset && (
-        <Image
-          src={imageBuilder(value).height(576).width(1024).fit("max").auto(
-            "format",
-          )
-            .url()}
-          alt={value.alt || " "}
-          loading="lazy"
-          height={576}
-          width={1024}
-          //    style={{
-          // Avoid jumping around with aspect-ratio CSS property
-          //      aspectRatio: width / height,
-          //    }}
-        />
-      )}
-      {caption && (
-        <figcaption>
-          <Typography
-            component="span"
+    <div>
+      <figure>
+        {value.asset && (
+          <Image
+            src={imageBuilder(value).url()}
+            alt={value.alt || " "}
+            loading="lazy"
+            // layout="fill"
+            objectFit="contain"
+            height={576}
+            width={1024}
             style={{
-              color: "#7C7B7B",
-              cursor: "pointer",
-              fontFamily: "'Lexend', sans-serif",
+              aspectRatio: width / height,
             }}
-            dangerouslySetInnerHTML={{ __html: caption }}
           />
-        </figcaption>
-      )}
-    </figure>
+        )}
+        {caption && (
+          <figcaption>
+            <Typography
+              component="div"
+              style={{
+                color: "#7C7B7B",
+                cursor: "pointer",
+                fontFamily: "'Lexend', sans-serif",
+                textAlign: "center",
+              }}
+              dangerouslySetInnerHTML={{ __html: caption }}
+            />
+          </figcaption>
+        )}
+      </figure>
+    </div>
   );
 };
