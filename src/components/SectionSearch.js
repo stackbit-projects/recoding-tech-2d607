@@ -75,11 +75,11 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // dates
+  // dates 2020-10-13T14:00:00.000Z
   const [startValue, setStartValue] = useState(
-    DateTime.fromISO("2020-10-13T14:00:00.000Z") // using the date of the earliest published TPP article
+    null // using the date of the earliest published TPP article
   );
-  const [endValue, setEndValue] = useState(DateTime.now());
+  const [endValue, setEndValue] = useState(null);
 
   useEffect(() => {
     if (!router.isReady) return;
