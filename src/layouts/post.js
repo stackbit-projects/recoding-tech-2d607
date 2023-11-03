@@ -248,7 +248,7 @@ const Post = (props) => {
                       <div className="ml-form-embedContent">
                         <h4>Our content. Delivered.</h4>
                         <p style={{ textAlign: "center" }}>
-                          Subscribe for our monthly update on Government Policy,
+                          Subscribe for our weekly update on Government Policy,
                           Tech News and Research
                         </p>
                       </div>
