@@ -117,11 +117,15 @@ function SectionTracker() {
         newGovts = [...new Set(newGovts)];
         newTypes = [...new Set(newTypes)];
 
-        const sortedTopics = topicsList.sort((a,b) => { 
-          if (a.displayName < b.displayName) { return -1; }
-          if (a.displayName > b.displayName) { return 1; }
-          return 0
-        })
+        const sortedTopics = topicsList.sort((a, b) => {
+          if (a.displayName < b.displayName) {
+            return -1;
+          }
+          if (a.displayName > b.displayName) {
+            return 1;
+          }
+          return 0;
+        });
 
         setTypes(newTypes);
         setCountries(newGovts);

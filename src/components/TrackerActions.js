@@ -75,7 +75,6 @@ const useStyles = makeStyles(() => ({
 const TrackerActions = (props) => {
   const classes = useStyles();
   const { page } = props;
-  console.log("***TRACKERACTION:", page);
 
   const isMobile = useMediaQuery("(max-width:1064px)");
 

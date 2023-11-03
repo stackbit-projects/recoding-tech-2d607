@@ -83,7 +83,13 @@ function SectionHero(props) {
 
   useEffect(() => {
     if (router) {
-      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
+      let crumbs = router.asPath.replace(/^\/|\/$/g, "").split("/");
+      // change "category" to "topic"
+      let index = crumbs.indexOf("category");
+      if (index !== -1) {
+        crumbs[index] = "topic";
+      }
+      setBreadcrumbs(crumbs);
     }
   }, []);
 
