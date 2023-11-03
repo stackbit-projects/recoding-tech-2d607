@@ -33,7 +33,7 @@ export async function getStaticProps({ params }) {
   console.log("Page author/[...slug].js getStaticProps, slug: ", slug);
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayName, link, slug, type }`
+    `*[_type == "topic" && stackbit_model_type == "page" && !(_id in path("drafts.**"))]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
     `*[_type == "author" && slug.current == "${slug}"]{_id, _createdAt, _updatedAt, _type, slug, name, email, bio, socials, staff, photo}`
