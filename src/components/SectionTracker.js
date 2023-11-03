@@ -127,8 +127,8 @@ function SectionTracker() {
           return 0;
         });
 
-        setTypes(newTypes);
-        setCountries(newGovts);
+        setTypes(newTypes.sort());
+        setCountries(newGovts.sort());
         setTopics(sortedTopics);
         setActions(allPolicies);
         setAllActions(allPolicies);
