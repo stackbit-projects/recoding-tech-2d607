@@ -64,7 +64,7 @@ const Author = (props) => {
             <Grid item xs={3}>
               {page.photo && (
                 <Image
-                  src={imageBuilder(page.photo).width(144).url()}
+                  src={imageBuilder(page.photo).url()}
                   height={144}
                   width={144}
                   alt=""
@@ -94,7 +94,7 @@ const Author = (props) => {
               useFlexGap
               flexWrap="wrap"
             >
-              {topics.length &&
+              {topics.length ?
                 topics.map((topic) => (
                   <Chip
                     color="footer"
@@ -105,7 +105,7 @@ const Author = (props) => {
                       textTransform: "none",
                     }}
                   />
-                ))}
+                )) : null}
             </Stack>
             <Grid
               container
@@ -115,7 +115,7 @@ const Author = (props) => {
               marginBottom={10}
               marginTop={8}
             >
-              {posts.length &&
+              {posts.length ? 
                 posts.map((post) => (
                   <Grid
                     item
@@ -153,7 +153,7 @@ const Author = (props) => {
                       </Typography>
                     </Link>
                   </Grid>
-                ))}
+                )) : null}
             </Grid>
           </Box>
         )}

@@ -187,8 +187,6 @@ const Post = (props) => {
                           {auth.photo && (
                             <Image
                               src={urlFor(auth.photo)
-                                .height(80)
-                                .width(80)
                                 .fit("max")
                                 .auto("format")
                                 .url()}
