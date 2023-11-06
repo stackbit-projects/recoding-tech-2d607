@@ -94,8 +94,8 @@ const Author = (props) => {
               useFlexGap
               flexWrap="wrap"
             >
-              {topics.length
-                ? topics.map((topic) => (
+              {topics.length ?
+                  (topics.map((topic) => (
                     <Chip
                       color="footer"
                       key={topic._id}
@@ -105,7 +105,7 @@ const Author = (props) => {
                         textTransform: "none",
                       }}
                     />
-                  ))
+                  )))
                 : null}
             </Stack>
             <Grid
@@ -116,8 +116,8 @@ const Author = (props) => {
               marginBottom={10}
               marginTop={8}
             >
-              {posts.length
-                ? posts.map((post) => (
+              {posts.length ? (
+                posts.map((post) => (
                     <Grid
                       item
                       key={post._id}
@@ -154,7 +154,7 @@ const Author = (props) => {
                         </Typography>
                       </Link>
                     </Grid>
-                  ))
+                  )))
                 : null}
             </Grid>
           </Box>
