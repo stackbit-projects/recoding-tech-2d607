@@ -21,7 +21,7 @@ const Sidebar = (props) => {
           <Typography
             component="h2"
             variant="h4"
-            borderBottom="1px solid #000"f
+            borderBottom="1px solid #000"
             paddingBottom={2}
           >
             Staff
