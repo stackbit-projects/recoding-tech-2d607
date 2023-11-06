@@ -94,7 +94,7 @@ const Author = (props) => {
               useFlexGap
               flexWrap="wrap"
             >
-              {topics.length 
+              {topics.length
                 ? topics.map((topic) => (
                     <Chip
                       color="footer"
