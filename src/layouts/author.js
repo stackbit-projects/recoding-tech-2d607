@@ -94,8 +94,7 @@ const Author = (props) => {
               useFlexGap
               flexWrap="wrap"
             >
-              {topics.length ? 
-                topics.map((topic) => (
+              {topics.length ? (topics.map((topic) => (
                     <Chip
                       color="footer"
                       key={topic._id}
@@ -105,7 +104,7 @@ const Author = (props) => {
                         textTransform: "none",
                       }}
                     />
-                  ))
+                  )))
                 : null}
             </Stack>
             <Grid
