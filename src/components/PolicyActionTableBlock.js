@@ -145,7 +145,7 @@ function PolicyActionTable(props) {
                     variant="h2"
                     sx={{ marginBottom: 1, textTransform: "uppercase" }}
                   >
-                    Law & Regulation Tracker
+                    Policy Tracker
                   </Typography>
                   <Typography component="div" variant="body1">
                     We track existing and proposed laws and regulations, along
@@ -172,7 +172,7 @@ function PolicyActionTable(props) {
           </Grid>
           <Grid item xs={12} md={6}>
             <TableContainer className={classes.table}>
-              <Table aria-label="Law and Regulation Tracker Table">
+              <Table aria-label="Policy Tracker Table">
                 <TableHead
                   sx={{
                     "&:active, &:focus, &:hover": {
@@ -298,7 +298,7 @@ function PolicyActionTable(props) {
       ) : (
         <>
           <TableContainer>
-            <Table aria-label="Law and Regulation Tracker Table">
+            <Table aria-label="Policy Tracker Table">
               <TableHead>
                 <TableRow>
                   {headers.map((column) => (

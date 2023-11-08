@@ -15,7 +15,7 @@ import PolicyActionMobile from "./PolicyActionMobile";
 const policyActionsQuery = `*[_type == "policy_action" && !(_id in path("drafts.**")) ]{country, dateInitiated,
                             lastUpdate, _updatedAt, _createdAt, _id,
                             slug, status, title, summary,
-                            relatedTopics[]->{_id, _key, name, slug, type}, type}|order(_updatedAt desc)[0...5]`;
+                            relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)[0...5]`;
 
 const HomepageActions = () => {
   const [actions, setActions] = useState([]);

@@ -92,7 +92,7 @@ const TrackerActions = (props) => {
       <Typography variant="body2" gutterBottom>
         <Link href="/tracker" className={classes.trackerLink}>
           <ArrowBackIcon className={classes.trackerIcon} />
-          Return to law & regulation tracker
+          Return to policy tracker
         </Link>
       </Typography>
       {isMobile ? (
@@ -204,7 +204,7 @@ const TrackerActions = (props) => {
         </Accordion>
       ) : (
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table aria-label="Law and Regulation Tracker Table">
+          <Table aria-label="Policy Tracker Table">
             <TableHead>
               <TableRow>
                 {headers.map((column) => (

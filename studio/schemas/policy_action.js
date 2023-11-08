@@ -67,7 +67,7 @@ export default {
     {
       name: 'lastUpdate',
       title: 'Date of last update',
-      type: 'date',
+      type: 'datetime',
     },
     {
       name: 'summary',

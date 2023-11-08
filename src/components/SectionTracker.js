@@ -93,6 +93,7 @@ function SectionTracker() {
 
     client.fetch(policyActionsQuery).then((allPolicies) => {
       if (Array.isArray(allPolicies) && allPolicies.length) {
+        console.log("allPolicies =>", allPolicies);
         allPolicies.map((policy) => {
           if (policy.country) {
             newGovts.push(policy.country);

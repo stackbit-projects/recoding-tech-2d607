@@ -132,7 +132,7 @@ function SectionArticle(props) {
                     ? `url(${urlFor(article.featuredImage).url()})`
                     : "",
                   backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
+                  backgroundSize: "100%",
                   "&:after": {
                     background: "rgba(0,0,0,0.5)",
                     bottom: 0,
