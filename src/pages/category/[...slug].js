@@ -45,7 +45,7 @@ export async function getStaticProps({ params }) {
       page,
       headlines,
       actions,
-      path: `/tracker/${page.slug.current ? page.slug.current : page.slug}`,
+      path: `/category/${page.slug.current ? page.slug.current : page.slug}`,
       data: { config, topics },
     },
     revalidate: 60,
