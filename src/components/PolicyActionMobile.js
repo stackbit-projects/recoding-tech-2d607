@@ -51,7 +51,7 @@ function PolicyActionMobile(props) {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={1}>
+        <Grid item>
           <Link
             href="/tracker"
             sx={{
