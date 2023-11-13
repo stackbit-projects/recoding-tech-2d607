@@ -8,7 +8,7 @@
     "eslint": "eslint",
     "eslint:init": "eslint --init",
     "prepare": "husky install",
-    "test": "eslint src/ --ext .js,.mjs,.jsx,.ts,.tsx --fix",
+    "test": "eslint src/ --fix",
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
@@ -20,10 +20,7 @@
     "reset": "node deleteData.mjs"
   },
   "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ]
+    "extends": ["eslint:recommended", "plugin:react/recommended"]
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",

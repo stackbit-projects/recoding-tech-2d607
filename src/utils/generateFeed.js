@@ -34,22 +34,25 @@ const generateFeed = async () => {
       title: post.title,
       id: url,
       link: url,
-      author: post.authors.map((author) => {
-        const socials = author.socials.split(",") || [];
-        return {
-          name: author.name,
-          email: author.email,
-          link: socials.length ? socials[0].trim() : undefined,
-        };
-      }),
+      author:
+        post.authors &&
+        post.authors.length &&
+        post.authors.map((author) => {
+          const socials = author.socials.split(",") || [];
+          return {
+            name: author.name,
+            email: author.email,
+            link: socials.length ? socials[0].trim() : undefined,
+          };
+        }),
       date: new Date(post.date),
     });
   });
 
-  fs.mkdirSync("../../public/rss", { recursive: true });
-  fs.writeFileSync("../../public/rss/feed.xml", feed.rss2());
-  fs.writeFileSync("../../public/rss/atom.xml", feed.atom1());
-  fs.writeFileSync("../../public/rss/feed.json", feed.json1());
+  fs.mkdirSync("./out/rss", { recursive: true });
+  fs.writeFileSync("./out/rss/feed.xml", feed.rss2());
+  fs.writeFileSync("./out/rss/atom.xml", feed.atom1());
+  fs.writeFileSync("./out/rss/feed.json", feed.json1());
 };
 
 export default generateFeed;

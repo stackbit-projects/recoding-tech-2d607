@@ -7,6 +7,8 @@ import { post } from "../layouts";
 
 export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
+  await generateFeed();
+
   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
     return {
       paths: [],
@@ -18,8 +20,6 @@ export async function getStaticPaths() {
   const paths = slugs.map((path) => ({
     params: { slug: [path.slug.current] },
   }));
-
-  await generateFeed();
 
   return {
     paths,
