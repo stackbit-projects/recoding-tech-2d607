@@ -31,6 +31,7 @@ export default {
     {
       title: 'Author',
       name: 'authors',
+      validation: (Rule) => Rule.required(),
       type: 'array',
       of: [
         {
@@ -42,6 +43,7 @@ export default {
     {
       type: 'datetime',
       name: 'date',
+      validation: (Rule) => Rule.required(),
       title: 'Published date',
     },
     {
