@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React from "react";
 import client from "../utils/sanityClient";
 
 import { post } from "../layouts";
@@ -32,7 +31,7 @@ export async function getStaticProps({ params }) {
     `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
+    `*[_type == "post" && slug.current == "${slug}"]{_id, _type, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
   );
   return {
     props: {

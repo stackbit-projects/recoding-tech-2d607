@@ -11,7 +11,7 @@ export async function getStaticProps() {
     `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "page" && stackbit_url_path == "/about-us"]{_id, _createdAt, title, supertitle, img_path, img_alt, body, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, stackbit_url_path}`
+    `*[_type == "page" && stackbit_url_path == "/about-us"]{_id, _type, _createdAt, title, supertitle, img_path, img_alt, body, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, stackbit_url_path}`
   );
   return {
     props: { path: "/about-us", page, data: { config, topics } },

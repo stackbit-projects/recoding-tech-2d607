@@ -10,7 +10,7 @@ export async function getStaticProps() {
     `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "advanced" && stackbit_url_path == "/podcast"]{_id, _createdAt, title, stackbit_url_path, sections[type == "section_podcast"]{type, embed_url, intro}}`
+    `*[_type == "advanced" && stackbit_url_path == "/podcast"]{_id, _type, _createdAt, title, stackbit_url_path, sections[type == "section_podcast"]{type, embed_url, intro}}`
   );
   return {
     props: { path: "/podcast", page, data: { config, topics } },
