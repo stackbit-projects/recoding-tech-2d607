@@ -86,6 +86,9 @@ export default {
             {
               type: 'citation',
             },
+            {
+              type: 'post'
+            }
           ],
         },
       ],
