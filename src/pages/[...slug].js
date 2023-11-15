@@ -29,15 +29,28 @@ export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayName, link, slug, type }`
+    `*[_type == "topic"]{ displayName, link, slug, type }`,
   );
-  const [page] = await client.fetch(
-    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
+  let [page] = await client.fetch(
+    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
   );
+  let path = `/${page.slug.current ? page.slug.current : page.slug}`;
+  if (!page) {
+    [page] = await client.fetch(
+      `*[_type == "page" && stackbit_url_path == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
+    );
+    path = `/${page.stackbit_url_path ? page.stackbit_url_path : null}`;
+  }
+  if (!advanced) {
+    [page] = await client.fetch(
+      `*[_type == "advanced" && stackbit_url_path == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
+    );
+    path = `/${page.stackbit_url_path ? page.stackbit_url_path : null}`;
+  }
   return {
     props: {
       page,
-      path: `/${page.slug.current ? page.slug.current : page.slug}`,
+      path: path,
       data: { config, topics },
     },
     revalidate: 60,
