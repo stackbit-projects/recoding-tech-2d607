@@ -2,7 +2,7 @@
 import React from "react";
 import client from "../utils/sanityClient";
 
-import { post } from "../layouts";
+import { meta } from "../layouts";
 
 export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
@@ -25,16 +25,18 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  console.log("Page [post ...slug].js getStaticProps, slug: ", params);
+  console.log("Page /[...slug].js getStaticProps, slug: ", params);
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic"]{ displayName, link, slug, type }`,
+    `*[_type == "topic" && stackbit_model_type == "page"]{ displayName, link, slug, type }`,
   );
+  
   let [page] = await client.fetch(
     `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
   );
   let path = `/${page.slug.current ? page.slug.current : page.slug}`;
+
   if (!page) {
     [page] = await client.fetch(
       `*[_type == "page" && stackbit_url_path == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
@@ -47,6 +49,9 @@ export async function getStaticProps({ params }) {
     );
     path = `/${page.stackbit_url_path ? page.stackbit_url_path : null}`;
   }
+
+  console.log("page =>", page)
+
   return {
     props: {
       page,
@@ -57,4 +62,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export default post;
+export default meta;

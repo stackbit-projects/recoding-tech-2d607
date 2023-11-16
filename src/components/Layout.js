@@ -15,14 +15,11 @@ import { ThemeProvider } from "@mui/material/styles";
 
 const Body = (props) => {
   const { page } = props;
-  console.log("page in Layout.js ->", page);
   let ogImage =
     page.seo && page.seo.ogImage
       ? imageBuilder(page.seo.ogImage).url()
       : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
-  console.log("ogImage =>", ogImage);
 
-  console.log("page ===>", page);
   return (
     <>
       <Head>
