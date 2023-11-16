@@ -98,8 +98,10 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
 
   const fetchArticles = async () => {
     //  using the date of the earliest published TPP article
-    let startDate = startValue ? startValue : DateTime.fromISO('2020-10-13T14:00:00.000Z') 
-    let endDate = endValue ? endValue : DateTime.now()
+    let startDate = startValue
+      ? startValue
+      : DateTime.fromISO("2020-10-13T14:00:00.000Z");
+    let endDate = endValue ? endValue : DateTime.now();
 
     let dateFragment = ` && date > '${startDate}' && date < '${endDate}'`;
     let searchFragment = "";
