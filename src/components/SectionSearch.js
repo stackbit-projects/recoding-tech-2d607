@@ -76,9 +76,8 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   const [loading, setLoading] = useState(false);
 
   // dates 2020-10-13T14:00:00.000Z
-  const [startValue, setStartValue] = useState(
-    null // using the date of the earliest published TPP article
-  );
+  // using the date of the earliest published TPP article
+  const [startValue, setStartValue] = useState(null);
   const [endValue, setEndValue] = useState(null);
 
   useEffect(() => {
@@ -98,7 +97,13 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   }, [router.isReady]);
 
   const fetchArticles = async () => {
-    let dateFragment = ` && date > '${startValue}' && date < '${endValue}'`;
+    //  using the date of the earliest published TPP article
+    let startDate = startValue
+      ? startValue
+      : DateTime.fromISO("2020-10-13T14:00:00.000Z");
+    let endDate = endValue ? endValue : DateTime.now();
+
+    let dateFragment = ` && date > '${startDate}' && date < '${endDate}'`;
     let searchFragment = "";
     if (searchValue) {
       searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
