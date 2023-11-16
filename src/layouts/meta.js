@@ -2,15 +2,15 @@ import { post, advanced, page } from ".";
 
 const meta = (props) => {
   if (props._type == "advanced") {
-    return advanced(props)
+    return advanced(props);
   }
   if (props._type == "post") {
-    return post(props)
+    return post(props);
   }
 
   if (props._type == "page") {
-    return page(props)
+    return page(props);
   }
-}
+};
 
-export default meta
+export default meta;
