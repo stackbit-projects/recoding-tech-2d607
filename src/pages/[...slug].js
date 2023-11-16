@@ -7,7 +7,7 @@ import { post } from "../layouts";
 
 export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
-  await generateFeed();
+  await generateFeed("./public");
 
   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
     return {
@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
     `*[_type == "topic"]{ displayName, link, slug, type }`,
   );
   const [page] = await client.fetch(
-    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
+    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
   );
   return {
     props: {

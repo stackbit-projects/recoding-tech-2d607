@@ -2,7 +2,7 @@ import fs from "fs";
 import { Feed } from "feed";
 import client from "./sanityClient";
 
-const generateFeed = async () => {
+const generateFeed = async (path) => {
   const siteURL = process.env.SITE_URL || "https://techpolicy.vercel.app";
   const date = new Date();
 
@@ -49,10 +49,10 @@ const generateFeed = async () => {
     });
   });
 
-  fs.mkdirSync("./out/rss", { recursive: true });
-  fs.writeFileSync("./out/rss/feed.xml", feed.rss2());
-  fs.writeFileSync("./out/rss/atom.xml", feed.atom1());
-  fs.writeFileSync("./out/rss/feed.json", feed.json1());
+  fs.mkdirSync(`${path}/rss`, { recursive: true });
+  fs.writeFileSync(`${path}/rss/feed.xml`, feed.rss2());
+  fs.writeFileSync(`${path}/rss/atom.xml`, feed.atom1());
+  fs.writeFileSync(`${path}/rss/feed.json`, feed.json1());
 };
 
 export default generateFeed;

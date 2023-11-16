@@ -118,3 +118,6 @@ deleteData.js
 
 # Local Netlify folder
 .netlify
+
+# RSS feeds
+public/rss/*
