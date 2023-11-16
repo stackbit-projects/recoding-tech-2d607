@@ -195,6 +195,12 @@ const theme = createTheme({
       fontWeight: 300,
       lineHeight: 1.4,
     },
+    body3: {
+      fontFamily: sansSerifFont,
+      fontWeight: 300,
+      lineHeight: 1.4,
+      fontSize: "1.35rem",
+    },
     h1: {
       fontFamily: sansSerifFont,
       fontSize: "2.4em",

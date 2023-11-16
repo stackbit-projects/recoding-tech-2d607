@@ -27,10 +27,10 @@ import PolicyActionTable from "./PolicyActionTable";
 import PolicyActionMobile from "./PolicyActionMobile";
 
 // SANITY QUERIES
-const policyActionsQuery = `*[_type == "policy_action" && !(_id match "drafts")]{category, country, dateInitiated,
+const policyActionsQuery = `*[_type == "policy_action" && !(_id in path("drafts.**")) ]{category, country, dateInitiated,
                             lastUpdate, _id,
                             slug, status, title,
-                            relatedTopics[]->{_id, name, slug}, type}|order(lastUpdate desc)`;
+                            relatedTopics[]->{_id, name, slug, displayName}, type}|order(lastUpdate desc)`;
 
 function SectionTracker() {
   const { query } = useRouter();
@@ -93,6 +93,7 @@ function SectionTracker() {
 
     client.fetch(policyActionsQuery).then((allPolicies) => {
       if (Array.isArray(allPolicies) && allPolicies.length) {
+        console.log("allPolicies =>", allPolicies);
         allPolicies.map((policy) => {
           if (policy.country) {
             newGovts.push(policy.country);
@@ -117,9 +118,19 @@ function SectionTracker() {
         newGovts = [...new Set(newGovts)];
         newTypes = [...new Set(newTypes)];
 
-        setTypes(newTypes);
-        setCountries(newGovts);
-        setTopics(topicsList);
+        const sortedTopics = topicsList.sort((a, b) => {
+          if (a.displayName < b.displayName) {
+            return -1;
+          }
+          if (a.displayName > b.displayName) {
+            return 1;
+          }
+          return 0;
+        });
+
+        setTypes(newTypes.sort());
+        setCountries(newGovts.sort());
+        setTopics(sortedTopics);
         setActions(allPolicies);
         setAllActions(allPolicies);
       }

@@ -13,7 +13,7 @@ const client = sanityClient({
   useCdn: false // We can't use the CDN for writing
 })
 
-const queries = ['*[_type == "citation"]', '*[_type == "topic"]', '*[_type == "creator"]']
+const queries = ['*[_type == "citation"]', '*[_type == "tag"]', '*[_type == "creator"]']
 
 const limiter = new RateLimiter({ tokensPerInterval: 1, interval: 'second' })
 

@@ -71,7 +71,7 @@ const transform = ([creators, tags, citations], externalCitation, idx) => {
           const date = new Date();
           const now = date.getMilliseconds().toString();
           const item = {
-            _type: "topic",
+            _type: "tag",
             _id: tag.tag.replace(/[^A-Z0-9]/gi, "-"),
             _key: `topic-${now}-${idx}-${index}`,
             name: tag.tag,
@@ -243,7 +243,7 @@ async function fetchAllCitations() {
 
   try {
     await commit(creators, "creator");
-    await commit(tags, "topic");
+    await commit(tags, "tag");
     await commit(citations, "citation");
     await prune(citations, "citation");
     await prune(creators, "creator");

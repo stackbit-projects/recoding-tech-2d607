@@ -23,7 +23,7 @@ const SectionSubscribe = () => {
         Our content. Delivered.
       </Typography>
       <Typography component="div" variant="body2" marginBottom={2}>
-        Subscribe for our monthly update on Government Policy, Tech News and
+        Subscribe for our weekly update on Government Policy, Tech News and
         Research
       </Typography>
       <Input

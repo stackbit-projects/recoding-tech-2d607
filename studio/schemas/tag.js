@@ -1,7 +1,7 @@
 export default {
   type: 'document',
   name: 'tag',
-  title: 'Recoding topics',
+  title: 'Library topics',
   fields: [
     {
       title: 'Name',

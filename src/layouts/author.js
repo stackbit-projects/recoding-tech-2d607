@@ -27,7 +27,7 @@ const Author = (props) => {
   const [posts, setPosts] = useState([]);
   const [topics, setTopics] = useState([]);
 
-  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
+  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id in path("drafts.**")) ]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
 
   useEffect(() => {
     client.fetch(postsQuery).then((actions) => {
@@ -36,8 +36,8 @@ const Author = (props) => {
         newTopics = [action.relatedTopics, ...newTopics];
       });
       newTopics = newTopics.flat();
-      newTopics = newTopics.filter(
-        (topic) => topic.stackbit_model_type == "page"
+      newTopics = newTopics.filter((topic) =>
+        topic ? topic.stackbit_model_type == "page" : null
       );
       newTopics = newTopics.filter(
         (value, index, self) =>
@@ -64,7 +64,7 @@ const Author = (props) => {
             <Grid item xs={3}>
               {page.photo && (
                 <Image
-                  src={imageBuilder(page.photo).width(144).url()}
+                  src={imageBuilder(page.photo).url()}
                   height={144}
                   width={144}
                   alt=""
@@ -94,18 +94,19 @@ const Author = (props) => {
               useFlexGap
               flexWrap="wrap"
             >
-              {topics.length &&
-                topics.map((topic) => (
-                  <Chip
-                    color="footer"
-                    key={topic._id}
-                    label={topic.displayName}
-                    sx={{
-                      fontWeight: 400,
-                      textTransform: "none",
-                    }}
-                  />
-                ))}
+              {topics.length
+                ? topics.map((topic) => (
+                    <Chip
+                      color="footer"
+                      key={topic._id}
+                      label={topic.displayName}
+                      sx={{
+                        fontWeight: 400,
+                        textTransform: "none",
+                      }}
+                    />
+                  ))
+                : null}
             </Stack>
             <Grid
               container
@@ -115,45 +116,46 @@ const Author = (props) => {
               marginBottom={10}
               marginTop={8}
             >
-              {posts.length &&
-                posts.map((post) => (
-                  <Grid
-                    item
-                    key={post._id}
-                    sx={{
-                      marginTop: 2,
-                    }}
-                    xs={12}
-                    sm={5.5}
-                  >
-                    <Link
-                      href={`/${post.slug.current}`}
+              {posts.length
+                ? posts.map((post) => (
+                    <Grid
+                      item
+                      key={post._id}
                       sx={{
-                        borderBottom: "1px solid",
-                        borderBottomColor: "#EFE9DA",
-                        display: "block",
-                        paddingBottom: 2,
-                        textDecoration: "none !important",
+                        marginTop: 2,
                       }}
+                      xs={12}
+                      sm={5.5}
                     >
-                      <Typography
-                        component="div"
-                        variant="body1"
+                      <Link
+                        href={`/${post.slug.current}`}
                         sx={{
-                          color: "#000 !important",
-                          fontSize: "1em",
-                          fontWeight: "700",
-                          "&:hover": {
-                            color: "#225C9D !important",
-                            textDecoration: "none",
-                          },
+                          borderBottom: "1px solid",
+                          borderBottomColor: "#EFE9DA",
+                          display: "block",
+                          paddingBottom: 2,
+                          textDecoration: "none !important",
                         }}
                       >
-                        {post.title}
-                      </Typography>
-                    </Link>
-                  </Grid>
-                ))}
+                        <Typography
+                          component="div"
+                          variant="body1"
+                          sx={{
+                            color: "#000 !important",
+                            fontSize: "1em",
+                            fontWeight: "700",
+                            "&:hover": {
+                              color: "#225C9D !important",
+                              textDecoration: "none",
+                            },
+                          }}
+                        >
+                          {post.title}
+                        </Typography>
+                      </Link>
+                    </Grid>
+                  ))
+                : null}
             </Grid>
           </Box>
         )}

@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-const recentArticlesQuery = `*[_type == "post" && !(_id match "drafts")]{title, date, slug}|order(date desc)[0...20]`;
+const recentArticlesQuery = `*[_type == "post" && !(_id in path("drafts.**")) ]{title, date, slug}|order(date desc)[0...20]`;
 
 const HomepageRecents = () => {
   const [articles, setArticles] = useState([]);

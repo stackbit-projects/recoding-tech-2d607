@@ -13,7 +13,12 @@ export default function SectionPodcast(props) {
   return (
     <section id={_.get(section, "section_id", null)}>
       <Box marginBottom={8}>
-        <Typography component="div" variant="body2" className="html-to-react">
+        <Typography
+          component="div"
+          variant="body3"
+          className="html-to-react"
+          marginBottom={6}
+        >
           <CustomPortableText value={section.intro} />
         </Typography>
         <div
@@ -26,8 +31,7 @@ export default function SectionPodcast(props) {
           }}
         >
           <iframe
-            style={{ width: "100%", height: "600px" }}
-            frameBorder="no"
+            style={{ width: "100%", height: "600px", border: "none" }}
             seamless=""
             src={section.embed_url}
           ></iframe>

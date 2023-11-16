@@ -83,7 +83,13 @@ function SectionHero(props) {
 
   useEffect(() => {
     if (router) {
-      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
+      let crumbs = router.asPath.replace(/^\/|\/$/g, "").split("/");
+      // change "category" to "topic"
+      let index = crumbs.indexOf("category");
+      if (index !== -1) {
+        crumbs[index] = "topic";
+      }
+      setBreadcrumbs(crumbs);
     }
   }, []);
 
@@ -146,13 +152,17 @@ function SectionHero(props) {
                     : "#215793"
                 }
               />
-              <path
-                d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
-                stroke={page.stackbit_model_type == "data" ? "#000" : "#EFE9DA"}
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              {page._type !== "policy_action" ? (
+                <path
+                  d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
+                  stroke={
+                    page.stackbit_model_type == "data" ? "#000" : "#EFE9DA"
+                  }
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              ) : null}
             </svg>
           </Box>
           {page._type == "policy_action" ? (
@@ -163,17 +173,13 @@ function SectionHero(props) {
             >
               Tracker Detail
             </Typography>
-          ) : page._type == "guide" ? (
-            <Typography variant="h4" className={classes.superTitle}>
-              Quick-start Guide
-            </Typography>
           ) : page._type == "topic" ? (
             <Typography
               variant="h4"
               className={classes.superTitle}
               color={page.stackbit_model_type == "page" ? "#FFF" : "#000"}
             >
-              {page.type}
+              Topic
             </Typography>
           ) : page._type == "article" ? (
             <Typography variant="h4" className={classes.superTitle}>

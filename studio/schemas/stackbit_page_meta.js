@@ -45,6 +45,50 @@ export default {
       },
     },
     {
+      type: 'string',
+      name: 'readTime',
+      title: 'Est. reading time (imported from Wordpress)',
+    },
+    {
+      type: 'string',
+      name: 'keywords',
+      title: 'Keywords for SEO, separated with commas',
+    },
+    {
+      type: 'string',
+      name: 'synonyms',
+      title: 'Similar words to inform the SEO review',
+    },
+    {
+      type: 'image',
+      name: 'ogImage',
+      title: 'OpenGraph image',
+      fields: [
+        {
+          name: 'ogImageAlt',
+          title: 'Alt text for the image',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      type: 'object',
+      name: 'twitterSeo',
+      title: 'Twitter SEO',
+      fields: [
+        {
+          type: 'string',
+          name: 'twitterTitle',
+          title: 'Twitter title',
+        },
+        {
+          type: 'text',
+          name: 'twitterDesc',
+          title: 'Twitter description',
+        },
+      ],
+    },
+    {
       type: 'array',
       name: 'extra',
       title: 'Extra',

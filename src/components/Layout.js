@@ -8,13 +8,21 @@ import { withPrefix, attribute } from "../utils";
 import Header from "./Header";
 import Footer from "./Footer";
 import theme from "../theme.js";
+import imageBuilder from "../utils/imageBuilder.js";
 
 // Material UI imports
 import { ThemeProvider } from "@mui/material/styles";
 
 const Body = (props) => {
   const { page } = props;
+  console.log("page in Layout.js ->", page);
+  let ogImage =
+    page.seo && page.seo.ogImage
+      ? imageBuilder(page.seo.ogImage).url()
+      : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
+  console.log("ogImage =>", ogImage);
 
+  console.log("page ===>", page);
   return (
     <>
       <Head>
@@ -36,6 +44,16 @@ const Body = (props) => {
           name="description"
           content={_.get(props, "page.seo.description", null) || ""}
         />
+        {/** OpenGraph Protocol */}
+        <meta name="og:title" content={_.get(props, "page.seo.title", null)} />
+        <meta
+          name="og:description"
+          content={_.get(props, "page.seo.description", null) || ""}
+        />
+        <meta name="og:image" content={ogImage} />
+        {/* <meta name="og:url" content={`https://techpolicy.press/${slug}`} /> */}
+        <meta name="og:type" content="article" />1
+        <meta name="og:locale" content="en_us" />
         {_.get(props, "page.seo.robots", null) && (
           <meta
             name="robots"

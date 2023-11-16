@@ -13,13 +13,17 @@ export async function getStaticPaths() {
     };
   }
 
-  const slugs = await client.fetch(`*[_type == "author"]{ slug }`);
-  const paths = slugs.map((path) => ({
-    params: { slug: [path.slug.current] },
-  }));
+  const slugs = await client.fetch(
+    `*[_type == "author" && !(_id in path("drafts.**")) ]{ slug }`
+  );
+  const paths = slugs.map((path) => {
+    return {
+      params: { slug: [path.slug.current] },
+    };
+  });
 
   return {
-    paths: [],
+    paths,
     fallback: false,
   };
 }
@@ -34,7 +38,7 @@ export async function getStaticProps({ params }) {
   const [page] = await client.fetch(
     `*[_type == "author" && slug.current == "${slug}"]{_id, _createdAt, _updatedAt, _type, slug, name, email, bio, socials, staff, photo}`
   );
-  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id match "drafts")]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
+  const postsQuery = `*[_type == "post" && references("${page._id}") && !(_id in path("drafts.**")) ]{_id, slug, date, ref, title, relatedTopics[]->{_id, displayName, stackbit_model_type} }|order(date desc)`;
   const posts = await client.fetch(postsQuery);
 
   return {

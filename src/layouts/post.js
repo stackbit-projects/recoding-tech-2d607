@@ -187,8 +187,6 @@ const Post = (props) => {
                           {auth.photo && (
                             <Image
                               src={urlFor(auth.photo)
-                                .height(80)
-                                .width(80)
                                 .fit("max")
                                 .auto("format")
                                 .url()}
@@ -248,7 +246,7 @@ const Post = (props) => {
                       <div className="ml-form-embedContent">
                         <h4>Our content. Delivered.</h4>
                         <p style={{ textAlign: "center" }}>
-                          Subscribe for our monthly update on Government Policy,
+                          Subscribe for our weekly update on Government Policy,
                           Tech News and Research
                         </p>
                       </div>

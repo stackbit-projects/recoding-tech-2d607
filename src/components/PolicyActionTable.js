@@ -128,7 +128,7 @@ function PolicyActionTable(props) {
                     variant="h2"
                     sx={{ marginBottom: 1, textTransform: "uppercase" }}
                   >
-                    Law & Regulation Tracker
+                    Policy Tracker
                   </Typography>
                   <Typography
                     component="div"
@@ -167,7 +167,7 @@ function PolicyActionTable(props) {
                 paddingLeft: 2,
               }}
             >
-              <Table aria-label="Law and Regulation Tracker Table">
+              <Table aria-label="Policy Tracker Table">
                 <TableHead
                   sx={{
                     "&:active, &:focus, &:hover": {
@@ -284,10 +284,7 @@ function PolicyActionTable(props) {
       ) : (
         <>
           <TableContainer>
-            <Table
-              aria-label="Law and Regulation Tracker Table"
-              className={classes.table}
-            >
+            <Table aria-label="Policy Tracker Table" className={classes.table}>
               <TableHead
                 sx={{
                   "&:active, &:focus, &:hover": {

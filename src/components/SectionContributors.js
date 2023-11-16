@@ -352,19 +352,7 @@ const Contributors = ({ authors: allAuthors }) => {
               spacing={2}
               sx={{ marginTop: 1 }}
             >
-              <Grid item xs={12} sm={2}>
-                <Typography
-                  component="h2"
-                  variant="h4"
-                  sx={{
-                    color: "rgba(0,0,0,0.6)",
-                    fontWeight: 400,
-                    marginBottom: 0,
-                  }}
-                >
-                  Filter by:
-                </Typography>
-              </Grid>
+              <Grid item xs={12} sm={2}></Grid>
               <Grid item>
                 <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
                   {Object.keys(filters).length
@@ -404,7 +392,7 @@ const Contributors = ({ authors: allAuthors }) => {
                     <Grid item xs={3}>
                       {author.photo && (
                         <Image
-                          src={urlFor(author.photo).width(80).url()}
+                          src={urlFor(author.photo).url()}
                           height={80}
                           width={80}
                           alt=""

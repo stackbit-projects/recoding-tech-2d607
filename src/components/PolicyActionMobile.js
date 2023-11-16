@@ -4,7 +4,6 @@ import { titleCase } from "title-case";
 import PropTypes from "prop-types";
 
 // components
-import FancyTitle from "./FancyTitle";
 
 // material ui
 import Accordion from "@mui/material/Accordion";
@@ -37,7 +36,50 @@ function PolicyActionMobile(props) {
 
   return (
     <>
-      <FancyTitle title="Law and Regulation Tracker" />
+      <Grid
+        container
+        item
+        justifyContent={"space-between"}
+        sx={{
+          borderBottom: "1px solid #8AA29D",
+        }}
+      >
+        <Grid container spacing={2} item xs={12} md={11}>
+          <Grid item>
+            <Typography component={"div"} variant="h3">
+              Policy Tracker
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Link
+            href="/tracker"
+            sx={{
+              height: 24,
+              textAlign: "center",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            <Typography
+              component="div"
+              variant="h5"
+              sx={{
+                backgroundColor: "#FFE5EA",
+                borderRadius: "2px",
+                color: "#FF0033",
+                fontWeight: 500,
+                paddingX: "10px",
+                paddingY: "6px",
+              }}
+            >
+              See all
+            </Typography>
+          </Link>
+        </Grid>
+      </Grid>
       {actions
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row) => (
