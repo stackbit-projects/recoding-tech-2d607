@@ -94,7 +94,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
       setSearch(query.query);
       setSearchValue(query.query);
     }
-  }, [router.isReady]);
+  }, [router.isReady, query]);
 
   const fetchArticles = async () => {
     //  using the date of the earliest published TPP article
@@ -118,13 +118,13 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     if (filters.length) {
       // console.log("***filters", filters);
       filters.forEach((filter) =>
-        filterFragment.push(` && references("${filter._id}")`)
+        filterFragment.push(` && references("${filter._id}")`),
       );
     }
     // console.log("***searchFragment***:", searchFragment);
     // console.log("***filterFragment***:", filterFragment);
     const query = `*[!(_id in path("drafts.**")) && _type == "post"${dateFragment}${searchFragment}${filterFragment.join(
-      " "
+      " ",
     )}]${searchValue ? scoreFragment : detailFragment}`;
     // console.log("***GROQ query***:", query);
     const newArticles = await client.fetch(query);
@@ -135,11 +135,11 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   useEffect(() => {
     setLoading(true);
 
-    if (filters.length || search) {
+    if (filters.length || search || (startValue && endValue)) {
       fetchArticles().catch(console.error);
     }
 
-    if (!filters.length && !search) {
+    if (!filters.length && !search && !(startValue && endValue)) {
       setArticles(allArticles);
       setLoading(false);
     }
@@ -366,7 +366,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                 ? articles
                     .slice(
                       (page - 1) * ROWS_PER_PAGE,
-                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
+                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE,
                     )
                     .map((article) => (
                       <Grid key={article._id} item xs={12}>
@@ -383,7 +383,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                         </Link>
                         <Typography variant="h4" color="rgba(0,0,0,0.6)">
                           {DateTime.fromISO(article.date).toLocaleString(
-                            DateTime.DATE_MED
+                            DateTime.DATE_MED,
                           )}{" "}
                         </Typography>
                       </Grid>
