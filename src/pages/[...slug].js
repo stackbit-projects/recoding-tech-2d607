@@ -13,9 +13,13 @@ export async function getStaticPaths() {
     };
   }
 
-  const slugs = await client.fetch(`*[_type == "post"]{ slug }`);
+  // *[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`);
+  const slugs = await client.fetch(`*[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`);
+
+  console.log(slugs.filter((path) => path.stackbit_url_path))
+
   const paths = slugs.map((path) => ({
-    params: { slug: [path.slug.current] },
+    params: { slug: [path.slug ? path.slug.current : path.stackbit_url_path.split('/')[1]] },
   }));
 
   return {
@@ -33,28 +37,38 @@ export async function getStaticProps({ params }) {
   );
   
   let [page] = await client.fetch(
-    `*[_type == "post" && slug.current == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
+    `*[_type in ["advanced", "page", "post"] && (slug.current == "${slug}" || stackbit_url_path == "/${slug}")]{_id, _type, stackbit_url_path, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
   );
-  let path = `/${page.slug.current ? page.slug.current : page.slug}`;
 
-  if (!page) {
-    [page] = await client.fetch(
-      `*[_type == "page" && stackbit_url_path == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
-    );
-    path = `/${page.stackbit_url_path ? page.stackbit_url_path : null}`;
-  }
-  if (!advanced) {
-    [page] = await client.fetch(
-      `*[_type == "advanced" && stackbit_url_path == "${slug}"]{_id, _createdAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`,
-    );
-    path = `/${page.stackbit_url_path ? page.stackbit_url_path : null}`;
-  }
+  let path;
 
   console.log("page =>", page)
+  
+  if (page && page.stackbit_url_path) {
+    path = page.stackbit_url_path.split('/')[1]
+  }
+
+  if (page.slug && page.slug.current) {
+    path = page.slug.current
+  }
+
+  if (page.slug && !page.slug.current) {
+    path = page.slug
+  }
+
+  let authors = [];
+
+  if (path == 'contributors') {
+    const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**")) ]{name, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
+    
+    authors = await client.fetch(authorsQuery);
+  }
 
   return {
     props: {
       page,
+      _type: page._type,
+      authors: authors.length ? authors : null,
       path: path,
       data: { config, topics },
     },

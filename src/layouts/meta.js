@@ -1,6 +1,6 @@
 import { post, advanced, page } from ".";
 
-const meta = (props) => {
+const Meta = (props) => {
   if (props._type == "advanced") {
     return advanced(props);
   }
@@ -13,4 +13,4 @@ const meta = (props) => {
   }
 };
 
-export default meta;
+export default Meta;
