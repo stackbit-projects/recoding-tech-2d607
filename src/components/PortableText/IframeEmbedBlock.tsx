@@ -69,7 +69,6 @@ export const IframeEmbedBlock = ({ value, children }) => {
     );
   } else if (embedType === "www.youtube.com" || embedType === "youtu.be") {
     const embedId = url.split("/").pop();
-    console.log("embedId=>", embedId);
     return (
       <iframe
         src={`https://www.youtube.com/embed/${embedId}`}

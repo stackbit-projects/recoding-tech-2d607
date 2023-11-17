@@ -93,7 +93,6 @@ function SectionTracker() {
 
     client.fetch(policyActionsQuery).then((allPolicies) => {
       if (Array.isArray(allPolicies) && allPolicies.length) {
-        console.log("allPolicies =>", allPolicies);
         allPolicies.map((policy) => {
           if (policy.country) {
             newGovts.push(policy.country);
@@ -145,7 +144,6 @@ function SectionTracker() {
       if (filters.length) {
         newActions = newActions.filter((action) => {
           let matches = 0;
-          console.log(filters);
           filters.map((filter) => {
             if (!filter.id) {
               if (action.type == filter) {

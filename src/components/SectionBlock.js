@@ -12,10 +12,10 @@ export default function SectionBlock(props) {
   return (
     <section id={_.get(section, "section_id", null)}>
       <Box marginBottom={8}>
-       <Typography component="div" className="html-to-react-article">
-         <CustomPortableText value={section.body} />
-       </Typography>     
+        <Typography component="div" className="html-to-react-article">
+          <CustomPortableText value={section.body} />
+        </Typography>
       </Box>
     </section>
-  )
+  );
 }

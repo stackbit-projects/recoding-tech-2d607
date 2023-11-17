@@ -8,7 +8,6 @@ import { CustomPortableText } from "../components/PortableText";
 
 export default function SectionPodcast(props) {
   let section = _.get(props, "section", null);
-  console.log("section =>", section);
 
   return (
     <section id={_.get(section, "section_id", null)}>

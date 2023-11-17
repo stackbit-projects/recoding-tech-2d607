@@ -98,7 +98,6 @@ const SectionSearch = () => {
     if (query.filter) {
       filterTopic = topics.filter((topic) => topic._id === query.filter);
       setFilters(filterTopic);
-      console.log("filters =>", filters);
     }
   }, [query, topics]);
 

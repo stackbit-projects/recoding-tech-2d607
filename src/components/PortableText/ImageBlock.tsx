@@ -14,8 +14,6 @@ export const ImageBlock = ({ value }) => {
       USE_PROFILES: { html: true },
     });
   }
-  console.log("width, height =>", width, height);
-  console.log("imageBuilder value =>", imageBuilder(value));
   if (!value.asset) console.log("***No asset for ImageBlock value***:", value);
   return (
     <div>
