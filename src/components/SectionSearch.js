@@ -94,7 +94,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
       setSearch(query.query);
       setSearchValue(query.query);
     }
-  }, [router.isReady]);
+  }, [router.isReady, query]);
 
   const fetchArticles = async () => {
     //  using the date of the earliest published TPP article
@@ -135,11 +135,11 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   useEffect(() => {
     setLoading(true);
 
-    if (filters.length || search) {
+    if (filters.length || search || (startValue && endValue)) {
       fetchArticles().catch(console.error);
     }
 
-    if (!filters.length && !search) {
+    if (!filters.length && !search && !(startValue && endValue)) {
       setArticles(allArticles);
       setLoading(false);
     }

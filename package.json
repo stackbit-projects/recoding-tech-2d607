@@ -8,7 +8,7 @@
     "eslint": "eslint",
     "eslint:init": "eslint --init",
     "prepare": "husky install",
-    "test": "eslint src/ --ext .js,.mjs,.jsx,.ts,.tsx --fix",
+    "test": "eslint src/ --fix",
     "dev": "next dev",
     "develop": "next dev",
     "fetch": "sourcebit fetch",
@@ -16,14 +16,12 @@
     "export": "next export",
     "build:netlify": "next build --debug",
     "start": "next start",
+    "generate:feed": "./src/utils/generateFeed.js",
     "import:citations": "node importData.mjs",
     "reset": "node deleteData.mjs"
   },
   "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ]
+    "extends": ["eslint:recommended", "plugin:react/recommended"]
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -43,6 +41,7 @@
     "babel-runtime": "^6.26.0",
     "classnames": "^2.3.1",
     "dotenv": "^16.0.1",
+    "feed": "^4.2.2",
     "html-to-text": "^9.0.5",
     "isomorphic-dompurify": "^1.8.0",
     "jsdom": "^22.1.0",
