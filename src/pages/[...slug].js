@@ -18,8 +18,6 @@ export async function getStaticPaths() {
   // *[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`);
   const slugs = await client.fetch(`*[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`);
 
-  console.log(slugs.filter((path) => path.stackbit_url_path))
-
   const paths = slugs.map((path) => ({
     params: { slug: [path.slug ? path.slug.current : path.stackbit_url_path.split('/')[1]] },
   }));

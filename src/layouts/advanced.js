@@ -18,7 +18,6 @@ import SectionRecentArticles from "../components/SectionRecentArticles";
 
 const Advanced = (props) => {
   const { path } = props;
-  console.log("path ->", path);
 
   return (
     <Layout {...props}>

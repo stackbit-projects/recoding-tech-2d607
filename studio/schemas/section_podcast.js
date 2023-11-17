@@ -1,7 +1,7 @@
 export default {
   type: 'object',
   name: 'section_podcast',
-  title: 'Podcast embed code',
+  title: 'Podcast embed',
   fields: [
     {
       title: 'Intro text',

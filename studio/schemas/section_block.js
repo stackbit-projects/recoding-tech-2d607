@@ -67,5 +67,16 @@ export default {
         },
       ],
     },
+    {
+      type: 'string',
+      name: 'type',
+      title: 'Object Type',
+      description: 'The type of the object',
+      hidden: false,
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: ['section_block'],
+      },
+    },
   ]
 }

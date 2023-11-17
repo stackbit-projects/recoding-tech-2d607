@@ -14,6 +14,7 @@ import SectionContributors from "./SectionContributors";
 import SectionForm from "./SectionForm";
 import SectionHero from "./SectionHero";
 import SectionArticles from "./SectionArticles";
+import SectionBlock from "./SectionBlock";
 import SectionPolicyActions from "./SectionPolicyActions";
 import SectionGuides from "./SectionGuides";
 import SectionLibrary from "./SectionLibrary";
@@ -35,6 +36,7 @@ export {
   Icon,
   RelatedCommentary,
   RelatedTopics,
+  SectionBlock,
   SectionContent,
   SectionContributors,
   SectionForm,
@@ -63,6 +65,7 @@ export default {
   Icon,
   RelatedCommentary,
   RelatedTopics,
+  SectionBlock,
   SectionContent,
   SectionContributors,
   SectionForm,
