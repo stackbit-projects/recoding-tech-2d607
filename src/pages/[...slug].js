@@ -1,5 +1,4 @@
 /* eslint-disable */
-import React from "react";
 import client from "../utils/sanityClient";
 
 import { meta } from "../layouts";

@@ -1,7 +1,7 @@
 export default {
   type: 'document',
   name: 'citation',
-  title: 'Citations',
+  title: 'Research library',
   fields: [
     {
       type: 'string',
