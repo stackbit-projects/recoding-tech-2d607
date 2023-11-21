@@ -3,11 +3,11 @@ export default {
   type: 'object',
   title: 'iFrame embed',
   fields: [
-    {
-      name: 'embedScript',
-      type: 'text',
-      title: 'Embed script',
-    },
+    // {
+    //   name: 'embedScript',
+    //   type: 'text',
+    //   title: 'Embed script',
+    // },
     {
       name: 'url',
       type: 'text',

@@ -152,7 +152,7 @@ export default {
       name: 'stackbit_url_path',
       title: 'URL Path',
       description:
-        'The URL path of this page relative to site root. For example, the site root page would be "/", and post page would be "posts/new-post/"',
+        'The URL path of this page relative to site root. For example, to create techpolicy.press/donate, you would enter /donate',
       validation: (Rule) => Rule.required(),
     },
     {

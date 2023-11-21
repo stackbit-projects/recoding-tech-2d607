@@ -3,6 +3,7 @@ import React from "react";
 import { Tweet, TweetNotFound } from "react-tweet";
 
 export const IframeEmbedBlock = ({ value, children }) => {
+
   const { url, embedType } = value;
 
   if (embedType === "airtable.com") {
@@ -80,11 +81,28 @@ export const IframeEmbedBlock = ({ value, children }) => {
         {children}
       </iframe>
     );
+  } else if (embedType == "donorbox") {
+    return (
+      <iframe
+        src={url}
+        style={{ maxWidth: "500px", minWidth: "250px", maxHeight: "none!important"}}
+        width="100%"
+        height="900px"
+        name="donorbox"
+        allowpaymentrequest="allowpaymentrequest"
+        seamless="seamless"
+        frameborder="0"
+        scrolling="no"
+      >
+      </iframe>
+    )
   } else {
     return (
       <iframe
         src={url}
-        style={{ width: "100%", height: "533", border: "none" }}
+        width="100%"
+        height= "533"
+        style={{ border: "none" }}
       >
         {children}
       </iframe>
