@@ -11,6 +11,16 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      type: 'string',
+      name: 'firstName',
+      title: 'First name',
+    },
+    {
+      type: 'string',
+      name: 'lastName',
+      title: 'Last name'
+    },
+    {
       title: 'Slug',
       name: 'slug',
       type: 'slug',
