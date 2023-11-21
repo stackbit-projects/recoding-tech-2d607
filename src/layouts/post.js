@@ -222,7 +222,7 @@ const Post = (props) => {
                               component="div"
                               variant="body2"
                             >
-                              {toPlainText(auth.bio).substring(0, 300)}...
+                              {toPlainText(auth.bio).substring(0, 300)}{toPlainText(auth.bio).length > 300 ? '...' : ''}
                             </Typography>
                           )}
                         </Grid>
