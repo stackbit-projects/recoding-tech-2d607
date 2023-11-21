@@ -344,7 +344,6 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                         key={`${filter}-${index}`}
                         item
                         label={filter.displayName}
-                        color={filter.type}
                         onDelete={handleDelete(filter)}
                       />
                     ))
