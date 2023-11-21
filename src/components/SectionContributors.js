@@ -117,9 +117,19 @@ const Contributors = ({ authors: allAuthors }) => {
 
     topicsList.map((topic) => (filtersList[topic.displayName] = false));
 
+    const sortedTopics = topicsList.sort((a, b) => {
+      if (a.displayName < b.displayName) {
+        return -1;
+      }
+      if (a.displayName > b.displayName) {
+        return 1;
+      }
+      return 0;
+    });
+
     setAuthors(authorsList);
     setFilteredAuthors(authorsList);
-    setTopics(topicsList);
+    setTopics(sortedTopics);
     setFilters(filtersList);
     setLoading(false);
   }, []);
