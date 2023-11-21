@@ -83,6 +83,11 @@ function SectionHero(props) {
 
   useEffect(() => {
     if (router) {
+      if (page._type == "advanced") {
+        setBreadcrumbs([page.title])
+        return;
+      }
+      
       let crumbs = router.asPath.replace(/^\/|\/$/g, "").split("/");
       // change "category" to "topic"
       let index = crumbs.indexOf("category");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DateTime } from "luxon";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import _ from "lodash";
@@ -38,14 +38,14 @@ function format(crumb) {
 }
 
 const Post = (props) => {
-  const router = useRouter();
+  // const router = useRouter();
   const { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   useEffect(() => {
-    if (router) {
-      setBreadcrumbs(router.query.slug);
+    if (page) {
+      setBreadcrumbs([page.title]);
     }
-  }, [router]);
+  }, []);
 
   useEffect(() => {}, [breadcrumbs]);
 
