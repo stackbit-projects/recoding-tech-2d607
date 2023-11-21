@@ -130,10 +130,18 @@ const Contributors = ({ authors: allAuthors }) => {
     });
 
     const sortedAuthors = authorsList.sort((a, b) => {
-      if (a.firstName < b.firstName) {
+      if (a.firstName) {
+        if (a.firstName < b.firstName) {
+          return -1;
+        }
+        if (a.firstName > b.firstName) {
+          return 1;
+        }
+      }
+      if (a.name < b.name) {
         return -1;
       }
-      if (a.firstName > b.firstName) {
+      if (a.name > b.name) {
         return 1;
       }
       return 0;
@@ -180,10 +188,18 @@ const Contributors = ({ authors: allAuthors }) => {
     }
 
     const sortedFiltered = searchFilter.sort((a, b) => {
-      if (a.firstName < b.firstName) {
+      if (a.firstName) {
+        if (a.firstName < b.firstName) {
+          return -1;
+        }
+        if (a.firstName > b.firstName) {
+          return 1;
+        }
+      }
+      if (a.name < b.name) {
         return -1;
       }
-      if (a.firstName > b.firstName) {
+      if (a.name > b.name) {
         return 1;
       }
       return 0;
