@@ -32,7 +32,8 @@ const Page = (props) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const {
-    page, page: { sidebar_content = {} },
+    page,
+    page: { sidebar_content = {} },
   } = props;
 
   useEffect(() => {
