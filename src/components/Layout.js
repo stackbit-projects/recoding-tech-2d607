@@ -20,7 +20,7 @@ const Body = (props) => {
   return (
     <>
       <Seo page={page} data={data} path={path} />
-      <base href="techpolicy.press"></base>
+      {/* <base href="techpolicy.press"></base> */}
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initialScale=1.0" />
       <meta name="google" content="notranslate" />

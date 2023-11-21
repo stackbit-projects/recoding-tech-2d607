@@ -79,7 +79,7 @@ const Seo = (props) => {
       openGraph={{
         siteName: "Tech Policy Press",
         locale: "en_US",
-        url: url,
+        url: url(),
         type: pageType(),
       }}
       twitter={{
