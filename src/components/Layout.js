@@ -33,7 +33,7 @@ const Body = (props) => {
             : page.name}{" "}
           | {_.get(props, "data.config.title", null)}
         </title>
-        <base href="test.recoding.tech"></base>
+        {/* <base href="test.recoding.tech"></base> */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initialScale=1.0" />
         <meta name="google" content="notranslate" />

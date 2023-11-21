@@ -45,7 +45,7 @@ function Footer(props) {
                   )}
                 </Typography>
               )}
-              <Link href="#FIXME">
+              <Link href="https://twitter.com/techpolicypress">
                 <TwitterIcon
                   sx={{
                     backgroundColor: "#FFF",
@@ -58,7 +58,7 @@ function Footer(props) {
                   TPP on Twitter
                 </Typography>
               </Link>
-              <Link href="#FIXME">
+              <Link href="/rss/feed.xml">
                 <RssFeedIcon
                   sx={{
                     backgroundColor: "#FFF",
@@ -71,7 +71,7 @@ function Footer(props) {
                   TPP RSS feed
                 </Typography>
               </Link>
-              <Link href="#FIXME">
+              <Link href="mailto:justin@techpolicy.press">
                 <EmailIcon
                   sx={{
                     backgroundColor: "#FFF",
