@@ -117,6 +117,8 @@ const Contributors = ({ authors: allAuthors }) => {
 
     topicsList.map((topic) => (filtersList[topic.displayName] = false));
 
+    console.log("allAuthors =>", allAuthors);
+
     const sortedTopics = topicsList.sort((a, b) => {
       if (a.displayName < b.displayName) {
         return -1;
@@ -127,7 +129,16 @@ const Contributors = ({ authors: allAuthors }) => {
       return 0;
     });
 
-    setAuthors(authorsList);
+    const sortedAuthors = authorsList.sort((a, b) => {
+      if (a.firstName < b.firstName) {
+        return -1;
+      }
+      if (a.firstName > b.firstName) {
+        return 1;
+      }
+      return 0;
+    });
+    setAuthors(sortedAuthors);
     setFilteredAuthors(authorsList);
     setTopics(sortedTopics);
     setFilters(filtersList);
@@ -168,7 +179,17 @@ const Contributors = ({ authors: allAuthors }) => {
       }
     }
 
-    setFilteredAuthors(searchFilter);
+    const sortedFiltered = searchFilter.sort((a, b) => {
+      if (a.firstName < b.firstName) {
+        return -1;
+      }
+      if (a.firstName > b.firstName) {
+        return 1;
+      }
+      return 0;
+    });
+
+    setFilteredAuthors(sortedFiltered);
   }, [filters, search]);
 
   useEffect(() => {
