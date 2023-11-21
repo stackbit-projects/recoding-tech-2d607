@@ -33,7 +33,7 @@ export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic" && stackbit_model_type == "page"]{ displayName, link, slug, type }`,
+    `*[_type == "topic" && stackbit_model_type == "page"]{ displayName, link, _id, slug, type }`,
   );
   
   let [page] = await client.fetch(
@@ -62,9 +62,19 @@ export async function getStaticProps({ params }) {
     authors = await client.fetch(authorsQuery);
   }
 
+  let articles = [];
+
+  if (path == "search") {
+    const articlesQuery =
+    `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, slug, 'key': slug } | order(date desc)`;
+
+    articles = await client.fetch(articlesQuery)
+  }
+
   return {
     props: {
       page,
+      articles: articles.length ? articles : null,
       _type: page._type,
       authors: authors.length ? authors : null,
       path: path,
