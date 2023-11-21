@@ -474,7 +474,8 @@ const Contributors = ({ authors: allAuthors }) => {
                           variant="body2"
                           sx={{ lineHeight: 1.8 }}
                         >
-                          {toPlainText(author.bio).substring(0, 300)}{toPlainText(author.bio).length > 300 ? '...' : ''}
+                          {toPlainText(author.bio).substring(0, 300)}
+                          {toPlainText(author.bio).length > 300 ? "..." : ""}
                         </Typography>
                       )}
                     </Grid>
