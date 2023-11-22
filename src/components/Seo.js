@@ -7,9 +7,7 @@ import imageBuilder from "../utils/imageBuilder.js";
 
 const Seo = (props) => {
   const { page, path } = props;
-
-  console.log("page =>", page);
-
+  
   let ogImage =
     page.seo && page.seo.ogImage
       ? imageBuilder(page.seo.ogImage).url()
@@ -91,18 +89,12 @@ const Seo = (props) => {
         locale: "en_US",
         url: url(),
         type: pageType(),
-        image: ogImage,
+        images: [{url: ogImage}],
       }}
       twitter={{
         handle: "@TechPolicyPress",
         site: "@TechPolicyPress",
         cardType: "summary_large_image",
-        image: ogImage,
-        title: page.seo && page.seo.title ? page.seo.title : page.title,
-        description:
-          page.seo && page.seo.description
-            ? page.seo.description
-            : "Tech Policy Press is a nonprofit media and community venture intended to provoke new ideas, debate and discussion at the intersection of technology and democracy. We publish opinion and analysis.",
       }}
     />
   );
