@@ -33,7 +33,6 @@ const Body = (props) => {
         <meta name="google" content="notranslate" />
         <meta
           property="og:image"
-          name="image"
           content="https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png"
         />
         {_.map(_.get(props, "page.seo.extra", null), (meta, meta_idx) => {
