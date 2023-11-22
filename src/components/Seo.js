@@ -7,7 +7,7 @@ import imageBuilder from "../utils/imageBuilder.js";
 
 const Seo = (props) => {
   const { page, path } = props;
-  
+
   let ogImage =
     page.seo && page.seo.ogImage
       ? imageBuilder(page.seo.ogImage).url()
@@ -89,7 +89,7 @@ const Seo = (props) => {
         locale: "en_US",
         url: url(),
         type: pageType(),
-        images: [{url: ogImage}],
+        images: [{ url: ogImage }],
       }}
       twitter={{
         handle: "@TechPolicyPress",
