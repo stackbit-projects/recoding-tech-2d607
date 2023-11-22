@@ -9,6 +9,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import theme from "../theme.js";
 
+import imageBuilder from "../utils/imageBuilder.js";
 import Seo from "./Seo.js";
 
 // Material UI imports
@@ -17,6 +18,11 @@ import { ThemeProvider } from "@mui/material/styles";
 const Body = (props) => {
   const { page, data, path } = props;
 
+  let ogImage =
+    page.seo && page.seo.ogImage
+    ? imageBuilder(page.seo.ogImage).url()
+    : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
+
   return (
     <>
       <Seo page={page} data={data} path={path} />
@@ -24,6 +30,7 @@ const Body = (props) => {
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initialScale=1.0" />
       <meta name="google" content="notranslate" />
+      <meta name="image" property="og:image" content={ogImage}/>
       {_.map(_.get(props, "page.seo.extra", null), (meta, meta_idx) => {
         // let key_name = _.get(meta, "keyName", null) || "name";
         return _.get(meta, "relativeUrl", null) ? (

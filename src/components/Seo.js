@@ -3,17 +3,9 @@ import { NextSeo } from "next-seo";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-// import imageBuilder from "../utils/imageBuilder.js";
 
 const Seo = (props) => {
   const { page, path } = props;
-  console.log("page in SEO", page);
-  console.log("props.data.config.title =>", props.data.config.title);
-
-  //   let ogImage =
-  //     page.seo && page.seo.ogImage
-  //       ? imageBuilder(page.seo.ogImage).url()
-  //       : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
 
   const url = () => {
     if (path == "/") {
