@@ -18,11 +18,6 @@ import { ThemeProvider } from "@mui/material/styles";
 const Body = (props) => {
   const { page, data, path } = props;
 
-  // let ogImage =
-  //   page.seo && page.seo.ogImage
-  //     ? imageBuilder(page.seo.ogImage).url()
-  //     : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
-
   return (
     <>
       <Seo page={page} data={data} path={path} />
@@ -31,10 +26,6 @@ const Body = (props) => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initialScale=1.0" />
         <meta name="google" content="notranslate" />
-        <meta
-          property="og:image"
-          content="https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png"
-        />
         {_.map(_.get(props, "page.seo.extra", null), (meta, meta_idx) => {
           // let key_name = _.get(meta, "keyName", null) || "name";
           return _.get(meta, "relativeUrl", null) ? (
