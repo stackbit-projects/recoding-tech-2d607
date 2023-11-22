@@ -28,37 +28,37 @@ const Body = (props) => {
       <Seo page={page} data={data} path={path} />
       {/* <base href="techpolicy.press"></base> */}
       <Head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initialScale=1.0" />
-      <meta name="google" content="notranslate" />
-      <meta name="image" property="og:image" content={ogImage} />
-      {_.map(_.get(props, "page.seo.extra", null), (meta, meta_idx) => {
-        // let key_name = _.get(meta, "keyName", null) || "name";
-        return _.get(meta, "relativeUrl", null) ? (
-          _.get(props, "data.config.domain", null) &&
-            (() => {
-              let domain = _.trim(
-                _.get(props, "data.config.domain", null),
-                "/"
-              );
-              let rel_url = withPrefix(_.get(meta, "value", null));
-              let full_url = domain + rel_url;
-              return (
-                <meta
-                  key={meta_idx}
-                  // {...attribute(key_name, _.get(meta, "name", null))}
-                  content={full_url}
-                />
-              );
-            })()
-        ) : (
-          <meta
-            key={meta_idx + ".1"}
-            // {...attribute(key_name, _.get(meta, "name", null))}
-            content={_.get(meta, "value", null)}
-          />
-        );
-      })}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initialScale=1.0" />
+        <meta name="google" content="notranslate" />
+        <meta name="image" property="og:image" content={ogImage} />
+        {_.map(_.get(props, "page.seo.extra", null), (meta, meta_idx) => {
+          // let key_name = _.get(meta, "keyName", null) || "name";
+          return _.get(meta, "relativeUrl", null) ? (
+            _.get(props, "data.config.domain", null) &&
+              (() => {
+                let domain = _.trim(
+                  _.get(props, "data.config.domain", null),
+                  "/"
+                );
+                let rel_url = withPrefix(_.get(meta, "value", null));
+                let full_url = domain + rel_url;
+                return (
+                  <meta
+                    key={meta_idx}
+                    // {...attribute(key_name, _.get(meta, "name", null))}
+                    content={full_url}
+                  />
+                );
+              })()
+          ) : (
+            <meta
+              key={meta_idx + ".1"}
+              // {...attribute(key_name, _.get(meta, "name", null))}
+              content={_.get(meta, "value", null)}
+            />
+          );
+        })}
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap"
           rel="stylesheet"
