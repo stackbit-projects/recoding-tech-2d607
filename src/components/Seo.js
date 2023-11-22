@@ -3,7 +3,6 @@ import { NextSeo } from "next-seo";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-
 const Seo = (props) => {
   const { page, path } = props;
 
