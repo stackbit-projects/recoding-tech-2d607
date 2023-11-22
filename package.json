@@ -21,7 +21,10 @@
     "reset": "node deleteData.mjs"
   },
   "eslintConfig": {
-    "extends": ["eslint:recommended", "plugin:react/recommended"]
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ]
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -51,6 +54,7 @@
     "marked": "^4.0.18",
     "next": "^12.2.3",
     "next-sanity": "^0.6.0",
+    "next-seo": "^6.4.0",
     "next-transpile-modules": "^10.0.1",
     "node-fetch": "^3.2.10",
     "node-sass-utils": "^1.1.3",
