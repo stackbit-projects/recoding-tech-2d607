@@ -8,12 +8,12 @@ import imageBuilder from "../utils/imageBuilder.js";
 const Seo = (props) => {
   const { page, path } = props;
 
-  console.log("page =>", page)
+  console.log("page =>", page);
 
   let ogImage =
-  page.seo && page.seo.ogImage
-    ? imageBuilder(page.seo.ogImage).url()
-    : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
+    page.seo && page.seo.ogImage
+      ? imageBuilder(page.seo.ogImage).url()
+      : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
 
   const url = () => {
     if (path == "/") {
@@ -34,15 +34,15 @@ const Seo = (props) => {
       return `https://techpolicy.press/category/${page.slug.current}`;
     }
 
-    if (page._type == 'author' && page.slug && page.slug.current) {
-      return `https://techpolicy.press/author/${page.slug.current}`
+    if (page._type == "author" && page.slug && page.slug.current) {
+      return `https://techpolicy.press/author/${page.slug.current}`;
     }
 
     if (page._type == "policy_action" && page.slug && page.slug.current) {
-      return `https://techpolicy.press/tracker/${page.slug.current}`
+      return `https://techpolicy.press/tracker/${page.slug.current}`;
     }
 
-    return `https://techpolicy.press`
+    return `https://techpolicy.press`;
   };
 
   const titleText = () => {
@@ -91,7 +91,7 @@ const Seo = (props) => {
         locale: "en_US",
         url: url(),
         type: pageType(),
-        image: ogImage
+        image: ogImage,
       }}
       twitter={{
         handle: "@TechPolicyPress",
@@ -99,10 +99,10 @@ const Seo = (props) => {
         cardType: "summary_large_image",
         image: ogImage,
         title: page.seo && page.seo.title ? page.seo.title : page.title,
-        description: page.seo && page.seo.description
-        ? page.seo.description
-        : "Tech Policy Press is a nonprofit media and community venture intended to provoke new ideas, debate and discussion at the intersection of technology and democracy. We publish opinion and analysis."
-    
+        description:
+          page.seo && page.seo.description
+            ? page.seo.description
+            : "Tech Policy Press is a nonprofit media and community venture intended to provoke new ideas, debate and discussion at the intersection of technology and democracy. We publish opinion and analysis.",
       }}
     />
   );
