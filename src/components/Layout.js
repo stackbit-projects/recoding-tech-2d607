@@ -27,6 +27,7 @@ const Body = (props) => {
     <>
       <Seo page={page} data={data} path={path} />
       {/* <base href="techpolicy.press"></base> */}
+      <Head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initialScale=1.0" />
       <meta name="google" content="notranslate" />
@@ -58,7 +59,6 @@ const Body = (props) => {
           />
         );
       })}
-      <Head>
         <link
           href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap"
           rel="stylesheet"
