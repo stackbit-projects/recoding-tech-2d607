@@ -45,9 +45,13 @@ const Seo = (props) => {
 
   const titleText = () => {
     if (page._type == "author") {
-        return `${page.name}, Author at ${_.get(props, "data.config.title", null)}`
-      }  
-    
+      return `${page.name}, Author at ${_.get(
+        props,
+        "data.config.title",
+        null
+      )}`;
+    }
+
     if (page.seo && page.seo.title) {
       return `${page.seo.title} | ${_.get(props, "data.config.title", null)}`;
     }
