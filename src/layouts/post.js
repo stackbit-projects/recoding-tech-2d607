@@ -124,7 +124,7 @@ const Post = (props) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {DateTime.fromISO(page.date).toLocaleString(
+                  {DateTime.fromISO(page.date).setLocale('en-us').toLocaleString(
                     DateTime.DATE_MED
                   )}
                 </Typography>
@@ -247,8 +247,7 @@ const Post = (props) => {
                       <div className="ml-form-embedContent">
                         <h4>Our content. Delivered.</h4>
                         <p style={{ textAlign: "center" }}>
-                          Subscribe for our weekly update on Government Policy,
-                          Tech News and Research
+                          Join our newsletter on issues and ideas at the intersection of tech & democracy
                         </p>
                       </div>
                       <form
