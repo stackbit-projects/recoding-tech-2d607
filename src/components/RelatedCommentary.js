@@ -57,6 +57,7 @@ const RelatedCommentary = (props) => {
   const title = _.get(props, "title", "Related");
 
   useEffect(() => {
+    console.log("commentary =>", commentary)
     const sort = commentary.sort((a, b) => {
       if (a.date && b.date) {
         return Date.parse(b.date) - Date.parse(a.date);
@@ -99,7 +100,7 @@ const RelatedCommentary = (props) => {
         </Grid>
         <Grid container item flexDirection="column">
           {sortedCommentary && sortedCommentary.length
-            ? sortedCommentary.slice(0, 4).map((comment, idx) => (
+            ? sortedCommentary.map((comment, idx) => (
                 <Grid
                   item
                   key={comment.__metadata ? comment.__metadata.id : comment._id}
@@ -110,7 +111,7 @@ const RelatedCommentary = (props) => {
                   <Typography component="div" variant="body1">
                     <Link
                       className={classes.citationTitle}
-                      href={comment.url || `/${comment.layout}/${comment.slug}`}
+                      href={comment._type == 'citation' ? comment.url || `/${comment.layout}/${comment.slug}`: `https://techpolicy.press/${comment.slug.current}`}
                     >
                       {comment.title}
                     </Link>
@@ -120,7 +121,7 @@ const RelatedCommentary = (props) => {
                     variant="h5"
                     className={classes.citationPublication}
                   >
-                    {process(comment)}
+                    {comment._type == 'citation' ? process(comment) : 'Tech Policy Press'}
                   </Typography>
                   <Typography className={classes.em}>
                     {comment.date
