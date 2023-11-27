@@ -124,9 +124,9 @@ const Post = (props) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {DateTime.fromISO(page.date).setLocale('en-us').toLocaleString(
-                    DateTime.DATE_MED
-                  )}
+                  {DateTime.fromISO(page.date)
+                    .setLocale("en-us")
+                    .toLocaleString(DateTime.DATE_MED)}
                 </Typography>
                 {page.toc && (
                   <Grid item xs={12} sm={12} mt={2}>
@@ -247,7 +247,8 @@ const Post = (props) => {
                       <div className="ml-form-embedContent">
                         <h4>Our content. Delivered.</h4>
                         <p style={{ textAlign: "center" }}>
-                          Join our newsletter on issues and ideas at the intersection of tech & democracy
+                          Join our newsletter on issues and ideas at the
+                          intersection of tech & democracy
                         </p>
                       </div>
                       <form

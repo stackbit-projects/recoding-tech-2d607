@@ -33,7 +33,8 @@ const Advanced = (props) => {
                   <div className="ml-form-embedBody ml-form-embedBodyDefault row-form">
                     <div className="ml-form-embedContent">
                       <h4>
-                        Join our newsletter on issues and ideas at the intersection of tech & democracy
+                        Join our newsletter on issues and ideas at the
+                        intersection of tech & democracy
                       </h4>
                     </div>
                     <form
