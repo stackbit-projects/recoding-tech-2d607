@@ -7,7 +7,7 @@ const generateFeed = async (path) => {
   const date = new Date();
 
   const posts = await client.fetch(
-    `*[!(_id in path("drafts.**")) && _type == "post"]{ _id, title, slug, date, authors[]=>{ name, email, socials} }`
+    `*[!(_id in path("drafts.**")) && _type == "post"]{ _id, title, slug, date, authors[]->{ name, email, socials } } | order(date desc)`
   );
 
   const feed = new Feed({
@@ -29,7 +29,7 @@ const generateFeed = async (path) => {
   });
 
   posts.forEach((post) => {
-    const url = `${siteURL}/${post.slug}`;
+    const url = `${siteURL}/${post.slug.current}`;
     feed.addItem({
       title: post.title,
       id: url,
