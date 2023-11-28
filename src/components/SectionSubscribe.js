@@ -23,8 +23,8 @@ const SectionSubscribe = () => {
         Our content. Delivered.
       </Typography>
       <Typography component="div" variant="body2" marginBottom={2}>
-        Subscribe for our weekly update on Government Policy, Tech News and
-        Research
+        Join our newsletter on issues and ideas at the intersection of tech &
+        democracy
       </Typography>
       <Input
         placeholder="Enter email address"

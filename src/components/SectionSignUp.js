@@ -19,8 +19,8 @@ export default function SectionSignUp(props) {
               <div className="ml-form-embedBody ml-form-embedBodyDefault row-form">
                 <div className="ml-form-embedContent">
                   <h4>
-                    Subscribe for our weekly update on Government Policy, Tech
-                    News and Research.
+                    Join our newsletter on issues and ideas at the intersection
+                    of tech & democracy.
                   </h4>
                   <p style={{ textAlign: "center" }}>
                     Tech Policy Press is a startup nonprofit media & community

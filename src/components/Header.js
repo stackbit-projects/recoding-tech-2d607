@@ -465,12 +465,14 @@ const Header = (props) => {
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
-                            maxWidth: `${
-                              (data.config.header.projectsLinks.length + 1) * 15
-                            }vw !important`,
-                            width: `${
-                              (data.config.header.projectsLinks.length + 1) * 10
-                            }vw`,
+                            maxWidth: `35vw`,
+                            // maxWidth: `${
+                            //   (data.config.header.projectsLinks.length + 1) * 15
+                            // }vw !important`
+                            width: `100%`,
+                            // width: `${
+                            //   (data.config.header.projectsLinks.length + 1) * 10
+                            // }vw`,
                           },
                         }}
                       >
