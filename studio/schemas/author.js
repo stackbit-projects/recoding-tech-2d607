@@ -27,7 +27,7 @@ export default {
       description: 'The slug for the author.',
       validation: (Rule) => Rule.required(),
       options: {
-        source: 'title',
+        source: 'name',
         maxLength: 200, // will be ignored if slugify is set
         slugify: (input) =>
           input
@@ -41,7 +41,6 @@ export default {
       type: 'string',
       name: 'email',
       title: 'Email',
-      validation: (Rule) => Rule.required(),
     },
     {
       type: 'string',
