@@ -22,7 +22,7 @@ const generateIndexSitemap = (post, image) => {
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
        <sitemap>
           <loc>https://techpolicy.press/sitemap-1.xml</loc>
-          <lastmod>${post.date}</lastmod>
+          <lastmod>${post._updatedAt}</lastmod>
        </sitemap>
        <sitemap>
           <loc>https://techpolicy.press/image-sitemap-1.xml</loc>
