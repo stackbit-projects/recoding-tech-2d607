@@ -38,7 +38,7 @@ const generateFeed = async (path) => {
         post.authors &&
         post.authors.length &&
         post.authors.map((author) => {
-          const socials = author.socials ? author.socials.split(",") || [] : '';
+          const socials = author.socials ? author.socials.split(",") || [] : "";
           return {
             name: author.name,
             email: author.email,
