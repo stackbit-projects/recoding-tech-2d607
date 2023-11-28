@@ -1,6 +1,7 @@
 import client from "../utils/sanityClient";
+import xmlescape from 'xml-escape'
 
-const postQuery = `*[_type == 'post' && !(_id in path("drafts.**"))] | order(date desc) {
+const postQuery = `*[_type == 'post' && !(_id in path("drafts.**"))] | order(date desc)[0..20] {
     slug, date, title
   }`;
 
@@ -9,9 +10,8 @@ const getPosts = async () => {
   return posts;
 };
 
-const generateNewsSitemap = async (posts) => {
-  const newsSitemap = `
-  <?xml version="1.0" encoding="UTF-8"?>
+const generateNewsSitemap = (posts) => {
+  const newsSitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     ${posts
@@ -25,28 +25,30 @@ const generateNewsSitemap = async (posts) => {
             <news:language>en</news:language>
           </news:publication>
           <news:publication_date>${post.date}</news:publication_date>
-          <news:title>${post.title}</news:title>
+          <news:title>${xmlescape(post.title)}</news:title>
         </news:news>
       </url>`;
       })
       .join("")}
   </urlset>
   `;
-  console.log("newsSitemap->", newsSitemap);
+  return newsSitemap
 };
 
+function NewsSiteMap(){}
+
 export async function getServerSideProps({ res }) {
-  const posts = await getPosts()
+  const posts = await getPosts();
 
-  const newsSitemap = generateNewsSitemap(posts)
-
-  res.setHeader("Content-Type", "text/xml")
-  res.write(newsSitemap)
-  res.end()
+  const newsSitemap = generateNewsSitemap(posts);
+  
+  res.setHeader("Content-Type", "text/xml");
+  res.write(newsSitemap);
+  res.end();
 
   return {
-    props: {}
-  }
+    props: {},
+  };
 }
 
-export default function SiteMap(){}
+export default NewsSiteMap

@@ -74,7 +74,8 @@
     "sourcebit-source-sanity": "https://github.com/throneless-tech/sourcebit-source-sanity.git#master",
     "sourcebit-target-next": "^0.8.3",
     "sprintf-js": "^1.1.2",
-    "title-case": "^3.0.3"
+    "title-case": "^3.0.3",
+    "xml-escape": "^1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.9",
