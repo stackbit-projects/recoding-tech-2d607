@@ -44,6 +44,9 @@ const Seo = (props) => {
   };
 
   const titleText = () => {
+    if (path == "/") {
+      return `${page.title}`;
+    }
     if (page._type == "author") {
       return `${page.name}, Author at ${_.get(
         props,
@@ -52,16 +55,16 @@ const Seo = (props) => {
       )}`;
     }
 
+    if (page.displayName) {
+      return `${page.displayName} | ${_.get(props, "data.config.title", null)}`;
+    }
+
     if (page.seo && page.seo.title) {
       return `${page.seo.title} | ${_.get(props, "data.config.title", null)}`;
     }
 
     if (page.title) {
       return `${page.title} | ${_.get(props, "data.config.title", null)}`;
-    }
-
-    if (page.displayName) {
-      return `${page.displayName} | ${_.get(props, "data.config.title", null)}`;
     }
 
     if (page.name) {
@@ -83,6 +86,28 @@ const Seo = (props) => {
     return type;
   };
 
+  const openGraph = () => {
+    let ogObject = {
+      siteName: "Tech Policy Press",
+      locale: "en_US",
+      url: url(),
+      type: pageType(),
+      images: [{ url: ogImage }],
+    };
+
+    if (page._type == "post") {
+      console.log("page  in opengraph obj =>", page);
+      ogObject = {
+        ...ogObject,
+        article: {
+          publishedTime: page.date,
+          modifiedTime: page._updatedAt,
+        },
+      };
+    }
+    return ogObject;
+  };
+
   return (
     <NextSeo
       title={titleText()}
@@ -92,13 +117,7 @@ const Seo = (props) => {
           : "Tech Policy Press is a nonprofit media and community venture intended to provoke new ideas, debate and discussion at the intersection of technology and democracy. We publish opinion and analysis."
       }
       canonical={url()}
-      openGraph={{
-        siteName: "Tech Policy Press",
-        locale: "en_US",
-        url: url(),
-        type: pageType(),
-        images: [{ url: ogImage }],
-      }}
+      openGraph={openGraph()}
       twitter={{
         handle: "@TechPolicyPress",
         site: "@TechPolicyPress",

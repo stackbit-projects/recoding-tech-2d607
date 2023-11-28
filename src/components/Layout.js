@@ -20,12 +20,24 @@ const Body = (props) => {
 
   return (
     <>
-      <Seo page={page} data={data} path={path} />
       {/* <base href="techpolicy.press"></base> */}
+      <Seo page={page} data={data} path={path} />
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initialScale=1.0" />
         <meta name="google" content="notranslate" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS feed for The Sunday Show"
+          href="https://feeds.captivate.fm/techpolicypress/"
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Tech Policy Press » Feed"
+          href="https://techpolicy.press/rss/feed.xml"
+        />
         {_.map(_.get(props, "page.seo.extra", null), (meta, meta_idx) => {
           // let key_name = _.get(meta, "keyName", null) || "name";
           return _.get(meta, "relativeUrl", null) ? (
@@ -63,12 +75,6 @@ const Body = (props) => {
             href={withPrefix(_.get(props, "data.config.favicon", null))}
           />
         )}
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title="RSS feed for The Sunday Show"
-          href="https://feeds.captivate.fm/techpolicypress/"
-        />
       </Head>
       <ThemeProvider theme={theme}>
         <Header {...props} />
