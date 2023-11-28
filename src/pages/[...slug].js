@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
   // *[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`);
   const slugs = await client.fetch(
-    `*[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`
+    `*[ _type in ["post", "advanced", "page" && !(_id in path("drafts.**"))] ]{ slug, stackbit_url_path }`
   );
 
   const paths = slugs.map((path) => ({
@@ -39,11 +39,11 @@ export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic" && stackbit_model_type == "page"]{ displayName, link, _id, slug, type }`
+    `*[_type == "topic" && stackbit_model_type == "page" && !(_id in path("drafts.**"))]{ displayName, link, _id, slug, type }`
   );
 
   let [page] = await client.fetch(
-    `*[_type in ["advanced", "page", "post"] && (slug.current == "${slug}" || stackbit_url_path == "/${slug}")]{_id, _type, stackbit_url_path, _createdAt, _updatedAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, heroContent, layout, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
+    `*[!(_id in path("drafts.**")) && _type in ["advanced", "page", "post"] && (slug.current == "${slug}" || stackbit_url_path == "/${slug}")]{_id, _type, stackbit_url_path, _createdAt, _updatedAt, date, slug, title, body, toc, seo, authors[]->{slug, name, photo, bio}, heroContent, layout, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedCommentary[]->}`
   );
 
   let path;
