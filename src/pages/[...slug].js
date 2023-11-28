@@ -20,13 +20,21 @@ export async function getStaticPaths() {
     `*[ _type in ["post", "advanced", "page" && !(_id in path("drafts.**"))] ]{ slug, stackbit_url_path }`
   );
 
-  const paths = slugs.map((path) => ({
-    params: {
-      slug: [
-        path.slug ? path.slug.current : path.stackbit_url_path.split("/")[1],
-      ],
-    },
-  }));
+  const paths = slugs.map((path) => {
+    let slug 
+    if (path.slug && path.slug.current) {
+      slug = path.slug.current
+    }
+    if (path.stackbit_url_path) {
+      slug = path.stackbit_url_path.split("/")[1]
+    }
+    return {
+      params: {
+        slug: [
+          slug.length ? slug : null,
+        ],
+      },
+  }});
 
   return {
     paths,
