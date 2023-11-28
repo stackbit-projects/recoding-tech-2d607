@@ -12,7 +12,7 @@ const getImages = async () => {
 };
 
 const generateImageSitemap = (images) => {
-    return `<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
          xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
       ${images
@@ -27,17 +27,17 @@ const generateImageSitemap = (images) => {
         </url>
       `;
         })
-        .join('')}
+        .join("")}
     </urlset>
   `;
-}
+};
 
 function ImageSiteMap() {}
 
 export async function getServerSideProps({ res }) {
-  const images = await getImages()
+  const images = await getImages();
 
-  const sitemap = generateImageSitemap(images)
+  const sitemap = generateImageSitemap(images);
 
   res.setHeader("Content-Type", "text/xml");
   res.write(sitemap);
@@ -48,4 +48,4 @@ export async function getServerSideProps({ res }) {
   };
 }
 
-export default ImageSiteMap
+export default ImageSiteMap;

@@ -10,7 +10,7 @@ const getPosts = async () => {
 };
 
 const generateSitemap = (posts) => {
-    return `<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
         <loc>https://techpolicy.press</loc>
@@ -24,17 +24,17 @@ const generateSitemap = (posts) => {
         </url>
       `;
         })
-        .join('')}
+        .join("")}
     </urlset>
   `;
-}
+};
 
 function SiteMap() {}
 
 export async function getServerSideProps({ res }) {
-  const posts = await getPosts()
+  const posts = await getPosts();
 
-  const sitemap = generateSitemap(posts)
+  const sitemap = generateSitemap(posts);
 
   res.setHeader("Content-Type", "text/xml");
   res.write(sitemap);
@@ -45,4 +45,4 @@ export async function getServerSideProps({ res }) {
   };
 }
 
-export default SiteMap
+export default SiteMap;
