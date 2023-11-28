@@ -1,5 +1,5 @@
 import client from "../utils/sanityClient";
-import xmlescape from 'xml-escape'
+import xmlescape from "xml-escape";
 
 const postQuery = `*[_type == 'post' && !(_id in path("drafts.**"))] | order(date desc)[0..20] {
     slug, date, title
@@ -32,16 +32,16 @@ const generateNewsSitemap = (posts) => {
       .join("")}
   </urlset>
   `;
-  return newsSitemap
+  return newsSitemap;
 };
 
-function NewsSiteMap(){}
+function NewsSiteMap() {}
 
 export async function getServerSideProps({ res }) {
   const posts = await getPosts();
 
   const newsSitemap = generateNewsSitemap(posts);
-  
+
   res.setHeader("Content-Type", "text/xml");
   res.write(newsSitemap);
   res.end();
@@ -51,4 +51,4 @@ export async function getServerSideProps({ res }) {
   };
 }
 
-export default NewsSiteMap
+export default NewsSiteMap;
