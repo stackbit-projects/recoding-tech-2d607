@@ -49,7 +49,12 @@ export const ImageBlock = ({ value }) => {
           </figcaption>
         ): null}
         {
-          value.caption ? <PortableText value={value.caption} /> : null
+          value.caption ? (
+            <figcaption>
+              <Typography component="div" style={{ color: "#7C7B7B" }}className="html-to-react-caption">
+                <PortableText value={value.caption} /> 
+              </Typography>
+            </figcaption> ) : null
         }
         {/* {value.caption ? (
             <Typography

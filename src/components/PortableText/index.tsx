@@ -5,7 +5,6 @@ import { FileBlock } from "./FileBlock";
 import { IframeEmbedBlock } from "./IframeEmbedBlock";
 import { ImageBlock } from "./ImageBlock";
 import { ReferenceBlock } from "./ReferenceBlock";
-import { CaptionBlock } from "./CaptionBlock"
 
 const components = {
   types: {
@@ -14,7 +13,6 @@ const components = {
     Image: ImageBlock,
     PDF: FileBlock,
     File: FileBlock,
-    Caption: CaptionBlock,
   },
 };
 export const CustomPortableText = ({ value }) => {
