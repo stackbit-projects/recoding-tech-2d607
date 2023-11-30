@@ -71,7 +71,8 @@ export async function getStaticProps({ params }) {
   let authors = [];
 
   if (path == "contributors") {
-    const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {name, firstName, lastName, slug, email, bio, socialMedia, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(lastUpdate desc)`;
+    // const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(_updatedAt asc)`;
+    const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(_updatedAt asc)[0..50]`
 
     authors = await client.fetch(authorsQuery);
   }
