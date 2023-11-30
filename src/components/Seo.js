@@ -128,10 +128,10 @@ const Seo = (props) => {
             authorName={page.authors.map((author) => {
               return {
                 name: author.name,
-                url: `https://techpolicy.press/contributor/${author.slug.current}`,
+                url: `https://techpolicy.press/author/${author.slug.current}`,
               };
             })}
-            publisherName="https://techpolicy.press"
+            publisherName="Tech Policy Press"
             publisherLogo="https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png"
             description={description()}
             isAccessibleForFree={true}
