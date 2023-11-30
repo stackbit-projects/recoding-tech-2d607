@@ -1,5 +1,6 @@
 import React from "react";
 import { NextSeo } from "next-seo";
+import { ArticleJsonLd } from "next-seo";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
@@ -72,6 +73,12 @@ const Seo = (props) => {
     }
   };
 
+  const description = () => {
+    return page.seo && page.seo.description
+      ? page.seo.description
+      : "Tech Policy Press is a nonprofit media and community venture intended to provoke new ideas, debate and discussion at the intersection of technology and democracy. We publish opinion and analysis.";
+  };
+
   const pageType = () => {
     let type = "article";
 
@@ -108,22 +115,47 @@ const Seo = (props) => {
     return ogObject;
   };
 
+  const jsonLd = () => {
+    if (page._type == "post") {
+      return (
+        <>
+          <ArticleJsonLd
+            useAppDir={false}
+            url={url()}
+            title={page.title}
+            datePublished={page.date}
+            dateModified={page._updatedAt}
+            authorName={page.authors.map((author) => {
+              return {
+                name: author.name,
+                url: `https://techpolicy.press/contributor/${author.slug.current}`,
+              };
+            })}
+            publisherName="https://techpolicy.press"
+            publisherLogo="https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png"
+            description={description()}
+            isAccessibleForFree={true}
+          />
+        </>
+      );
+    }
+  };
+
   return (
-    <NextSeo
-      title={titleText()}
-      description={
-        page.seo && page.seo.description
-          ? page.seo.description
-          : "Tech Policy Press is a nonprofit media and community venture intended to provoke new ideas, debate and discussion at the intersection of technology and democracy. We publish opinion and analysis."
-      }
-      canonical={url()}
-      openGraph={openGraph()}
-      twitter={{
-        handle: "@TechPolicyPress",
-        site: "@TechPolicyPress",
-        cardType: "summary_large_image",
-      }}
-    />
+    <>
+      <NextSeo
+        title={titleText()}
+        description={description()}
+        canonical={url()}
+        openGraph={openGraph()}
+        twitter={{
+          handle: "@TechPolicyPress",
+          site: "@TechPolicyPress",
+          cardType: "summary_large_image",
+        }}
+      />
+      {jsonLd()}
+    </>
   );
 };
 
