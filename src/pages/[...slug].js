@@ -47,7 +47,7 @@ export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic" && stackbit_model_type == "page" && !(_id in path("drafts.**"))]{ displayName, link, _id, slug, type }`
+    `*[_type == "topic" && stackbit_model_type == "page" && !(_id in path("drafts.**"))]{ displayName, _id, slug } | order(displayName asc)`
   );
 
   let [page] = await client.fetch(
@@ -60,11 +60,11 @@ export async function getStaticProps({ params }) {
     path = page.stackbit_url_path.split("/")[1];
   }
 
-  if (page.slug && page.slug.current) {
+  if (page && page.slug && page.slug.current) {
     path = page.slug.current;
   }
 
-  if (page.slug && !page.slug.current) {
+  if (page && page.slug && !page.slug.current) {
     path = page.slug;
   }
 
