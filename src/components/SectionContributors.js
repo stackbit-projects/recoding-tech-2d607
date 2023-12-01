@@ -101,7 +101,7 @@ const Contributors = () => {
     setAuthors([...oldAuthors, ...newAuthors]);
   };
 
-  const searchQuery = `*[_type == "author" && !(_id in path("drafts.**")) && (name match '${searchValue}'|| firstName match '${searchValue}' || lastName match '${searchValue}') ] 
+  const searchQuery = `*[_type == "author" && !(_id in path("drafts.**")) && (name match '${searchValue}*'|| firstName match '${searchValue}*' || lastName match '${searchValue}*') ] 
     {_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, 
       "relatedPostTopics": *[_type=='post' && references(^._id)]
       { _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} `;
