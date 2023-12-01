@@ -7,13 +7,13 @@ import { toPlainText } from "@portabletext/react";
 // material ui imports
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
+// import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import FormGroup from "@mui/material/FormGroup";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
@@ -46,7 +46,7 @@ const Contributors = () => {
   const [filteredAuthors, setFilteredAuthors] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState("");
   const [topics, setTopics] = useState([]);
   const [totalAuthors, setTotalAuthors] = useState(0);
   const [filters, setFilters] = useState({});
@@ -65,13 +65,15 @@ const Contributors = () => {
 
   // clear the text search input
   const handleClearTextSearch = () => {
+    setSearchValue("");
     setSearch("");
+    setFilteredAuthors(filteredAuthors);
   };
 
   // handle whether a filter is checked
-  const handleFilterChange = (id) => {
-    setFilters({ ...filters, [id]: filters[id] == true ? false : true });
-  };
+  // const handleFilterChange = (id) => {
+  //   setFilters({ ...filters, [id]: filters[id] == true ? false : true });
+  // };
 
   /* eslint-disable no-unused-vars */
 
@@ -89,9 +91,6 @@ const Contributors = () => {
   // };
 
   const handleDelete = (topic) => () => {
-    if (query.filter && history) {
-      history.pushState(null, "", location.href.split("?")[0]);
-    }
     setFilters({ ...filters, [topic]: filters[topic] == true ? false : true });
   };
 
@@ -102,16 +101,28 @@ const Contributors = () => {
     setAuthors([...oldAuthors, ...newAuthors]);
   };
 
-  const fetchSearch = async () => {
-    const query = `*[_type == "author" && !(_id in path("drafts.**")) && (name match ${searchValue} || firstName match ${searchValue} || lastName match ${searchValue}) ] 
+  const searchQuery = `*[_type == "author" && !(_id in path("drafts.**")) && (name match '${searchValue}'|| firstName match '${searchValue}' || lastName match '${searchValue}') ] 
     {_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, 
       "relatedPostTopics": *[_type=='post' && references(^._id)]
-      { _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} `
-    
-    const results = await client.fetch(query)
-    setFilteredAuthors(results)
-    setLoading(false)
-  }
+      { _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} `;
+
+  /**
+   * four use cases:
+   * - filter, no search
+   * - search, no filter DONE
+   * - search, then filter DONE
+   */
+  // const fetchSearch = async () => {
+  //   const query = `*[_type == "author" && !(_id in path("drafts.**")) && (name match '${searchValue}*'|| firstName match '${searchValue}' || lastName match '${searchValue}') ]
+  //   {_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo,
+  //     "relatedPostTopics": *[_type=='post' && references(^._id)]
+  //     { _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} `;
+
+  //   const results = await client.fetch(query);
+  //   // setFilteredAuthors(results);
+  //   // setLoading(false);
+  //   return results
+  // };
 
   useEffect(() => {
     let sorted;
@@ -135,11 +146,6 @@ const Contributors = () => {
   }, []);
 
   useEffect(() => {
-    // client.fetch(authorsQuery).then((authors)=>{
-    //   if(Array.isArray(authors) && authors.length) {
-    //     setAuthors(authors)
-    //   }
-    // })
     let authorsList = [];
     let topicsList = [];
     let filtersList = {};
@@ -187,10 +193,30 @@ const Contributors = () => {
   }, [authors]);
 
   useEffect(() => {
-    let searchFilter = authors;
-    if (searchValue) {
-     fetchSearch()
+    if (searchValue.length != 0 || search.length != 0) {
+      client.fetch(searchQuery).then((results) => {
+        // setAuthors(results)
+        setFilteredAuthors(results);
+        setLoading(false);
+      });
+    } else {
+      setFilteredAuthors(authors);
+      setLoading(false);
     }
+  }, [searchValue]);
+
+  useEffect(() => {
+    let searchFilter = authors;
+    // let results;
+    // if (searchValue.length != 0 || search.length != 0) {
+    //   client.fetch(searchQuery).then(results => {
+    //     setFilteredAuthors(results)
+    //     setLoading(false)
+    //   });
+    //  }
+
+    // console.log("results!", results)
+
     // if (search) {
     //   searchFilter = filteredAuthors.filter((author) => {
     //     const regex = new RegExp(`${search}`, "i");
@@ -218,6 +244,7 @@ const Contributors = () => {
               if (topic && filters[topic.displayName] == true) matches += 1;
             });
           }
+
           return matches >= filtersList.length;
         });
       }
@@ -242,7 +269,13 @@ const Contributors = () => {
     });
 
     setFilteredAuthors(sortedFiltered);
-  }, [filters, search]);
+
+    // if (!searchValue || !search) {
+    //   setLoading(false)
+    //   handleClearTextSearch()
+    //   setFilteredAuthors(sortedFiltered)
+    // }
+  }, [filters]);
 
   useEffect(() => {
     let filterTopic;
@@ -254,7 +287,7 @@ const Contributors = () => {
     }
   }, [query, topics]);
 
-  useEffect(() => {}, [authors, filteredAuthors, topics]);
+  // useEffect(() => {}, [authors, filteredAuthors, topics]);
 
   return (
     <Box my={8}>
@@ -331,11 +364,12 @@ const Contributors = () => {
                         id="search-input"
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
-                        onKeyDown={(e)=>{
+                        onKeyDown={(e) => {
                           if (e.key == "Enter") {
                             setLoading(true);
                             setSearch(e.target.value);
                             setSearchValue(e.target.value);
+                            handleClose();
                           }
                         }}
                         startAdornment={
@@ -356,81 +390,81 @@ const Contributors = () => {
                         }
                       />
                     </FormControl>
-                    <Grid
-                      container
-                      alignItems="center"
-                      justifyContent="space-between"
-                      sx={{ borderBottom: "1px solid #8AA29D" }}
-                    >
-                      <Grid item>
-                        <Typography
-                          component="h2"
-                          variant="h4"
-                          sx={{
-                            fontSize: 14,
-                            fontWeight: 500,
-                            marginBottom: 0,
-                          }}
-                        >
-                          Filter by
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Button onClick={handleClearFilters}>
+                    {/* <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ borderBottom: "1px solid #8AA29D" }}
+                      >
+                        <Grid item>
                           <Typography
-                            component="div"
-                            variant="h5"
+                            component="h2"
+                            variant="h4"
                             sx={{
-                              borderRadius: "2px",
-                              color: "#FF0033",
+                              fontSize: 14,
                               fontWeight: 500,
-                              paddingX: "10px",
-                              paddingY: "6px",
                               marginBottom: 0,
-                              "&:active, & :focus, &:hover": {
-                                color: "#FF0033",
-                                textDecoration: "underline",
-                              },
                             }}
                           >
-                            Clear
+                            Filter by
                           </Typography>
-                        </Button>
-                      </Grid>
-                    </Grid>
-                    <FormGroup
-                      sx={{
-                        flexWrap: "nowrap",
-                        maxHeight: "615px",
-                        overflow: "scroll",
-                      }}
-                    >
-                      {topics
-                        ? topics.map((topic) => (
-                            <FormControlLabel
-                              key={topic._id}
+                        </Grid>
+                        <Grid item>
+                          <Button onClick={handleClearFilters}>
+                            <Typography
+                              component="div"
+                              variant="h5"
                               sx={{
-                                span: {
-                                  fontFamily: "'Lexend', sans-serif",
+                                borderRadius: "2px",
+                                color: "#FF0033",
+                                fontWeight: 500,
+                                paddingX: "10px",
+                                paddingY: "6px",
+                                marginBottom: 0,
+                                "&:active, & :focus, &:hover": {
+                                  color: "#FF0033",
+                                  textDecoration: "underline",
                                 },
                               }}
-                              control={
-                                <Checkbox
-                                  checked={filters[topic.displayName]}
-                                  onChange={() =>
-                                    handleFilterChange(topic.displayName)
-                                  }
-                                />
-                              }
-                              label={
-                                topic.displayName
-                                  ? topic.displayName
-                                  : topic.name
-                              }
-                            />
-                          ))
-                        : null}
-                    </FormGroup>
+                            >
+                              Clear
+                            </Typography>
+                          </Button>
+                        </Grid>
+                      </Grid>
+                      <FormGroup
+                        sx={{
+                          flexWrap: "nowrap",
+                          maxHeight: "615px",
+                          overflow: "scroll",
+                        }}
+                      >
+                        {topics
+                          ? topics.map((topic) => (
+                              <FormControlLabel
+                                key={topic._id}
+                                sx={{
+                                  span: {
+                                    fontFamily: "'Lexend', sans-serif",
+                                  },
+                                }}
+                                control={
+                                  <Checkbox
+                                    checked={filters[topic.displayName]}
+                                    onChange={() =>
+                                      handleFilterChange(topic.displayName)
+                                    }
+                                  />
+                                }
+                                label={
+                                  topic.displayName
+                                    ? topic.displayName
+                                    : topic.name
+                                }
+                              />
+                            ))
+                          : null}
+                      </FormGroup>{" "} */}
                   </Paper>
                 </Popper>
               </Grid>
@@ -452,7 +486,7 @@ const Contributors = () => {
                             <Chip
                               key={`${filter}-${index}`}
                               item
-                              label={`Topic - ${filter}`}
+                              label={`${filter}`}
                               onDelete={handleDelete(filter)}
                               sx={{
                                 fontFamily: "'Open sans', sans-serif",
@@ -468,7 +502,7 @@ const Contributors = () => {
               </Grid>
             </Grid>
             <Grid container my={6} spacing={4}>
-              {filteredAuthors &&
+              {filteredAuthors.length ? (
                 filteredAuthors.map((author) => (
                   <Grid
                     container
@@ -523,11 +557,16 @@ const Contributors = () => {
                       )}
                     </Grid>
                   </Grid>
-                ))}
+                ))
+              ) : (
+                <Grid container item justifyContent="center">
+                  <Typography variant="div">{`No authors found with the name '${searchValue}.' Clear the search filter to return to previous results.`}</Typography>
+                </Grid>
+              )}
             </Grid>
           </>
         )}
-        {authors.length < totalAuthors ? (
+        {authors.length < totalAuthors && !searchValue ? (
           <Grid container item justifyContent="center">
             <Button onClick={fetchNextResults}>
               <Typography
