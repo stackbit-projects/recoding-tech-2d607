@@ -31,8 +31,15 @@ import SearchIcon from "@mui/icons-material/Search";
 
 // utils
 import { urlFor } from "../utils";
+import client from "../utils/sanityClient";
 
-const Contributors = ({ authors: allAuthors }) => {
+const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} | order(lastName asc)[0..24]`;
+const TOTAL_AUTHORS = `count(*[_type == "author" && !(_id in path("drafts.**"))])`;
+const nextAuthorsQuery = (lastAuthor) => {
+  return `*[_type == "author" && !(_id in path("drafts.**")) && lastName > '${lastAuthor.lastName}']{_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} | order(lastName asc)[0..24]`;
+};
+
+const Contributors = () => {
   const { query } = useRouter();
   const [loading, setLoading] = useState(true);
   const [authors, setAuthors] = useState([]);
@@ -86,12 +93,41 @@ const Contributors = ({ authors: allAuthors }) => {
     setFilters({ ...filters, [topic]: filters[topic] == true ? false : true });
   };
 
+  const fetchNextResults = async () => {
+    const lastAuthor = authors[authors.length - 1];
+    const oldAuthors = authors;
+    const newAuthors = await client.fetch(nextAuthorsQuery(lastAuthor));
+    setAuthors([...oldAuthors, ...newAuthors]);
+  };
+
   useEffect(() => {
+    let sorted;
+    client.fetch(authorsQuery).then((data) => {
+      sorted = data.sort((a, b) => {
+        if (a.lastName < b.lastName) {
+          return -1;
+        }
+        if (a.lastName > b.lastName) {
+          return 1;
+        }
+        return 0;
+      });
+      setAuthors(sorted);
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    // client.fetch(authorsQuery).then((authors)=>{
+    //   if(Array.isArray(authors) && authors.length) {
+    //     setAuthors(authors)
+    //   }
+    // })
     let authorsList = [];
     let topicsList = [];
     let filtersList = {};
 
-    authorsList = allAuthors.filter(
+    authorsList = authors.filter(
       (value, index, self) =>
         index ===
         self.findIndex((t) => t._id === value._id && t.name === value.name)
@@ -117,8 +153,6 @@ const Contributors = ({ authors: allAuthors }) => {
 
     topicsList.map((topic) => (filtersList[topic.displayName] = false));
 
-    console.log("allAuthors =>", allAuthors);
-
     const sortedTopics = topicsList.sort((a, b) => {
       if (a.displayName < b.displayName) {
         return -1;
@@ -129,29 +163,31 @@ const Contributors = ({ authors: allAuthors }) => {
       return 0;
     });
 
-    const sortedAuthors = authorsList.sort((a, b) => {
-      if (a.firstName) {
-        if (a.firstName < b.firstName) {
-          return -1;
-        }
-        if (a.firstName > b.firstName) {
-          return 1;
-        }
-      }
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
-    setAuthors(sortedAuthors);
+    // const sortedAuthors = authorsList.sort((a, b) => {
+    //   if (a.firstName) {
+    //     if (a.firstName < b.firstName) {
+    //       return -1;
+    //     }
+    //     if (a.firstName > b.firstName) {
+    //       return 1;
+    //     }
+    //   }
+    //   if (a.name < b.name) {
+    //     return -1;
+    //   }
+    //   if (a.name > b.name) {
+    //     return 1;
+    //   }
+    //   return 0;
+    // });
+    // setAuthors(sortedAuthors);
+    // console.log("authors =>", authorsList)
+    // console.log("authorsList ->", authorsList)
     setFilteredAuthors(authorsList);
     setTopics(sortedTopics);
     setFilters(filtersList);
     setLoading(false);
-  }, []);
+  }, [authors]);
 
   useEffect(() => {
     let searchFilter = authors;
@@ -188,11 +224,11 @@ const Contributors = ({ authors: allAuthors }) => {
     }
 
     const sortedFiltered = searchFilter.sort((a, b) => {
-      if (a.firstName) {
-        if (a.firstName < b.firstName) {
+      if (a.lastName) {
+        if (a.lastName < b.lastName) {
           return -1;
         }
-        if (a.firstName > b.firstName) {
+        if (a.lastName > b.lastName) {
           return 1;
         }
       }
@@ -484,6 +520,31 @@ const Contributors = ({ authors: allAuthors }) => {
             </Grid>
           </>
         )}
+        {authors.length < TOTAL_AUTHORS ? (
+          <Grid container item justifyContent="center">
+            <Button onClick={fetchNextResults}>
+              <Typography
+                component="div"
+                variant="h5"
+                sx={{
+                  backgroundColor: "#FFE5EA",
+                  borderRadius: "2px",
+                  color: "#FF0033",
+                  fontWeight: 500,
+                  paddingX: "10px",
+                  paddingY: "6px",
+                  textAlign: "center",
+                  "&:active, & :focus, &:hover": {
+                    color: "#FF0033",
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                View More
+              </Typography>
+            </Button>
+          </Grid>
+        ) : null}
       </Container>
     </Box>
   );
