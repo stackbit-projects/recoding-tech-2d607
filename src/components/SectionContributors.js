@@ -46,6 +46,7 @@ const Contributors = () => {
   const [filteredAuthors, setFilteredAuthors] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
+  const [searchValue, setSearchValue] = useState('')
   const [topics, setTopics] = useState([]);
   const [totalAuthors, setTotalAuthors] = useState(0);
   const [filters, setFilters] = useState({});
@@ -100,6 +101,17 @@ const Contributors = () => {
     const newAuthors = await client.fetch(nextAuthorsQuery(lastAuthor));
     setAuthors([...oldAuthors, ...newAuthors]);
   };
+
+  const fetchSearch = async () => {
+    const query = `*[_type == "author" && !(_id in path("drafts.**")) && (name match ${searchValue} || firstName match ${searchValue} || lastName match ${searchValue}) ] 
+    {_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, 
+      "relatedPostTopics": *[_type=='post' && references(^._id)]
+      { _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} `
+    
+    const results = await client.fetch(query)
+    setFilteredAuthors(results)
+    setLoading(false)
+  }
 
   useEffect(() => {
     let sorted;
@@ -168,26 +180,6 @@ const Contributors = () => {
       return 0;
     });
 
-    // const sortedAuthors = authorsList.sort((a, b) => {
-    //   if (a.firstName) {
-    //     if (a.firstName < b.firstName) {
-    //       return -1;
-    //     }
-    //     if (a.firstName > b.firstName) {
-    //       return 1;
-    //     }
-    //   }
-    //   if (a.name < b.name) {
-    //     return -1;
-    //   }
-    //   if (a.name > b.name) {
-    //     return 1;
-    //   }
-    //   return 0;
-    // });
-    // setAuthors(sortedAuthors);
-    // console.log("authors =>", authorsList)
-    // console.log("authorsList ->", authorsList)
     setFilteredAuthors(authorsList);
     setTopics(sortedTopics);
     setFilters(filtersList);
@@ -196,18 +188,21 @@ const Contributors = () => {
 
   useEffect(() => {
     let searchFilter = authors;
-    if (search) {
-      searchFilter = filteredAuthors.filter((author) => {
-        const regex = new RegExp(`${search}`, "i");
-        for (const prop in author) {
-          const value = author[prop];
-          if (typeof value === "string" || value instanceof String) {
-            if (value.search(regex) >= 0) return true;
-          }
-        }
-        return false;
-      });
+    if (searchValue) {
+     fetchSearch()
     }
+    // if (search) {
+    //   searchFilter = filteredAuthors.filter((author) => {
+    //     const regex = new RegExp(`${search}`, "i");
+    //     for (const prop in author) {
+    //       const value = author[prop];
+    //       if (typeof value === "string" || value instanceof String) {
+    //         if (value.search(regex) >= 0) return true;
+    //       }
+    //     }
+    //     return false;
+    //   });
+    // }
 
     if (Object.keys(filters).length) {
       let filtersList = Object.values(filters);
@@ -336,6 +331,13 @@ const Contributors = () => {
                         id="search-input"
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
+                        onKeyDown={(e)=>{
+                          if (e.key == "Enter") {
+                            setLoading(true);
+                            setSearch(e.target.value);
+                            setSearchValue(e.target.value);
+                          }
+                        }}
                         startAdornment={
                           <InputAdornment position="start">
                             <SearchIcon />
