@@ -47,7 +47,7 @@ const Contributors = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
   const [topics, setTopics] = useState([]);
-  const [totalAuthors, setTotalAuthors] = useState(0)
+  const [totalAuthors, setTotalAuthors] = useState(0);
   const [filters, setFilters] = useState({});
 
   // open/close search/filter menu
@@ -117,9 +117,9 @@ const Contributors = () => {
       setLoading(false);
     });
 
-    client.fetch(authorsCountQuery).then(data => {
-      setTotalAuthors(data)
-    })
+    client.fetch(authorsCountQuery).then((data) => {
+      setTotalAuthors(data);
+    });
   }, []);
 
   useEffect(() => {
