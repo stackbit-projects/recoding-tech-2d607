@@ -34,7 +34,7 @@ import { urlFor } from "../utils";
 import client from "../utils/sanityClient";
 
 const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} | order(lastName asc)[0..24]`;
-const TOTAL_AUTHORS = `count(*[_type == "author" && !(_id in path("drafts.**"))])`;
+const authorsCountQuery = `count(*[_type == "author" && !(_id in path("drafts.**"))])`;
 const nextAuthorsQuery = (lastAuthor) => {
   return `*[_type == "author" && !(_id in path("drafts.**")) && lastName > '${lastAuthor.lastName}']{_id, name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }} | order(lastName asc)[0..24]`;
 };
@@ -47,6 +47,7 @@ const Contributors = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
   const [topics, setTopics] = useState([]);
+  const [totalAuthors, setTotalAuthors] = useState(0)
   const [filters, setFilters] = useState({});
 
   // open/close search/filter menu
@@ -115,6 +116,10 @@ const Contributors = () => {
       setAuthors(sorted);
       setLoading(false);
     });
+
+    client.fetch(authorsCountQuery).then(data => {
+      setTotalAuthors(data)
+    })
   }, []);
 
   useEffect(() => {
@@ -520,7 +525,7 @@ const Contributors = () => {
             </Grid>
           </>
         )}
-        {authors.length < TOTAL_AUTHORS ? (
+        {authors.length < totalAuthors ? (
           <Grid container item justifyContent="center">
             <Button onClick={fetchNextResults}>
               <Typography
