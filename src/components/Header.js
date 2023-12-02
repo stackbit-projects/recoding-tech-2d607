@@ -465,7 +465,7 @@ const Header = (props) => {
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
-                            maxWidth: `35vw`,
+                            maxWidth: `41vw`,
                             // maxWidth: `${
                             //   (data.config.header.projectsLinks.length + 1) * 15
                             // }vw !important`
