@@ -146,7 +146,7 @@ const Sidebar = (props) => {
             borderBottom="1px solid #000"
             paddingBottom={2}
           >
-            Masthead
+            Fellows
           </Typography>
           {content[0].masthead &&
             content[0].masthead.length &&
