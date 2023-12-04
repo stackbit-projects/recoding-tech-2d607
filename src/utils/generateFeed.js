@@ -7,7 +7,7 @@ const generateFeed = async (path) => {
   const date = new Date();
 
   const posts = await client.fetch(
-    `*[!(_id in path("drafts.**")) && _type == "post"]{ _id, title, slug, date, authors[]->{ name, email, socials } } | order(date desc)`
+    `*[!(_id in path("drafts.**")) && _type == "post"]{ _id, title, slug, date, authors[]->{ name, socials } } | order(date desc)`
   );
 
   const feed = new Feed({
@@ -41,7 +41,6 @@ const generateFeed = async (path) => {
           const socials = author.socials ? author.socials.split(",") || [] : "";
           return {
             name: author.name,
-            email: author.email,
             link: socials.length ? socials[0].trim() : undefined,
           };
         }),

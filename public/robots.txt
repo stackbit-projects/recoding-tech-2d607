@@ -3,4 +3,4 @@ Disallow:
 Sitemap: https://techpolicy.press/sitemap.xml
 Sitemap: https://techpolicy.press/sitemap-1.xml
 Sitemap: https://techpolicy.press/news-sitemap.xml
-Sitemap: https://techpolicy.press/image-sitemap.xml 
+Sitemap: https://techpolicy.press/image-sitemap-1.xml 
