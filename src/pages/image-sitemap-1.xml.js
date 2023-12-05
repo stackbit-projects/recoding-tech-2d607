@@ -1,7 +1,6 @@
 import client from "../utils/sanityClient";
 
-const imagesQuery = `*[ !(_id in path("drafts.**")) && _type in ["sanity.imageAsset"] ]
-{ url, _createdAt, _updatedAt, 
+const imagesQuery = `*[ !(_id in path("drafts.**")) && _type == "sanity.imageAsset" && dateTime(_createdAt) > dateTime(now()) - 60*60*24*52] { url, _createdAt, _updatedAt, 
   "refs": count(*[ references(^._id) ]), 
   "references": *[ references(^._id) ]{ _id, slug, _createdAt }[0]}
 [ refs > 0 ] | order(_createdAt desc)`;
@@ -19,7 +18,8 @@ const generateImageSitemap = (images) => {
         .map((image) => {
           return `
         <url>
-            <loc>https://techpolicy.press/${image.references.slug.current}</loc>
+            <loc>https://techpolicy.press/${image.references.slug ? 
+                        image.references.slug.current : ''}</loc>
             <image:image>
               <image:loc>${image.url}</image:loc>
               <lastmod>${image._updatedAt}</lastmod>
