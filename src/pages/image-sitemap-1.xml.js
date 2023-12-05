@@ -18,8 +18,9 @@ const generateImageSitemap = (images) => {
         .map((image) => {
           return `
         <url>
-            <loc>https://techpolicy.press/${image.references.slug ? 
-                        image.references.slug.current : ''}</loc>
+            <loc>https://techpolicy.press/${
+              image.references.slug ? image.references.slug.current : ""
+            }</loc>
             <image:image>
               <image:loc>${image.url}</image:loc>
               <lastmod>${image._updatedAt}</lastmod>

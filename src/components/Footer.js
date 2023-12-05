@@ -14,7 +14,6 @@ import Typography from "@mui/material/Typography";
 // MUI icons
 import EmailIcon from "@mui/icons-material/Email";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
-import TwitterIcon from "@mui/icons-material/Twitter";
 
 // components
 import Logo from "./LogoFooter";
@@ -45,19 +44,6 @@ function Footer(props) {
                   )}
                 </Typography>
               )}
-              <Link href="https://twitter.com/techpolicypress">
-                <TwitterIcon
-                  sx={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "4px",
-                    fill: "#3475BF",
-                    marginRight: 1,
-                  }}
-                />
-                <Typography component="span" sx={{ display: "none" }}>
-                  TPP on Twitter
-                </Typography>
-              </Link>
               <Link href="/rss/feed.xml">
                 <RssFeedIcon
                   sx={{
@@ -71,7 +57,7 @@ function Footer(props) {
                   TPP RSS feed
                 </Typography>
               </Link>
-              <Link href="mailto:justin@techpolicy.press">
+              <Link href="mailto:newsletter@techpolicy.press">
                 <EmailIcon
                   sx={{
                     backgroundColor: "#FFF",

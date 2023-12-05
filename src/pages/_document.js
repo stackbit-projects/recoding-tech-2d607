@@ -20,8 +20,18 @@ class MyDocument extends Document {
           <ScriptTag src={withPrefix("js/page-load.js")} />
           <ScriptTag src={withPrefix("js/page-unload.js")} />
           <NextScript />
-          <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-          <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+          <script
+            async
+            defer
+            src="https://scripts.simpleanalyticscdn.com/latest.js"
+          ></script>
+          <noscript>
+            <img
+              src="https://queue.simpleanalyticscdn.com/noscript.gif"
+              alt=""
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </noscript>
         </body>
       </Html>
     );

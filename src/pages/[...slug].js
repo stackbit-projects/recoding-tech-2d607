@@ -42,7 +42,8 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps(props) {
+  const { params } = props
   console.log("Page /[...slug].js getStaticProps, slug: ", params);
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
@@ -87,9 +88,9 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      page,
+      page: page ? page : null,
       articles: articles.length ? articles : null,
-      _type: page._type,
+      _type: page ? page._type : null,
       authors: authors.length ? authors : null,
       path: path,
       data: { config, topics },
