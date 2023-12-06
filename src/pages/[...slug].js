@@ -1,12 +1,10 @@
 /* eslint-disable */
 import client from "../utils/sanityClient";
-import generateFeed from "../utils/generateFeed";
 
 import { meta } from "../layouts";
 
 export async function getStaticPaths() {
   console.log("Page [...slug].js getStaticPaths");
-  await generateFeed("./public");
 
   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
     return {

@@ -1,14 +1,8 @@
-import fs from "fs";
 import { Feed } from "feed";
-import client from "./sanityClient";
 
-const generateFeed = async (path) => {
+const generateFeed = async (posts) => {
   const siteURL = process.env.SITE_URL || "https://techpolicy.vercel.app";
   const date = new Date();
-
-  const posts = await client.fetch(
-    `*[!(_id in path("drafts.**")) && _type == "post"]{ _id, title, slug, date, authors[]->{ name, socials } } | order(date desc)`
-  );
 
   const feed = new Feed({
     title: "Tech Policy Press",
@@ -48,10 +42,12 @@ const generateFeed = async (path) => {
     });
   });
 
-  fs.mkdirSync(`${path}/rss`, { recursive: true });
-  fs.writeFileSync(`${path}/rss/feed.xml`, feed.rss2());
-  fs.writeFileSync(`${path}/rss/atom.xml`, feed.atom1());
-  fs.writeFileSync(`${path}/rss/feed.json`, feed.json1());
+  return feed
+
+  // fs.mkdirSync(`${path}/rss`, { recursive: true });
+  // fs.writeFileSync(`${path}/rss/feed.xml`, feed.rss2());
+  // fs.writeFileSync(`${path}/rss/atom.xml`, feed.atom1());
+  // fs.writeFileSync(`${path}/rss/feed.json`, feed.json1());
 };
 
 export default generateFeed;
