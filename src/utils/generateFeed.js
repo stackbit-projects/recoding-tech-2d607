@@ -42,7 +42,7 @@ const generateFeed = async (posts) => {
     });
   });
 
-  return feed
+  return feed;
 
   // fs.mkdirSync(`${path}/rss`, { recursive: true });
   // fs.writeFileSync(`${path}/rss/feed.xml`, feed.rss2());
