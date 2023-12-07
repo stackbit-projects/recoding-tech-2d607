@@ -26,6 +26,8 @@ const Body = (props) => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initialScale=1.0" />
         <meta name="google" content="notranslate" />
+        <meta name="author" content={page.authors ? page.authors.map(author => author.name).join(', ') : 'Tech Policy Press'}/>
+        <meta name="publish_date" content={page.date ? page.date : page._createdAt ? page._createdAt : ''}/>
         <link
           rel="alternate"
           type="application/rss+xml"
