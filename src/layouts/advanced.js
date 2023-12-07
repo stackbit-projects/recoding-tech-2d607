@@ -135,10 +135,10 @@ const Advanced = (props) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Box mt={12} mb={8}>
+              <Box mt={1} mb={8}>
                 <HomepageActions />
               </Box>
-              <Box mt={12} mb={10}>
+              <Box mt={2} mb={10}>
                 <HomepageRecents />
               </Box>
             </Container>
