@@ -86,7 +86,9 @@ const Body = (props) => {
         {_.get(props, "data.config.favicon", null) && (
           <link
             rel="icon"
-            href={data.config.favicon ? imageBuilder(data.config.favicon).url() : ''}
+            href={
+              data.config.favicon ? imageBuilder(data.config.favicon).url() : ""
+            }
           />
         )}
       </Head>
