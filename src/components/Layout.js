@@ -9,7 +9,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import theme from "../theme.js";
 
-// import imageBuilder from "../utils/imageBuilder.js";
+import imageBuilder from "../utils/imageBuilder.js";
 import Seo from "./Seo.js";
 
 // Material UI imports
@@ -86,7 +86,7 @@ const Body = (props) => {
         {_.get(props, "data.config.favicon", null) && (
           <link
             rel="icon"
-            href={withPrefix(_.get(props, "data.config.favicon", null))}
+            href={data.config.favicon ? imageBuilder(data.config.favicon).url() : ''}
           />
         )}
       </Head>

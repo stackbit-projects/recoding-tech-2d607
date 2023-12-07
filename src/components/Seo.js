@@ -19,7 +19,6 @@ const Seo = (props) => {
         : []; // gets the first image in the body of the text
       let asset = firstImage.length ? firstImage[0] : null;
       asset ? (url = imageBuilder(asset).url()) : null;
-      return url;
     }
 
     if (page.seo && page.seo.ogImage) {
