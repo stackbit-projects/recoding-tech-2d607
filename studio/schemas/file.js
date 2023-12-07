@@ -20,6 +20,11 @@ export default {
       type: 'file',
     },
     {
+      name: 'image',
+      title: 'Upload image',
+      type: 'image'
+    },
+    {
       name: 'parentPost',
       title: 'Tech Policy Press post associated with this PDF',
       type: 'array',

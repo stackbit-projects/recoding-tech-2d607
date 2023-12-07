@@ -9,10 +9,22 @@ import imageBuilder from "../utils/imageBuilder.js";
 const Seo = (props) => {
   const { page, path } = props;
 
-  let ogImage =
-    page.seo && page.seo.ogImage
-      ? imageBuilder(page.seo.ogImage).url()
-      : "https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png";
+  const ogImage = () => {
+    let url = 'https://cdn.sanity.io/images/3tzzh18d/production/697d4cc6122b80fcb64b256d888010c242ce6beb-1200x675.png' // default OpenGraph image
+
+    if (page._type == "post") {
+      let firstImage = page.body ? page.body.filter(blockContent => blockContent._type == "Image") : [] // gets the first image in the body of the text
+      let asset = firstImage.length ? firstImage[0] : null
+      asset ? url = imageBuilder(asset).url() : null
+      return url
+    }
+
+    if (page.seo && page.seo.ogImage) {
+      url = imageBuilder(page.seo.ogImage).url()
+    }
+
+    return url
+  }
 
   const url = () => {
     if (path == "/") {
@@ -99,16 +111,16 @@ const Seo = (props) => {
       locale: "en_US",
       url: url(),
       type: pageType(),
-      images: [{ url: ogImage }],
+      images: [{ url: ogImage() }],
     };
 
     if (page._type == "post") {
-      console.log("page  in opengraph obj =>", page);
       ogObject = {
         ...ogObject,
         article: {
           publishedTime: page.date,
           modifiedTime: page._updatedAt,
+          authors: page.authors.map(author => `http://techpolicy.press/author/${author.slug.current}`)
         },
       };
     }
