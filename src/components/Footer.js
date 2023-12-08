@@ -3,7 +3,7 @@ import React from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 
-import { htmlToReact, Link, withPrefix } from "../utils";
+import { htmlToReact, Link } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -19,6 +19,15 @@ import RssFeedIcon from "@mui/icons-material/RssFeed";
 import Logo from "./LogoFooter";
 
 function Footer(props) {
+  let links;
+  if (
+    props.data &&
+    props.data.config &&
+    props.data.config.footer &&
+    props.data.config.footer.links
+  ) {
+    links = props.data.config.footer.links;
+  }
   return (
     <footer style={{ backgroundColor: "#3475BF", color: "#FFF" }}>
       <Box pt={8} pb={4}>
@@ -44,7 +53,7 @@ function Footer(props) {
                   )}
                 </Typography>
               )}
-              <Link href="/rss/feed.xml">
+              <Link href="https://techpolicy.press/rss/feed.xml">
                 <RssFeedIcon
                   sx={{
                     backgroundColor: "#FFF",
@@ -79,7 +88,30 @@ function Footer(props) {
               xs={12}
               sm={6}
             >
-              {_.map(
+              {links.length
+                ? links.map((link, idx) => (
+                    <Grid item key={idx} sx={{ my: 1 }}>
+                      <Link style={{ textDecoration: "none" }} href={link.url}>
+                        <Typography
+                          component="span"
+                          variant="h5"
+                          sx={{
+                            color: "#FFF",
+                            fontSize: 14,
+                            textDecoration: "none",
+                            textTransform: "none",
+                            "&:hover, &:focus": {
+                              textDecoration: "underline",
+                            },
+                          }}
+                        >
+                          {link.label}
+                        </Typography>
+                      </Link>
+                    </Grid>
+                  ))
+                : null}
+              {/* {_.map(
                 _.get(props, "data.config.footer.links", null),
                 (action, action_idx) => (
                   <Grid item key={action_idx} sx={{ my: 1 }}>
@@ -120,7 +152,7 @@ function Footer(props) {
                     </Link>
                   </Grid>
                 )
-              )}
+              )} */}
             </Grid>
           </Grid>
           {_.get(props, "data.config.footer.copyright", null) && (
@@ -145,6 +177,7 @@ function Footer(props) {
 
 Footer.propTypes = {
   path: PropTypes.string,
+  data: PropTypes.object,
 };
 
 export default Footer;
