@@ -83,7 +83,7 @@ const Advanced = (props) => {
                     style={{ display: "none" }}
                   >
                     <div className="ml-form-successContent">
-                      <h4>Thank you !</h4>
+                      <h4>Thank you!</h4>
                       <p style={{ textAlign: "center" }}>
                         <br />
                       </p>
@@ -135,10 +135,10 @@ const Advanced = (props) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Box mt={1} mb={8}>
+              <Box mt={6} mb={8}>
                 <HomepageActions />
               </Box>
-              <Box mt={2} mb={10}>
+              <Box mt={2} mb={8}>
                 <HomepageRecents />
               </Box>
             </Container>
