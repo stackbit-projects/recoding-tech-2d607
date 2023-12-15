@@ -47,8 +47,6 @@ const Post = (props) => {
     }
   }, []);
 
-  useEffect(() => {}, [breadcrumbs]);
-
   return (
     <Layout {...props}>
       <Box my={6}>

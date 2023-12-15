@@ -90,7 +90,7 @@ const SectionRecentArticles = () => {
     });
   }, []);
 
-  useEffect(() => {}, [articles]);
+  // useEffect(() => {}, [articles]);
 
   return (
     <Grid container className={classes.grid}>

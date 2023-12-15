@@ -57,7 +57,6 @@ const RelatedCommentary = (props) => {
   const title = _.get(props, "title", "Related");
 
   useEffect(() => {
-    console.log("commentary =>", commentary);
     const sort = commentary.sort((a, b) => {
       if (a.date && b.date) {
         return Date.parse(b.date) - Date.parse(a.date);

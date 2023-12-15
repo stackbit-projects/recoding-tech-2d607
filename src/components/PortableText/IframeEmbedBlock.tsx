@@ -91,7 +91,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
         name="donorbox"
         allowpaymentrequest="allowpaymentrequest"
         seamless="seamless"
-        frameborder="0"
+        frameBorder="0"
         scrolling="no"
       >
       </iframe>

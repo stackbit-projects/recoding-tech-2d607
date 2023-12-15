@@ -44,7 +44,7 @@ const SectionTopics = (props) => {
     }
   }, []);
 
-  useEffect(() => {}, [topics]);
+  // useEffect(() => {}, [topics]);
 
   return (
     <section>

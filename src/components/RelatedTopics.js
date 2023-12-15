@@ -36,7 +36,7 @@ const Topics = (props) => {
     setSpecialTopics(newTopics);
   }, []);
 
-  useEffect(() => {}, [specialTopics]);
+  // useEffect(() => {}, [specialTopics]);
 
   const title = _.get(props, "label", "Topics");
 

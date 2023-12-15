@@ -15,7 +15,6 @@ export const ImageBlock = ({ value }) => {
       USE_PROFILES: { html: true },
     });
   }
-  console.log("value!!! ->", value)
   if (!value.asset) console.log("***No asset for ImageBlock value***:", value);
   return (
     <div>

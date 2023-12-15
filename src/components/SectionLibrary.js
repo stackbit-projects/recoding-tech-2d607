@@ -91,7 +91,7 @@ const SectionSearch = () => {
     });
   }, []);
 
-  useEffect(() => {}, [topics]);
+  // useEffect(() => {}, [topics]);
 
   useEffect(() => {
     let filterTopic;

@@ -148,7 +148,7 @@ const Seo = (props) => {
               };
             })}
             publisherName="Tech Policy Press"
-            publisherLogo="https://cdn.sanity.io/images/3tzzh18d/production/1ced33594667a8922f4f75aef61be51af62a8890-800x800.png"
+            publisherLogo="https://cdn.sanity.io/images/3tzzh18d/production/697d4cc6122b80fcb64b256d888010c242ce6beb-1200x675.png"
             description={description()}
             isAccessibleForFree={true}
           />

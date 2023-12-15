@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -35,7 +35,7 @@ const Topic = (props) => {
   const classes = useStyles();
   const { page, actions, headlines } = props;
 
-  useEffect(() => {}, [actions, headlines]);
+  // useEffect(() => {}, [actions, headlines]);
 
   return (
     <Layout {...props}>
@@ -61,7 +61,14 @@ const Topic = (props) => {
                   <CustomPortableText value={page.description} />
                 </Typography>
               </Grid>
-              <Grid spacing={4} direction="column" item sm={12} md={4}>
+              <Grid
+                container
+                spacing={4}
+                direction="column"
+                item
+                sm={12}
+                md={4}
+              >
                 <Grid item sx={{ width: "100%" }}>
                   <div
                     id="mlb2-5983225"

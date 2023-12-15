@@ -1,7 +1,7 @@
 // base imports
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 // utils
 import client from "../utils/sanityClient";
@@ -33,7 +33,7 @@ const policyActionsQuery = `*[_type == "policy_action" && !(_id in path("drafts.
                             relatedTopics[]->{_id, name, slug, displayName}, type}|order(lastUpdate desc)`;
 
 function SectionTracker() {
-  const { query } = useRouter();
+  // const { query } = useRouter();
   // const { section } = props;
   const [actions, setActions] = useState([]);
   const [allActions, setAllActions] = useState([]);
@@ -136,7 +136,7 @@ function SectionTracker() {
     });
   }, []);
 
-  useEffect(() => {}, [query]);
+  // useEffect(() => {}, [query]);
 
   useEffect(() => {
     if (allActions.length) {
@@ -170,7 +170,7 @@ function SectionTracker() {
     }
   }, [filters, allActions]);
 
-  useEffect(() => {}, [actions, countries, types, topics]);
+  // useEffect(() => {}, [actions, countries, types, topics]);
 
   return (
     <section>

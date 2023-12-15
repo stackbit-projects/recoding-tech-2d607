@@ -50,7 +50,7 @@ const Author = (props) => {
     });
   }, []);
 
-  useEffect(() => {}, [posts, topics]);
+  // useEffect(() => {}, [posts, topics]);
   return (
     <Layout {...props}>
       <SectionHero {...props} />
