@@ -4,7 +4,7 @@ on:
     - cron: "0 0 * * *"
 jobs:
   backup-dataset:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     name: Backup dataset
     defaults:
       run:
