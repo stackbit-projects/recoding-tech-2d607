@@ -12,9 +12,16 @@ const components = {
     iframeEmbed: IframeEmbedBlock,
     Image: ImageBlock,
     PDF: FileBlock,
-    File: FileBlock,
+    File: FileBlock,  
   },
+  marks: {
+    link: ({value, children}) => {
+      const { href } = value
+      return <a href={href} target="_blank" rel="noopener">{children}</a>
+    }
+  }
 };
 export const CustomPortableText = ({ value }) => {
+  console.log("value", value)
   return <PortableText value={value} components={components} />;
 };

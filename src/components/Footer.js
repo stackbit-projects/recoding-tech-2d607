@@ -28,6 +28,7 @@ function Footer(props) {
   ) {
     links = props.data.config.footer.links;
   }
+
   return (
     <footer style={{ backgroundColor: "#3475BF", color: "#FFF" }}>
       <Box pt={8} pb={4}>
