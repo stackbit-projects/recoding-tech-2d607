@@ -22,6 +22,5 @@ const components = {
   }
 };
 export const CustomPortableText = ({ value }) => {
-  console.log("value", value)
   return <PortableText value={value} components={components} />;
 };
