@@ -1,5 +1,6 @@
 // base imports
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 // utils
 import client from "../utils/sanityClient";
@@ -17,7 +18,7 @@ const policyActionsQuery = `*[_type == "policy_action" && !(_id in path("drafts.
                             slug, status, title, summary,
                             relatedTopics[]->{_id, _key, name, slug, type}, type}|order(lastUpdate desc)[0...5]`;
 
-const HomepageActions = () => {
+const HomepageActions = ({ trackerText }) => {
   const [actions, setActions] = useState([]);
 
   const isMobile = useMediaQuery("(max-width:1064px)");
@@ -36,11 +37,19 @@ const HomepageActions = () => {
         {isMobile ? (
           <PolicyActionMobile actions={actions} isHomepage />
         ) : (
-          <PolicyActionTable actions={actions} isHomepage />
+          <PolicyActionTable
+            actions={actions}
+            trackerText={trackerText}
+            isHomepage
+          />
         )}
       </Box>
     </section>
   ) : null;
+};
+
+HomepageActions.propTypes = {
+  trackerText: PropTypes.string,
 };
 
 export default HomepageActions;

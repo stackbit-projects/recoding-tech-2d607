@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
 
 function PolicyActionTable(props) {
   const classes = useStyles();
-  const { actions, isHomepage } = props;
+  const { actions, isHomepage, trackerText } = props;
 
   const truncate = (title) =>
     title.length > 62 ? `${title.substring(0, 62)}...` : title;
@@ -135,10 +135,7 @@ function PolicyActionTable(props) {
                     variant="body2"
                     sx={{ fontWeight: 400 }}
                   >
-                    We track existing and proposed laws and regulations, along
-                    with government investigations and litigation from across
-                    the U.S. and Europe, that will shape the rules and
-                    accountability for Big Tech.
+                    {trackerText}
                   </Typography>
                   <Button
                     href="/tracker"
@@ -421,6 +418,7 @@ function PolicyActionTable(props) {
 PolicyActionTable.propTypes = {
   actions: PropTypes.array,
   isHomepage: PropTypes.bool,
+  trackerText: PropTypes.string,
 };
 
 export default PolicyActionTable;

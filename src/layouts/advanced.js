@@ -17,7 +17,7 @@ import SectionHeroTracker from "../components/SectionHeroTracker";
 import SectionRecentArticles from "../components/SectionRecentArticles";
 
 const Advanced = (props) => {
-  const { path } = props;
+  const { path, page } = props;
 
   return (
     <Layout {...props}>
@@ -136,7 +136,9 @@ const Advanced = (props) => {
                 </Grid>
               </Grid>
               <Box mt={6} mb={8}>
-                <HomepageActions />
+                <HomepageActions
+                  trackerText={page.trackerText ? page.trackerText : ""}
+                />
               </Box>
               <Box mt={2} mb={8}>
                 <HomepageRecents />
@@ -179,6 +181,7 @@ const Advanced = (props) => {
 Advanced.propTypes = {
   citations: PropTypes.array,
   path: PropTypes.string,
+  page: PropTypes.object,
 };
 
 export default Advanced;

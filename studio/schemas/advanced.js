@@ -28,6 +28,12 @@ export default {
       title: 'Hero Link URL',
       description: 'The URL for the hero link.',
     },
+    {
+      type: 'text',
+      name: 'trackerText',
+      title: 'Policy tracker intro text',
+      description: 'Add the introduction text for the Policy Tracker for the homepage'
+    },
     // {
     //   name: "featuredTopics",
     //   title: "Featured Topics",
