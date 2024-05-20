@@ -3,14 +3,15 @@ import { DateTime } from "luxon";
 // import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import _ from "lodash";
+// import _ from "lodash";
 import { titleCase } from "title-case";
 import { toPlainText } from "@portabletext/react";
 import urlFor from "../utils/imageBuilder";
 import { CustomPortableText } from "../components/PortableText";
 
 // utils
-import { markdownify } from "../utils";
+// import { markdownify } from "../utils";
+import slugify from "slugify";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -29,6 +30,74 @@ import RelatedTopics from "../components/RelatedTopics";
 // icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
+// table of contents
+import { PortableText } from "@portabletext/react";
+
+const slug = (heading) => {
+  let slug = "";
+
+  if (typeof heading === "string") {
+    slug = `#${slugify(heading, {
+      remove: /[*+~.()'"!:@?/]/g,
+    })}`;
+  }
+
+  if (typeof heading === "object" && heading.props && heading.props.text) {
+    slug = `#${slugify(heading.props.text, {
+      remove: /[*+~.()'"!:@?/]/g,
+    })}`;
+  }
+
+  return slug;
+};
+
+const ToCserializer = {
+  block: {
+    h1: ({ children }) => (
+      <Link
+        href={slug(children[0])}
+        sx={{
+          color: "#000",
+          fontSize: "1.3em",
+          fontWeight: 400,
+          textDecoration: "none",
+          "&:active, &:focus, &:hover": {
+            fontWeight: 600,
+          },
+        }}
+      >
+        {children}
+      </Link>
+    ),
+    h2: ({ children }) => (
+      <Grid item md={6}>
+        <Typography component="div" variant="h4">
+          <Link
+            href={slug(children[0])}
+            sex={{
+              textDecoration: "underline",
+            }}
+          >
+            {children}
+          </Link>
+        </Typography>
+      </Grid>
+    ),
+    // ignore other block types
+    h3: () => null,
+    h4: () => null,
+    image: () => null,
+    iframeEmbed: () => null,
+    file: () => null,
+    normal: () => null,
+    blockquote: () => null,
+  },
+  list: {
+    bullet: () => null,
+    number: () => null,
+  },
+};
+
 function handleClick(event) {
   event.preventDefault();
 }
@@ -40,6 +109,7 @@ function format(crumb) {
 const Post = (props) => {
   // const router = useRouter();
   const { page } = props;
+  console.log(">>> PAGE", page);
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   useEffect(() => {
     if (page) {
@@ -65,20 +135,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
+                  if (index == breadcrumbs.length - 1) {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FF0033">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  } else {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  }
+                })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -126,29 +196,41 @@ const Post = (props) => {
                     .setLocale("en-us")
                     .toLocaleString(DateTime.DATE_MED)}
                 </Typography>
+                {/* {page.toc && (
+                  // <Grid item xs={12} sm={12} mt={2}>
+                  //   <Box
+                  //     sx={{
+                  //       p: 2,
+                  //       bgcolor: "#F3F0E699",
+                  //     }}
+                  //   >
+                  //     <Typography
+                  //       component="div"
+                  //       variant="h4"
+                  //       sx={{
+                  //         borderBottom: "1px solid #8AA29D",
+                  //         marginBottom: 2,
+                  //         paddingBottom: 2,
+                  //       }}
+                  //     >
+                  //       Table of Contents
+                  //     </Typography>
+                  //     <Typography component="div" className="html-to-react">
+                  //       {markdownify(_.get(props, "page.toc", null))}
+                  //     </Typography>
+                  //   </Box>
+                  // </Grid>
+                )} */}
+
                 {page.toc && (
-                  <Grid item xs={12} sm={12} mt={2}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        bgcolor: "#F3F0E699",
-                      }}
-                    >
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #8AA29D",
-                          marginBottom: 2,
-                          paddingBottom: 2,
-                        }}
-                      >
-                        Table of Contents
-                      </Typography>
-                      <Typography component="div" className="html-to-react">
-                        {markdownify(_.get(props, "page.toc", null))}
-                      </Typography>
-                    </Box>
+                  <Grid
+                    container
+                    spacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    mt={2}
+                    direction="row"
+                  >
+                    <PortableText value={page.toc} components={ToCserializer} />
                   </Grid>
                 )}
                 {page.body && (
