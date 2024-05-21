@@ -32,6 +32,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 // table of contents
 import { PortableText } from "@portabletext/react";
+import { ImageBlock } from "../components/PortableText/ImageBlock";
 
 const slug = (heading) => {
   let slug = "";
@@ -54,24 +55,22 @@ const slug = (heading) => {
 const ToCserializer = {
   block: {
     h1: ({ children }) => (
-      <Link
-        href={slug(children[0])}
-        sx={{
-          color: "#000",
-          fontSize: "1.3em",
-          fontWeight: 400,
-          textDecoration: "none",
-          "&:active, &:focus, &:hover": {
-            fontWeight: 600,
-          },
-        }}
-      >
-        {children}
-      </Link>
+      <Grid item md={6} mt={0} mb={2}>
+        <Typography component="div" marginLeft={1} variant="tocText">
+          <Link
+            href={slug(children[0])}
+            sex={{
+              textDecoration: "underline",
+            }}
+          >
+            {children}
+          </Link>
+        </Typography>
+      </Grid>
     ),
     h2: ({ children }) => (
-      <Grid item md={6}>
-        <Typography component="div" variant="h4">
+      <Grid item md={6} mt={0} mb={2}>
+        <Typography component="div" marginLeft={1} variant="tocText">
           <Link
             href={slug(children[0])}
             sex={{
@@ -221,17 +220,33 @@ const Post = (props) => {
                   //   </Box>
                   // </Grid>
                 )} */}
+                {page.featuredImage && page.toc && (
+                  <ImageBlock value={page.featuredImage} />
+                )}
 
                 {page.toc && (
-                  <Grid
-                    container
-                    spacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    mt={2}
-                    direction="row"
-                  >
-                    <PortableText value={page.toc} components={ToCserializer} />
-                  </Grid>
+                  <>
+                    <Box mb={0}>
+                      <Typography variant="tocTitle">
+                        {page.tocTitle || "Contents"}
+                      </Typography>
+                    </Box>
+                    <Grid
+                      container
+                      spacing={0}
+                      columnSpacing={{ xs: 1, sm: 1, md: 1 }}
+                      mt={2}
+                      mb={2}
+                      justifyContent="space-between"
+                      flexDirection="column"
+                      maxHeight={200}
+                    >
+                      <PortableText
+                        value={page.toc}
+                        components={ToCserializer}
+                      />
+                    </Grid>
+                  </>
                 )}
                 {page.body && (
                   <Typography component="div" className="html-to-react-article">

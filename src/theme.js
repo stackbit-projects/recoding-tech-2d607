@@ -263,10 +263,17 @@ const theme = createTheme({
       fontSize: "1.1250em",
       fontWeight: 600,
     },
+    tocTitle: {
+      fontFamily: sansSerifFont,
+      fontSize: "1em",
+      fontWeight: 700,
+      textTransform: "uppercase",
+    },
     tocText: {
-      fontSize: "1.1250em",
+      fontFamily: sansSerifFont,
+      fontSize: "0.91em",
+      lineHeight: 1,
       fontWeight: 400,
-      lineHeight: "2.4em",
     },
     tableHeaderHome: {
       fontFamily: sansSerifFont,
