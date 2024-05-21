@@ -36,7 +36,7 @@ export default {
       of: [
         {
           type: 'reference',
-          to: {type: 'author'},
+          to: { type: 'author' },
         },
       ],
     },
@@ -50,6 +50,40 @@ export default {
       type: 'image',
       name: 'featuredImage',
       title: 'Featured image',
+      fields: [
+        {
+          name: 'caption',
+          type: 'array',
+          of: [{ type: 'block' }],
+          title: 'Caption',
+        },
+        {
+          name: 'altText',
+          title: 'Alt text for the image',
+          type: 'text',
+        },
+      ]
+    },
+    {
+      type: 'string',
+      name: 'tocTitle',
+      description: 'Title for the table of contents section'
+    },
+    {
+      name: "toc",
+      title: "Table of contents",
+      description: "Copy and paste your subheadings here",
+      validation: null,
+      type: "array",
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Heading 1', value: 'h1' },
+            { title: 'Heading 2', value: 'h2' },
+          ],
+        }
+      ]
     },
     {
       title: 'Content',
@@ -59,13 +93,13 @@ export default {
         {
           type: 'block',
           styles: [
-            {title: 'Normal', value: 'normal'},
-            {title: 'Heading 1', value: 'h1'},
-            {title: 'Heading 2', value: 'h2'},
-            {title: 'Heading 3', value: 'h3'},
-            {title: 'Heading 4', value: 'h4'},
-            {title: 'Heading 5', value: 'h5'},
-            {title: 'Quote', value: 'blockquote'},
+            { title: 'Normal', value: 'normal' },
+            { title: 'Heading 1', value: 'h1' },
+            { title: 'Heading 2', value: 'h2' },
+            { title: 'Heading 3', value: 'h3' },
+            { title: 'Heading 4', value: 'h4' },
+            { title: 'Heading 5', value: 'h5' },
+            { title: 'Quote', value: 'blockquote' },
           ],
         },
         {
@@ -76,7 +110,7 @@ export default {
             {
               name: 'caption',
               type: 'array',
-              of: [{type: 'block'}],
+              of: [{ type: 'block' }],
               title: 'Caption',
             },
             {
@@ -128,7 +162,7 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{type: 'topic'}],
+          to: [{ type: 'topic' }],
         },
       ],
     },
@@ -155,12 +189,12 @@ export default {
     {
       title: 'Published Date, New',
       name: 'publishDateDesc',
-      by: [{field: 'date', direction: 'desc'}],
+      by: [{ field: 'date', direction: 'desc' }],
     },
     {
       title: 'Published Date, Old',
       name: 'publishDateAsc',
-      by: [{field: 'date', direction: 'asc'}],
+      by: [{ field: 'date', direction: 'asc' }],
     },
   ],
 }
