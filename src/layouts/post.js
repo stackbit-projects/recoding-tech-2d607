@@ -32,7 +32,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 // table of contents
 import { PortableText } from "@portabletext/react";
-import { ImageBlock } from "../components/PortableText/ImageBlock";
+// import { ImageBlock } from "../components/PortableText/ImageBlock";
 
 const slug = (heading) => {
   let slug = "";
@@ -108,11 +108,19 @@ function format(crumb) {
 const Post = (props) => {
   // const router = useRouter();
   const { page } = props;
-  console.log(">>> PAGE", page);
   const [breadcrumbs, setBreadcrumbs] = useState([]);
+
+  const hasHeadings = (body) => {
+    return body.some((block) => block.style === "h2" || block.style === "h1");
+  };
+
   useEffect(() => {
     if (page) {
       setBreadcrumbs([page.title]);
+    }
+
+    if (page.body) {
+      hasHeadings(page.body);
     }
   }, []);
 
@@ -134,20 +142,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
+                  if (index == breadcrumbs.length - 1) {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FF0033">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  } else {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  }
+                })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -220,13 +228,13 @@ const Post = (props) => {
                   //   </Box>
                   // </Grid>
                 )} */}
-                {page.featuredImage && page.toc && (
+                {/* {page.featuredImage && page.toc && (
                   <ImageBlock value={page.featuredImage} />
-                )}
+                )} */}
 
-                {page.toc && (
+                {hasHeadings(page.body) && (
                   <>
-                    <Box mb={0}>
+                    <Box mb={0} mt={2}>
                       <Typography variant="tocTitle">
                         {page.tocTitle || "Contents"}
                       </Typography>
@@ -242,12 +250,13 @@ const Post = (props) => {
                       maxHeight={200}
                     >
                       <PortableText
-                        value={page.toc}
+                        value={page.body}
                         components={ToCserializer}
                       />
                     </Grid>
                   </>
                 )}
+
                 {page.body && (
                   <Typography component="div" className="html-to-react-article">
                     <CustomPortableText value={page.body} />
