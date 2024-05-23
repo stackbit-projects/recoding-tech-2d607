@@ -111,32 +111,30 @@ const RelatedCommentary = (props) => {
         <Grid container item flexDirection="column">
           {sortedCommentary && sortedCommentary.length
             ? sortedCommentary.map((comment, idx) => (
-              <Link
-                className={classes.noUnderline}
-                key={
-                  comment.__metadata ? comment.__metadata.id : comment._id
-                }
-                href={
-                  comment._type == "citation"
-                    ? comment.url || `/${comment.layout}/${comment.slug}`
-                    : `https://techpolicy.press/${comment.slug.current}`
-                }
-              >
-                <Grid
-                  item
-                  key={
-                    comment.__metadata ? comment.__metadata.id : comment._id
-                  }
-                  className={
-                    idx === 3 ? classes.lastCitation : classes.citation
+                <Link
+                  className={classes.noUnderline}
+                  key={comment.__metadata ? comment.__metadata.id : comment._id}
+                  href={
+                    comment._type == "citation"
+                      ? comment.url || `/${comment.layout}/${comment.slug}`
+                      : `https://techpolicy.press/${comment.slug.current}`
                   }
                 >
-                  <Typography
-                    component="div"
-                    variant="body1"
-                    className={classes.citationTitle}
+                  <Grid
+                    item
+                    key={
+                      comment.__metadata ? comment.__metadata.id : comment._id
+                    }
+                    className={
+                      idx === 3 ? classes.lastCitation : classes.citation
+                    }
                   >
-                    {/* <Link
+                    <Typography
+                      component="div"
+                      variant="body1"
+                      className={classes.citationTitle}
+                    >
+                      {/* <Link
                     className={classes.citationTitle}
                     href={
                       comment._type == "citation"
@@ -144,22 +142,22 @@ const RelatedCommentary = (props) => {
                         : `https://techpolicy.press/${comment.slug.current}`
                     }
                   > */}
-                    {comment.title}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    component="div"
-                    variant="h5_alt"
-                    className={classes.citationPublication}
-                  >
-                    {comment._type == "citation"
-                      ? process(comment)
-                      : "Tech Policy Press"}{" "}
-                    <ArrowForwardIcon className={classes.trackerIcon} />
-                  </Typography>
-                </Grid>
-              </Link>
-            ))
+                      {comment.title}
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      component="div"
+                      variant="h5_alt"
+                      className={classes.citationPublication}
+                    >
+                      {comment._type == "citation"
+                        ? process(comment)
+                        : "Tech Policy Press"}{" "}
+                      <ArrowForwardIcon className={classes.trackerIcon} />
+                    </Typography>
+                  </Grid>
+                </Link>
+              ))
             : null}
         </Grid>
       </Grid>
