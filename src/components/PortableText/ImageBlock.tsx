@@ -8,7 +8,6 @@ import imageBuilder from "../../utils/imageBuilder";
 import { PortableText } from "@portabletext/react";
 
 export const ImageBlock = ({ value }) => {
-  console.log("VALUE IN IMAGEBLOCK =>", value)
   const { width, height } = getImageDimensions(value);
   let htmlCaption;
   if (value.wordpressCaption) {
@@ -38,11 +37,12 @@ export const ImageBlock = ({ value }) => {
           <figcaption>
             <Typography
               component="div"
+              className="html-to-react-caption"
               style={{
                 color: "#7C7B7B",
-                cursor: "pointer",
-                fontFamily: "'Lexend', sans-serif",
-                textAlign: "center",
+                // cursor: "pointer",
+                // fontFamily: "'Lexend', sans-serif",
+                // textAlign: "center",
               }}
               dangerouslySetInnerHTML={{ __html: htmlCaption }}
             />

@@ -134,20 +134,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
+                  if (index == breadcrumbs.length - 1) {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FF0033">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  } else {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  }
+                })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -221,7 +221,9 @@ const Post = (props) => {
                   // </Grid>
                 )} */}
                 {page.featuredImage && page.toc && (
-                  <ImageBlock value={page.featuredImage} />
+                  <Typography component="div" className="html-to-react-article">
+                    <ImageBlock value={page.featuredImage} />
+                  </Typography>
                 )}
 
                 {page.toc && (
