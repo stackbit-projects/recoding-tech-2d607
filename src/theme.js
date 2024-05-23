@@ -245,6 +245,12 @@ const theme = createTheme({
       marginBottom: 20,
       textTransform: "uppercase",
     },
+    h5_alt: {
+      fontFamily: sansSerifFont,
+      fontSize: "0.81em",
+      marginBottom: 2,
+      textTransform: "uppercase",
+    },
     h5_card: {
       color: "rgba(0, 0, 0, 0.6)",
       fontFamily: sansSerifFont,

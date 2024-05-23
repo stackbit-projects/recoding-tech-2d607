@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
-import { DateTime } from "luxon";
+// import { DateTime } from "luxon";
 
 // utils
 import process from "../utils/processCitations";
@@ -12,6 +12,7 @@ import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Link from "./NextLinkComposed";
 import Typography from "@mui/material/Typography";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const useStyles = makeStyles(() => ({
   citation: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles(() => ({
   },
   citationTitle: {
     color: "#000 !important",
-    fontSize: "1.2em",
+    fontSize: "1em !important",
     fontWeight: "bold",
     textDecoration: "none",
     "&:hover": {
@@ -34,8 +35,8 @@ const useStyles = makeStyles(() => ({
     },
   },
   citationPublication: {
-    marginTop: 25,
-    marginBottom: 8,
+    fontWeight: "bold",
+    color: "#7C7B7B",
   },
   em: {
     fontSize: "0.8em",
@@ -46,6 +47,16 @@ const useStyles = makeStyles(() => ({
     borderBottom: "1px solid #000",
     marginBottom: 6,
     marginTop: 6,
+  },
+  noUnderline: {
+    textDecoration: "none",
+  },
+  trackerIcon: {
+    color: "#FF0033",
+    // left: 0,
+    // position: "absolute",
+    top: "50%",
+    transform: "translateY(30%)",
   },
 }));
 
@@ -100,43 +111,55 @@ const RelatedCommentary = (props) => {
         <Grid container item flexDirection="column">
           {sortedCommentary && sortedCommentary.length
             ? sortedCommentary.map((comment, idx) => (
+              <Link
+                className={classes.noUnderline}
+                key={
+                  comment.__metadata ? comment.__metadata.id : comment._id
+                }
+                href={
+                  comment._type == "citation"
+                    ? comment.url || `/${comment.layout}/${comment.slug}`
+                    : `https://techpolicy.press/${comment.slug.current}`
+                }
+              >
                 <Grid
                   item
-                  key={comment.__metadata ? comment.__metadata.id : comment._id}
+                  key={
+                    comment.__metadata ? comment.__metadata.id : comment._id
+                  }
                   className={
                     idx === 3 ? classes.lastCitation : classes.citation
                   }
                 >
-                  <Typography component="div" variant="body1">
-                    <Link
-                      className={classes.citationTitle}
-                      href={
-                        comment._type == "citation"
-                          ? comment.url || `/${comment.layout}/${comment.slug}`
-                          : `https://techpolicy.press/${comment.slug.current}`
-                      }
-                    >
-                      {comment.title}
-                    </Link>
-                  </Typography>
                   <Typography
                     component="div"
-                    variant="h5"
+                    variant="body1"
+                    className={classes.citationTitle}
+                  >
+                    {/* <Link
+                    className={classes.citationTitle}
+                    href={
+                      comment._type == "citation"
+                        ? comment.url || `/${comment.layout}/${comment.slug}`
+                        : `https://techpolicy.press/${comment.slug.current}`
+                    }
+                  > */}
+                    {comment.title}
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    component="div"
+                    variant="h5_alt"
                     className={classes.citationPublication}
                   >
                     {comment._type == "citation"
                       ? process(comment)
-                      : "Tech Policy Press"}
-                  </Typography>
-                  <Typography className={classes.em}>
-                    {comment.date
-                      ? DateTime.fromISO(comment.date).toLocaleString(
-                          DateTime.DATE_FULL
-                        )
-                      : ""}
+                      : "Tech Policy Press"}{" "}
+                    <ArrowForwardIcon className={classes.trackerIcon} />
                   </Typography>
                 </Grid>
-              ))
+              </Link>
+            ))
             : null}
         </Grid>
       </Grid>

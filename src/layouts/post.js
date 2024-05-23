@@ -3,14 +3,14 @@ import { DateTime } from "luxon";
 // import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import _ from "lodash";
+// import _ from "lodash";
 import { titleCase } from "title-case";
 import { toPlainText } from "@portabletext/react";
 import urlFor from "../utils/imageBuilder";
 import { CustomPortableText } from "../components/PortableText";
 
 // utils
-import { markdownify } from "../utils";
+// import { markdownify } from "../utils";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -65,20 +65,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
+                  if (index == breadcrumbs.length - 1) {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FF0033">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  } else {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  }
+                })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -126,7 +126,7 @@ const Post = (props) => {
                     .setLocale("en-us")
                     .toLocaleString(DateTime.DATE_MED)}
                 </Typography>
-                {page.toc && (
+                {/* {page.toc && (
                   <Grid item xs={12} sm={12} mt={2}>
                     <Box
                       sx={{
@@ -150,7 +150,7 @@ const Post = (props) => {
                       </Typography>
                     </Box>
                   </Grid>
-                )}
+                )} */}
                 {page.body && (
                   <Typography component="div" className="html-to-react-article">
                     <CustomPortableText value={page.body} />
