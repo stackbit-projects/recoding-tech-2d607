@@ -481,84 +481,84 @@ const Contributors = () => {
                 <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
                   {Object.keys(filters).length
                     ? Object.keys(filters).map((filter, index) => {
-                      if (filters[filter] == true) {
-                        return (
-                          <Chip
-                            key={`${filter}-${index}`}
-                            item
-                            label={`${filter}`}
-                            onDelete={handleDelete(filter)}
-                            sx={{
-                              fontFamily: "'Open sans', sans-serif",
-                              fontWeight: 500,
-                              textTransform: "none",
-                            }}
-                          />
-                        );
-                      }
-                    })
+                        if (filters[filter] == true) {
+                          return (
+                            <Chip
+                              key={`${filter}-${index}`}
+                              item
+                              label={`${filter}`}
+                              onDelete={handleDelete(filter)}
+                              sx={{
+                                fontFamily: "'Open sans', sans-serif",
+                                fontWeight: 500,
+                                textTransform: "none",
+                              }}
+                            />
+                          );
+                        }
+                      })
                     : null}
                 </Stack>
               </Grid>
             </Grid>
             <Grid container my={6} spacing={4}>
-              {filteredAuthors.length ? (
-                filteredAuthors.map((author) => (
-                  <Grid
-                    container
-                    item
-                    key={author.slug.current}
-                    spacing={2}
-                    xs={12}
-                    sm={6}
-                    md={4}
-                  >
-                    <Grid item xs={3}>
-                      {author.photo && (
-                        <Image
-                          src={urlFor(author.photo).url()}
-                          height={80}
-                          width={80}
-                          alt=""
-                          style={{ borderRadius: 50 }}
-                        />
-                      )}
-                    </Grid>
-                    <Grid item xs={9}>
-                      <Link
-                        href={`/author/${author.slug.current}`}
-                        sx={{
-                          textDecoration: "none",
-                          "&:active, &:focus, &:hover": {
-                            color: "#000",
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ color: "#000", fontWeight: 400 }}
+              {filteredAuthors.length
+                ? filteredAuthors.map((author) => (
+                    <Grid
+                      container
+                      item
+                      key={author.slug.current}
+                      spacing={2}
+                      xs={12}
+                      sm={6}
+                      md={4}
+                    >
+                      <Grid item xs={3}>
+                        {author.photo && (
+                          <Image
+                            src={urlFor(author.photo).url()}
+                            height={80}
+                            width={80}
+                            alt=""
+                            style={{ borderRadius: 50 }}
+                          />
+                        )}
+                      </Grid>
+                      <Grid item xs={9}>
+                        <Link
+                          href={`/author/${author.slug.current}`}
+                          sx={{
+                            textDecoration: "none",
+                            "&:active, &:focus, &:hover": {
+                              color: "#000",
+                              textDecoration: "underline",
+                            },
+                          }}
                         >
-                          {author.name}
-                        </Typography>
-                      </Link>
-                      {author.bio && (
-                        <Typography
-                          color="rgba(0,0,0,0.48)"
-                          component="div"
-                          marginTop={1}
-                          variant="body2"
-                          sx={{ lineHeight: 1.8 }}
-                        >
-                          {toPlainText(author.bio).substring(0, 300)}
-                          {toPlainText(author.bio).length > 300 ? "..." : ""}
-                        </Typography>
-                      )}
+                          <Typography
+                            component="span"
+                            variant="h4"
+                            sx={{ color: "#000", fontWeight: 400 }}
+                          >
+                            {author.name}
+                          </Typography>
+                        </Link>
+                        {author.bio && (
+                          <Typography
+                            color="rgba(0,0,0,0.48)"
+                            component="div"
+                            marginTop={1}
+                            variant="body2"
+                            sx={{ lineHeight: 1.8 }}
+                          >
+                            {toPlainText(author.bio).substring(0, 300)}
+                            {toPlainText(author.bio).length > 300 ? "..." : ""}
+                          </Typography>
+                        )}
+                      </Grid>
                     </Grid>
-                  </Grid>
-                ))
-              ) : null}
+                  ))
+                : null}
             </Grid>
           </>
         )}
