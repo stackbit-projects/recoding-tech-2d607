@@ -109,10 +109,10 @@ function SectionHero(props) {
                 page._type == "author" ||
                 page.stackbit_url_path == "/contributors" ||
                 page.stackbit_url_path == "/newsletter"
-              ? theme.palette["secondary"].main
-              : page.stackbit_url_path == "/library"
-              ? "#EDE4C1"
-              : theme.palette["topic"].main,
+                ? theme.palette["secondary"].main
+                : page.stackbit_url_path == "/library"
+                  ? "#EDE4C1"
+                  : theme.palette["topic"].main,
         }}
       >
         <Container maxWidth="xl">
@@ -127,10 +127,10 @@ function SectionHero(props) {
               </Typography>
               {breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (
-                    <Typography key={crumb} variant="body2" color="#FFF">
-                      {format(crumb)}
-                    </Typography>
-                  ))
+                  <Typography key={crumb} variant="body2" color="#FFF">
+                    {format(crumb)}
+                  </Typography>
+                ))
                 : null}
             </Breadcrumbs>
           </Box>
@@ -151,17 +151,17 @@ function SectionHero(props) {
                       page._type == "author" ||
                       page.stackbit_url_path == "/contributors" ||
                       page.stackbit_url_path == "/newsletter"
-                    ? "#3C6E63"
-                    : page.stackbit_url_path == "/library"
-                    ? "#DBD7B4"
-                    : "#215793"
+                      ? "#3C6E63"
+                      : page.stackbit_url_path == "/library"
+                        ? "#DBD7B4"
+                        : "#215793"
                 }
               />
               {page._type !== "policy_action" ? (
                 <path
                   d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
                   stroke={
-                    page.stackbit_model_type == "data" ? "#000" : "#EFE9DA"
+                    page.stackbit_model_type == "data" ? "" : "#EFE9DA"
                   }
                   strokeWidth="4"
                   strokeLinecap="round"
@@ -203,28 +203,28 @@ function SectionHero(props) {
             page.heroContent ||
             page.title ||
             page.name) && (
-            <Typography
-              variant="h1"
-              className={classes.title}
-              color={
-                page.stackbit_model_type == "data" ||
-                page.stackbit_url_path == "/library"
-                  ? "#000"
-                  : "#FFF"
-              }
-              fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
-            >
-              {titleCase(
-                page.displayName
-                  ? page.displayName
-                  : page.name
-                  ? page.name
-                  : page.heroContent
-                  ? page.heroContent
-                  : page.title
-              )}
-            </Typography>
-          )}
+              <Typography
+                variant="h1"
+                className={classes.title}
+                color={
+                  page.stackbit_model_type == "data" ||
+                    page.stackbit_url_path == "/library"
+                    ? "#000"
+                    : "#FFF"
+                }
+                fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
+              >
+                {titleCase(
+                  page.displayName
+                    ? page.displayName
+                    : page.name
+                      ? page.name
+                      : page.heroContent
+                        ? page.heroContent
+                        : page.title
+                )}
+              </Typography>
+            )}
           {page.heroLinkUrl && (
             <div className={classes.links}>
               <Link
@@ -245,11 +245,11 @@ function SectionHero(props) {
               {page.author ? `${page.author.name} – ` : ""}
               {page._type == "guide"
                 ? `Last updated: ${DateTime.fromISO(
-                    page._updatedAt
-                  ).toLocaleString(DateTime.DATE_FULL)}`
+                  page._updatedAt
+                ).toLocaleString(DateTime.DATE_FULL)}`
                 : DateTime.fromISO(page.date).toLocaleString(
-                    DateTime.DATE_FULL
-                  )}
+                  DateTime.DATE_FULL
+                )}
             </Typography>
           )}
         </Container>
