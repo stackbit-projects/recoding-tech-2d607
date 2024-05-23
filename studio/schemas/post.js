@@ -65,27 +65,6 @@ export default {
       ]
     },
     {
-      type: 'string',
-      name: 'tocTitle',
-      description: 'Title for the table of contents section'
-    },
-    {
-      name: "toc",
-      title: "Table of contents",
-      description: "Copy and paste your subheadings here",
-      validation: null,
-      type: "array",
-      of: [
-        {
-          type: 'block',
-          styles: [
-            { title: 'Heading 1', value: 'h1' },
-            { title: 'Heading 2', value: 'h2' },
-          ],
-        }
-      ]
-    },
-    {
       title: 'Content',
       name: 'body',
       type: 'array',
@@ -154,7 +133,28 @@ export default {
         },
       ],
     },
-
+    {
+      type: 'string',
+      name: 'tocTitle',
+      title: 'Table of Contents Title',
+      description: 'Title for the table of contents section'
+    },
+    {
+      name: "toc",
+      title: "Table of contents",
+      description: "Copy and paste your subheadings here",
+      validation: null,
+      type: "array",
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Heading 1', value: 'h1' },
+            { title: 'Heading 2', value: 'h2' },
+          ],
+        }
+      ]
+    },
     {
       title: 'Related topics',
       name: 'relatedTopics',
