@@ -481,22 +481,22 @@ const Contributors = () => {
                 <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
                   {Object.keys(filters).length
                     ? Object.keys(filters).map((filter, index) => {
-                        if (filters[filter] == true) {
-                          return (
-                            <Chip
-                              key={`${filter}-${index}`}
-                              item
-                              label={`${filter}`}
-                              onDelete={handleDelete(filter)}
-                              sx={{
-                                fontFamily: "'Open sans', sans-serif",
-                                fontWeight: 500,
-                                textTransform: "none",
-                              }}
-                            />
-                          );
-                        }
-                      })
+                      if (filters[filter] == true) {
+                        return (
+                          <Chip
+                            key={`${filter}-${index}`}
+                            item
+                            label={`${filter}`}
+                            onDelete={handleDelete(filter)}
+                            sx={{
+                              fontFamily: "'Open sans', sans-serif",
+                              fontWeight: 500,
+                              textTransform: "none",
+                            }}
+                          />
+                        );
+                      }
+                    })
                     : null}
                 </Stack>
               </Grid>
@@ -558,11 +558,7 @@ const Contributors = () => {
                     </Grid>
                   </Grid>
                 ))
-              ) : (
-                <Grid container item justifyContent="center">
-                  <Typography variant="div">{`No authors found with the name '${searchValue}.' Clear the search filter to return to previous results.`}</Typography>
-                </Grid>
-              )}
+              ) : null}
             </Grid>
           </>
         )}
