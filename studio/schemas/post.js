@@ -134,6 +134,17 @@ export default {
       ],
     },
     {
+      title: 'Related topics',
+      name: 'relatedTopics',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'topic' }],
+        },
+      ],
+    },
+    {
       type: 'string',
       name: 'tocTitle',
       title: 'Table of Contents Title',
@@ -154,17 +165,6 @@ export default {
           ],
         }
       ]
-    },
-    {
-      title: 'Related topics',
-      name: 'relatedTopics',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'topic' }],
-        },
-      ],
     },
     {
       type: 'stackbit_page_meta',
