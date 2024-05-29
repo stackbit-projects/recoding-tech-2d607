@@ -1,14 +1,14 @@
-import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemas'
-import {structure, defaultDocumentNode} from './deskStructure'
+import { defineConfig } from 'sanity'
+import { deskTool } from 'sanity/desk'
+import { visionTool } from '@sanity/vision'
+import { schemaTypes } from './schemas'
+import { structure, defaultDocumentNode } from './deskStructure'
 
 export default defineConfig({
   name: 'default',
   title: 'Tech Policy Press',
   projectId: '3tzzh18d',
-  dataset: 'production',
+  dataset: 'tpp-development',
   // document: {
   //   productionUrl: async (prev, context) => {
   //     const {getClient, dataset, document} = context
@@ -28,7 +28,7 @@ export default defineConfig({
   // },
   plugins: [
     // deskTool({structure: structure, defaultDocumentNode: defaultDocumentNodeResolver}),
-    deskTool({structure, defaultDocumentNode}),
+    deskTool({ structure, defaultDocumentNode }),
     visionTool(),
   ],
   schema: {

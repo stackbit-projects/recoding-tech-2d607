@@ -1,3 +1,5 @@
+import CustomAutocomplete from "../customInputs/policyActionTypes"
+
 export default {
   type: 'document',
   name: 'policy_action',
@@ -40,6 +42,9 @@ export default {
       type: 'string',
       title: 'Country',
       description: "The policy actions's country of origin",
+      components: {
+        input: CustomAutocomplete
+      }
 
       // {
       //   name: 'country',
@@ -123,10 +128,10 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{type: 'topic'}],
+          to: [{ type: 'topic' }],
           options: {
             filter: 'stackbit_model_type == $stackbit_model_type',
-            filterParams: {stackbit_model_type: 'page'},
+            filterParams: { stackbit_model_type: 'page' },
           },
         },
       ],
