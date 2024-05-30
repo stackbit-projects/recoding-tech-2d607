@@ -48,11 +48,11 @@ export const IframeEmbedBlock = ({ value, children }) => {
         <Tweet
           id={tweetId}
           onError={(error) => <TweetNotFound error={error} />}
-          // onError={(error) => (
-          //   <div className="light">
-          //     <TweetNotFound error={error} />
-          //   </div>
-          // )}
+        // onError={(error) => (
+        //   <div className="light">
+        //     <TweetNotFound error={error} />
+        //   </div>
+        // )}
         />
       </div>
     );
@@ -61,6 +61,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
       <iframe
         src={`https://player.vimeo.com/video/${url.slice(-9)}?h=69206d40f4`}
         width="100%"
+        style={{ border: "none" }}
         height="360"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen={true}
@@ -73,6 +74,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
     return (
       <iframe
         src={`https://www.youtube.com/embed/${embedId}`}
+        style={{ border: "none" }}
         width="100%"
         height="480"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -85,7 +87,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
     return (
       <iframe
         src={url}
-        style={{ maxWidth: "500px", minWidth: "250px", maxHeight: "none!important"}}
+        style={{ maxWidth: "500px", minWidth: "250px", maxHeight: "none!important" }}
         width="100%"
         height="900px"
         name="donorbox"
@@ -101,7 +103,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
       <iframe
         src={url}
         width="100%"
-        height= "533"
+        height="533"
         style={{ border: "none" }}
       >
         {children}
