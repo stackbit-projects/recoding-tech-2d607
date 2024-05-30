@@ -55,7 +55,7 @@ const slug = (heading) => {
 const ToCserializer = {
   block: {
     h1: ({ children }) => (
-      <Grid item md={6} mt={0} mb={2}>
+      <Grid item xs={12} sm={6} md={6} mt={0} mb={2}>
         <Typography component="div" marginLeft={1} variant="tocText">
           <Link
             href={slug(children[0])}
@@ -69,7 +69,7 @@ const ToCserializer = {
       </Grid>
     ),
     h2: ({ children }) => (
-      <Grid item md={6} mt={0} mb={2}>
+      <Grid item xs={12} sm={6} md={6} mt={0} mb={2}>
         <Typography component="div" marginLeft={1} variant="tocText">
           <Link
             href={slug(children[0])}
@@ -134,20 +134,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
+                  if (index == breadcrumbs.length - 1) {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FF0033">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  } else {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  }
+                })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -235,13 +235,12 @@ const Post = (props) => {
                     </Box>
                     <Grid
                       container
-                      spacing={0}
-                      columnSpacing={{ xs: 1, sm: 1, md: 1 }}
+                      spacing={1}
                       mt={2}
                       mb={2}
-                      justifyContent="space-between"
                       flexDirection="column"
                       maxHeight={200}
+                    // maxWidth={'100%'}
                     >
                       <PortableText
                         value={page.toc}

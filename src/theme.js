@@ -272,7 +272,7 @@ const theme = createTheme({
     tocText: {
       fontFamily: sansSerifFont,
       fontSize: "0.91em",
-      lineHeight: 1,
+      lineHeight: 1.25,
       fontWeight: 400,
     },
     tableHeaderHome: {
