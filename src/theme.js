@@ -248,7 +248,6 @@ const theme = createTheme({
     h5_alt: {
       fontFamily: sansSerifFont,
       fontSize: "0.81em",
-      marginBottom: 2,
       textTransform: "uppercase",
     },
     h5_card: {
