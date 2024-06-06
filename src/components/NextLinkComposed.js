@@ -68,15 +68,37 @@ const Link = React.forwardRef(function Link(props, ref) {
 
   if (isExternal) {
     if (noLinkStyle) {
-      return <Anchor className={className} target="_blank" href={href} ref={ref} {...other} />;
+      return (
+        <Anchor
+          className={className}
+          target="_blank"
+          href={href}
+          ref={ref}
+          {...other}
+        />
+      );
     }
 
-    return <MuiLink className={className} target="_blank" href={href} ref={ref} {...other} />;
+    return (
+      <MuiLink
+        className={className}
+        target="_blank"
+        href={href}
+        ref={ref}
+        {...other}
+      />
+    );
   }
 
   if (noLinkStyle) {
     return (
-      <NextLinkComposed className={className} target="_blank" ref={ref} to={href} {...other} />
+      <NextLinkComposed
+        className={className}
+        target="_blank"
+        ref={ref}
+        to={href}
+        {...other}
+      />
     );
   }
 
