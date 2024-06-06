@@ -27,7 +27,7 @@ export const NextLinkComposed = React.forwardRef(function NextLinkComposed(
       passHref
       locale={locale}
     >
-      <Anchor ref={ref} {...other} />
+      <Anchor ref={ref} target="_blank" {...other} />
     </NextLink>
   );
 });
@@ -68,15 +68,37 @@ const Link = React.forwardRef(function Link(props, ref) {
 
   if (isExternal) {
     if (noLinkStyle) {
-      return <Anchor className={className} href={href} ref={ref} {...other} />;
+      return (
+        <Anchor
+          className={className}
+          target="_blank"
+          href={href}
+          ref={ref}
+          {...other}
+        />
+      );
     }
 
-    return <MuiLink className={className} href={href} ref={ref} {...other} />;
+    return (
+      <MuiLink
+        className={className}
+        target="_blank"
+        href={href}
+        ref={ref}
+        {...other}
+      />
+    );
   }
 
   if (noLinkStyle) {
     return (
-      <NextLinkComposed className={className} ref={ref} to={href} {...other} />
+      <NextLinkComposed
+        className={className}
+        target="_blank"
+        ref={ref}
+        to={href}
+        {...other}
+      />
     );
   }
 
@@ -87,6 +109,7 @@ const Link = React.forwardRef(function Link(props, ref) {
       className={className}
       ref={ref}
       to={href}
+      target="_blank"
       {...other}
     />
   );
