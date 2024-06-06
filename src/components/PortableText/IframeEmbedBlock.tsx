@@ -48,11 +48,11 @@ export const IframeEmbedBlock = ({ value, children }) => {
         <Tweet
           id={tweetId}
           onError={(error) => <TweetNotFound error={error} />}
-          // onError={(error) => (
-          //   <div className="light">
-          //     <TweetNotFound error={error} />
-          //   </div>
-          // )}
+        // onError={(error) => (
+        //   <div className="light">
+        //     <TweetNotFound error={error} />
+        //   </div>
+        // )}
         />
       </div>
     );
@@ -85,7 +85,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
     return (
       <iframe
         src={url}
-        style={{ maxWidth: "500px", minWidth: "250px", maxHeight: "none!important"}}
+        style={{ maxWidth: "500px", minWidth: "250px", maxHeight: "none!important" }}
         width="100%"
         height="900px"
         name="donorbox"
@@ -101,7 +101,7 @@ export const IframeEmbedBlock = ({ value, children }) => {
       <iframe
         src={url}
         width="100%"
-        height= "533"
+        height="533"
         style={{ border: "none" }}
       >
         {children}
