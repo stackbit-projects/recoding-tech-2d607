@@ -108,7 +108,6 @@ function format(crumb) {
 const Post = (props) => {
   // const router = useRouter();
   const { page } = props;
-  console.log(">>> PAGE", page);
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   useEffect(() => {
     if (page) {
@@ -134,20 +133,20 @@ const Post = (props) => {
               </Typography>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
+                  if (index == breadcrumbs.length - 1) {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FF0033">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  } else {
+                    return (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    );
+                  }
+                })
                 : null}
             </Breadcrumbs>
           </Box>
@@ -240,7 +239,7 @@ const Post = (props) => {
                       mb={2}
                       flexDirection="column"
                       maxHeight={200}
-                      // maxWidth={'100%'}
+                    // maxWidth={'100%'}
                     >
                       <PortableText
                         value={page.toc}
