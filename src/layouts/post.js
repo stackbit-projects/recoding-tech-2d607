@@ -3,14 +3,15 @@ import { DateTime } from "luxon";
 // import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import _ from "lodash";
+// import _ from "lodash";
 import { titleCase } from "title-case";
 import { toPlainText } from "@portabletext/react";
 import urlFor from "../utils/imageBuilder";
 import { CustomPortableText } from "../components/PortableText";
 
 // utils
-import { markdownify } from "../utils";
+// import { markdownify } from "../utils";
+import slugify from "slugify";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -28,6 +29,73 @@ import RelatedTopics from "../components/RelatedTopics";
 
 // icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+// table of contents
+import { PortableText } from "@portabletext/react";
+import { ImageBlock } from "../components/PortableText/ImageBlock";
+
+const slug = (heading) => {
+  let slug = "";
+
+  if (typeof heading === "string") {
+    slug = `#${slugify(heading, {
+      remove: /[*+~.()'"!:@?/]/g,
+    })}`;
+  }
+
+  if (typeof heading === "object" && heading.props && heading.props.text) {
+    slug = `#${slugify(heading.props.text, {
+      remove: /[*+~.()'"!:@?/]/g,
+    })}`;
+  }
+
+  return slug;
+};
+
+const ToCserializer = {
+  block: {
+    h1: ({ children }) => (
+      <Grid item xs={12} sm={6} md={6} mt={0} mb={2}>
+        <Typography component="div" marginLeft={1} variant="tocText">
+          <Link
+            href={slug(children[0])}
+            sex={{
+              textDecoration: "underline",
+            }}
+          >
+            {children}
+          </Link>
+        </Typography>
+      </Grid>
+    ),
+    h2: ({ children }) => (
+      <Grid item xs={12} sm={6} md={6} mt={0} mb={2}>
+        <Typography component="div" marginLeft={1} variant="tocText">
+          <Link
+            href={slug(children[0])}
+            sex={{
+              textDecoration: "underline",
+            }}
+          >
+            {children}
+          </Link>
+        </Typography>
+      </Grid>
+    ),
+    // ignore other block types
+    h3: () => null,
+    h4: () => null,
+    image: () => null,
+    iframeEmbed: () => null,
+    file: () => null,
+    normal: () => null,
+    blockquote: () => null,
+  },
+  list: {
+    bullet: () => null,
+    number: () => null,
+  },
+};
 
 function handleClick(event) {
   event.preventDefault();
@@ -126,30 +194,59 @@ const Post = (props) => {
                     .setLocale("en-us")
                     .toLocaleString(DateTime.DATE_MED)}
                 </Typography>
+                {/* {page.toc && (
+                  // <Grid item xs={12} sm={12} mt={2}>
+                  //   <Box
+                  //     sx={{
+                  //       p: 2,
+                  //       bgcolor: "#F3F0E699",
+                  //     }}
+                  //   >
+                  //     <Typography
+                  //       component="div"
+                  //       variant="h4"
+                  //       sx={{
+                  //         borderBottom: "1px solid #8AA29D",
+                  //         marginBottom: 2,
+                  //         paddingBottom: 2,
+                  //       }}
+                  //     >
+                  //       Table of Contents
+                  //     </Typography>
+                  //     <Typography component="div" className="html-to-react">
+                  //       {markdownify(_.get(props, "page.toc", null))}
+                  //     </Typography>
+                  //   </Box>
+                  // </Grid>
+                )} */}
+                {page.featuredImage && page.toc && (
+                  <Typography component="div" className="html-to-react-article">
+                    <ImageBlock value={page.featuredImage} />
+                  </Typography>
+                )}
+
                 {page.toc && (
-                  <Grid item xs={12} sm={12} mt={2}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        bgcolor: "#F3F0E699",
-                      }}
-                    >
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{
-                          borderBottom: "1px solid #8AA29D",
-                          marginBottom: 2,
-                          paddingBottom: 2,
-                        }}
-                      >
-                        Table of Contents
-                      </Typography>
-                      <Typography component="div" className="html-to-react">
-                        {markdownify(_.get(props, "page.toc", null))}
+                  <>
+                    <Box mb={0}>
+                      <Typography variant="tocTitle">
+                        {page.tocTitle || "Contents"}
                       </Typography>
                     </Box>
-                  </Grid>
+                    <Grid
+                      container
+                      spacing={1}
+                      mt={2}
+                      mb={2}
+                      flexDirection="column"
+                      maxHeight={200}
+                      // maxWidth={'100%'}
+                    >
+                      <PortableText
+                        value={page.toc}
+                        components={ToCserializer}
+                      />
+                    </Grid>
+                  </>
                 )}
                 {page.body && (
                   <Typography component="div" className="html-to-react-article">

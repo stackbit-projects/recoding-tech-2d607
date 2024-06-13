@@ -37,23 +37,24 @@ export const ImageBlock = ({ value }) => {
           <figcaption>
             <Typography
               component="div"
+              className="html-to-react-caption"
               style={{
                 color: "#7C7B7B",
-                cursor: "pointer",
-                fontFamily: "'Lexend', sans-serif",
-                textAlign: "center",
+                // cursor: "pointer",
+                // fontFamily: "'Lexend', sans-serif",
+                // textAlign: "center",
               }}
               dangerouslySetInnerHTML={{ __html: htmlCaption }}
             />
           </figcaption>
-        ): null}
+        ) : null}
         {
           value.caption ? (
             <figcaption>
-              <Typography component="div" style={{ color: "#7C7B7B" }}className="html-to-react-caption">
-                <PortableText value={value.caption} /> 
+              <Typography component="div" style={{ color: "#7C7B7B" }} className="html-to-react-caption">
+                <PortableText value={value.caption} />
               </Typography>
-            </figcaption> ) : null
+            </figcaption>) : null
         }
         {/* {value.caption ? (
             <Typography
