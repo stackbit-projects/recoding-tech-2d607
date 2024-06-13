@@ -45,6 +45,8 @@ import post from './post.js'
 import author from './author.js'
 import iframeEmbed from './iframeEmbed.js'
 import tag from './tag.js'
+import dropdown_option from './dropdown_option.js'
+
 
 // Then we give our schema to the builder and provide the result to Sanity
 export const schemaTypes = [
@@ -57,6 +59,7 @@ export const schemaTypes = [
   author,
   creators,
   citation,
+  dropdown_option,
   file,
   // guide,
   iframeEmbed,
