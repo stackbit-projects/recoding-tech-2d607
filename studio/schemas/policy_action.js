@@ -1,4 +1,4 @@
-import CustomAutocomplete from "../customInputs/policyActionTypes"
+import { GovtAutocomplete, TypeAutocomplete } from "../customInputs/policyAction"
 
 export default {
   type: 'document',
@@ -36,15 +36,20 @@ export default {
       title: 'Policy action type',
       description: 'E.g. legislation, proposal, etc.',
       validation: (Rule) => Rule.required(),
+      components: {
+        input: TypeAutocomplete
+      }
     },
     {
       name: 'country',
       type: 'string',
       title: 'Country',
       description: "The policy actions's country of origin",
+      validation: (Rule) => Rule.required(),
       components: {
-        input: CustomAutocomplete
+        input: GovtAutocomplete
       }
+
 
       // {
       //   name: 'country',
