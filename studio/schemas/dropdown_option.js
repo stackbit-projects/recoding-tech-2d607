@@ -1,5 +1,3 @@
-import { prepareConfig } from "sanity";
-
 export default {
     type: 'document',
     name: 'dropdown_option',
