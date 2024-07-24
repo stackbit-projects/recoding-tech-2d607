@@ -189,8 +189,8 @@ const TrackerActions = (props) => {
                 <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {page.lastUpdate
                     ? DateTime.fromISO(page.lastUpdate).toLocaleString(
-                      DateTime.DATE_MED
-                    )
+                        DateTime.DATE_MED
+                      )
                     : ""}
                 </Typography>
               </Grid>
@@ -244,11 +244,11 @@ const TrackerActions = (props) => {
                   <Typography component="div" variant="trackerRow">
                     {page.lastUpdate
                       ? DateTime.fromISO(page.lastUpdate).toLocaleString(
-                        DateTime.DATE_MED
-                      )
+                          DateTime.DATE_MED
+                        )
                       : DateTime.fromISO(page.dateInitiated).toLocaleString(
-                        DateTime.DATE_MED
-                      )}{" "}
+                          DateTime.DATE_MED
+                        )}{" "}
                     {/* if lastUpdate is null, put in dateInitiated */}
                   </Typography>
                 </TableCell>

@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function format(crumb) {
+  console.log("crumb?", crumb);
   return titleCase(crumb.split("-").join(" "));
 }
 

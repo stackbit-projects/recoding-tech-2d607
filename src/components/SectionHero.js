@@ -5,9 +5,9 @@ import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // Material UI imports
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
+// import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
@@ -16,7 +16,8 @@ import Typography from "@mui/material/Typography";
 import { withPrefix } from "../utils";
 
 // icons
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+// import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import CustomBreadcrumbs from "./Breadcrumbs";
 
 const useStyles = makeStyles((theme) => ({
   author: {
@@ -51,12 +52,12 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   svg: {
-    height: 350,
+    height: 420,
     left: "50%",
     position: "absolute",
-    top: "40%",
+    top: "20%",
     transform: "translate(-50%, -50%)",
-    width: 750,
+    width: 1100,
     zIndex: 0,
   },
 
@@ -70,20 +71,18 @@ function handleClick(event) {
   event.preventDefault();
 }
 
-function format(crumb) {
-  return titleCase(crumb.split("-").join(" "));
-}
+// function format(crumb) {
+//   return titleCase(crumb.split("-").join(" "));
+// }
 
 function SectionHero(props) {
   const router = useRouter();
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   let { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    console.log("section hero useeffect");
-    console.log("page?", page);
     if (router) {
       if (page._type == "advanced") {
         setBreadcrumbs([page.title]);
@@ -100,44 +99,48 @@ function SectionHero(props) {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("breadcrumbs =>", breadcrumbs);
+  }, [breadcrumbs]);
+
   return (
     <section id={page._id} className="block block-hero">
       <Box
-        style={{
-          backgroundColor:
-            page.stackbit_model_type == "data" || page.layout == "policy_action"
-              ? "#FFF"
-              : page._type == "author" ||
-                page.stackbit_url_path == "/contributors" ||
-                page.stackbit_url_path == "/newsletter"
-              ? theme.palette["secondary"].main
-              : page.stackbit_url_path == "/library"
-              ? "#EDE4C1"
-              : theme.palette["topic"].main,
-        }}
+        style={{ backgroundColor: "#FFF" }}
+      // style={{
+      //   backgroundColor:
+      //     page.stackbit_model_type == "data" || page.layout == "policy_action" || page.stackbit_url_path == "/contributors"
+      //       ? "#FFF"
+      //       : page._type == "author" ||
+      //         page.stackbit_url_path == "/newsletter"
+      //         ? theme.palette["secondary"].main
+      //         : page.stackbit_url_path == "/library"
+      //           ? "#EDE4C1"
+      //           : theme.palette["topic"].main,
+      // }}
       >
         <Container maxWidth="xl">
-          <Box role="presentation" onClick={handleClick} sx={{ paddingY: 6 }}>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-              sx={{ color: "#FFF" }}
-            >
-              <Typography variant="body2" color="#FFF">
-                Home
-              </Typography>
-              {breadcrumbs.length
-                ? breadcrumbs.map((crumb) => (
-                    <Typography key={crumb} variant="body2" color="#FFF">
-                      {format(crumb)}
-                    </Typography>
-                  ))
-                : null}
-            </Breadcrumbs>
+          <Box
+            role="presentation"
+            onClick={handleClick}
+            sx={{ paddingY: 6 }}
+            marginBottom={8}
+          >
+            {page.stackbit_url_path !== "/contributors" ? (
+              <CustomBreadcrumbs page={page} />
+            ) : null}
           </Box>
         </Container>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
+            {/* <svg xmlns="http://www.w3.org/2000/svg"
+              width="1126"
+              height="440"
+              fill="none"
+              viewBox="0 0 1126 440">
+              <path fill="#215793" d="M1126 0H711C586 0 586 126 460 126H0v314h460c126 0 126-126 251-126h415V0Z" />
+            </svg> */}
+
             <svg
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -149,14 +152,14 @@ function SectionHero(props) {
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action"
-                    ? "#215793"
-                    : page._type == "author" ||
-                      page.stackbit_url_path == "/contributors" ||
-                      page.stackbit_url_path == "/newsletter"
-                    ? "#3C6E63"
-                    : page.stackbit_url_path == "/library"
-                    ? "#DBD7B4"
-                    : "#215793"
+                      ? "#215793"
+                      : page._type == "author" ||
+                        page.stackbit_url_path == "/contributors" ||
+                        page.stackbit_url_path == "/newsletter"
+                        ? "#3C6E63"
+                        : page.stackbit_url_path == "/library"
+                          ? "#DBD7B4"
+                          : "#215793"
                 }
               />
               {page._type !== "policy_action" ? (
@@ -203,28 +206,28 @@ function SectionHero(props) {
             page.heroContent ||
             page.title ||
             page.name) && (
-            <Typography
-              variant="h1"
-              className={classes.title}
-              color={
-                page.stackbit_model_type == "data" ||
-                page.stackbit_url_path == "/library"
-                  ? "#000"
-                  : "#FFF"
-              }
-              fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
-            >
-              {titleCase(
-                page.displayName
-                  ? page.displayName
-                  : page.name
-                  ? page.name
-                  : page.heroContent
-                  ? page.heroContent
-                  : page.title
-              )}
-            </Typography>
-          )}
+              <Typography
+                variant="h1"
+                className={classes.title}
+                color={
+                  page.stackbit_model_type == "data" ||
+                    page.stackbit_url_path == "/library"
+                    ? "#000"
+                    : "#FFF"
+                }
+                fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
+              >
+                {titleCase(
+                  page.displayName
+                    ? page.displayName
+                    : page.name
+                      ? page.name
+                      : page.heroContent
+                        ? page.heroContent
+                        : page.title
+                )}
+              </Typography>
+            )}
           {page.heroLinkUrl && (
             <div className={classes.links}>
               <Link
@@ -245,11 +248,11 @@ function SectionHero(props) {
               {page.author ? `${page.author.name} – ` : ""}
               {page._type == "guide"
                 ? `Last updated: ${DateTime.fromISO(
-                    page._updatedAt
-                  ).toLocaleString(DateTime.DATE_FULL)}`
+                  page._updatedAt
+                ).toLocaleString(DateTime.DATE_FULL)}`
                 : DateTime.fromISO(page.date).toLocaleString(
-                    DateTime.DATE_FULL
-                  )}
+                  DateTime.DATE_FULL
+                )}
             </Typography>
           )}
         </Container>
