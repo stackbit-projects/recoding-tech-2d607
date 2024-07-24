@@ -10,7 +10,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -21,7 +21,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const useStyles = makeStyles(() => ({
@@ -89,12 +89,7 @@ const TrackerActions = (props) => {
 
   return (
     <>
-      <Typography variant="body2" gutterBottom>
-        <Link href="/tracker" className={classes.trackerLink}>
-          <ArrowBackIcon className={classes.trackerIcon} />
-          Return to policy tracker
-        </Link>
-      </Typography>
+      <Typography variant="body2" gutterBottom></Typography>
       {isMobile ? (
         <Accordion sx={{ marginBottom: 4 }}>
           <AccordionSummary
@@ -194,8 +189,8 @@ const TrackerActions = (props) => {
                 <Typography variant="h4" sx={{ fontWeight: "normal" }}>
                   {page.lastUpdate
                     ? DateTime.fromISO(page.lastUpdate).toLocaleString(
-                        DateTime.DATE_MED
-                      )
+                      DateTime.DATE_MED
+                    )
                     : ""}
                 </Typography>
               </Grid>
@@ -249,11 +244,11 @@ const TrackerActions = (props) => {
                   <Typography component="div" variant="trackerRow">
                     {page.lastUpdate
                       ? DateTime.fromISO(page.lastUpdate).toLocaleString(
-                          DateTime.DATE_MED
-                        )
+                        DateTime.DATE_MED
+                      )
                       : DateTime.fromISO(page.dateInitiated).toLocaleString(
-                          DateTime.DATE_MED
-                        )}{" "}
+                        DateTime.DATE_MED
+                      )}{" "}
                     {/* if lastUpdate is null, put in dateInitiated */}
                   </Typography>
                 </TableCell>

@@ -32,7 +32,7 @@ export async function getStaticProps({ params }) {
     `*[_type == "topic"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "policy_action" && slug.current == "${slug}"]{_id, _type, _createdAt, _updatedAt, slug, title, displayTitle, type, dateInitiated, lastUpdate, country, status, summary, stackbit_model_type, relatedCitations[]->, relatedCommentary[]->}`
+    `*[_type == "policy_action" && slug.current == "${slug}"]{_id, _type, _createdAt, _updatedAt, slug, title, displayTitle, type, dateInitiated, lastUpdate, country, layout, status, summary, stackbit_model_type, relatedCitations[]->, relatedCommentary[]->}`
   );
   return {
     props: {

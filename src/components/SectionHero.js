@@ -82,6 +82,8 @@ function SectionHero(props) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
+    console.log("section hero useeffect");
+    console.log("page?", page);
     if (router) {
       if (page._type == "advanced") {
         setBreadcrumbs([page.title]);
@@ -103,10 +105,9 @@ function SectionHero(props) {
       <Box
         style={{
           backgroundColor:
-            page.stackbit_model_type == "data"
+            page.stackbit_model_type == "data" || page.layout == "policy_action"
               ? "#FFF"
-              : page.layout == "policy_action" ||
-                page._type == "author" ||
+              : page._type == "author" ||
                 page.stackbit_url_path == "/contributors" ||
                 page.stackbit_url_path == "/newsletter"
               ? theme.palette["secondary"].main
@@ -147,8 +148,9 @@ function SectionHero(props) {
                 fill={
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
-                    : page.layout == "policy_action" ||
-                      page._type == "author" ||
+                    : page.layout == "policy_action"
+                    ? "#215793"
+                    : page._type == "author" ||
                       page.stackbit_url_path == "/contributors" ||
                       page.stackbit_url_path == "/newsletter"
                     ? "#3C6E63"
