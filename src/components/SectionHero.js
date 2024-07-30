@@ -115,17 +115,17 @@ function SectionHero(props) {
     <section id={page._id} className="block block-hero">
       <Box
         style={{ backgroundColor: "#FFF" }}
-      // style={{
-      //   backgroundColor:
-      //     page.stackbit_model_type == "data" || page.layout == "policy_action" || page.stackbit_url_path == "/contributors"
-      //       ? "#FFF"
-      //       : page._type == "author" ||
-      //         page.stackbit_url_path == "/newsletter"
-      //         ? theme.palette["secondary"].main
-      //         : page.stackbit_url_path == "/library"
-      //           ? "#EDE4C1"
-      //           : theme.palette["topic"].main,
-      // }}
+        // style={{
+        //   backgroundColor:
+        //     page.stackbit_model_type == "data" || page.layout == "policy_action" || page.stackbit_url_path == "/contributors"
+        //       ? "#FFF"
+        //       : page._type == "author" ||
+        //         page.stackbit_url_path == "/newsletter"
+        //         ? theme.palette["secondary"].main
+        //         : page.stackbit_url_path == "/library"
+        //           ? "#EDE4C1"
+        //           : theme.palette["topic"].main,
+        // }}
       >
         <Container maxWidth="xl">
           <Box
@@ -160,14 +160,14 @@ function SectionHero(props) {
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action"
-                      ? "#215793"
-                      : page._type == "author" ||
-                        page.stackbit_url_path == "/contributors" ||
-                        page.stackbit_url_path == "/newsletter"
-                        ? "#3C6E63"
-                        : page.stackbit_url_path == "/library"
-                          ? "#DBD7B4"
-                          : "#215793"
+                    ? "#215793"
+                    : page._type == "author" ||
+                      page.stackbit_url_path == "/contributors" ||
+                      page.stackbit_url_path == "/newsletter"
+                    ? "#3C6E63"
+                    : page.stackbit_url_path == "/library"
+                    ? "#DBD7B4"
+                    : "#215793"
                 }
               />
               {/* this was the white shape that used to be part of the design
@@ -219,7 +219,7 @@ function SectionHero(props) {
                 className={classes.advanced_hero}
                 color={
                   page.stackbit_model_type == "data" ||
-                    page.stackbit_url_path == "/library"
+                  page.stackbit_url_path == "/library"
                     ? "#000"
                     : "#FFF"
                 }
@@ -237,7 +237,7 @@ function SectionHero(props) {
                 className={classes.title}
                 color={
                   page.stackbit_model_type == "data" ||
-                    page.stackbit_url_path == "/library"
+                  page.stackbit_url_path == "/library"
                     ? "#000"
                     : "#FFF"
                 }
@@ -247,10 +247,10 @@ function SectionHero(props) {
                   page.displayName
                     ? page.displayName
                     : page.name
-                      ? page.name
-                      : page.heroContent
-                        ? page.heroContent
-                        : page.title
+                    ? page.name
+                    : page.heroContent
+                    ? page.heroContent
+                    : page.title
                 )}
               </Typography>
             )}

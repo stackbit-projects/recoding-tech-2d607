@@ -40,10 +40,10 @@ const CustomBreadcrumbs = (page) => {
       </Link>
       {breadcrumbs.length
         ? breadcrumbs.map((crumb) => (
-          <Typography key={crumb} variant="body2" color="#000">
-            {crumb}
-          </Typography>
-        ))
+            <Typography key={crumb} variant="body2" color="#000">
+              {crumb}
+            </Typography>
+          ))
         : null}
     </Breadcrumbs>
   );
