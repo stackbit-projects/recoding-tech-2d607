@@ -203,7 +203,21 @@ const theme = createTheme({
     },
     h1: {
       fontFamily: sansSerifFont,
+      lineHeight: 1.167,
       fontSize: "2.4em",
+      fontWeight: 700,
+      textAlign: "center",
+    },
+    h1_hero: {
+      fontFamily: sansSerifFont,
+      lineHeight: 1.167,
+      fontSize: "1.6em",
+      fontWeight: 700,
+      textAlign: "center",
+    },
+    h2_hero: {
+      fontFamily: sansSerifFont,
+      fontSize: "1.3em",
       fontWeight: 700,
       textAlign: "center",
     },

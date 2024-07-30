@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
-import { DateTime } from "luxon";
+// import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // Material UI imports
@@ -9,17 +9,24 @@ import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 // import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 // utils
-import { withPrefix } from "../utils";
+// import { withPrefix } from "../utils";
 
 // icons
 // import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import CustomBreadcrumbs from "./Breadcrumbs";
 
 const useStyles = makeStyles((theme) => ({
+  advanced_hero: {
+    lineHeight: "1.67",
+    fontSize: "2em",
+    paddingTop: 35,
+    zIndex: 1,
+    position: "relative",
+  },
   author: {
     fontStyle: "italic",
     marginTop: 50,
@@ -28,10 +35,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   hero: {
-    marginBottom: 60,
+    marginBottom: 100,
     marginTop: 70,
-    paddingBottom: 150,
-    paddingTop: 40,
+    paddingBottom: 100,
+    paddingTop: 0,
     position: "relative",
   },
   link: {
@@ -52,15 +59,14 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   svg: {
-    height: 420,
+    height: 360,
     left: "50%",
     position: "absolute",
     top: "20%",
     transform: "translate(-50%, -50%)",
-    width: 1100,
+    width: 1000,
     zIndex: 0,
   },
-
   title: {
     position: "relative",
     zIndex: 1,
@@ -83,6 +89,8 @@ function SectionHero(props) {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
+    console.log("PAGE._TYPE IN SECTION HERO =>", page._type);
+
     if (router) {
       if (page._type == "advanced") {
         setBreadcrumbs([page.title]);
@@ -107,31 +115,31 @@ function SectionHero(props) {
     <section id={page._id} className="block block-hero">
       <Box
         style={{ backgroundColor: "#FFF" }}
-        // style={{
-        //   backgroundColor:
-        //     page.stackbit_model_type == "data" || page.layout == "policy_action" || page.stackbit_url_path == "/contributors"
-        //       ? "#FFF"
-        //       : page._type == "author" ||
-        //         page.stackbit_url_path == "/newsletter"
-        //         ? theme.palette["secondary"].main
-        //         : page.stackbit_url_path == "/library"
-        //           ? "#EDE4C1"
-        //           : theme.palette["topic"].main,
-        // }}
+      // style={{
+      //   backgroundColor:
+      //     page.stackbit_model_type == "data" || page.layout == "policy_action" || page.stackbit_url_path == "/contributors"
+      //       ? "#FFF"
+      //       : page._type == "author" ||
+      //         page.stackbit_url_path == "/newsletter"
+      //         ? theme.palette["secondary"].main
+      //         : page.stackbit_url_path == "/library"
+      //           ? "#EDE4C1"
+      //           : theme.palette["topic"].main,
+      // }}
       >
         <Container maxWidth="xl">
           <Box
             role="presentation"
             onClick={handleClick}
             sx={{ paddingY: 6 }}
-            marginBottom={8}
+            marginBottom={12}
           >
             {page.stackbit_url_path !== "/contributors" ? (
               <CustomBreadcrumbs page={page} />
             ) : null}
           </Box>
         </Container>
-        <Container maxWidth="sm" className={classes.hero}>
+        <Container maxWidth="sm" minWidth="xs" className={classes.hero}>
           <Box className={classes.svg}>
             {/* <svg xmlns="http://www.w3.org/2000/svg"
               width="1126"
@@ -152,17 +160,18 @@ function SectionHero(props) {
                   page.stackbit_model_type == "data"
                     ? "#ECF0F0"
                     : page.layout == "policy_action"
-                    ? "#215793"
-                    : page._type == "author" ||
-                      page.stackbit_url_path == "/contributors" ||
-                      page.stackbit_url_path == "/newsletter"
-                    ? "#3C6E63"
-                    : page.stackbit_url_path == "/library"
-                    ? "#DBD7B4"
-                    : "#215793"
+                      ? "#215793"
+                      : page._type == "author" ||
+                        page.stackbit_url_path == "/contributors" ||
+                        page.stackbit_url_path == "/newsletter"
+                        ? "#3C6E63"
+                        : page.stackbit_url_path == "/library"
+                          ? "#DBD7B4"
+                          : "#215793"
                 }
               />
-              {page._type !== "policy_action" ? (
+              {/* this was the white shape that used to be part of the design
+               {page._type !== "policy_action" ? (
                 <path
                   d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
                   stroke={page.stackbit_model_type == "data" ? "" : "#EFE9DA"}
@@ -170,91 +179,144 @@ function SectionHero(props) {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              ) : null}
+              ) : null} */}
             </svg>
           </Box>
-          {page._type == "policy_action" ? (
-            <Typography
-              variant="h4"
-              className={classes.superTitle}
-              color={"#FFF"}
-            >
-              Tracker Detail
-            </Typography>
-          ) : page._type == "topic" ? (
-            <Typography
-              variant="h4"
-              className={classes.superTitle}
-              color={page.stackbit_model_type == "page" ? "#FFF" : "#000"}
-            >
-              Topic
-            </Typography>
-          ) : page._type == "article" ? (
-            <Typography variant="h4" className={classes.superTitle}>
-              Commentary & Analysis
-            </Typography>
-          ) : page._type == "author" ? (
-            <Typography
-              variant="h4"
-              className={classes.superTitle}
-              sx={{ color: "#FFF" }}
-            >
-              contributors
-            </Typography>
-          ) : null}
-          {(page.displayName ||
-            page.heroContent ||
-            page.title ||
-            page.name) && (
-            <Typography
-              variant="h1"
-              className={classes.title}
-              color={
-                page.stackbit_model_type == "data" ||
-                page.stackbit_url_path == "/library"
-                  ? "#000"
-                  : "#FFF"
-              }
-              fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
-            >
-              {titleCase(
-                page.displayName
-                  ? page.displayName
-                  : page.name
-                  ? page.name
-                  : page.heroContent
-                  ? page.heroContent
-                  : page.title
-              )}
-            </Typography>
-          )}
-          {page.heroLinkUrl && (
-            <div className={classes.links}>
-              <Link
-                variant="link"
-                href={withPrefix(page.heroLinkUrl)}
-                className={classes.link}
+          <Container maxWidth="sm" className={classes.heroTextBox}>
+            {page._type == "policy_action" ? (
+              <Typography
+                variant="h4"
+                className={classes.superTitle}
+                color={"#FFF"}
               >
-                {page.heroLinkText}
-              </Link>
-            </div>
-          )}
-          {(page._type == "guide" || page._type == "article") && (
-            <Typography
-              component="div"
-              variant="body1"
-              className={classes.author}
-            >
-              {page.author ? `${page.author.name} – ` : ""}
-              {page._type == "guide"
-                ? `Last updated: ${DateTime.fromISO(
+                Tracker Detail
+              </Typography>
+            ) : page._type == "topic" ? (
+              <Typography
+                variant="h4"
+                className={classes.superTitle}
+                color={page.stackbit_model_type == "page" ? "#FFF" : "#000"}
+              >
+                Topic
+              </Typography>
+            ) : page._type == "article" ? (
+              <Typography variant="h4" className={classes.superTitle}>
+                Commentary & Analysis
+              </Typography>
+            ) : page._type == "author" ? (
+              <Typography
+                variant="h4"
+                className={classes.superTitle}
+                sx={{ color: "#FFF" }}
+              >
+                Contributors
+              </Typography>
+            ) : null}
+
+            {page._type === "advanced" ? (
+              <Typography
+                variant="h1"
+                className={classes.advanced_hero}
+                color={
+                  page.stackbit_model_type == "data" ||
+                    page.stackbit_url_path == "/library"
+                    ? "#000"
+                    : "#FFF"
+                }
+              >
+                {page.title}
+              </Typography>
+            ) : (
+              <Typography
+                sx={{
+                  typography: {
+                    sm: "h1_hero",
+                    xs: "h2_hero",
+                  },
+                }}
+                className={classes.title}
+                color={
+                  page.stackbit_model_type == "data" ||
+                    page.stackbit_url_path == "/library"
+                    ? "#000"
+                    : "#FFF"
+                }
+                fontSize={page._type == "author" ? "16em" : "2em"}
+              >
+                {titleCase(
+                  page.displayName
+                    ? page.displayName
+                    : page.name
+                      ? page.name
+                      : page.heroContent
+                        ? page.heroContent
+                        : page.title
+                )}
+              </Typography>
+            )}
+
+            {/**
+             * 
+             *  <Typography
+                  sx={{
+                    typography: {
+                      sm: 'h1_hero',
+                      xs: 'h2_hero'
+                    }
+                  }}
+                  // variant="h1"
+                  className={classes.title}
+                  color={
+                    page.stackbit_model_type == "data" ||
+                      page.stackbit_url_path == "/library"
+                      ? "#000"
+                      : "#FFF"
+                  }
+                  fontSize={page._type == "policy_action" ? "1.6em" : "2em"}
+                >
+       {titleCase(
+                    page.displayName
+                      ? page.displayName
+                      : page.name
+                        ? page.name
+                        : page.heroContent
+                          ? page.heroContent
+                          : page.title
+                  )} 
+          </Typography>
+             * 
+             * 
+           
+            {
+              page.heroLinkUrl && (
+                <div className={classes.links}>
+                  <Link
+                    variant="link"
+                    href={withPrefix(page.heroLinkUrl)}
+                    className={classes.link}
+                  >
+                    {page.heroLinkText}
+                  </Link>
+                </div>
+              )
+            }
+            {/* {(page._type == "guide" || page._type == "article") && (
+              <Typography
+                component="div"
+                variant="body1"
+                className={classes.author}
+              >
+                {page.author ? `${page.author.name} – ` : ""}
+                {page._type == "guide"
+                  ? `Last updated: ${DateTime.fromISO(
                     page._updatedAt
                   ).toLocaleString(DateTime.DATE_FULL)}`
-                : DateTime.fromISO(page.date).toLocaleString(
+                  : DateTime.fromISO(page.date).toLocaleString(
                     DateTime.DATE_FULL
                   )}
-            </Typography>
-          )}
+              </Typography>
+            )} */}
+          </Container>
         </Container>
       </Box>
     </section>

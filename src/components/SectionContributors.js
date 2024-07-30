@@ -302,6 +302,7 @@ const Contributors = () => {
               container
               alignItems="center"
               justifyContent="space-between"
+              mt={15}
               sx={{ borderBottom: loading ? "" : "1px solid #8AA29D" }}
             >
               <Grid item>
