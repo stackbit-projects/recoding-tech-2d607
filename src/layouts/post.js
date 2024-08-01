@@ -244,7 +244,7 @@ const Post = (props) => {
                       mb={2}
                       flexDirection="column"
                       maxHeight={200}
-                    // maxWidth={'100%'}
+                      // maxWidth={'100%'}
                     >
                       <PortableText
                         value={page.toc}
