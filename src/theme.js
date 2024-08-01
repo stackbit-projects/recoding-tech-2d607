@@ -201,6 +201,11 @@ const theme = createTheme({
       lineHeight: 1.4,
       fontSize: "1.35rem",
     },
+    currentCrumb: {
+      fontFamily: sansSerifFont,
+      fontWeight: 450,
+      lineHeight: 1.4,
+    },
     h1: {
       fontFamily: sansSerifFont,
       lineHeight: 1.167,
@@ -210,13 +215,14 @@ const theme = createTheme({
     },
     h1_hero: {
       fontFamily: sansSerifFont,
-      lineHeight: 1.167,
+      lineHeight: 1.1,
       fontSize: "1.6em",
       fontWeight: 700,
       textAlign: "center",
     },
     h2_hero: {
       fontFamily: sansSerifFont,
+      lineHeight: 1.1,
       fontSize: "1.3em",
       fontWeight: 700,
       textAlign: "center",
