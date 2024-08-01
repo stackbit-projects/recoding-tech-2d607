@@ -206,6 +206,12 @@ const theme = createTheme({
       fontWeight: 450,
       lineHeight: 1.4,
     },
+    currentCrumbPost: {
+      color: "#FF0033",
+      fontFamily: sansSerifFont,
+      fontWeight: 300,
+      lineHeight: 1.4,
+    },
     h1: {
       fontFamily: sansSerifFont,
       lineHeight: 1.167,

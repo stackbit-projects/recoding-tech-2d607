@@ -41,6 +41,10 @@ const CustomBreadcrumbs = ({ page }) => {
       crumbs.push(page.name);
     }
 
+    if (_type === "post") {
+      crumbs.push(title);
+    }
+
     setBreadcrumbs(crumbs);
   }, []);
 
@@ -61,8 +65,9 @@ const CustomBreadcrumbs = ({ page }) => {
               return (
                 <Typography
                   key={crumb}
-                  variant="currentCrumb"
-                  color="#000"
+                  variant={
+                    _type === "post" ? "currentCrumbPost" : "currentCrumb"
+                  }
                   classname={classes.current}
                 >
                   {crumb}
