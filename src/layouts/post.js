@@ -156,7 +156,16 @@ const Post = (props) => {
             </Breadcrumbs> */}
           </Box>
           <Grid container spacing={8}>
-            <Grid container spacing={4} paddingTop={"0 !important"} marginTop={2} item xs={12} md={8} direction="row">
+            <Grid
+              container
+              spacing={4}
+              paddingTop={"0 !important"}
+              marginTop={2}
+              item
+              xs={12}
+              md={8}
+              direction="row"
+            >
               <Grid item>
                 {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
@@ -244,7 +253,7 @@ const Post = (props) => {
                       mb={2}
                       flexDirection="column"
                       maxHeight={200}
-                    // maxWidth={'100%'}
+                      // maxWidth={'100%'}
                     >
                       <PortableText
                         value={page.toc}
