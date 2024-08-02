@@ -61,33 +61,33 @@ const CustomBreadcrumbs = ({ page }) => {
       </Typography>
       {breadcrumbs.length
         ? breadcrumbs.map((crumb, idx) => {
-          if (idx === breadcrumbs.length - 1) {
-            return (
-              <Typography
-                key={crumb}
-                variant={
-                  _type === "post" ? "currentCrumbPost" : "currentCrumb"
-                }
-                className={classes.current}
-              >
-                {crumb}
-              </Typography>
-            );
-          } else {
-            return (
-              <Typography
-                component="div"
-                key={crumb}
-                variant="body2"
-                color="#000"
-              >
-                <Link href={crumb.link} className={classes.link}>
-                  {crumb.linkText}
-                </Link>
-              </Typography>
-            );
-          }
-        })
+            if (idx === breadcrumbs.length - 1) {
+              return (
+                <Typography
+                  key={crumb}
+                  variant={
+                    _type === "post" ? "currentCrumbPost" : "currentCrumb"
+                  }
+                  className={classes.current}
+                >
+                  {crumb}
+                </Typography>
+              );
+            } else {
+              return (
+                <Typography
+                  component="div"
+                  key={crumb}
+                  variant="body2"
+                  color="#000"
+                >
+                  <Link href={crumb.link} className={classes.link}>
+                    {crumb.linkText}
+                  </Link>
+                </Typography>
+              );
+            }
+          })
         : null}
     </Breadcrumbs>
   );
