@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
+// import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { titleCase } from "title-case";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
+// import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
 // icons
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+// import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 // images
 import TrackerBackground from "../assets/tracker-bg.jpg";
@@ -57,21 +57,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function format(crumb) {
-  return titleCase(crumb.split("-").join(" "));
-}
+// function format(crumb) {
+//   return titleCase(crumb.split("-").join(" "));
+// }
 
 function SectionHero(props) {
-  const router = useRouter();
+  // const router = useRouter();
   const classes = useStyles();
   let { page } = props;
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  // const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  useEffect(() => {
-    if (router) {
-      setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   if (router) {
+  //     setBreadcrumbs(router.asPath.replace(/^\/|\/$/g, "").split("/"));
+  //   }
+  // }, [router]);
 
   return (
     <section id={page._id} className="block block-hero">
@@ -104,7 +104,7 @@ function SectionHero(props) {
           }}
         >
           <Container maxWidth={"xl"} sx={{ position: "relative", zIndex: 1 }}>
-            <Breadcrumbs
+            {/* <Breadcrumbs
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
               color="#FFF"
@@ -124,7 +124,7 @@ function SectionHero(props) {
                     </Typography>
                   ))
                 : null}
-            </Breadcrumbs>
+            </Breadcrumbs> */}
           </Container>
           <Container
             maxWidth="sm"
