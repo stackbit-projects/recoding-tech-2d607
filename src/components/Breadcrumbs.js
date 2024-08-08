@@ -28,12 +28,15 @@ const CustomBreadcrumbs = ({ page }) => {
   const { title, _type } = page;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
+  const truncate = (title) =>
+    title.length > 50 ? `${title.substring(0, 50)}...` : title;
+
   useEffect(() => {
     const crumbs = [];
 
     if (_type === "policy_action") {
       crumbs.push({ linkText: "Policy Tracker", link: "/tracker/" });
-      crumbs.push(title);
+      crumbs.push(truncate(title));
     }
 
     if (_type === "author") {
@@ -42,7 +45,7 @@ const CustomBreadcrumbs = ({ page }) => {
     }
 
     if (_type === "post") {
-      crumbs.push(title);
+      crumbs.push(truncate(title));
     }
 
     setBreadcrumbs(crumbs);
@@ -61,33 +64,33 @@ const CustomBreadcrumbs = ({ page }) => {
       </Typography>
       {breadcrumbs.length
         ? breadcrumbs.map((crumb, idx) => {
-            if (idx === breadcrumbs.length - 1) {
-              return (
-                <Typography
-                  key={crumb}
-                  variant={
-                    _type === "post" ? "currentCrumbPost" : "currentCrumb"
-                  }
-                  className={classes.current}
-                >
-                  {crumb}
-                </Typography>
-              );
-            } else {
-              return (
-                <Typography
-                  component="div"
-                  key={crumb}
-                  variant="body2"
-                  color="#000"
-                >
-                  <Link href={crumb.link} className={classes.link}>
-                    {crumb.linkText}
-                  </Link>
-                </Typography>
-              );
-            }
-          })
+          if (idx === breadcrumbs.length - 1) {
+            return (
+              <Typography
+                key={crumb}
+                variant={
+                  _type === "post" ? "currentCrumbPost" : "currentCrumb"
+                }
+                className={classes.current}
+              >
+                {crumb}
+              </Typography>
+            );
+          } else {
+            return (
+              <Typography
+                component="div"
+                key={crumb}
+                variant="body2"
+                color="#000"
+              >
+                <Link href={crumb.link} className={classes.link}>
+                  {crumb.linkText}
+                </Link>
+              </Typography>
+            );
+          }
+        })
         : null}
     </Breadcrumbs>
   );
