@@ -102,58 +102,21 @@ function handleClick(event) {
   event.preventDefault();
 }
 
-// function format(crumb) {
-//   return titleCase(crumb.split("-").join(" "));
-// }
-
 const Post = (props) => {
-  // const router = useRouter();
   const { page } = props;
-  // // const [breadcrumbs, setBreadcrumbs] = useState([]);
-  // useEffect(() => {
-  //   if (page) {
-  //     setBreadcrumbs([page.title]);
-  //   }
-  // }, []);
 
   return (
     <Layout {...props}>
       <Box my={6}>
-        <Container maxWidth="xl">
+        <Container
+          maxWidth="lg"
+        >
           <Box
             role="presentation"
             onClick={handleClick}
             sx={{ marginBottom: 6 }}
           >
             <CustomBreadcrumbs page={page} />
-
-            {/* <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Typography component="div" variant="body2" color="text.primary">
-                <UtilsLink href="/">
-                  Home
-                </UtilsLink>
-              </Typography>
-              {breadcrumbs && breadcrumbs.length
-                ? breadcrumbs.map((crumb, index) => {
-                  if (index == breadcrumbs.length - 1) {
-                    return (
-                      <Typography key={crumb} variant="body2" color="#FF0033">
-                        {format(crumb)}
-                      </Typography>
-                    );
-                  } else {
-                    return (
-                      <Typography key={crumb} variant="body2" color="#FFF">
-                        {format(crumb)}
-                      </Typography>
-                    );
-                  }
-                })
-                : null}
-            </Breadcrumbs> */}
           </Box>
           <Grid container spacing={8}>
             <Grid
@@ -167,9 +130,6 @@ const Post = (props) => {
               direction="row"
             >
               <Grid item>
-                {/* <Typography component="div" className="html-to-react">
-                  {markdownify(_.get(props, "page.content", null))}
-                </Typography> */}
                 <Typography
                   component="h1"
                   variant="h2_article"
@@ -253,7 +213,7 @@ const Post = (props) => {
                       mb={2}
                       flexDirection="column"
                       maxHeight={200}
-                      // maxWidth={'100%'}
+                    // maxWidth={'100%'}
                     >
                       <PortableText
                         value={page.toc}
