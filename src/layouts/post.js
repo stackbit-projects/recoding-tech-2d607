@@ -108,9 +108,7 @@ const Post = (props) => {
   return (
     <Layout {...props}>
       <Box my={6}>
-        <Container
-          maxWidth="lg"
-        >
+        <Container maxWidth="lg">
           <Box
             role="presentation"
             onClick={handleClick}
@@ -213,7 +211,7 @@ const Post = (props) => {
                       mb={2}
                       flexDirection="column"
                       maxHeight={200}
-                    // maxWidth={'100%'}
+                      // maxWidth={'100%'}
                     >
                       <PortableText
                         value={page.toc}
