@@ -74,44 +74,44 @@ const PageRecents = (props) => {
       >
         {readings && readings.length
           ? readings.map((article) => (
-            <Grid
-              item
-              key={article._id}
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{
-                borderBottom: "1px solid",
-                borderBottomColor: "#EFE9DA",
-                maxWidth: isMobile ? "100%" : "30% !important",
-                paddingBottom: 2,
-                paddingTop: 2,
-              }}
-            >
-              <Link
-                href={`/${article.slug.current}`}
+              <Grid
+                item
+                key={article._id}
+                xs={12}
+                sm={6}
+                md={4}
                 sx={{
-                  textDecoration: "none !important",
+                  borderBottom: "1px solid",
+                  borderBottomColor: "#EFE9DA",
+                  maxWidth: isMobile ? "100%" : "30% !important",
+                  paddingBottom: 2,
+                  paddingTop: 2,
                 }}
               >
-                <Typography
-                  component="span"
-                  variant="body1"
+                <Link
+                  href={`/${article.slug.current}`}
                   sx={{
-                    color: "#000 !important",
-                    fontSize: "1em",
-                    fontWeight: "700",
-                    "&:hover": {
-                      color: "#225C9D !important",
-                      textDecoration: "none",
-                    },
+                    textDecoration: "none !important",
                   }}
                 >
-                  {article.title}
-                </Typography>
-              </Link>
-            </Grid>
-          ))
+                  <Typography
+                    component="span"
+                    variant="body1"
+                    sx={{
+                      color: "#000 !important",
+                      fontSize: "1em",
+                      fontWeight: "700",
+                      "&:hover": {
+                        color: "#225C9D !important",
+                        textDecoration: "none",
+                      },
+                    }}
+                  >
+                    {article.title}
+                  </Typography>
+                </Link>
+              </Grid>
+            ))
           : null}
       </Grid>
     </section>
