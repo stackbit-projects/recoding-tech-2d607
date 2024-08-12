@@ -45,7 +45,8 @@ const Topic = (props) => {
           {page.stackbit_model_type == "page" && (
             <Grid container spacing={8}>
               <Grid
-                spacing={12}
+                container
+                spacing={4}
                 direction="column"
                 item
                 sm={12}
@@ -56,7 +57,7 @@ const Topic = (props) => {
                   component="div"
                   variant="body2"
                   className="html-to-react"
-                  sx={{ fontSize: 14, lineHeight: 2 }}
+                  sx={{ fontSize: 16, lineHeight: 2 }}
                 >
                   <CustomPortableText value={page.description} />
                 </Typography>

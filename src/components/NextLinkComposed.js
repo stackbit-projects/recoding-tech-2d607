@@ -11,28 +11,40 @@ const Anchor = styled("a")({});
 
 export const NextLinkComposed = React.forwardRef(function NextLinkComposed(
   props,
-  ref
+  // ref
 ) {
-  const { to, linkAs, replace, scroll, shallow, prefetch, locale, ...other } =
-    props;
+  const {
+    children,
+    to,
+    linkAs,
+    // replace,
+    // scroll,
+    // shallow,
+    // prefetch,
+    // locale,
+    // ...other
+  } = props;
 
+  console.log("*** wow hello-> to", to);
+  console.log("props", props);
   return (
     <NextLink
       href={to}
-      prefetch={prefetch}
+      // prefetch={prefetch}
       as={linkAs}
-      replace={replace}
-      scroll={scroll}
-      shallow={shallow}
-      passHref
-      locale={locale}
+    // replace={replace}
+    // // scroll={scroll}
+    // shallow={shallow}
+    // passHref
+    // locale={locale}
     >
-      <Anchor ref={ref} target="_blank" {...other} />
+      {children}
     </NextLink>
   );
 });
 
 NextLinkComposed.propTypes = {
+  children: PropTypes.object,
   href: PropTypes.any,
   linkAs: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   locale: PropTypes.string,

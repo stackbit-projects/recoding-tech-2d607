@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import ComposedLink from "./NextLinkComposed";
+import NextLink from "next/link";
 import Typography from "@mui/material/Typography";
 
 const PageRecents = (props) => {
@@ -29,12 +29,12 @@ const PageRecents = (props) => {
           </Typography>
         </Grid>
         <Grid item>
-          <ComposedLink
+          <NextLink
             href={{
               pathname: "/search",
               query: { filter: page._id },
             }}
-            sx={{
+            style={{
               height: 24,
               textDecoration: "none",
               width: 162,
@@ -53,6 +53,7 @@ const PageRecents = (props) => {
                 fontWeight: 500,
                 paddingX: "10px",
                 paddingY: "6px",
+                textDecoration: "none",
                 "&:active, & :focus, &:hover": {
                   color: "#FF0033",
                   textDecoration: "underline",
@@ -61,7 +62,7 @@ const PageRecents = (props) => {
             >
               View more
             </Typography>
-          </ComposedLink>
+          </NextLink>
         </Grid>
       </Grid>
       <Grid

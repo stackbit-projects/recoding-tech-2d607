@@ -6,7 +6,8 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
+import NextLink from "next/link";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -48,9 +49,9 @@ const RelatedActions = (props) => {
                 </Grid>
               </Grid>
               <Grid item xs={12} md={1}>
-                <Link
+                <NextLink
                   href="/tracker"
-                  sx={{
+                  style={{
                     height: 24,
                     textAlign: "center",
                     width: 162,
@@ -70,6 +71,7 @@ const RelatedActions = (props) => {
                       fontWeight: 500,
                       paddingX: "10px",
                       paddingY: "6px",
+                      textDecoration: "none",
                       "&:active, & :focus, &:hover": {
                         color: "#FF0033",
                         textDecoration: "underline",
@@ -78,7 +80,7 @@ const RelatedActions = (props) => {
                   >
                     See all
                   </Typography>
-                </Link>
+                </NextLink>
               </Grid>
             </Grid>
             <PolicyActionTableBlock actions={actions} isHomepage={false} />
