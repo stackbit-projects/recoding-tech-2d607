@@ -10,7 +10,7 @@ import { styled } from "@mui/material/styles";
 const Anchor = styled("a")({});
 
 export const NextLinkComposed = React.forwardRef(function NextLinkComposed(
-  props,
+  props
   // ref
 ) {
   const {
@@ -32,11 +32,11 @@ export const NextLinkComposed = React.forwardRef(function NextLinkComposed(
       href={to}
       // prefetch={prefetch}
       as={linkAs}
-    // replace={replace}
-    // // scroll={scroll}
-    // shallow={shallow}
-    // passHref
-    // locale={locale}
+      // replace={replace}
+      // // scroll={scroll}
+      // shallow={shallow}
+      // passHref
+      // locale={locale}
     >
       {children}
     </NextLink>
