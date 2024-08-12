@@ -43,13 +43,14 @@ const Topic = (props) => {
       <Box my={8}>
         <Container>
           {page.stackbit_model_type == "page" && (
-            <Grid container spacing={8}>
+            <Grid container padding={2} spacing={8}>
               <Grid
                 container
-                spacing={4}
+                spacing={2}
                 direction="column"
                 item
-                sm={12}
+                xs={12}
+                sm={8}
                 md={8}
                 className={classes.maxWidth}
               >
@@ -64,10 +65,11 @@ const Topic = (props) => {
               </Grid>
               <Grid
                 container
-                spacing={4}
+                spacing={2}
                 direction="column"
                 item
-                sm={12}
+                xs={12}
+                sm={4}
                 md={4}
               >
                 <Grid item sx={{ width: "100%" }}>

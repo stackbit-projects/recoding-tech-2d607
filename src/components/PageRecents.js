@@ -74,44 +74,44 @@ const PageRecents = (props) => {
       >
         {readings && readings.length
           ? readings.map((article) => (
-              <Grid
-                item
-                key={article._id}
-                xs={12}
-                sm={6}
-                md={4}
+            <Grid
+              item
+              key={article._id}
+              xs={12}
+              sm={6}
+              md={4}
+              sx={{
+                borderBottom: "1px solid",
+                borderBottomColor: "#EFE9DA",
+                maxWidth: isMobile ? "100%" : "30% !important",
+                paddingBottom: 2,
+                paddingTop: 2,
+              }}
+            >
+              <Link
+                href={`/${article.slug.current}`}
                 sx={{
-                  borderBottom: "1px solid",
-                  borderBottomColor: "#EFE9DA",
-                  maxWidth: isMobile ? "100%" : "30% !important",
-                  paddingBottom: 2,
-                  paddingTop: 2,
+                  textDecoration: "none !important",
                 }}
               >
-                <Link
-                  href={`/${article.slug.current}`}
+                <Typography
+                  component="span"
+                  variant="body1"
                   sx={{
-                    textDecoration: "none !important",
+                    color: "#000 !important",
+                    fontSize: "1em",
+                    fontWeight: "700",
+                    "&:hover": {
+                      color: "#225C9D !important",
+                      textDecoration: "none",
+                    },
                   }}
                 >
-                  <Typography
-                    component="span"
-                    variant="body1"
-                    sx={{
-                      color: "#000 !important",
-                      fontSize: "1em",
-                      fontWeight: "700",
-                      "&:hover": {
-                        color: "#225C9D !important",
-                        textDecoration: "none",
-                      },
-                    }}
-                  >
-                    {article.title}
-                  </Typography>
-                </Link>
-              </Grid>
-            ))
+                  {article.title}
+                </Typography>
+              </Link>
+            </Grid>
+          ))
           : null}
       </Grid>
     </section>
