@@ -1,5 +1,5 @@
 [build]
-publish = "out"
+publish = ".next"
 command = "npm run build"
 functions = "functions/"
 
@@ -12,5 +12,5 @@ framework = "#static"
 
 #[[redirects]]
 #from = "recoding-tech-v2.netlify.app"
-#to = "recoding.tech"
+#to = "techpolicy.press"
 
