@@ -3,6 +3,9 @@ publish = ".next"
 command = "npm run build"
 functions = "functions/"
 
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
 [build.environment]
 #NETLIFY_NEXT_PLUGIN_SKIP = "true"
 NODE_OPTIONS="–max-old-space-size=8192"
