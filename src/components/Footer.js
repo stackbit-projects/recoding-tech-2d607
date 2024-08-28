@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { htmlToReact, Link } from "../utils";
 import NextLink from "next/link";
 
-
 // material ui imports
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -93,26 +92,29 @@ function Footer(props) {
             >
               {links.length
                 ? links.map((link, idx) => (
-                  <Grid item key={idx} sx={{ my: 1 }}>
-                    <NextLink style={{ textDecoration: "none" }} href={link.url}>
-                      <Typography
-                        component="span"
-                        variant="h5"
-                        sx={{
-                          color: "#FFF",
-                          fontSize: 14,
-                          textDecoration: "none",
-                          textTransform: "none",
-                          "&:hover, &:focus": {
-                            textDecoration: "underline",
-                          },
-                        }}
+                    <Grid item key={idx} sx={{ my: 1 }}>
+                      <NextLink
+                        style={{ textDecoration: "none" }}
+                        href={link.url}
                       >
-                        {link.label}
-                      </Typography>
-                    </NextLink>
-                  </Grid>
-                ))
+                        <Typography
+                          component="span"
+                          variant="h5"
+                          sx={{
+                            color: "#FFF",
+                            fontSize: 14,
+                            textDecoration: "none",
+                            textTransform: "none",
+                            "&:hover, &:focus": {
+                              textDecoration: "underline",
+                            },
+                          }}
+                        >
+                          {link.label}
+                        </Typography>
+                      </NextLink>
+                    </Grid>
+                  ))
                 : null}
               {/* {_.map(
                 _.get(props, "data.config.footer.links", null),
