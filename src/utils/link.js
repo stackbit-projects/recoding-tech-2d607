@@ -11,7 +11,7 @@ function Link({ children, href, ...other }) {
     const page = href === "/" ? "/" : "/[...slug]";
     return (
       <NextLink href={page} as={href}>
-        {/* <a {...other}>{children}</a> */}
+        {children}
       </NextLink>
     );
   }
