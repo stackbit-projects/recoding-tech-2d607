@@ -18,7 +18,7 @@ function Link({ children, href, ...other }) {
     }
     return (
       <NextLink href={page} as={href}>
-        <a {...other}>{children}</a>
+        {children}
       </NextLink>
     );
   }

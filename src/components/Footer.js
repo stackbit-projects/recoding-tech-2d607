@@ -4,6 +4,7 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 
 import { htmlToReact, Link } from "../utils";
+import NextLink from "next/link";
 
 // material ui imports
 import Box from "@mui/material/Box";
@@ -92,7 +93,10 @@ function Footer(props) {
               {links.length
                 ? links.map((link, idx) => (
                     <Grid item key={idx} sx={{ my: 1 }}>
-                      <Link style={{ textDecoration: "none" }} href={link.url}>
+                      <NextLink
+                        style={{ textDecoration: "none" }}
+                        href={link.url}
+                      >
                         <Typography
                           component="span"
                           variant="h5"
@@ -108,7 +112,7 @@ function Footer(props) {
                         >
                           {link.label}
                         </Typography>
-                      </Link>
+                      </NextLink>
                     </Grid>
                   ))
                 : null}

@@ -217,7 +217,7 @@ function PolicyActionTable(props) {
                           tabIndex={-1}
                           key={row._key}
                         >
-                          {headers.map((column) => {
+                          {headers.map((column, idx) => {
                             let value = row[column.id];
                             // if (!value) {
                             //   if (row.country) {
@@ -240,6 +240,7 @@ function PolicyActionTable(props) {
                                 column.id == "lastUpdate" ? (
                                   <Typography
                                     component="div"
+                                    key={`${column.id}-#${idx}`}
                                     variant={"trackerRowHome"}
                                   >
                                     {value
@@ -256,6 +257,7 @@ function PolicyActionTable(props) {
                                 ) : column.id == "title" ? (
                                   <Typography
                                     component="div"
+                                    key={`${column.id}-#${idx}`}
                                     variant={"trackerTitleHome"}
                                   >
                                     <Link
@@ -271,6 +273,7 @@ function PolicyActionTable(props) {
                                   </Typography>
                                 ) : column.id == "type" ? (
                                   <Typography
+                                    key={`${row.type}`}
                                     component="div"
                                     variant={"trackerRowHome"}
                                   >

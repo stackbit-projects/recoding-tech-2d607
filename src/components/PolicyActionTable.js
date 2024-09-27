@@ -184,7 +184,7 @@ function PolicyActionTable(props) {
                     }}
                   >
                     {headers.map((column) => (
-                      <TableCell key={column.id}>
+                      <TableCell key={`${column.id}-cell`}>
                         <Typography component="div" variant={"tableHeaderHome"}>
                           {column.label}
                         </Typography>
@@ -199,7 +199,7 @@ function PolicyActionTable(props) {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row._id}
+                        key={`${row._id}-row`}
                       >
                         {headers.map((column) => {
                           let value = row[column.id];

@@ -43,12 +43,14 @@ const Topic = (props) => {
       <Box my={8}>
         <Container>
           {page.stackbit_model_type == "page" && (
-            <Grid container spacing={8}>
+            <Grid container padding={2} spacing={8}>
               <Grid
-                spacing={12}
+                container
+                spacing={2}
                 direction="column"
                 item
-                sm={12}
+                xs={12}
+                sm={8}
                 md={8}
                 className={classes.maxWidth}
               >
@@ -56,17 +58,18 @@ const Topic = (props) => {
                   component="div"
                   variant="body2"
                   className="html-to-react"
-                  sx={{ fontSize: 14, lineHeight: 2 }}
+                  sx={{ fontSize: 16, lineHeight: 2 }}
                 >
                   <CustomPortableText value={page.description} />
                 </Typography>
               </Grid>
               <Grid
                 container
-                spacing={4}
+                spacing={2}
                 direction="column"
                 item
-                sm={12}
+                xs={12}
+                sm={4}
                 md={4}
               >
                 <Grid item sx={{ width: "100%" }}>

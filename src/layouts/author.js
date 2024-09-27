@@ -61,7 +61,7 @@ const Author = (props) => {
           sx={{ borderBottom: "1px solid #8AA29D" }}
         >
           <Grid container>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
               {page.photo && (
                 <Image
                   src={imageBuilder(page.photo).url()}
@@ -72,7 +72,7 @@ const Author = (props) => {
                 />
               )}
             </Grid>
-            <Grid item xs={9}>
+            <Grid item sm={9} xs={12}>
               {page.bio && (
                 <Typography component="div" variant="body2">
                   <CustomPortableText value={page.bio} />

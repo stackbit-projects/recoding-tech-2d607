@@ -17,7 +17,10 @@ export const ImageBlock = ({ value }) => {
   }
   if (!value.asset) console.log("***No asset for ImageBlock value***:", value);
   return (
-    <div>
+    <div style={{
+      position: "relative",
+      width: "100%"
+    }}>
       <figure>
         {value.asset && (
           <Image
@@ -25,12 +28,13 @@ export const ImageBlock = ({ value }) => {
             alt={value.alt || " "}
             loading="lazy"
             // layout="fill"
-            objectFit="contain"
             height={576}
             width={1024}
             style={{
               aspectRatio: width / height,
             }}
+            layout="responsive"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
         {htmlCaption ? (
