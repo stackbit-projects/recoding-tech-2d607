@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Typography from "@mui/material/Typography";
-import Link from "../utils/link";
+// import Link from "../utils/link";
+import NextLink from "next/link";
 
 // Material UI
 import { makeStyles } from "@mui/styles";
@@ -57,40 +58,40 @@ const CustomBreadcrumbs = ({ page }) => {
       aria-label="breadcrumb"
       sx={{ color: "#000" }}
     >
-      <Typography variant="body2" color="#000">
-        <Link href="/" className={classes.link}>
+      <NextLink href="/" className={classes.link}>
+        <Typography variant="body2" color="#000">
           Home
-        </Link>
-      </Typography>
+        </Typography>
+      </NextLink>
       {breadcrumbs.length
         ? breadcrumbs.map((crumb, idx) => {
-            if (idx === breadcrumbs.length - 1) {
-              return (
-                <Typography
-                  key={crumb}
-                  variant={
-                    _type === "post" ? "currentCrumbPost" : "currentCrumb"
-                  }
-                  className={classes.current}
-                >
-                  {crumb}
-                </Typography>
-              );
-            } else {
-              return (
+          if (idx === breadcrumbs.length - 1) {
+            return (
+              <Typography
+                key={crumb}
+                variant={
+                  _type === "post" ? "currentCrumbPost" : "currentCrumb"
+                }
+                className={classes.current}
+              >
+                {crumb}
+              </Typography>
+            );
+          } else {
+            return (
+              <NextLink key={`${crumb}-link`} href={crumb.link} className={classes.link}>
                 <Typography
                   component="div"
                   key={crumb}
                   variant="body2"
                   color="#000"
                 >
-                  <Link href={crumb.link} className={classes.link}>
-                    {crumb.linkText}
-                  </Link>
+                  {crumb.linkText}
                 </Typography>
-              );
-            }
-          })
+              </NextLink>
+            );
+          }
+        })
         : null}
     </Breadcrumbs>
   );
