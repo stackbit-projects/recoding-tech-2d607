@@ -141,8 +141,7 @@ function SectionHero(props) {
                     : "#215793"
                 }
               />
-              {/* this was the white outline shape that used to be part of the design
-               {page._type !== "policy_action" ? (
+              {page._type !== "policy_action" ? (
                 <path
                   d="M587.5 277H430.8c-78.3 0-78.3-78.6-156.6-78.6H117.5V2h156.7c78.3 0 78.3 78.6 156.6 78.6h156.7V277Z"
                   stroke={page.stackbit_model_type == "data" ? "" : "#EFE9DA"}
@@ -150,7 +149,7 @@ function SectionHero(props) {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              ) : null} */}
+              ) : null}
             </svg>
           </Box>
           <Container maxWidth="sm" className={classes.hero_text_box}>
