@@ -110,7 +110,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
         `*[_type=="author" && name match "${searchValue}"]{_id}`
       );
       const authorSearch = authors
-        .map((author) => ` || "${author._id}" in authors[]._id`)
+        .map((author) => ` || references("${author._id}")`)
         .join("");
       searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}" ${authorSearch})`;
     }
