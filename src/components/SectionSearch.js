@@ -142,6 +142,8 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     setLoading(true);
 
     if (filters.length || search || (startValue && endValue)) {
+      // reset pagination
+      setPage(1);
       fetchArticles().catch(console.error);
     }
 
