@@ -106,7 +106,13 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     let dateFragment = ` && date > '${startDate}' && date < '${endDate}'`;
     let searchFragment = "";
     if (searchValue) {
-      searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
+      const authors = await client.fetch(
+        `*[_type=="author" && name match "${searchValue}"]{_id}`
+      );
+      const authorSearch = authors
+        .map((author) => ` || "${author._id}" in authors[]._id`)
+        .join("");
+      searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}" ${authorSearch})`;
     }
 
     // if there's a searchvalue text, boost the results where the title matches the search value
