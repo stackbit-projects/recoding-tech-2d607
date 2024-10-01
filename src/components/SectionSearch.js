@@ -116,9 +116,9 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     }
 
     // if there's a searchvalue text, boost the results where the title matches the search value
-    // let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
+    // let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { _id, title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
 
-    let detailFragment = ` { title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
+    let detailFragment = ` { _id, title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
 
     let filterFragment = [];
     if (filters.length) {
