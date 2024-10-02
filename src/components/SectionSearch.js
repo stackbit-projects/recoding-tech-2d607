@@ -106,13 +106,19 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     let dateFragment = ` && date > '${startDate}' && date < '${endDate}'`;
     let searchFragment = "";
     if (searchValue) {
-      searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}")`;
+      const authors = await client.fetch(
+        `*[_type=="author" && name match "${searchValue}"]{_id}`
+      );
+      const authorSearch = authors
+        .map((author) => ` || references("${author._id}")`)
+        .join("");
+      searchFragment = ` && (pt::text(body) match "${searchValue}" || title match "${searchValue}" ${authorSearch})`;
     }
 
     // if there's a searchvalue text, boost the results where the title matches the search value
-    let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
+    // let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { _id, title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
 
-    let detailFragment = ` { title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
+    let detailFragment = ` { _id, title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
 
     let filterFragment = [];
     if (filters.length) {
@@ -125,7 +131,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     // console.log("***filterFragment***:", filterFragment);
     const query = `*[!(_id in path("drafts.**")) && _type == "post"${dateFragment}${searchFragment}${filterFragment.join(
       " "
-    )}]${searchValue ? scoreFragment : detailFragment}`;
+    )}]${detailFragment}`;
     // console.log("***GROQ query***:", query);
     const newArticles = await client.fetch(query);
     setArticles(newArticles);
@@ -136,6 +142,8 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     setLoading(true);
 
     if (filters.length || search || (startValue && endValue)) {
+      // reset pagination
+      setPage(1);
       fetchArticles().catch(console.error);
     }
 
