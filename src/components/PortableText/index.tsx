@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import { FileBlock } from "./FileBlock";
 import { IframeEmbedBlock } from "./IframeEmbedBlock";
+import { CustomHtmlBlock } from "./CustomHtmlBlock";
 import { ImageBlock } from "./ImageBlock";
 import { ReferenceBlock } from "./ReferenceBlock";
 
@@ -30,6 +31,7 @@ const components = {
   types: {
     reference: ReferenceBlock,
     iframeEmbed: IframeEmbedBlock,
+    customHtml: CustomHtmlBlock,
     Image: ImageBlock,
     PDF: FileBlock,
     File: FileBlock,

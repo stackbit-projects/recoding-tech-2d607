@@ -135,6 +135,9 @@ module.exports = {
                 props.node
               );
             },
+            customHtml: (props) => {
+              return h("div", props.node.code);
+            },
           },
         },
       },

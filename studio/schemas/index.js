@@ -44,6 +44,7 @@ import stackbit_page_meta from './stackbit_page_meta.js'
 import post from './post.js'
 import author from './author.js'
 import iframeEmbed from './iframeEmbed.js'
+import customHtml from './customHtml.js'
 import tag from './tag.js'
 import dropdown_option from './dropdown_option.js'
 
@@ -63,6 +64,7 @@ export const schemaTypes = [
   file,
   // guide,
   iframeEmbed,
+  customHtml,
   page,
   // person,
   post,
