@@ -90,7 +90,11 @@ const Body = (props) => {
           );
         })}
         <link
-          href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700,700i&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Libre+Baskerville:700&display=swap"
           rel="stylesheet"
         />
         {_.get(props, "data.config.favicon", null) && (

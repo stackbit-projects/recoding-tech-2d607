@@ -110,12 +110,15 @@ function SectionHero(props) {
                 page.stackbit_url_path == "/contributors" ||
                 page.stackbit_url_path == "/newsletter"
               ? theme.palette["secondary"].main
+              : page.stackbit_url_path == "/donate" ||
+                page.stackbit_url_path == "/donate_new"
+              ? "#559482"
               : page.stackbit_url_path == "/library"
               ? "#EDE4C1"
               : theme.palette["topic"].main,
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <Box role="presentation" onClick={handleClick} sx={{ paddingY: 6 }}>
             <Breadcrumbs
               separator={<NavigateNextIcon fontSize="small" />}
@@ -152,6 +155,9 @@ function SectionHero(props) {
                       page.stackbit_url_path == "/contributors" ||
                       page.stackbit_url_path == "/newsletter"
                     ? "#3C6E63"
+                    : page.stackbit_url_path == "/donate" ||
+                      page.stackbit_url_path == "/donate_new"
+                    ? "#3C8671"
                     : page.stackbit_url_path == "/library"
                     ? "#DBD7B4"
                     : "#215793"
