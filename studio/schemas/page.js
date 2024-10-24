@@ -99,6 +99,11 @@ export default {
             },
           ],
         },
+        {
+          title: 'Custom HTML',
+          name: 'customHtml',
+          type: 'customHtml',
+        },
       ],
     },
     // {

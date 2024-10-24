@@ -6,6 +6,7 @@ import { CircularProgress } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
 // Icons
 import SearchIcon from "@mui/icons-material/Search";
@@ -13,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const SearchBar = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
   const handleSearchRequest = (value) => {
@@ -29,6 +31,37 @@ const SearchBar = () => {
 
   if (loading) {
     return <CircularProgress />;
+  } else if (!isOpen) {
+    return (
+      <>
+        <IconButton
+          type="search"
+          aria-label="search"
+          sx={{ width: 40 }}
+          onClick={() => setOpen(true)}
+        >
+          <SearchIcon sx={{ color: "#000" }} />
+        </IconButton>
+        <Button
+          href="/donate"
+          color="tertiary"
+          variant="contained"
+          sx={{
+            borderRadius: "4px",
+            color: "#FFF",
+            bgcolor: "#DF1316",
+            fontFamily: `"Roboto", sans-serif`,
+            fontSize: 13,
+            fontWeight: 500,
+            position: "relative",
+            textTransform: "uppercase",
+            marginLeft: "24px",
+          }}
+        >
+          Donate
+        </Button>
+      </>
+    );
   } else {
     return (
       <Paper
