@@ -283,6 +283,15 @@ const Header = (props) => {
                           Search
                         </Link>
                       </Typography>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ marginLeft: 2, textTransform: "none" }}
+                      >
+                        <Link href={`/donate`} className={classes.link}>
+                          Donate
+                        </Link>
+                      </Typography>
                     </nav>
                   </Box>
                 </Popover>
