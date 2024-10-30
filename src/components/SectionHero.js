@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useRouter } from "next/router";
 import { DateTime } from "luxon";
 import { titleCase } from "title-case";
+import NextLink from "next/link";
 
 // Material UI imports
 import { makeStyles, useTheme } from "@mui/styles";
@@ -41,6 +41,13 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     zIndex: 1,
   },
+  breadcrumblink: {
+    color: "#000",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#ff0033",
+    },
+  },
   links: {
     marginTop: 40,
     textAlign: "center",
@@ -75,28 +82,38 @@ function format(crumb) {
 }
 
 function SectionHero(props) {
-  const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
   let { page } = props;
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
-  useEffect(() => {
-    if (router) {
-      if (page._type == "advanced") {
-        setBreadcrumbs([page.title]);
-        return;
-      }
+  const truncate = (title) =>
+    +title.length > 50 ? `${title.substring(0, 50)}...` : title;
 
-      let crumbs = router.asPath.replace(/^\/|\/$/g, "").split("/");
-      // change "category" to "topic"
-      let index = crumbs.indexOf("category");
-      if (index !== -1) {
-        crumbs[index] = "topic";
-      }
-      setBreadcrumbs(crumbs);
+  useEffect(() => {
+    const crumbs = [];
+
+    if (page._type === "policy_action") {
+      crumbs.push({ linkText: "Policy Tracker", link: "/tracker/" });
+      crumbs.push(truncate(page.title));
     }
-  }, []);
+
+    if (page._type === "author") {
+      crumbs.push({ linkText: "Contributors", link: "/contributors/" });
+      crumbs.push(page.name);
+    }
+
+    if (page._type === "topic") {
+      crumbs.push("Topics");
+      crumbs.push(truncate(page.name));
+    }
+
+    if (page._type === "post" || page._type === "advanced") {
+      crumbs.push(truncate(page.title));
+    }
+
+    setBreadcrumbs(crumbs);
+  }, [page.title, page._type]);
 
   return (
     <section id={page._id} className="block block-hero">
@@ -125,15 +142,34 @@ function SectionHero(props) {
               aria-label="breadcrumb"
               sx={{ color: "#FFF" }}
             >
-              <Typography variant="body2" color="#FFF">
-                Home
-              </Typography>
+              <NextLink href="/" className={classes.breadcrumblink}>
+                <Typography variant="body2" color="#FFF">
+                  Home
+                </Typography>
+              </NextLink>
               {breadcrumbs.length
-                ? breadcrumbs.map((crumb) => (
-                    <Typography key={crumb} variant="body2" color="#FFF">
-                      {format(crumb)}
-                    </Typography>
-                  ))
+                ? breadcrumbs.map((crumb, index) =>
+                    crumb.linkText ? (
+                      <NextLink
+                        key={index}
+                        href={crumb.link}
+                        className={classes.breadcrumblink}
+                      >
+                        <Typography
+                          component="div"
+                          key={crumb}
+                          variant="body2"
+                          color="#FFF"
+                        >
+                          {crumb.linkText}
+                        </Typography>
+                      </NextLink>
+                    ) : (
+                      <Typography key={crumb} variant="body2" color="#FFF">
+                        {format(crumb)}
+                      </Typography>
+                    )
+                  )
                 : null}
             </Breadcrumbs>
           </Box>

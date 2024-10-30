@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import { useRouter } from "next/router";
+import NextLink from "next/link";
 
 // Material UI imports
 import Box from "@mui/material/Box";
@@ -55,9 +56,11 @@ const Page = (props) => {
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
             >
-              <Typography variant="body2" color="text.primary">
-                Home
-              </Typography>
+              <NextLink href="/" style={{ textDecoration: "none" }}>
+                <Typography variant="body2" color="text.primary">
+                  Home
+                </Typography>
+              </NextLink>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
                     if (index == breadcrumbs.length - 1) {

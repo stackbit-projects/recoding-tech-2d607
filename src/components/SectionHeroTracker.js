@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { titleCase } from "title-case";
+import NextLink from "next/link";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -103,15 +104,17 @@ function SectionHero(props) {
             },
           }}
         >
-          <Container maxWidth={"xl"} sx={{ position: "relative", zIndex: 1 }}>
+          <Container maxWidth={"lg"} sx={{ position: "relative", zIndex: 1 }}>
             <Breadcrumbs
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
               color="#FFF"
             >
-              <Typography component="span" variant="body2" color="#FFF">
-                Home
-              </Typography>
+              <NextLink href="/" style={{ textDecoration: "none" }}>
+                <Typography component="span" variant="body2" color="#FFF">
+                  Home
+                </Typography>
+              </NextLink>
               {breadcrumbs.length
                 ? breadcrumbs.map((crumb) => (
                     <Typography

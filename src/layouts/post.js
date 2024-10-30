@@ -8,6 +8,7 @@ import { titleCase } from "title-case";
 import { toPlainText } from "@portabletext/react";
 import urlFor from "../utils/imageBuilder";
 import { CustomPortableText } from "../components/PortableText";
+import NextLink from "next/link";
 
 // utils
 // import { markdownify } from "../utils";
@@ -127,10 +128,13 @@ const Post = (props) => {
             <Breadcrumbs
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
+              sx={{ position: "relative" }}
             >
-              <Typography variant="body2" color="text.primary">
-                Home
-              </Typography>
+              <NextLink href="/" style={{ textDecoration: "none" }}>
+                <Typography variant="body2" color="text.primary">
+                  Home
+                </Typography>
+              </NextLink>
               {breadcrumbs && breadcrumbs.length
                 ? breadcrumbs.map((crumb, index) => {
                     if (index == breadcrumbs.length - 1) {
