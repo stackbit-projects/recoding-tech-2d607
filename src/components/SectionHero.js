@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useRouter } from "next/router";
 import { DateTime } from "luxon";
 import { titleCase } from "title-case";
 
 // Material UI imports
 import { makeStyles, useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
 // utils
 import { withPrefix } from "../utils";
-
-// icons
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const useStyles = makeStyles((theme) => ({
   author: {
@@ -66,37 +61,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleClick(event) {
-  event.preventDefault();
-}
-
-function format(crumb) {
-  return titleCase(crumb.split("-").join(" "));
-}
-
 function SectionHero(props) {
-  const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
   let { page } = props;
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
-
-  useEffect(() => {
-    if (router) {
-      if (page._type == "advanced") {
-        setBreadcrumbs([page.title]);
-        return;
-      }
-
-      let crumbs = router.asPath.replace(/^\/|\/$/g, "").split("/");
-      // change "category" to "topic"
-      let index = crumbs.indexOf("category");
-      if (index !== -1) {
-        crumbs[index] = "topic";
-      }
-      setBreadcrumbs(crumbs);
-    }
-  }, []);
 
   return (
     <section id={page._id} className="block block-hero">
@@ -118,26 +86,7 @@ function SectionHero(props) {
               : theme.palette["topic"].main,
         }}
       >
-        <Container maxWidth="lg">
-          <Box role="presentation" onClick={handleClick} sx={{ paddingY: 6 }}>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-              sx={{ color: "#FFF" }}
-            >
-              <Typography variant="body2" color="#FFF">
-                Home
-              </Typography>
-              {breadcrumbs.length
-                ? breadcrumbs.map((crumb) => (
-                    <Typography key={crumb} variant="body2" color="#FFF">
-                      {format(crumb)}
-                    </Typography>
-                  ))
-                : null}
-            </Breadcrumbs>
-          </Box>
-        </Container>
+        <Container maxWidth="lg" sx={{ paddingTop: 6 }}></Container>
         <Container maxWidth="sm" className={classes.hero}>
           <Box className={classes.svg}>
             <svg
