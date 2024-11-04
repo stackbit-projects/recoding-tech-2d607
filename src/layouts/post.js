@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DateTime } from "luxon";
 // import { useRouter } from "next/router";
 import Image from "next/image";
 import PropTypes from "prop-types";
 // import _ from "lodash";
-import { titleCase } from "title-case";
 import { toPlainText } from "@portabletext/react";
 import urlFor from "../utils/imageBuilder";
 import { CustomPortableText } from "../components/PortableText";
@@ -15,7 +14,6 @@ import slugify from "slugify";
 
 // material ui imports
 import Box from "@mui/material/Box";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -26,9 +24,6 @@ import Typography from "@mui/material/Typography";
 import { Layout } from "../components/index";
 import RelatedCommentary from "../components/RelatedCommentary";
 import RelatedTopics from "../components/RelatedTopics";
-
-// icons
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 // table of contents
 import { PortableText } from "@portabletext/react";
@@ -97,59 +92,14 @@ const ToCserializer = {
   },
 };
 
-function handleClick(event) {
-  event.preventDefault();
-}
-
-function format(crumb) {
-  return titleCase(crumb.split("-").join(" "));
-}
-
 const Post = (props) => {
   // const router = useRouter();
   const { page } = props;
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
-  useEffect(() => {
-    if (page) {
-      setBreadcrumbs([page.title]);
-    }
-  }, []);
 
   return (
     <Layout {...props}>
       <Box my={6}>
         <Container>
-          <Box
-            role="presentation"
-            onClick={handleClick}
-            sx={{ marginBottom: 6 }}
-          >
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Typography variant="body2" color="text.primary">
-                Home
-              </Typography>
-              {breadcrumbs && breadcrumbs.length
-                ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
-                : null}
-            </Breadcrumbs>
-          </Box>
           <Grid container spacing={8}>
             <Grid container spacing={4} item xs={12} md={8} direction="row">
               <Grid item>

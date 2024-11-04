@@ -1,12 +1,10 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { useRouter } from "next/router";
 
 // Material UI imports
 import Box from "@mui/material/Box";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -17,71 +15,21 @@ import components, { Layout } from "../components/index";
 import Sidebar from "../components/Sidebar";
 import { CustomPortableText } from "../components/PortableText";
 
-// icons
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-
-function handleClick(event) {
-  event.preventDefault();
-}
-
-function format(crumb) {
-  return crumb.split("-").join(" ");
-}
-
 const Page = (props) => {
-  const router = useRouter();
-  const [breadcrumbs, setBreadcrumbs] = useState([]);
   const {
-    page,
     page: { sidebar_content = {} },
   } = props;
-
-  useEffect(() => {
-    if (page && page.title) {
-      setBreadcrumbs([page.title]);
-    }
-  }, [router]);
 
   return (
     <Layout {...props}>
       <Box mb={4}>
         <Container>
-          <Box
-            role="presentation"
-            onClick={handleClick}
-            sx={{ marginBottom: 6 }}
-          >
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Typography variant="body2" color="text.primary">
-                Home
-              </Typography>
-              {breadcrumbs && breadcrumbs.length
-                ? breadcrumbs.map((crumb, index) => {
-                    if (index == breadcrumbs.length - 1) {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FF0033">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    } else {
-                      return (
-                        <Typography key={crumb} variant="body2" color="#FFF">
-                          {format(crumb)}
-                        </Typography>
-                      );
-                    }
-                  })
-                : null}
-            </Breadcrumbs>
-          </Box>
           <Grid
             container
             spacing={4}
             alignItems="flex-start"
             justifyContent="space-between"
+            sx={{ marginTop: 0 }}
           >
             <Grid item xs={12} sm={8}>
               <Typography
