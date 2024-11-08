@@ -125,7 +125,6 @@ function SectionTracker() {
     let newGovts = [];
     let newTypes = [];
 
-    console.log(searchValue);
     setLoading(true);
 
     client
