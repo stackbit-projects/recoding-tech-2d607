@@ -117,7 +117,7 @@ function SectionTracker() {
     setSearch("");
   };
 
-  const searchQuery = `*[_type == "policy_action" && !(_id in path("drafts.**")) && (title match '${searchValue}*')]{category, country, dateInitiated,
+  const searchQuery = `*[_type == "policy_action" && !(_id in path("drafts.**")) && (title match '${searchValue}*' || pt::text(summary) match '${searchValue}')]{category, country, dateInitiated,
                                 lastUpdate, _id, slug, status, title, relatedTopics[]->{_id, name, slug, displayName}, type}|order(lastUpdate desc)`;
 
   useEffect(() => {
