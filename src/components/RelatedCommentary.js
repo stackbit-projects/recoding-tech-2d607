@@ -37,10 +37,6 @@ const useStyles = makeStyles(() => ({
     fontWeight: "bold",
     color: "#7C7B7B",
   },
-  em: {
-    fontSize: "0.8em",
-    fontStyle: "italic",
-  },
   grid: {},
   gridTitle: {
     borderBottom: "1px solid #000",
