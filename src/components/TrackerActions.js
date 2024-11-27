@@ -10,7 +10,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -21,7 +20,6 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Material UI icons
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const useStyles = makeStyles(() => ({
@@ -89,12 +87,6 @@ const TrackerActions = (props) => {
 
   return (
     <>
-      <Typography variant="body2" gutterBottom>
-        <Link href="/tracker" className={classes.trackerLink}>
-          <ArrowBackIcon className={classes.trackerIcon} />
-          Return to policy tracker
-        </Link>
-      </Typography>
       {isMobile ? (
         <Accordion sx={{ marginBottom: 4 }}>
           <AccordionSummary
