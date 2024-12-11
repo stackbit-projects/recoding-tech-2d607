@@ -12,6 +12,18 @@ export default {
       validation: null,
     },
     {
+      type: 'array',
+      name: 'topics',
+      title: 'Topics',
+      description: 'Newsletter topics',
+      validation: null,
+      of: [
+        {
+          type: 'newsletter_topic',
+        },
+      ],
+    },
+    {
       type: "string",
       name: "type",
       title: "Object Type",

@@ -71,12 +71,12 @@ function SectionHero(props) {
       <Box
         style={{
           backgroundColor:
-            page.stackbit_model_type == "data"
+            page.stackbit_model_type == "data" ||
+            page.stackbit_url_path == "/newsletter"
               ? "#FFF"
               : page.layout == "policy_action" ||
                 page._type == "author" ||
-                page.stackbit_url_path == "/contributors" ||
-                page.stackbit_url_path == "/newsletter"
+                page.stackbit_url_path == "/contributors"
               ? theme.palette["secondary"].main
               : page.stackbit_url_path == "/donate" ||
                 page.stackbit_url_path == "/donate_new"
@@ -101,9 +101,10 @@ function SectionHero(props) {
                     ? "#ECF0F0"
                     : page.layout == "policy_action" ||
                       page._type == "author" ||
-                      page.stackbit_url_path == "/contributors" ||
-                      page.stackbit_url_path == "/newsletter"
+                      page.stackbit_url_path == "/contributors"
                     ? "#3C6E63"
+                    : page.stackbit_url_path == "/newsletter"
+                    ? "#559482"
                     : page.stackbit_url_path == "/donate" ||
                       page.stackbit_url_path == "/donate_new"
                     ? "#3C8671"
