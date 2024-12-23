@@ -8,12 +8,11 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.fontFamily,
-    fontSize: "12px",
+    fontSize: "13px",
     fontWeight: 600,
     display: "flex",
     flexDirection: "column",
@@ -24,14 +23,6 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "1px solid #E2D7BB77",
       paddingBottom: "10px",
     },
-  },
-  author: {
-    fontFamily: theme.typography.link.fontFamily,
-    fontSize: "10px",
-    fontWeight: 700,
-    textTransform: "uppercase",
-    marginTop: 6,
-    color: "#7C7B7B",
   },
 }));
 
@@ -64,25 +55,6 @@ const RelatedArticles = (props) => {
                   >
                     {article.title}
                   </Link>
-                  {article.authors && article.authors.length > 0 && (
-                    <Link
-                      href={`/${article.slug.current}`}
-                      className={classes.author}
-                      sx={{ textDecoration: "none" }}
-                    >
-                      {article.authors[0].firstName}{" "}
-                      {article.authors[0].lastName}{" "}
-                      <ArrowForwardIcon
-                        sx={{
-                          backgroundColor: "#FFF",
-                          fill: "#eb333d",
-                          width: 15,
-                          height: 15,
-                          verticalAlign: "bottom",
-                        }}
-                      />
-                    </Link>
-                  )}
                 </div>
               ))}
             </Box>
