@@ -28,6 +28,7 @@ import RelatedTopics from "../components/RelatedTopics";
 // table of contents
 import { PortableText } from "@portabletext/react";
 import { ImageBlock } from "../components/PortableText/ImageBlock";
+import RelatedArticles from "../components/RelatedArticles";
 
 const slug = (heading) => {
   let slug = "";
@@ -281,6 +282,7 @@ const Post = (props) => {
                 commentary={page.relatedCommentary}
                 noFilter={true}
               />
+              <RelatedArticles articles={page.relatedArticles} />
               <RelatedTopics topics={page.relatedTopics} />
               <div
                 id="mlb2-5983225"

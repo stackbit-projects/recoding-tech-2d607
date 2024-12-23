@@ -150,6 +150,56 @@ export default {
       ],
     },
     {
+      title: 'Related Articles',
+      name: 'relatedArticles',
+      type: 'array',
+      of: [
+        {
+          title: 'Reference to related article',
+          type: 'reference',
+          to: [
+            {
+              type: 'post',
+            },
+          ],
+          options: {
+            disableNew: true,
+            filter: async ({document, getClient}) => {
+              if (!document.relatedTopics || document.relatedTopics.length === 0)
+                return { filter: '', params: {} }
+
+              const client = getClient({apiVersion: '2023-01-01'})
+              const tags = document.relatedTopics.map((topic) => topic._ref).join('", "')
+              const query = document.relatedTopics.map((topic) => `references("${topic._ref}")`).join(' || ')
+              const postIds = await client.fetch(
+                `*[!(_id in path("drafts.**")) && _type == "post" && (${query})]
+                  {_id, "count": count((relatedTopics[]->_id)[@ in ["${tags}"]])}
+                  |order(coalesce(count, -1) desc)[0...51]`
+              )
+
+              return {
+                filter: '_id in $postIds',
+                params: {postIds: postIds.filter(post => post._id !== document._id.replace(/^drafts\./, '')).map((post) => post._id)},
+              }
+            },
+          },
+        },
+        {
+          type: 'reference',
+          name: 'all_posts',
+          title: 'Reference to article',
+          to: [
+            {
+              type: 'post',
+            },
+          ],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    },
+    {
       type: 'string',
       name: 'tocTitle',
       title: 'Table of Contents Title',
