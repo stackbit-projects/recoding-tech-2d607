@@ -29,6 +29,7 @@ import RelatedTopics from "../components/RelatedTopics";
 import { PortableText } from "@portabletext/react";
 import { ImageBlock } from "../components/PortableText/ImageBlock";
 import RelatedArticles from "../components/RelatedArticles";
+import NewsletterSubscribe from "../components/NewsletterSubscribe";
 
 const slug = (heading) => {
   let slug = "";
@@ -96,6 +97,30 @@ const ToCserializer = {
 const Post = (props) => {
   // const router = useRouter();
   const { page } = props;
+
+  let body1 = null;
+  let body2 = null;
+
+  if (page.body) {
+    // find the center of the page
+    try {
+      let center = Math.ceil(page.body.length / 2);
+      while (
+        ["number", "bullet"].includes(page.body[center]?.listItem) ||
+        ["h2", "h3", "h4"].includes(page.body[center - 1]?.style)
+      ) {
+        const newCenter = Math.min(center + 1, page.body.length);
+        if (center == newCenter) {
+          break;
+        }
+        center = newCenter;
+      }
+      body1 = page.body.slice(0, center);
+      body2 = page.body.slice(center);
+    } catch (error) {
+      // ignore
+    }
+  }
 
   return (
     <Layout {...props}>
@@ -201,7 +226,15 @@ const Post = (props) => {
                 )}
                 {page.body && (
                   <Typography component="div" className="html-to-react-article">
-                    <CustomPortableText value={page.body} />
+                    {body1 && body2 ? (
+                      <>
+                        <CustomPortableText value={body1} />
+                        <NewsletterSubscribe />
+                        <CustomPortableText value={body2} />
+                      </>
+                    ) : (
+                      <CustomPortableText value={page.body} />
+                    )}
                   </Typography>
                 )}
               </Grid>
@@ -284,76 +317,6 @@ const Post = (props) => {
               />
               <RelatedArticles articles={page.relatedArticles} />
               <RelatedTopics topics={page.relatedTopics} />
-              <div
-                id="mlb2-5983225"
-                className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-5983225"
-              >
-                <div className="ml-form-align-center">
-                  <div className="ml-form-embedWrapper embedForm">
-                    <div className="ml-form-embedBody ml-form-embedBodyDefault row-form">
-                      <div className="ml-form-embedContent">
-                        <h4>Our content. Delivered.</h4>
-                        <p style={{ textAlign: "center" }}>
-                          Join our newsletter on issues and ideas at the
-                          intersection of tech & democracy
-                        </p>
-                      </div>
-                      <form
-                        className="ml-block-form"
-                        action="https://static.mailerlite.com/webforms/submit/s8h5n5"
-                        data-code="s8h5n5"
-                        method="post"
-                        target="_blank"
-                      >
-                        <div className="ml-form-formContent">
-                          <div className="ml-form-fieldRow ml-last-item">
-                            <div className="ml-field-group ml-field-email ml-validate-email ml-validate-required">
-                              <input
-                                aria-label="email"
-                                aria-required="true"
-                                type="email"
-                                className="form-control"
-                                data-inputmask=""
-                                name="fields[email]"
-                                placeholder="Email"
-                                autoComplete="email"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <input type="hidden" name="ml-submit" value="1" />
-                        <div className="ml-form-embedSubmit">
-                          <button type="submit" className="primary">
-                            Subscribe
-                          </button>
-                          <button
-                            disabled="disabled"
-                            style={{ display: "none" }}
-                            type="button"
-                            className="loading"
-                          >
-                            {" "}
-                            <div className="ml-form-embedSubmitLoad"></div>{" "}
-                            <span className="sr-only">Loading...</span>{" "}
-                          </button>
-                        </div>
-                        <input type="hidden" name="anticsrf" value="true" />
-                      </form>
-                    </div>
-                    <div
-                      className="ml-form-successBody row-success"
-                      style={{ display: "none" }}
-                    >
-                      <div className="ml-form-successContent">
-                        <h4>Thank you!</h4>
-                        <p style={{ textAlign: "center" }}>
-                          You have successfully joined our subscriber list.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </Grid>
           </Grid>
         </Container>
