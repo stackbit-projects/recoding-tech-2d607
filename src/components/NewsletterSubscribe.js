@@ -28,7 +28,7 @@ function NewsletterSubscribe() {
               className="ml-form-embedContent"
               style={{ marginBottom: "20px" }}
             >
-              <h4 style={{ fontSize: "20px" }}>Our content. Delivered.</h4>
+              <h4 style={{ fontSize: "24px" }}>Our content. Delivered.</h4>
               <div
                 style={{
                   textAlign: "center",
