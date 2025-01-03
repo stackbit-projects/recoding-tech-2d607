@@ -9,7 +9,12 @@ function NewsletterSubscribe() {
       id="mlb2-5983225"
       className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-5983225"
     >
-      <div style={{ margin: "32px 0", borderTop: "1px solid #E2D7BB" }} />
+      <div
+        style={{
+          margin: "32px 0 24px 0",
+          borderTop: "1px solid #E2D7BB",
+        }}
+      />
       <div className="ml-form-align-center">
         <div
           className="ml-form-embedWrapper embedForm"
@@ -17,23 +22,22 @@ function NewsletterSubscribe() {
         >
           <div
             className="ml-form-embedBody ml-form-embedBodyDefault row-form"
-            style={{ padding: "40px" }}
+            style={{ padding: "25px 0 30px 0" }}
           >
             <div
               className="ml-form-embedContent"
-              style={{ marginBottom: "32px" }}
+              style={{ marginBottom: "20px" }}
             >
-              <h4>Our content. Delivered.</h4>
+              <h4 style={{ fontSize: "20px" }}>Our content. Delivered.</h4>
               <div
                 style={{
                   textAlign: "center",
-                  fontSize: "18px",
                   fontWeight: "400",
-                  marginTop: "5px",
+                  lineHeight: "22px",
                 }}
               >
-                Subscribe for our monthly update on Government
-                <br /> Policy, Tech News and Research
+                Join our newsletter on issues and ideas at the
+                <br /> intersection of tech & democracy
               </div>
             </div>
             <form
@@ -60,7 +64,7 @@ function NewsletterSubscribe() {
                           placeholder="Enter email address"
                           autoComplete="email"
                           style={{
-                            padding: "8px 10px !important",
+                            padding: "6px 10px !important",
                           }}
                         />
                       </div>
@@ -81,7 +85,7 @@ function NewsletterSubscribe() {
                         lineHeight: "normal !important",
                         fontWeight: "400 !important",
                         alignItems: "center",
-                        padding: "7px 10px !important",
+                        padding: "5px 10px !important",
                       }}
                     >
                       SUBSCRIBE <ChevronRight />
@@ -115,7 +119,12 @@ function NewsletterSubscribe() {
           </div>
         </div>
       </div>
-      <div style={{ margin: "32px 0", borderTop: "1px solid #E2D7BB" }} />
+      <div
+        style={{
+          margin: "24px 0 32px 0",
+          borderTop: "1px solid #E2D7BB",
+        }}
+      />
     </div>
   );
 }
