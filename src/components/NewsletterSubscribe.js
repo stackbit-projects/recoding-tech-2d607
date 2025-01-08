@@ -89,7 +89,7 @@ function NewsletterSubscribe() {
                         padding: "5px 10px !important",
                       }}
                     >
-                      SUBSCRIBE <ChevronRight />
+                      Subscribe <ChevronRight />
                     </button>
                     <button
                       disabled="disabled"
