@@ -79,9 +79,10 @@ function NewsletterSubscribe() {
                       type="submit"
                       className="primary"
                       style={{
+                        fontFamily: "Lexend, sans-serif!important",
                         display: "flex",
                         justifyContent: "space-evenly",
-                        fontSize: "16px !important",
+                        fontSize: "14px !important",
                         lineHeight: "normal !important",
                         fontWeight: "400 !important",
                         alignItems: "center",

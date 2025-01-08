@@ -101,7 +101,7 @@ const Post = (props) => {
   let body1 = null;
   let body2 = null;
 
-  if (page.body) {
+  if (page.body && page.disableNewsletterSignup !== true) {
     // find the center of the page
     try {
       let center = Math.ceil(page.body.length / 2);
