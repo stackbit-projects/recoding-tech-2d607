@@ -222,6 +222,12 @@ export default {
       ]
     },
     {
+      type: 'boolean',
+      name: 'disableNewsletterSignup',
+      title: 'Disable the Newsletter Signup block',
+      validation: null,
+    },
+    {
       type: 'stackbit_page_meta',
       name: 'seo',
       title: 'SEO',
