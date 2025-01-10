@@ -1,9 +1,25 @@
 // base imports
 import React from "react";
 
+import { makeStyles } from "@mui/styles";
 import { ChevronRight } from "@mui/icons-material";
+import { Box } from "@mui/material";
+
+const useStyles = makeStyles((theme) => ({
+  subscribe: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "10px",
+    [theme.breakpoints.down("sm")]: {
+      alignItems: "center",
+      flexDirection: "column",
+    },
+  },
+}));
 
 function NewsletterSubscribe() {
+  const classes = useStyles();
+
   return (
     <div
       id="mlb2-5983225"
@@ -34,10 +50,13 @@ function NewsletterSubscribe() {
                   textAlign: "center",
                   fontWeight: "400",
                   lineHeight: "22px",
+                  maxWidth: "390px",
+                  marginRight: "auto",
+                  marginLeft: "auto",
                 }}
               >
-                Join our newsletter on issues and ideas at the
-                <br /> intersection of tech & democracy
+                Join our newsletter on issues and ideas at the intersection of
+                tech & democracy
               </div>
             </div>
             <form
@@ -48,7 +67,7 @@ function NewsletterSubscribe() {
               target="_blank"
             >
               <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <div style={{ display: "flex", gap: "10px" }}>
+                <Box className={classes.subscribe}>
                   <div
                     className="ml-form-formContent"
                     style={{ width: "221px", marginBottom: "0px" }}
@@ -102,7 +121,7 @@ function NewsletterSubscribe() {
                       <span className="sr-only">Loading...</span>{" "}
                     </button>
                   </div>
-                </div>
+                </Box>
               </div>
               <input type="hidden" name="anticsrf" value="true" />
             </form>
