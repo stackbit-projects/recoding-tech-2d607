@@ -81,8 +81,8 @@ export default function SectionSignUp(props) {
                 </div>
                 <form
                   className="ml-block-form"
-                  action="https://static.mailerlite.com/webforms/submit/m6i8p9"
-                  data-code="m6i8p9"
+                  action="https://static.mailerlite.com/webforms/submit/v1a4y3"
+                  data-code="v1a4y3"
                   method="post"
                   target="_blank"
                 >
@@ -125,6 +125,7 @@ export default function SectionSignUp(props) {
                       </button>
                     </div>
                     <input type="hidden" name="anticsrf" value="true" />
+                    <input type="hidden" name="groups[]" value="104107073" />
                   </div>
                   {section.topics && (
                     <div className={classes.grid}>
