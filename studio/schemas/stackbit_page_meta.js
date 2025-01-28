@@ -17,7 +17,7 @@ export default {
       title: 'Description',
       description:
         '⚡️ The page description that goes into the <meta name="description"> tag. The meta description gives you an opportunity to control how your document looks in the search results. As with the title, make sure your meta descriptions are clear, concise, and reflective of the content users will find on your page. Ideally between 70-160 characters.',
-      validation: null,
+      validation: Rule => Rule.max(160).error(`The description should not exceed 160 characters.`),
     },
     {
       type: 'array',
