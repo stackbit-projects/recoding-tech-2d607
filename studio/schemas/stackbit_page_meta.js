@@ -75,6 +75,7 @@ export default {
       type: 'object',
       name: 'twitterSeo',
       title: 'Twitter SEO',
+      hidden: true,
       fields: [
         {
           type: 'string',
