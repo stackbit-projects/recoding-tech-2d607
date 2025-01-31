@@ -47,6 +47,7 @@ import iframeEmbed from './iframeEmbed.js'
 import customHtml from './customHtml.js'
 import tag from './tag.js'
 import dropdown_option from './dropdown_option.js'
+import newsletter_topic from './newsletter_topic.js'
 
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -86,6 +87,7 @@ export const schemaTypes = [
   section_tracker,
   section_policy_actions,
   sidebar_about,
+  newsletter_topic,
   tag,
   topic,
   action,
