@@ -238,12 +238,14 @@ export default {
       name: 'link',
       title: 'Wordpress link',
       validation: null,
+      hidden: true
     },
     {
       type: 'string',
       name: 'postId',
       title: 'Wordpress post id',
       validation: null,
+      hidden: true
     },
   ],
   orderings: [

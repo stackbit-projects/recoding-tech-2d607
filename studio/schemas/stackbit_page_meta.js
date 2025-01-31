@@ -48,16 +48,19 @@ export default {
       type: 'string',
       name: 'readTime',
       title: 'Est. reading time (imported from Wordpress)',
+      hidden: true,
     },
     {
       type: 'string',
       name: 'keywords',
       title: 'Keywords for SEO, separated with commas',
+      hidden: true,
     },
     {
       type: 'string',
       name: 'synonyms',
       title: 'Similar words to inform the SEO review',
+      hidden: true,
     },
     {
       type: 'image',
