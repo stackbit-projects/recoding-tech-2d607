@@ -21,7 +21,11 @@ const Seo = (props) => {
       asset ? (url = imageBuilder(asset).url()) : null;
     }
 
-    if (page.seo && page.seo.ogImage) {
+    if (page.featuredImage && page.featuredImage.asset) {
+      url = imageBuilder(page.featuredImage).url();
+    }
+
+    if (page.seo && page.seo.ogImage && page.seo.ogImage.asset) {
       url = imageBuilder(page.seo.ogImage).url();
     }
 
