@@ -5,7 +5,7 @@ import _ from "lodash";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   header: {
     fontFamily: "'Libre Baskerville', serif!important",
     fontSize: "32px!important",
@@ -15,6 +15,9 @@ const useStyles = makeStyles(() => ({
     display: "grid",
     gridGap: "20px",
     gridTemplateColumns: "1fr 1fr",
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "1fr",
+    },
     marginRight: "-20px",
     marginLeft: "-20px",
   },
@@ -29,6 +32,16 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     justifyContent: "space-between",
     height: "325px",
+  },
+  formContainer: {
+    display: "flex",
+    gap: "32px",
+    justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      marginRight: "-16px",
+      marginLeft: "-16px",
+      gap: "16px",
+    },
   },
 }));
 
@@ -86,13 +99,7 @@ export default function SectionSignUp(props) {
                   method="post"
                   target="_blank"
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "32px",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <div className={classes.formContainer}>
                     <div className="ml-form-formContent">
                       <div className="ml-form-fieldRow ml-last-item">
                         <div className="ml-field-group ml-field-email ml-validate-email ml-validate-required">
