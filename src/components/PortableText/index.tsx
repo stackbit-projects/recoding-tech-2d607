@@ -37,6 +37,9 @@ const components = {
     File: FileBlock,
   },
   marks: {
+    left: ({children}) => <span style={{ textAlign: 'left', width: '100%', display: 'inline-block' }}>{children}</span>,
+    center: ({children}) => <span style={{ textAlign: 'center', width: '100%', display: 'inline-block' }}>{children}</span>,
+    right: ({children}) => <span style={{ textAlign: 'right', width: '100%', display: 'inline-block' }}>{children}</span>,
     link: ({ value, children }) => {
       const { href } = value
       return <a href={href} target="_blank" rel="noopener">{children}</a>

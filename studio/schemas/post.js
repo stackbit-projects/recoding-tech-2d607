@@ -1,3 +1,6 @@
+import { AlignLeftIcon, AlignRightIcon, AlignCenterIcon } from '../components/icons'
+import { TextAlign } from '../components/text-align'
+
 export default {
   type: 'document',
   name: 'post',
@@ -79,6 +82,31 @@ export default {
             { title: 'Heading 4', value: 'h4' },
             { title: 'Heading 5', value: 'h5' },
             { title: 'Quote', value: 'blockquote' },
+          ],
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+              { title: "Code", value: "code" },
+              { title: "Underline", value: "underline" },
+              { title: "Strike", value: "strike-through" },
+              { title: 'Left', value: 'left', icon: AlignLeftIcon, component: TextAlign },
+              { title: 'Center', value: 'center', icon: AlignCenterIcon, component: TextAlign },
+              { title: 'Right', value: 'right', icon: AlignRightIcon, component: TextAlign },
+            ],
+            annotations: [
+              {
+                type: 'object',
+                name: 'link',
+                fields: [
+                  { type: 'string', name: 'href' },
+                ],
+              },
+            ]
+          },
+          lists: [
+            { title: 'Bullet', value: 'bullet' },
+            { title: 'Number', value: 'number' },
           ],
         },
         {
